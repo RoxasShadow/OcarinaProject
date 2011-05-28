@@ -1,0 +1,23 @@
+Ocarina2 is a flexible and light CMS builded in PHP5 and MySQL, with OOP
+and a rendering engine, wich divides the logic and the graphic.
+So, if you're a graphic, just use the simple tag wich the programmer gives you,
+otherwise, if you are a web-developer, just search a graphic, and, when you've
+found, foul slog :-)
+
+With this CMS, you can create/edit/delete the article and their comments, the
+pages (wich are article uncommentable) and the annunce (wich are short message
+readable only by the staff of your website).
+You can also install/disinstall/edit the various skin wich you/your graphic 
+creates.
+Then, you can manage the SEO-side: generate sitemap, manage the robots.txt and
+(de)active the auto-metadescription/metakeyword.
+
+The user can write a comment for each article and have a personal page, wich
+has various fields customizable.
+There is also a search engine and a archive.
+
+The target for the final release is set on this summer.
+
+5/23/2011 ~ Giovanni `Roxas Shadow` Capuano & Alberto Milan.
+
+P.S.: Thank you github for hosting our code :-)

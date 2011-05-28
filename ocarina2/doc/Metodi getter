@@ -1,0 +1,53 @@
+====== Metodi getter ======
+
+* getPage(), getNews(), getComment(), getUser(), getConfig(), searchPageByTitle(), searchPageByContent(), searchNewsByTitle(), searchNewsByContent() e searchUserByField():
+	Questi metodi ritornano un oggetto iterabile contenete array di record.
+	Facciamo un esempio.
+	Vogliamo listare tutti i titoli e i contenuti di tutte le pagine presenti nel database.
+	
+	<?php
+	// [...]
+	if(!$objectPage = $page->getPage()) {
+		echo 'È accaduto un errore.';
+	}
+	else {
+		foreach($objectPage as $result) {
+			echo $result->titolo;
+			echo ' --> ';
+			echo $result->contenuto;
+			echo '<br /><br />';
+		}
+	}
+	?>
+	
+	Vogliamo listare il titolo e il contenuto di una pagina dal minititolo 'questo-e-un-test'.
+	
+	<?php
+	// [...]
+	if(!$objectPage = $page->getPage('questo-e-un-test'))
+		echo 'È accaduto un errore.';
+	}
+	else {
+		foreach($objectPage as $result) {
+			echo $result->titolo;
+			echo ' --> ';
+			echo $result->contenuto;
+			echo '<br /><br />';
+		}
+	}
+	?>
+	
+* getCategory():
+	Questo metodo ritorna un valore sottoforma di stringa.
+	Facciamo un esempio.
+	Vogliamo listare le categorie che si trovano nella tabella news del database.
+	
+	<?php
+	// [...]
+	if(!$categoria = $category->getCategory('news'))
+		echo 'È accaduto un errore.';
+	}
+	else {
+		echo $categoria;
+	}
+	?>
