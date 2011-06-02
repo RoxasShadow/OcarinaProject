@@ -1,4 +1,4 @@
-Ocarina2 is a flexible and light CMS builded in PHP5 and MySQL, with OOP
+Ocarina is a flexible and light CMS builded in PHP5 and MySQL, with OOP
 and a rendering engine, wich divides the logic and the graphic.
 So, if you're a graphic, just use the simple tag wich the programmer gives you,
 otherwise, if you are a web-developer, just search a graphic, and, when you've

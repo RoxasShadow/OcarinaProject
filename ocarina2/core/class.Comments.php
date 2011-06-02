@@ -9,7 +9,7 @@ include 'class.News.php';
 class Comments extends News {
 
 	/* Ottiene uno o più commenti. */
-	public function getPage($id = '') {
+	public function getComment($id = '') {
 		$commenti = array();
 		if($id !== '') {
 			if(!is_numeric($id))
@@ -41,6 +41,8 @@ class Comments extends News {
 	
 	/* Controlla se il commento esiste. */
 	public function isComment($id) {
+		if(!is_numeric($id))
+			return false;
 		if(!$query = parent::query("SELECT * FROM commenti WHERE id='$id'"))
 			return false;
 		return parent::count($query) > 0 ? true : false;
@@ -67,14 +69,14 @@ class Comments extends News {
 	public function createComment($array) {
 		if(!is_array($array))
 			return false;
-		if((parent::isNews($array[0])) && (parent::isUser($array[0]))) {
+		if((parent::isNews($array[0])) && (parent::isUser($array[1]))) {
 			$query = parent::query('SELECT * FROM commenti');
 			$campi = parent::getColumns($query);
 			if(!is_array($campi))
 				return false;
 			$query = 'INSERT INTO commenti(';
 			foreach($campi as $var)
-				if(($var !== 'id')
+				if($var !== 'id')
 					$query .= $var.', ';
 			$query = trim($query, ', ');
 			$query .= ') VALUES(';
@@ -89,11 +91,15 @@ class Comments extends News {
 	
 	/* Modifica un commento. */
 	public function editComment($campo, $valore, $id) {
-		return parent::query("UPDATE comenti SET $campo='$valore' WHERE id='$id'") ? true : false;
+		if(!is_numeric($id))
+			return false;
+		return parent::query("UPDATE commenti SET $campo='$valore' WHERE id=$id") ? true : false;
 	}
 	
 	/* Elimina un commento. */
 	public function deleteComment($id) {
-		return parent::query("DELETE FROM commenti WHERE id='$id'")) ? true : false
+		if(!is_numeric($id))
+			return false;
+		return parent::query("DELETE FROM commenti WHERE id='$id'") ? true : false;
 	}
 }

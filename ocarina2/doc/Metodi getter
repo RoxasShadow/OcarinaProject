@@ -37,6 +37,20 @@
 	}
 	?>
 	
+	Vogliamo listare il titolo e il contenuto di una sola pagina presente nel database.
+	
+	<?php
+	// [...]
+	if(!$objectPage = $page->getPage()) {
+		echo 'È accaduto un errore.';
+	}
+	else {
+		echo $objectPage[0]->titolo;
+		echo ' --> ';
+		echo $objectPage[0]->contenuto;
+	}
+	?>
+	
 * getCategory():
 	Questo metodo ritorna un valore sottoforma di stringa.
 	Facciamo un esempio.
