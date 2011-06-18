@@ -3,7 +3,7 @@
 	core/class.Configuration.php
 	(C) Giovanni Capuano 2011
 */
-include 'class.MySQL.php';
+require_once('class.MySQL.php');
 
 /* Questa classe mette a disposizione dei metodi per gestire la configurazione. */
 class Configuration extends MySQL {

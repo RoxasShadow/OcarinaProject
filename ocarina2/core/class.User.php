@@ -3,7 +3,7 @@
 	core/class.User.php
 	(C) Giovanni Capuano 2011
 */
-include 'class.Configuration.php';
+require_once('class.Configuration.php');
 
 /* Questa classe mette a disposizione dei metodi per gestire gli utenti. */
 class User extends Configuration {
@@ -42,6 +42,13 @@ class User extends Configuration {
 		if(!$query = parent::query("SELECT * FROM utenti WHERE nickname='$nickname'"))
 			return false;
 		return parent::count($query) > 0 ? true : false;
+	}
+	
+	/* Conta quanti utenti sono presenti nel database. */
+	public function countUser() {
+		if(!$query = parent::query('SELECT COUNT(*) FROM utenti'))
+			return false;
+		return mysql_result($query, 0, 0);
 	}
 	
 	/* Controlla se l'utente è loggato. */
@@ -123,16 +130,16 @@ class User extends Configuration {
 	/* Distrugge un cookie. */
 	public function unSetCookie() {
 		$cookie = '';
-		foreach(parent::getConfig('cookie') as $v)
-			$cookie = $v->cookie;
+		$config = parent::getConfig('cookie');
+		$cookie = $config[0];
 		setcookie($cookie, '', -3600);
 	}
 	
 	/* Ottiene un cookie. */
 	public function getCookie() {
 		$cookie = '';
-		foreach(parent::getConfig('cookie') as $v)
-			$cookie = $v->cookie;
+		$config = parent::getConfig('cookie');
+		$cookie = $config[0];
 		return isset($_COOKIE[$cookie]) ? parent::purge($_COOKIE[$cookie]) : false;
 	}
 	

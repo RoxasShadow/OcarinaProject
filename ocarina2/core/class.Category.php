@@ -3,7 +3,7 @@
 	core/class.Category.php
 	(C) Giovanni Capuano 2011
 */
-include 'class.User.php';
+require_once('class.User.php');
 
 /* Questa classe mette a disposizione dei metodi per gestire le categorie. */
 class Category extends User {

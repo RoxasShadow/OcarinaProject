@@ -3,13 +3,13 @@
 	core/class.News.php
 	(C) Giovanni Capuano 2011
 */
-include 'class.Category.php';
+require_once('class.Category.php');
 
 /* Questa classe mette a disposizione dei metodi per gestire le news. */
 class News extends Category {
 
 	/* Ottiene una o più news. */
-	public function getNews($minititolo = '') {
+	public function getNews($minititolo = '', $min = '', $max = '') {
 		$news = array();
 		if($minititolo !== '') {
 			if($this->isPage($minititolo)) {
@@ -23,11 +23,17 @@ class News extends Category {
 			return false;
 		}
 		else {
-			if(!$query = parent::query("SELECT DISTINCT * FROM news"))
-				return false;
+			if(($min == '') && ($max == '')) {
+				if(!$query = parent::query('SELECT DISTINCT * FROM news'))
+					return false;
+			}
+			else {
+				if(!$query = parent::query("SELECT DISTINCT * FROM news LIMIT $min, $max"))
+					return false;
+			}
 			if(parent::count($query) > 0) {
 				while($result = parent::get($query))
-					array_push($news, $result);
+					array_push($news, parent::get($query));
 				if(is_array($news))
 					return $news;
 				return false;
@@ -42,6 +48,13 @@ class News extends Category {
 		if(!$query = parent::query("SELECT * FROM news WHERE minititolo='$minititolo'"))
 			return false;
 		return parent::count($query) > 0 ? true : false;
+	}
+	
+	/* Conta quante news sono presenti nel database. */
+	public function countNews() {
+		if(!$query = parent::query('SELECT COUNT(*) FROM news'))
+			return false;
+		return mysql_result($query, 0, 0);
 	}
 	
 	/* Ricerca le news per titolo. */

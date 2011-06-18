@@ -7,8 +7,9 @@
 /* Questa classe include tutti i metodi per la sicurezza. */
 class Security {
 	
-	/* Filtra una stringa. Se l'argomento è un array multidimensionale, ogni array che lo compone viene ripassato nel metodo. Se, altrimenti, è un semplice array o una stringa, ogni valore è filtrato da mysql_real_escape_string().
-	Poichè uso htmlentities(), tutto l'HTML presente non verrà parsato, quindi questo metodo non dovrà essere usato nella amministrazione (altrimenti non potrai creare, ad esempio, una tabella con il puro HTML, se non usando i BBCode, ma non penso riuscirai ad usare un BBCode per ogni tag esistente :). Basterà però creare un metodo identico ma senza htmlentities(). */
+	/* Filtra una stringa. Se l'argomento è un array multidimensionale, ogni array che lo compone viene ripassato nel metodo.
+	   Se, altrimenti, è un semplice array o una stringa, ogni valore è filtrato da mysql_real_escape_string().
+	   ATTENZIONE: Non usare per le news e le pagine, altrimenti l'HTML non sarà parsato! */
 	public function purge($var) {
 		if(is_array($var)) {
 			foreach($var as $key => $value) {
@@ -25,23 +26,6 @@ class Security {
 			if(get_magic_quotes_gpc())
 				$var = stripslashes($var);
 			$var = mysql_real_escape_string(htmlentities($var));
-		}
-		return $var;
-	}
-	
-	/* Rimuove i filtri da una stringa. Se l'argomento è un array multidimensionale, ogni array che lo compone viene ripassato nel metodo. Se, altrimenti, è un semplice array o una stringa, ogni valore è pulito da stripslashes(). */
-	public function unPurge($var) {
-		if(is_array($var)) {
-			foreach($var as $key => $value) {
-				if(is_array($var[$key]))
-					$var[$key] = $this->unPurge($var[$key]);
-				if(is_string($var[$key])) {
-					$var[$key] = stripslashes($var[$key]);
-				}
-			}
-		}
-		if(is_string($var)) {
-			$var = stripslashes($var);
 		}
 		return $var;
 	}

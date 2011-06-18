@@ -3,8 +3,7 @@
 	core/class.Rendering.php
 	(C) Giovanni Capuano 2011
 */
-include 'class.Configuration.php';
-include '/var/www/htdocs/ocarina2/rendering/Smarty.class.php';
+require_once('class.Configuration.php');
 
 /* Questa classe mette a disposizione dei metodi per interagire con il motore di rendering. */
 class Rendering extends Configuration {
@@ -12,6 +11,8 @@ class Rendering extends Configuration {
 
 	/* Quando la classe viene istanziata, il costruttore provvede a creare un nuovo oggetto Smarty. */
 	public function __construct() {
+		$config = parent::getConfig();
+		require_once($config[0]->root_rendering.'/Smarty.class.php');
 		parent::__construct(); // Eredito il costruttore della superclasse
 		$this->smarty = new Smarty;
 		$getConfig = parent::getConfig();

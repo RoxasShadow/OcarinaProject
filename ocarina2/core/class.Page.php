@@ -3,7 +3,7 @@
 	core/class.Page.php
 	(C) Giovanni Capuano 2011
 */
-include 'class.Category.php';
+require_once('class.Category.php');
 
 /* Questa classe mette a disposizione dei metodi per gestire le pagine. */
 class Page extends Category {
@@ -23,7 +23,7 @@ class Page extends Category {
 			return false;
 		}
 		else {
-			if(!$query = parent::query("SELECT DISTINCT * FROM pagine"))
+			if(!$query = parent::query('SELECT DISTINCT * FROM pagine'))
 				return false;
 			if(parent::count($query) > 0) {
 				while($result = parent::get($query))
@@ -42,6 +42,13 @@ class Page extends Category {
 		if(!$query = parent::query("SELECT * FROM pagine WHERE minititolo='$minititolo'"))
 			return false;
 		return parent::count($query) > 0 ? true : false;
+	}
+	
+	/* Conta quante pagine sono presenti nel database. */
+	public function countPage() {
+		if(!$query = parent::query('SELECT COUNT(*) FROM pagine'))
+			return false;
+		return mysql_result($query, 0, 0);
 	}
 	
 	/* Ricerca le pagine per titolo. */

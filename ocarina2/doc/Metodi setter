@@ -8,7 +8,7 @@
 	
 	<?php
 	// [...]
-	$array = array('Linus Torvalds', 'About me', 'about-me', 'Sono nato ad Helsinki, in Finlandia, nel 1969...', 'Su di me', date('d-m-y'), date('G:m:s'));
+	$array = array('Linus Torvalds', 'About me', 'about-me', 'Sono nato ad Helsinki, in Finlandia, nel 1969...', 'Su di me', date('d-m-y'), date('G:m:s'), 1);
 	if(!$page->createPage($array)) {
 		echo 'È accaduto un errore.';
 	}

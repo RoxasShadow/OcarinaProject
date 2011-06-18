@@ -3,7 +3,7 @@
 	core/class.Comments.php
 	(C) Giovanni Capuano 2011
 */
-include 'class.News.php';
+require_once('class.News.php');
 
 /* Questa classe mette a disposizione dei metodi per gestire i commenti. */
 class Comments extends News {

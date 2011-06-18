@@ -3,7 +3,7 @@
 	core/class.MySQL.php
 	(C) Giovanni Capuano 2011
 */
-include 'class.Security.php';
+require_once('class.Security.php');
 
 /* Questa classe mette a disposizione dei metodi per gestire il database. */
 class MySQL extends Security {
