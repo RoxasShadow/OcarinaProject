@@ -9,7 +9,7 @@ require_once('class.News.php');
 class Comments extends News {
 
 	/* Ottiene uno o più commenti. */
-	public function getComment($news = '', $min = '', $max = '') {
+	public function getComment($news = '') {
 		$commenti = array();
 		if($news !== '') {
 			if($this->isComment($news)) {
@@ -23,17 +23,11 @@ class Comments extends News {
 			return false;
 		}
 		else {
-			if(($min == '') && ($max == '')) {
-				if(!$query = parent::query('SELECT DISTINCT * FROM commenti'))
-					return false;
-			}
-			else {
-				if(!$query = parent::query("SELECT DISTINCT * FROM commenti LIMIT $min, $max"))
-					return false;
-			}
+			if(!$query = parent::query('SELECT DISTINCT * FROM commenti'))
+				return false;
 			if(parent::count($query) > 0) {
 				while($result = parent::get($query))
-					array_push($commenti, parent::get($query));
+					array_push($commenti, $result);
 				if(is_array($commenti))
 					return $commenti;
 				return false;

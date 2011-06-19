@@ -33,7 +33,7 @@ class News extends Category {
 			}
 			if(parent::count($query) > 0) {
 				while($result = parent::get($query))
-					array_push($news, parent::get($query));
+					array_push($news, $result);
 				if(is_array($news))
 					return $news;
 				return false;

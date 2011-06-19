@@ -1,1 +1,2 @@
-Ricerca.php (ricerca.tpl già c'è. X SMARTY -> if_isset(titolo) OR isset(contenuto) --> $cerca = true)
+Bug commenti;
+Errori definiti nel template (magari usa i codici di errore);

@@ -1,17 +1,15 @@
 {include file="$root_rendering/templates/$skin/include/header.tpl"}
-	{if isset($error)}
-	<div id="titolo">{$error}</div>
+	{if isset($errore)}
+		<div id="titolo">{$errore}</div>
 	{else}
-	{if is_array($contenuto)}
-	{foreach from=$contenuto key=key item=item}
-	{if $contenuto[$key]->approvato == 1}
-	<div id="titolo">{$contenuto[$key]->titolo}</div>
-	<div id="newsheader" align="center">Scritto il giorno {$contenuto[$key]->data} alle ore {$contenuto[$key]->ora} nella categoria <a href="categoria.php?cat={$contenuto[$key]->categoria}">{$contenuto[$key]->categoria}</a>.</div><br />
-	<div id="news">{$contenuto[$key]->contenuto}</div>
-	{/if}
-	{/foreach}
-	{else}
-	<div id="titolo">{$contenuto}</div>
-	{/if}
+		{if is_array($pagina)}
+			{foreach from=$pagina key=key item=item}
+				{if $pagina[$key]->approvato == 1}
+					<div id="titolo">{$pagina[$key]->titolo}</div>
+					<div id="newsheader" align="center">Scritto da <a href="profilo.php?nickname={$pagina[$key]->autore}">{$pagina[$key]->autore}</a> il giorno {$pagina[$key]->data} alle ore {$pagina[$key]->ora} nella categoria <a href="categoria.php?cat={$pagina[$key]->categoria}">{$pagina[$key]->categoria}</a>.</div><br />
+					<div id="news">{$pagina[$key]->contenuto}</div>
+				{/if}
+			{/foreach}
+		{/if}
 	{/if}
 {include file="$root_rendering/templates/$skin/include/footer.tpl"}

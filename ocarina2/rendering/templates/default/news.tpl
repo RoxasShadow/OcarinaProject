@@ -1,35 +1,29 @@
 {include file="$root_rendering/templates/$skin/include/header.tpl"}
-	{if isset($commentSended)}
-	<div id="titolo">{$commentSended}</div>
-	{else if isset($error)}
-	<div id="titolo">{$error}</div>
-	{else}
-	{if is_array($contenuto)}
-	{foreach from=$contenuto key=key item=item}
-	{if $contenuto[$key]->approvato == 1}
-	<div id="titolo">{$contenuto[$key]->titolo}</div>
-	<div id="newsheader" align="center">Scritto da <a href="profilo.php?nickname={$contenuto[$key]->autore}">{$contenuto[$key]->autore}</a> il giorno {$contenuto[$key]->data} alle ore {$contenuto[$key]->ora} nella categoria <a href="categoria.php?cat={$contenuto[$key]->categoria}">{$contenuto[$key]->categoria}</a>.</div><br />
-	<div id="news">{$contenuto[$key]->contenuto}</div>
-	{/if}
-	{/foreach}
-	{if is_array($comments)}
-	<br /><hr><br />
-	{foreach from=$comments key=key item=item}
-	{if $comments[$key]->approvato == 1}
-	<fieldset><legend>#{$item@iteration} Commento inviato il giorno {$comments[$key]->data} alle ore {$comments[$key]->ora} da <a href="profilo.php?nickname={$comments[$key]->autore}">{$comments[$key]->autore}</a></legend>{$comments[$key]->contenuto}</fieldset><br />
-	{/if}
-	{/foreach}
-	{else}
-	<br /><hr><br />
-	<div id="news">{$comments}</div>
-	{/if}
-	<br />
-	<form action="" method="post">
-	<textarea name="comment"></textarea><br />
-	<input type="submit" value="Invia commento" />
-	</form>
-	{else}
-	<div id="titolo">{$error}</div>
-	{/if}
+	{if isset($errore)}
+		<div id="titolo">{$errore}</div>
+	{else if isset($commentSended)}
+		<div id="titolo">{$commentSended}</div>
+	{elseif is_array($news)}
+		{foreach from=$news key=key item=item}
+			{if $news[$key]->approvato == 1}
+				<div id="titolo">{$news[$key]->titolo}</div>
+				<div id="newsheader" align="center">Scritto da <a href="profilo.php?nickname={$news[$key]->autore}">{$news[$key]->autore}</a> il giorno {$news[$key]->data} alle ore {$news[$key]->ora} nella categoria <a href="categoria.php?cat={$news[$key]->categoria}">{$news[$key]->categoria}</a>.</div><br />
+				<div id="news">{$news[$key]->contenuto}</div>
+			{/if}
+		{/foreach}
+		{if !is_array($commenti)}
+			<br /><hr /><br />
+			<div id="news">{$commenti}</div>
+		{else}
+			<br /><hr /><br />
+			{foreach from=$commenti key=key item=item}
+				<fieldset><legend>#{$item@iteration} Commento inviato il giorno {$commenti[$key]->data} alle ore {$commenti[$key]->ora} da <a href="profilo.php?nickname={$commenti[$key]->autore}">{$commenti[$key]->autore}</a></legend>{$commenti[$key]->contenuto}</fieldset><br />
+			{/foreach}
+		{/if}
+		<br />
+		<form action="" method="post">
+		<textarea name="comment" cols="59" rows="10"></textarea><br />
+		<input type="submit" value="Invia commento" />
+		</form>
 	{/if}
 {include file="$root_rendering/templates/$skin/include/footer.tpl"}

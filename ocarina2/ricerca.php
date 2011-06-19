@@ -3,33 +3,29 @@
 	/ricercaa.php
 	(C) Giovanni Capuano 2011
 */
-require_once('core/class.News.php');
+ob_start('ob_gzhandler');
 require_once('core/class.Comments.php');
 require_once('core/class.Page.php');
 require_once('core/class.Rendering.php');
 
-$news = new News();
-$pagina = new Page();
 $comment = new Comments();
+$pagina = new Page();
 $rendering = new Rendering();
-$config = $news->getConfig();
-$secret = $news->getCookie();
-$cercaNews = ((isset($_POST['news'])) && (isset($_POST['submitNews']))) ? $news->purge($_POST['news']) : '';
-$cercaPagine = ((isset($_POST['pagine'])) && (isset($_POST['submitPage']))) ? $news->purge($_POST['pagine']) : '';
-$cercaCommenti = ((isset($_POST['commenti'])) && (isset($_POST['submitComment']))) ? $news->purge($_POST['commenti']) : '';
+$config = $comment->getConfig();
+$cercaNews = ((isset($_POST['news'])) && (isset($_POST['submitNews']))) ? $comment->purge($_POST['news']) : '';
+$cercaPagine = ((isset($_POST['pagine'])) && (isset($_POST['submitPage']))) ? $comment->purge($_POST['pagine']) : '';
+$cercaCommenti = ((isset($_POST['commenti'])) && (isset($_POST['submitComment']))) ? $comment->purge($_POST['commenti']) : '';
 $cerca = true;
 
-$user = $news->searchUserByField('secret', $news->getCookie());
-$rendering->addValue('utente', $user[0]->nickname);
+$user = $comment->searchUserByField('secret', $comment->getCookie());
+$logged = !$user ? false : true;
+$rendering->addValue('utente', $logged ? $user[0]->nickname : '');
 $rendering->addValue('titolo', 'Cerca nel sito &raquo; '.$config[0]->nomesito);
 $rendering->addValue('keywords', $config[0]->keywords);
 $rendering->addValue('description', $config[0]->description);
-$rendering->addValue('url_rendering', $config[0]->url_rendering);
-$rendering->addValue('root_rendering', $config[0]->root_rendering);
-$rendering->addValue('skin', $config[0]->skin);
 
 if($cercaNews !== '') {
-	$search = $news->searchNews($cercaNews);
+	$search = $comment->searchNews($cercaNews);
 	if(!$search)
 		$rendering->addValue('error_news', 'Non è stata trovata nessuna news corrispondente alla tua keyword.');
 	else
@@ -54,11 +50,3 @@ elseif($cercaCommenti !== '') {
 }
 $rendering->addValue('cerca', $cerca);
 $rendering->renderize('ricerca.tpl');
-
-
-
-
-
-
-
-
