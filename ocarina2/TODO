@@ -1,0 +1,1 @@
+Ricerca.php (ricerca.tpl già c'è. X SMARTY -> if_isset(titolo) OR isset(contenuto) --> $cerca = true)

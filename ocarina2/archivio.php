@@ -1,32 +1,27 @@
 <?php
 /**
-	/index.php
+	/categoria.php
 	(C) Giovanni Capuano 2011
 */
 require_once('core/class.News.php');
+require_once('core/class.Page.php');
 require_once('core/class.Rendering.php');
-require_once('etc/class.Pager.php');
 
 $news = new News();
+$pagine = new Page();
 $rendering = new Rendering();
 $config = $news->getConfig();
 $secret = $news->getCookie();
 
 $user = $news->searchUserByField('secret', $news->getCookie());
 $rendering->addValue('utente', $user[0]->nickname);
-$rendering->addValue('titolo', $config[0]->nomesito);
+$rendering->addValue('titolo', 'Archivio &raquo; '.$config[0]->nomesito);
 $rendering->addValue('keywords', $config[0]->keywords);
 $rendering->addValue('description', $config[0]->description);
 $rendering->addValue('url_rendering', $config[0]->url_rendering);
 $rendering->addValue('root_rendering', $config[0]->root_rendering);
 $rendering->addValue('skin', $config[0]->skin);
 
-$pager = new Pager();
-$rendering->addValue('navigatore', $pager->getNav());
-$rendering->addValue('currentPage', $pager->getCurrentPage());
-
-if($pager->getCurrentPage() > $pager->getNumPages())
-	$rendering->addValue('contenuto', 'È accaduto un errore.');
-else
-	!$news->getNews() ? $rendering->addValue('contenuto', 'È accaduto un errore.') : $rendering->addValue('contenuto', $news->getNews('', $pager->getMin(), $pager->getMax()));
-$rendering->renderize('index.tpl');
+!$news->getNews() ? $rendering->addValue('news', 'È accaduto un errore.') : $rendering->addValue('news', $news->getNews());
+!$pagine->getPage() ? $rendering->addValue('pagine', 'È accaduto un errore.') : $rendering->addValue('pagine', $pagine->getPage());
+$rendering->renderize('archivio.tpl');

@@ -1,6 +1,6 @@
 <?php
 /**
-	core/class.News.php
+	core/class.News.phpz
 	(C) Giovanni Capuano 2011
 */
 require_once('class.Category.php');
@@ -12,7 +12,7 @@ class News extends Category {
 	public function getNews($minititolo = '', $min = '', $max = '') {
 		$news = array();
 		if($minititolo !== '') {
-			if($this->isPage($minititolo)) {
+			if($this->isNews($minititolo)) {
 				if(!$query = parent::query("SELECT DISTINCT * FROM news WHERE minititolo='$minititolo'"))
 					return false;
 				array_push($news, parent::get($query));
@@ -57,7 +57,7 @@ class News extends Category {
 		return mysql_result($query, 0, 0);
 	}
 	
-	/* Ricerca le news per titolo. */
+	/* Ricerca le news per titolo.
 	public function searchNewsByTitle($keyword) {
 		if(!$query = parent::query("SELECT DISTINCT * FROM news WHERE titolo LIKE '%$keyword%'"))
 			return false;
@@ -74,9 +74,43 @@ class News extends Category {
 			return false;
 	}
 	
-	/* Ricerca le news per contenuto. */
+	/* Ricerca le news per contenuto.
 	public function searchNewsByContent($keyword) {
 		if(!$query = parent::query("SELECT DISTINCT * FROM news WHERE contenuto LIKE '%$keyword%'"))
+			return false;
+		if(parent::count($query) > 0) {
+			$news = array();
+			while($result = parent::get($query)) {
+				array_push($news, $result);
+			}
+			if(is_array($news))
+				return $news;
+			return false;
+		}
+		else
+			return false;
+	} */
+	
+	/* Ricerca le news da una keyword. */
+	public function searchNews($keyword) {
+		if(!$query = parent::query("SELECT DISTINCT * FROM news WHERE (titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%')"))
+			return false;
+		if(parent::count($query) > 0) {
+			$news = array();
+			while($result = parent::get($query)) {
+				array_push($news, $result);
+			}
+			if(is_array($news))
+				return $news;
+			return false;
+		}
+		else
+			return false;
+	}
+	
+	/* Ricerca le news per categoria. */
+	public function searchNewsByCategory($keyword) {
+		if(!$query = parent::query("SELECT DISTINCT * FROM news WHERE categoria='$keyword'"))
 			return false;
 		if(parent::count($query) > 0) {
 			$news = array();

@@ -9,13 +9,11 @@ require_once('class.News.php');
 class Comments extends News {
 
 	/* Ottiene uno o più commenti. */
-	public function getComment($id = '') {
+	public function getComment($news = '', $min = '', $max = '') {
 		$commenti = array();
-		if($id !== '') {
-			if(!is_numeric($id))
-				return false;
-			if($this->isComment($id)) {
-				if(!$query = parent::query("SELECT DISTINCT * FROM commenti WHERE id='$id'"))
+		if($news !== '') {
+			if($this->isComment($news)) {
+				if(!$query = parent::query("SELECT DISTINCT * FROM commenti WHERE news='$news'"))
 					return false;
 				array_push($commenti, parent::get($query));
 				if(is_array($commenti))
@@ -25,11 +23,17 @@ class Comments extends News {
 			return false;
 		}
 		else {
-			if(!$query = parent::query("SELECT DISTINCT * FROM commenti"))
-				return false;
+			if(($min == '') && ($max == '')) {
+				if(!$query = parent::query('SELECT DISTINCT * FROM commenti'))
+					return false;
+			}
+			else {
+				if(!$query = parent::query("SELECT DISTINCT * FROM commenti LIMIT $min, $max"))
+					return false;
+			}
 			if(parent::count($query) > 0) {
 				while($result = parent::get($query))
-					array_push($commenti, $result);
+					array_push($commenti, parent::get($query));
 				if(is_array($commenti))
 					return $commenti;
 				return false;
@@ -40,16 +44,14 @@ class Comments extends News {
 	}
 	
 	/* Controlla se il commento esiste. */
-	public function isComment($id) {
-		if(!is_numeric($id))
-			return false;
-		if(!$query = parent::query("SELECT * FROM commenti WHERE id='$id'"))
+	public function isComment($news) {
+		if(!$query = parent::query("SELECT * FROM commenti WHERE news='$news'"))
 			return false;
 		return parent::count($query) > 0 ? true : false;
 	}
 	
-	/* Ricerca i commenti per contenuto. */
-	public function searchCommentByContent($keyword) {
+	/* Ricerca i commenti da una keyword. */
+	public function searchComment($keyword) {
 		if(!$query = parent::query("SELECT DISTINCT * FROM commenti WHERE contenuto LIKE '%$keyword%'"))
 			return false;
 		if(parent::count($query) > 0) {
@@ -69,7 +71,7 @@ class Comments extends News {
 	public function createComment($array) {
 		if(!is_array($array))
 			return false;
-		if((parent::isNews($array[0])) && (parent::isUser($array[1]))) {
+		if((parent::isNews($array[2])) && (parent::isUser($array[0]))) {
 			$query = parent::query('SELECT * FROM commenti');
 			$campi = parent::getColumns($query);
 			if(!is_array($campi))

@@ -51,7 +51,7 @@ class Page extends Category {
 		return mysql_result($query, 0, 0);
 	}
 	
-	/* Ricerca le pagine per titolo. */
+	/* Ricerca le pagine per titolo.
 	public function searchPageByTitle($keyword) {
 		if(!$query = parent::query("SELECT DISTINCT * FROM pagine WHERE titolo LIKE '%$keyword%'"))
 			return false;
@@ -68,9 +68,43 @@ class Page extends Category {
 			return false;
 	}
 	
-	/* Ricerca le pagine per contenuto. */
+	/* Ricerca le pagine per contenuto.
 	public function searchPageByContent($keyword) {
 		if(!$query = parent::query("SELECT DISTINCT * FROM pagine WHERE contenuto LIKE '%$keyword%'"))
+			return false;
+		if(parent::count($query) > 0) {
+			$pagine = array();
+			while($result = parent::get($query)) {
+				array_push($pagine, $result);
+			}
+			if(is_array($pagine))
+				return $pagine;
+			return false;
+		}
+		else
+			return false;
+	}*/
+	
+	/* Ricerca le pagine da una keyword. */
+	public function searchPage($keyword) {
+		if(!$query = parent::query("SELECT DISTINCT * FROM pagine WHERE (titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%')"))
+			return false;
+		if(parent::count($query) > 0) {
+			$pagine = array();
+			while($result = parent::get($query)) {
+				array_push($pagine, $result);
+			}
+			if(is_array($pagine))
+				return $pagine;
+			return false;
+		}
+		else
+			return false;
+	}
+	
+	/* Ricerca le pagine per categoria. */
+	public function searchPageByCategory($keyword) {
+		if(!$query = parent::query("SELECT DISTINCT * FROM pagine WHERE categoria='$keyword'"))
 			return false;
 		if(parent::count($query) > 0) {
 			$pagine = array();
