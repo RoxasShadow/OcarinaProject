@@ -44,9 +44,40 @@ class Comments extends News {
 		return parent::count($query) > 0 ? true : false;
 	}
 	
+	/* Conta quanti commenti sono presenti nel database. */
+	public function countNews() {
+		if(!$query = parent::query('SELECT COUNT(*) FROM commenti'))
+			return false;
+		return mysql_result($query, 0, 0);
+	}
+	
+	/* Conta quanti commenti collegati ad una news sono presenti nel database. */
+	public function countCommentByNews($news) {
+		if(!$query = parent::query("SELECT COUNT(*) FROM commenti WHERE news='$news'"))
+			return false;
+		return mysql_result($query, 0, 0);
+	}
+	
 	/* Ricerca i commenti da una keyword. */
 	public function searchComment($keyword) {
 		if(!$query = parent::query("SELECT DISTINCT * FROM commenti WHERE contenuto LIKE '%$keyword%'"))
+			return false;
+		if(parent::count($query) > 0) {
+			$commenti = array();
+			while($result = parent::get($query)) {
+				array_push($commenti, $result);
+			}
+			if(is_array($commenti))
+				return $commenti;
+			return false;
+		}
+		else
+			return false;
+	}
+	
+	/* Ricerca il commento da un id. */
+	public function searchCommentById($id) {
+		if(!$query = parent::query("SELECT DISTINCT * FROM commenti WHERE id='$id'"))
 			return false;
 		if(parent::count($query) > 0) {
 			$commenti = array();

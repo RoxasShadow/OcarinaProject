@@ -33,7 +33,7 @@ body {
 	height: 97%;width: 99%;
 }
 
-a:link, a:visited, a:active, a:focus {
+a {
 	text-decoration: none;
 	color: #808080;
 }

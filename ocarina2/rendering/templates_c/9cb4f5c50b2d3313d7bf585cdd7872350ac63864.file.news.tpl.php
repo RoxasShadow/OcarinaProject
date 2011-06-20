@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-06-19 20:16:20
+<?php /* Smarty version Smarty-3.0.8, created on 2011-06-20 12:59:37
          compiled from "/var/www/htdocs/ocarina2/rendering/templates/default/news.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:17331396174dfe5914b2fb80-59435331%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:5554309184dff44396cca56-92196352%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '9cb4f5c50b2d3313d7bf585cdd7872350ac63864' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering/templates/default/news.tpl',
-      1 => 1308514579,
+      1 => 1308574774,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '17331396174dfe5914b2fb80-59435331',
+  'nocache_hash' => '5554309184dff44396cca56-92196352',
   'function' => 
   array (
   ),
@@ -47,6 +47,8 @@ if ($_smarty_tpl->_count($_from) > 0){
 </a>.</div><br />
 				<div id="news"><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->contenuto;?>
 </div>
+			<?php }else{ ?>
+				La news non è stata approvata, e quindi non è visibile.
 			<?php }?>
 		<?php }} ?>
 		<?php if (!is_array($_smarty_tpl->getVariable('commenti')->value)){?>
@@ -64,18 +66,66 @@ if ($_smarty_tpl->_count($_from) > 0){
  $_smarty_tpl->tpl_vars['key']->value = $_smarty_tpl->tpl_vars['item']->key;
  $_smarty_tpl->tpl_vars['item']->iteration++;
 ?>
-				<fieldset><legend>#<?php echo $_smarty_tpl->tpl_vars['item']->iteration;?>
- Commento inviato il giorno <?php echo $_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->data;?>
+				<?php if ($_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->approvato==1){?>
+					<fieldset><legend><a href="commento.php?id=<?php echo $_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->id;?>
+">#<?php echo $_smarty_tpl->tpl_vars['item']->iteration;?>
+</a> Commento inviato il giorno <?php echo $_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->data;?>
  alle ore <?php echo $_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->ora;?>
  da <a href="profilo.php?nickname=<?php echo $_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->autore;?>
 "><?php echo $_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->autore;?>
-</a></legend><?php echo $_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->contenuto;?>
+</a>. <a onclick="javascript:quota(this);">Quota</a></legend><?php echo $_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->contenuto;?>
 </fieldset><br />
+				<?php }else{ ?>
+					Il commento non è stato approvato, e quindi non è visibile.
+				<?php }?>
 			<?php }} ?>
 		<?php }?>
 		<br />
+		
+		<script type="text/javascript">
+		function quota(objDom) {
+		    var browserName = navigator.appName; 
+		    var txtToQuote = "";
+			var ante = "[quote]";
+			var dopo = "[/quote]";
+	
+		    if (browserName == "Microsoft Internet Explorer") {
+			txtToQuote = objDom.innerText;
+		    }
+		    else {
+			txtToQuote = objDom.textContent;
+			txtToQuote2 = ante+txtToQuote+dopo;
+		    }
+
+		    document.getElementById("txtQuota").value = txtToQuote2;
+		}
+		function add(emoticons) {
+		    var text = document.getElementById("txtQuota").value;
+		    document.getElementById("txtQuota").value = text + emoticons;
+		}
+		function requestcolor() {
+		    var colore = prompt("Digita il nome del colore (esempio: red, black, white)");
+		    add('[color='+colore+'][/color]');
+		}
+		</script>
+		
+		<a onclick="javascript:add('[b][/b]');"><b>Grassetto</b></a>
+		<a onclick="javascript:add('[i][/i]');"><b>Corsivo</b></a>
+
+		<a onclick="javascript:add('[u][/u]');"><b>Sottolineato</b></a>
+		<a onclick="javascript:add('[s][/s]');"><b>Barrato</b></a>
+		<a onclick="javascript:requestcolor();"><b>Colore</b></a>
+		<a onclick="javascript:add('[url=http://][/url]');"><b>URL</b></a>
+		<a onclick="javascript:add('[spoiler][/spoiler]');"><b>Spoiler</b></a>
+		<a onclick="javascript:add('[left][/left]');"><b>Allineato a sinistra</b></a>
+		<a onclick="javascript:add('[center][/center]');"><b>Allineato a centro</b></a>
+		<a onclick="javascript:add('[right][/right]');"><b>Allineato a destra</b></a>
+		<a onclick="javascript:add('[br]');"><b>Accapo</b></a>
+
+		<a onclick="javascript:add('[code][/code]');"><b>Codice</b></a>
+		<a onclick="javascript:add('[quote][/quote]');"><b>Citazione</b></a>
 		<form action="" method="post">
-		<textarea name="comment" cols="59" rows="10"></textarea><br />
+		<textarea name="comment" cols="59" rows="10" id="txtQuota" tabindex="1"></textarea><br />
 		<input type="submit" value="Invia commento" />
 		</form>
 	<?php }?>

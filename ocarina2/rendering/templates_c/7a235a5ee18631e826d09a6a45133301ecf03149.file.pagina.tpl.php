@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-06-19 20:24:31
+<?php /* Smarty version Smarty-3.0.8, created on 2011-06-20 12:41:33
          compiled from "/var/www/htdocs/ocarina2/rendering/templates/default/pagina.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:9917612374dfe5aff4091e0-31414865%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:18041310294dff3ffd3bce13-00748527%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '7a235a5ee18631e826d09a6a45133301ecf03149' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering/templates/default/pagina.tpl',
-      1 => 1308515069,
+      1 => 1308525556,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '9917612374dfe5aff4091e0-31414865',
+  'nocache_hash' => '18041310294dff3ffd3bce13-00748527',
   'function' => 
   array (
   ),
@@ -43,6 +43,8 @@ if ($_smarty_tpl->_count($_from) > 0){
 </a>.</div><br />
 					<div id="news"><?php echo $_smarty_tpl->getVariable('pagina')->value[$_smarty_tpl->tpl_vars['key']->value]->contenuto;?>
 </div>
+				<?php }else{ ?>
+					La pagina non è stata approvata, e quindi non è visibile.
 				<?php }?>
 			<?php }} ?>
 		<?php }?>

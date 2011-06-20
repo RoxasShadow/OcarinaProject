@@ -1,6 +1,6 @@
 <?php
 /**
-	/ricercaa.php
+	/ricerca.php
 	(C) Giovanni Capuano 2011
 */
 ob_start('ob_gzhandler');
@@ -17,9 +17,10 @@ $cercaPagine = ((isset($_POST['pagine'])) && (isset($_POST['submitPage']))) ? $c
 $cercaCommenti = ((isset($_POST['commenti'])) && (isset($_POST['submitComment']))) ? $comment->purge($_POST['commenti']) : '';
 $cerca = true;
 
-$user = $comment->searchUserByField('secret', $comment->getCookie());
-$logged = !$user ? false : true;
-$rendering->addValue('utente', $logged ? $user[0]->nickname : '');
+$logged = $comment->isLogged() ? true : false;
+if($logged)
+	$username = $comment->searchUserByField('secret', $comment->getCookie());
+$rendering->addValue('utente', $logged ? $username[0]->nickname : '');
 $rendering->addValue('titolo', 'Cerca nel sito &raquo; '.$config[0]->nomesito);
 $rendering->addValue('keywords', $config[0]->keywords);
 $rendering->addValue('description', $config[0]->description);

@@ -11,7 +11,11 @@
 	<div id="header">{$titolo}</div>
 	<div id="menu" align="center">
 	<a href="Aindex.php">News</a> | <a href="archivio.php">Archivio</a> | <a href="ricerca.php">Cerca nel sito</a> | <a href="#">Filler</a> | <a href="#">Filler</a><br />
-	Bentornato {$utente} (<a href="admin/logout.php">Logout</a> | <a href="admin/profilo.php?nickname={$utente}">Profilo</a>)
+	{if $utente == ''}
+		Benvenuto su {$nomesito}! Per usufruire di tutte le funzionalità che ti offriamo <a href="login.php">accedi</a> oppure <a href="registrazione.php">registrati</a>.
+	{else}
+		Bentornato {$utente} (<a href="logout.php">Logout</a> | <a href="profilo.php?nickname={$utente}">Profilo</a>)
+	{/if}
 	<br />
 	<table id="colunica">
 	<tr>

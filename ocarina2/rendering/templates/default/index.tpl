@@ -1,4 +1,7 @@
 {include file="$root_rendering/templates/$skin/include/header.tpl"}
+	{if isset($lastlogout)}
+		<div align="center">Ciao {$utente}, non ti connettevi a {$nomesito} dal {$lastlogout}, siamo felici di rivederti!</div>
+	{/if}
 	{if isset($errore)}
 		<div id="titolo">{$errore}</div>
 	{else}
@@ -8,7 +11,7 @@
 					<div id="titolo"><a href="news.php?titolo={$news[$key]->minititolo}">{$news[$key]->titolo}</a></div>
 					<div id="newsheader" align="center">Scritto da <a href="profilo.php?nickname={$news[$key]->autore}">{$news[$key]->autore}</a> il giorno {$news[$key]->data} alle ore {$news[$key]->ora} nella categoria <a href="categoria.php?cat={$news[$key]->categoria}">{$news[$key]->categoria}</a>.</div><br />
 					<div id="news">{$news[$key]->contenuto}</div>
-					<div align="right"><a href="news.php?titolo={$news[$key]->minititolo}">Lascia un commento</a></div>
+					<div align="right"><a href="news.php?titolo={$news[$key]->minititolo}">Lascia un commento {php}require_once('core/class.Comments.php'); $v = new Comments(); echo $v->countCommentByNews('{$news[$key]->minititolo}');{/php}</a></div>
 					<hr />
 				{/if}
 			{/foreach}

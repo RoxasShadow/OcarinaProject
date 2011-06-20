@@ -13,9 +13,10 @@ $pagine = new Page();
 $rendering = new Rendering();
 $config = $news->getConfig();
 
-$user = $news->searchUserByField('secret', $news->getCookie());
-$logged = !$user ? false : true;
-$rendering->addValue('utente', $logged ? $user[0]->nickname : '');
+$logged = $news->isLogged() ? true : false;
+if($logged)
+	$username = $news->searchUserByField('secret', $news->getCookie());
+$rendering->addValue('utente', $logged ? $username[0]->nickname : '');
 $rendering->addValue('titolo', 'Archivio &raquo; '.$config[0]->nomesito);
 $rendering->addValue('keywords', $config[0]->keywords);
 $rendering->addValue('description', $config[0]->description);

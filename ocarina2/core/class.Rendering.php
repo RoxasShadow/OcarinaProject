@@ -22,12 +22,14 @@ class Rendering extends Configuration {
 		$this->smarty->compile_dir = $path.'/templates_c';
 		$this->smarty->config_dir = $path.'/configs';
 		$this->smarty->error_reporting = E_ALL & ~E_NOTICE;
+		$this->smarty->allow_php_tag = true;
 		
 		/* Valori predefiniti. */
 		$config = parent::getConfig();
 		$this->addValue('url_rendering', $config[0]->url_rendering);
 		$this->addValue('root_rendering', $config[0]->root_rendering);
 		$this->addValue('skin', $config[0]->skin);
+		$this->addValue('nomesito', $config[0]->nomesito);
 	}
 
 	/* Quando la classe viene distrutta, il distruttore provvede a distruggere l'oggetto Smarty liberando memoria. */

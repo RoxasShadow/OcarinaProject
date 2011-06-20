@@ -14,9 +14,10 @@ $rendering = new Rendering();
 $config = $news->getConfig();
 $categoria = isset($_GET['cat']) ? $news->purge($_GET['cat']) : '';
 
-$user = $news->searchUserByField('secret', $news->getCookie());
-$logged = !$user ? false : true;
-$rendering->addValue('utente', $logged ? $user[0]->nickname : '');
+$logged = $news->isLogged() ? true : false;
+if($logged)
+	$username = $news->searchUserByField('secret', $news->getCookie());
+$rendering->addValue('utente', $logged ? $username[0]->nickname : '');
 $rendering->addValue('titolo', $categoria !== '' ? 'Categoria: '.$categoria.' &raquo; '.$config[0]->nomesito : $config[0]->nomesito);
 $rendering->addValue('keywords', $config[0]->keywords);
 $rendering->addValue('description', $config[0]->description);

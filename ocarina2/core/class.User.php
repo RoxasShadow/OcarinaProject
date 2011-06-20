@@ -52,18 +52,24 @@ class User extends Configuration {
 	}
 	
 	/* Controlla se l'utente è loggato. */
-	public function isLogged($secret) {
-		if(!$query = parent::query("SELECT * FROM utenti WHERE secret='$secret'"))
+	public function isLogged() {
+		$cookie = $this->getCookie();
+		if(!$cookie)
+			return false;
+		if(!$query = parent::query("SELECT * FROM utenti WHERE secret='$cookie'"))
 			return false;
 		return parent::count($query) > 0 ? true : false;
 	}
 	
 	/* Ricerca gli utenti per un campo specifico. */
 	public function searchUserByField($campo, $valore) {
-		if(!$query = parent::query("SELECT DISTINCT * FROM utenti WHERE $campo LIKE '%$valore%'"))
+		if(!$query = parent::query("SELECT DISTINCT * FROM utenti WHERE $campo='$valore'"))
 			return false;
 		if(parent::count($query) > 0) {
 			$utenti = array();
+			while($result = parent::get($query)) {
+				array_push($utenti, $result);
+			}
 			array_push($utenti, parent::get($query));
 			if(is_array($utenti))
 				return $utenti;
@@ -121,26 +127,20 @@ class User extends Configuration {
 	
 	/* Crea un cookie. */
 	public function setCookie($value) {
-		$cookie = '';
-		foreach(parent::getConfig('cookie') as $v)
-			$cookie = $v->cookie;
-		setcookie($cookie, $value, time()+3600);  /* expire in 1 hour */
+		$config = parent::getConfig('cookie');
+		setcookie($config[0]->cookie, $value, time()+3600);  /* expire in 1 hour */
 	}
 	
 	/* Distrugge un cookie. */
 	public function unSetCookie() {
-		$cookie = '';
 		$config = parent::getConfig('cookie');
-		$cookie = $config[0];
-		setcookie($cookie, '', -3600);
+		setcookie($config[0]->cookie, '', -3600);
 	}
 	
 	/* Ottiene un cookie. */
 	public function getCookie() {
-		$cookie = '';
 		$config = parent::getConfig('cookie');
-		$cookie = $config[0];
-		return isset($_COOKIE[$cookie]) ? parent::purge($_COOKIE[$cookie]) : false;
+		return isset($_COOKIE[$config[0]->cookie]) ? parent::purge($_COOKIE[$config[0]->cookie]) : false;
 	}
 	
 	/* Logga un utente. */
@@ -165,7 +165,8 @@ class User extends Configuration {
 		$code = $this->getCookie();
 		$query = parent::query("SELECT DISTINCT * FROM utenti WHERE secret='$code'");
 		if(parent::count($query) > 0) {
-			parent::query("UPDATE utenti SET secret='' WHERE secret='$code'");
+			$data = date('d-m-y');
+			parent::query("UPDATE utenti SET secret='', lastlogout='$data' WHERE secret='$code'");
 			$this->unSetCookie();
 		}
 		else
