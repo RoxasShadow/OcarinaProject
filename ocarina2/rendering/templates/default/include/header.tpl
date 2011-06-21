@@ -10,11 +10,11 @@
 <body>
 	<div id="header">{$titolo}</div>
 	<div id="menu" align="center">
-	<a href="Aindex.php">News</a> | <a href="archivio.php">Archivio</a> | <a href="ricerca.php">Cerca nel sito</a> | <a href="#">Filler</a> | <a href="#">Filler</a><br />
+	<a href="Aindex.php">News</a> | <a href="archivio.php">Archivio</a> | <a href="ricerca.php">Cerca nel sito</a> | <a href="profilo.php">Profili</a> | <a href="#">Filler</a><br />
 	{if $utente == ''}
-		Benvenuto su {$nomesito}! Per usufruire di tutte le funzionalità che ti offriamo <a href="login.php">accedi</a> oppure <a href="registrazione.php">registrati</a>.
+		Benvenuto su {$nomesito}! Per usufruire di tutte le funzionalità che ti offriamo <a href="login.php">accedi</a> oppure <a href="registrazione.php">registrati</a>. (<a href="recuperapassword.php">Password persa?</a>)
 	{else}
-		Bentornato {$utente} (<a href="logout.php">Logout</a> | <a href="profilo.php?nickname={$utente}">Profilo</a>)
+		Bentornato {$utente} (<a href="logout.php">Logout</a> | <a href="profilo.php?nickname={$utente}">Profilo</a> | <a href="modificaprofilo.php">Modifica profilo</a> | <a href="modificapassword.php">Modifica password</a>)
 	{/if}
 	<br />
 	<table id="colunica">

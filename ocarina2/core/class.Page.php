@@ -13,7 +13,7 @@ class Page extends Category {
 		$pagine = array();
 		if($minititolo !== '') {
 			if($this->isPage($minititolo)) {
-				if(!$query = parent::query("SELECT DISTINCT * FROM pagine WHERE minititolo='$minititolo'"))
+				if(!$query = parent::query("SELECT DISTINCT * FROM pagine WHERE minititolo='$minititolo' ORDER BY titolo ASC"))
 					return false;
 				array_push($pagine, parent::get($query));
 				if(is_array($pagine))
@@ -23,7 +23,7 @@ class Page extends Category {
 			return false;
 		}
 		else {
-			if(!$query = parent::query('SELECT DISTINCT * FROM pagine'))
+			if(!$query = parent::query('SELECT DISTINCT * FROM pagine ORDER BY titolo ASC'))
 				return false;
 			if(parent::count($query) > 0) {
 				while($result = parent::get($query))
@@ -39,7 +39,7 @@ class Page extends Category {
 	
 	/* Controlla se la pagina esiste. */
 	public function isPage($minititolo) {
-		if(!$query = parent::query("SELECT * FROM pagine WHERE minititolo='$minititolo'"))
+		if(!$query = parent::query("SELECT * FROM pagine WHERE minititolo='$minititolo' ORDER BY titolo ASC"))
 			return false;
 		return parent::count($query) > 0 ? true : false;
 	}
@@ -51,43 +51,9 @@ class Page extends Category {
 		return mysql_result($query, 0, 0);
 	}
 	
-	/* Ricerca le pagine per titolo.
-	public function searchPageByTitle($keyword) {
-		if(!$query = parent::query("SELECT DISTINCT * FROM pagine WHERE titolo LIKE '%$keyword%'"))
-			return false;
-		if(parent::count($query) > 0) {
-			$pagine = array();
-			while($result = parent::get($query)) {
-				array_push($pagine, $result);
-			}
-			if(is_array($pagine))
-				return $pagine;
-			return false;
-		}
-		else
-			return false;
-	}
-	
-	/* Ricerca le pagine per contenuto.
-	public function searchPageByContent($keyword) {
-		if(!$query = parent::query("SELECT DISTINCT * FROM pagine WHERE contenuto LIKE '%$keyword%'"))
-			return false;
-		if(parent::count($query) > 0) {
-			$pagine = array();
-			while($result = parent::get($query)) {
-				array_push($pagine, $result);
-			}
-			if(is_array($pagine))
-				return $pagine;
-			return false;
-		}
-		else
-			return false;
-	}*/
-	
 	/* Ricerca le pagine da una keyword. */
 	public function searchPage($keyword) {
-		if(!$query = parent::query("SELECT DISTINCT * FROM pagine WHERE (titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%')"))
+		if(!$query = parent::query("SELECT DISTINCT * FROM pagine WHERE (titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%') ORDER BY titolo ASC"))
 			return false;
 		if(parent::count($query) > 0) {
 			$pagine = array();
@@ -104,7 +70,7 @@ class Page extends Category {
 	
 	/* Ricerca le pagine per categoria. */
 	public function searchPageByCategory($keyword) {
-		if(!$query = parent::query("SELECT DISTINCT * FROM pagine WHERE categoria='$keyword'"))
+		if(!$query = parent::query("SELECT DISTINCT * FROM pagine WHERE categoria='$keyword' ORDER BY titolo ASC"))
 			return false;
 		if(parent::count($query) > 0) {
 			$pagine = array();

@@ -11,7 +11,7 @@ require_once('etc/function.BBCode.php');
 $pagina = new Page();
 $rendering = new Rendering();
 $config = $pagina->getConfig();
-$titolo = isset($_GET['titolo']) ? $pagina->purge($_GET['titolo']) : '';
+$titolo = ((isset($_GET['titolo'])) && ($_GET['titolo'] !== '')) ? $pagina->purge($_GET['titolo']) : '';
 
 $logged = $pagina->isLogged() ? true : false;
 if($logged)

@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-06-20 19:39:39
+<?php /* Smarty version Smarty-3.0.8, created on 2011-06-21 23:26:29
          compiled from "/var/www/htdocs/ocarina2/rendering/templates/default/include/header.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:7652523634dffa1fbcdf353-13990756%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:18935917874e0128a5e14587-18763239%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '9cd30aac40a119258fa7385e7e04e4d3860ad49b' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering/templates/default/include/header.tpl',
-      1 => 1308598369,
+      1 => 1308698786,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '7652523634dffa1fbcdf353-13990756',
+  'nocache_hash' => '18935917874e0128a5e14587-18763239',
   'function' => 
   array (
   ),
@@ -35,14 +35,14 @@ $_smarty_tpl->decodeProperties(array (
 	<div id="header"><?php echo $_smarty_tpl->getVariable('titolo')->value;?>
 </div>
 	<div id="menu" align="center">
-	<a href="Aindex.php">News</a> | <a href="archivio.php">Archivio</a> | <a href="ricerca.php">Cerca nel sito</a> | <a href="#">Filler</a> | <a href="#">Filler</a><br />
+	<a href="Aindex.php">News</a> | <a href="archivio.php">Archivio</a> | <a href="ricerca.php">Cerca nel sito</a> | <a href="profilo.php">Profili</a> | <a href="#">Filler</a><br />
 	<?php if ($_smarty_tpl->getVariable('utente')->value==''){?>
 		Benvenuto su <?php echo $_smarty_tpl->getVariable('nomesito')->value;?>
-! Per usufruire di tutte le funzionalità che ti offriamo <a href="login.php">accedi</a> oppure <a href="registrazione.php">registrati</a>.
+! Per usufruire di tutte le funzionalità che ti offriamo <a href="login.php">accedi</a> oppure <a href="registrazione.php">registrati</a>. (<a href="recuperapassword.php">Password persa?</a>)
 	<?php }else{ ?>
 		Bentornato <?php echo $_smarty_tpl->getVariable('utente')->value;?>
  (<a href="logout.php">Logout</a> | <a href="profilo.php?nickname=<?php echo $_smarty_tpl->getVariable('utente')->value;?>
-">Profilo</a>)
+">Profilo</a> | <a href="modificaprofilo.php">Modifica profilo</a> | <a href="modificapassword.php">Modifica password</a>)
 	<?php }?>
 	<br />
 	<table id="colunica">

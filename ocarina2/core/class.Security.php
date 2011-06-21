@@ -18,14 +18,14 @@ class Security {
 				if(is_string($var[$key])) {
 					if(get_magic_quotes_gpc())
 						$var[$key] = stripslashes($var[$key]);
-					$var[$key] = mysql_real_escape_string(htmlentities($var[$key]));
+					$var[$key] = trim(mysql_real_escape_string(htmlentities($var[$key])));
 				}
 			}
 		}
 		if(is_string($var)) {
 			if(get_magic_quotes_gpc())
 				$var = stripslashes($var);
-			$var = mysql_real_escape_string(htmlentities($var));
+			$var = trim(mysql_real_escape_string(htmlentities($var)));
 		}
 		return $var;
 	}
@@ -37,7 +37,32 @@ class Security {
 	
 	/* Controlla l'autenticità di un URL (solo sintatticamente). */
 	public function isURL($url) {
-		return preg_match('/^(http|https|ftp)://([A-Z0-9][A-Z0-9_-]*(?:.[A-Z0-9][A-Z0-9_-]*)+):?(d+)?/?/i', $url) ? true : false;
+		return preg_match('|^http(s)?://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i', $url) ? true : false;
+	}
+	
+	/* Controlla l'autenticità di un link ad un'immagine. */
+	public function isImage($url) {
+		$params = array('http' => array('method' => 'HEAD'));
+		$ctx = stream_context_create($params);
+		$fp = @fopen($url, 'rb', false, $ctx);
+		if(!$fp) 
+			return false;
+		$meta = stream_get_meta_data($fp);
+		if($meta === false) {
+			fclose($fp);
+			return false;
+		}
+		$wrapper_data = $meta['wrapper_data'];
+		if(is_array($wrapper_data)) {
+			foreach(array_keys($wrapper_data) as $hh) {
+				if(substr($wrapper_data[$hh], 0, 19) == 'Content-Type: image') {
+					fclose($fp);
+					return true;
+				}
+			}
+		}
+		fclose($fp);
+		return false;
 	}
 	
 	/* Genera delle stringhe alfanumeriche pseudocasuali. */
@@ -61,32 +86,94 @@ class Security {
 
 		// Platform
 	    	if(preg_match('/linux/i', $useragent))
-	    		$platform = 'Linux';
+	    		$platform = 'GNU/Linux';
 	    	elseif(preg_match('/macintosh|mac os x/i', $useragent))
 	    		$platform = 'Mac OS X';
 	    	elseif(preg_match('/windows|win32/i', $useragent))
 	    		$platform = 'Microsoft Windows';
 	   
 	   	// Browser
-	    	if(preg_match('/MSIE/i', $useragent) && !preg_match('/Opera/i',$useragent)) {
+	   	// Look here <http://www.useragentstring.com/pages/useragentstring.php> :)
+	   	// Se usi un browser basato su un altro (come Iceweasel per Firefox), aggiungi prima la derivata e poi la base.
+	    	if(preg_match('/Opera/i', $useragent)) {
+	    		$browser = 'Opera';
+	    		$browserAgent = 'Opera';
+	    	}
+	    	elseif(preg_match('/MSIE/i', $useragent)) {
 	    		$browser = 'Internet Explorer';
 	    		$browserAgent = 'MSIE';
 	    	}
-	    	elseif(preg_match('/Firefox/i',$useragent)) {
-	    		$browser = 'Mozilla Firefox';
-	    		$browserAgent = 'Firefox';
+	    	elseif(preg_match('/Iceweasel/i', $useragent)) {
+	    		$browser = 'Iceweasel';
+	    		$browserAgent = 'Iceweasel';
+	    	}
+	    	elseif(preg_match('/GranParadiso/i', $useragent)) {
+	    		$browser = 'GranParadiso';
+	    		$browserAgent = 'GranParadiso';
+	    	}
+	    	elseif(preg_match('/Netscape/i', $useragent)) {
+	    		$browser = 'Netscape';
+	    		$browserAgent = 'Netscape';
+	    	}
+	    	elseif(preg_match('/Epiphany/i', $useragent)) {
+	    		$browser = 'Epiphany';
+	    		$browserAgent = 'Epiphany';
+	    	}
+	    	elseif(preg_match('/msnbot/i', $useragent)) {
+	    		$browser = 'Msnbot';
+	    		$browserAgent = 'msnbot';
+	    	}
+	    	elseif(preg_match('/Yahoo/i', $useragent)) {
+	    		$browser = 'Yahoo! Slurp';
+	    		$browserAgent = 'Mozilla';
+	    	}
+	    	elseif(preg_match('/Googlebot/i', $useragent)) {
+	    		$browser = 'Googlebot';
+	    		$browserAgent = 'Googlebot';
 	    	}
 	    	elseif(preg_match('/Chrome/i', $useragent)) {
 	    		$browser = 'Google Chrome';
 	    		$browserAgent = 'Chrome';
 	    	}
+	    	elseif(preg_match('/Iceweasel/i', $useragent)) {
+	    		$browser = 'Iceweasel';
+	    		$browserAgent = 'Iceweasel';
+	    	}
+	    	elseif(preg_match('/Konqueror/i', $useragent)) {
+	    		$browser = 'Konqueror';
+	    		$browserAgent = 'Konqueror';
+	    	}
+	    	elseif(preg_match('/PSP/i', $useragent)) {
+	    		$browser = 'PSP';
+	    		$browserAgent = 'PSP';
+	    	}
+	    	elseif(preg_match('/Playstation/i', $useragent)) {
+	    		$browser = 'Playstation';
+	    		$browserAgent = 'Playstation';
+	    	}
+	    	elseif(preg_match('/PSP/i', $useragent)) {
+	    		$browser = 'PSP';
+	    		$browserAgent = 'PSP';
+	    	}
+	    	elseif(preg_match('/Wii/i', $useragent)) {
+	    		$browser = 'Wii';
+	    		$browserAgent = 'Wii';
+	    	}
+	    	elseif(preg_match('/Xbox/i', $useragent)) {
+	    		$browser = 'Xbox';
+	    		$browserAgent = 'Xbox';
+	    	}
+	    	elseif(preg_match('/Iphone/i', $useragent)) {
+	    		$browser = 'Iphone';
+	    		$browserAgent = 'Iphone';
+	    	}
+	    	elseif(preg_match('/Ipod/i', $useragent)) {
+	    		$browser = 'Ipod';
+	    		$browserAgent = 'Ipod';
+	    	}
 	    	elseif(preg_match('/Safari/i', $useragent)) {
 	    		$browser = 'Safari';
 	    		$browserAgent = 'Safari';
-	    	}
-	    	elseif(preg_match('/Opera/i', $useragent)) {
-	    		$browser = 'Opera';
-	    		$browserAgent = 'Opera';
 	    	}
 	    	elseif(preg_match('/Netscape/i', $useragent)) {
 	    		$browser = 'Netscape';
@@ -100,6 +187,10 @@ class Security {
 	    		$browser = 'w3m';
 	    		$browserAgent = 'w3m';
 	    	}
+	    	elseif(preg_match('/Firefox/i',$useragent)) {
+	    		$browser = 'Mozilla Firefox';
+	    		$browserAgent = 'Firefox';
+	    	}
 	    		
 	    	// Version
 		$known = array('Version', $browserAgent, 'other');
@@ -108,7 +199,7 @@ class Security {
 		
 		$i = count($matches['browser']);
 		if($i != 1)
-			$version = strripos($useragent, "Version") < strripos($useragent, $browserAgent) ? $matches['version'][0] : $matches['version'][1];
+			$version = @strripos($useragent, "Version") < strripos($useragent, $browserAgent) ? $matches['version'][0] : $matches['version'][1];
 		else
 			$version = $matches['version'][0];
 		if($version == null || $version == '')
@@ -116,7 +207,7 @@ class Security {
 	   
 		return array(
 			'useragent' => $useragent,
-			'name'      => $browser,
+			'browser'   => $browser,
 			'version'   => $version,
 			'platform'  => $platform
 	    	);

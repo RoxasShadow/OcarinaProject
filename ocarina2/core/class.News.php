@@ -13,7 +13,7 @@ class News extends Category {
 		$news = array();
 		if($minititolo !== '') {
 			if($this->isNews($minititolo)) {
-				if(!$query = parent::query("SELECT DISTINCT * FROM news WHERE minititolo='$minititolo'"))
+				if(!$query = parent::query("SELECT DISTINCT * FROM news WHERE minititolo='$minititolo' ORDER BY titolo ASC"))
 					return false;
 				array_push($news, parent::get($query));
 				if(is_array($news))
@@ -24,11 +24,11 @@ class News extends Category {
 		}
 		else {
 			if(($min == '') && ($max == '')) {
-				if(!$query = parent::query('SELECT DISTINCT * FROM news'))
+				if(!$query = parent::query('SELECT DISTINCT * FROM news ORDER BY titolo ASC'))
 					return false;
 			}
 			else {
-				if(!$query = parent::query("SELECT DISTINCT * FROM news LIMIT $min, $max"))
+				if(!$query = parent::query("SELECT DISTINCT * FROM news ORDER BY id DESC LIMIT $min, $max"))
 					return false;
 			}
 			if(parent::count($query) > 0) {
@@ -57,43 +57,9 @@ class News extends Category {
 		return mysql_result($query, 0, 0);
 	}
 	
-	/* Ricerca le news per titolo.
-	public function searchNewsByTitle($keyword) {
-		if(!$query = parent::query("SELECT DISTINCT * FROM news WHERE titolo LIKE '%$keyword%'"))
-			return false;
-		if(parent::count($query) > 0) {
-			$news = array();
-			while($result = parent::get($query)) {
-				array_push($news, $result);
-			}
-			if(is_array($news))
-				return $news;
-			return false;
-		}
-		else
-			return false;
-	}
-	
-	/* Ricerca le news per contenuto.
-	public function searchNewsByContent($keyword) {
-		if(!$query = parent::query("SELECT DISTINCT * FROM news WHERE contenuto LIKE '%$keyword%'"))
-			return false;
-		if(parent::count($query) > 0) {
-			$news = array();
-			while($result = parent::get($query)) {
-				array_push($news, $result);
-			}
-			if(is_array($news))
-				return $news;
-			return false;
-		}
-		else
-			return false;
-	} */
-	
 	/* Ricerca le news da una keyword. */
 	public function searchNews($keyword) {
-		if(!$query = parent::query("SELECT DISTINCT * FROM news WHERE (titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%')"))
+		if(!$query = parent::query("SELECT DISTINCT * FROM news WHERE (titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%') ORDER BY id DESC"))
 			return false;
 		if(parent::count($query) > 0) {
 			$news = array();
@@ -110,7 +76,7 @@ class News extends Category {
 	
 	/* Ricerca le news per categoria. */
 	public function searchNewsByCategory($keyword) {
-		if(!$query = parent::query("SELECT DISTINCT * FROM news WHERE categoria='$keyword'"))
+		if(!$query = parent::query("SELECT DISTINCT * FROM news WHERE categoria='$keyword' ORDER BY id DESC"))
 			return false;
 		if(parent::count($query) > 0) {
 			$news = array();
@@ -130,7 +96,7 @@ class News extends Category {
 		if(!is_array($array))
 			return false;
 		if((!$this->isNews($array[2])) && (parent::isCategory('news', $array[4])) && (parent::isUser($array[0]))) {
-			$query = parent::query('SELECT * FROM news');
+			$query = parent::query('SELECT * FROM news ORDER BY id DESC');
 			$campi = parent::getColumns($query);
 			if(!is_array($campi))
 				return false;

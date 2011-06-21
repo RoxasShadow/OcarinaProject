@@ -39,6 +39,11 @@ else {
 	$getNews = $news->getNews('', $pager->getMin(), $max);
 	if(!$getNews)
 		$rendering->addValue('errore', 'È accaduto un errore.');
+	elseif($pager->getCurrentPage() == $pager->getNumPages()) {
+		for($i=0, $count=count($getNews); $i<$count; ++$i)
+			$getNews[$i]->contenuto = bbcode($getNews[$i]->contenuto);
+		$rendering->addValue('news', $getNews);
+	}
 	else {
 		for($i=0; $i<$max; ++$i) // È uno spreco di memoria iterare tutti gli elementi, basta iterarne solo quelli che vengono mostrati
 			$getNews[$i]->contenuto = bbcode($getNews[$i]->contenuto);

@@ -13,9 +13,10 @@ class Comments extends News {
 		$commenti = array();
 		if($news !== '') {
 			if($this->isComment($news)) {
-				if(!$query = parent::query("SELECT DISTINCT * FROM commenti WHERE news='$news'"))
+				if(!$query = parent::query("SELECT DISTINCT * FROM commenti WHERE news='$news' ORDER BY id ASC"))
 					return false;
-				array_push($commenti, parent::get($query));
+				while($result = parent::get($query))
+					array_push($commenti, $result);
 				if(is_array($commenti))
 					return $commenti;
 				return false;
@@ -23,7 +24,7 @@ class Comments extends News {
 			return false;
 		}
 		else {
-			if(!$query = parent::query('SELECT DISTINCT * FROM commenti'))
+			if(!$query = parent::query('SELECT DISTINCT * FROM commenti ORDER BY id ASC'))
 				return false;
 			if(parent::count($query) > 0) {
 				while($result = parent::get($query))

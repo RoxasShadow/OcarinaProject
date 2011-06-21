@@ -16,7 +16,7 @@ $commento = isset($_POST['comment']) ? $comment->purge($_POST['comment']) : '';
 
 $logged = $comment->isLogged() ? true : false;
 if($logged)
-	$username = $news->searchUserByField('secret', $news->getCookie());
+	$username = $comment->searchUserByField('secret', $comment->getCookie());
 $rendering->addValue('utente', $logged ? $username[0]->nickname : '');
 $rendering->addValue('titolo', $titolo !== '' ? $titolo.' &raquo; '.$config[0]->nomesito : $config[0]->nomesito);
 $rendering->addValue('keywords', $config[0]->keywords);
@@ -42,7 +42,7 @@ else {
 			$rendering->addValue('commenti', $getComment);
 		}
 		if(($commento !== '') && ($logged)) {
-			$array = array($user[0]->nickname, $commento, $news[0]->minititolo, date('d-m-y'), date('G:m:s'), $config[0]->approvacommenti);
+			$array = array($username[0]->nickname, $commento, $news[0]->minititolo, date('d-m-y'), date('G:m:s'), $config[0]->approvacommenti);
 		if($comment->createComment($array))
 			$rendering->addValue('commentSended', 'Il commento è stato inviato, attendi per il redirect...'.header('Refresh: 2; URL=news.php?titolo='.$titolo));
 		else
