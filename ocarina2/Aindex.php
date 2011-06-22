@@ -29,17 +29,17 @@ if(($welcome) && ($logged)) {
 		$rendering->addValue('lastlogout', $lastlogout);
 }
 		
-$pager = new Pager();
+$pager = new Pager($config[0]->impaginazionenews);
 $rendering->addValue('navigatore', $pager->getNav());
-$rendering->addValue('currentPage', $pager->getCurrentPage());
+$rendering->addValue('currentPage', $pager->currentPage);
 
-if($pager->getCurrentPage() > $pager->getNumPages())
+if($pager->currentPage > $pager->numPages)
 	$rendering->addValue('errore', 'È accaduto un errore.');
 else {
-	$getNews = $news->getNews('', $pager->getMin(), $pager->getMax());
+	$getNews = $news->getNews('', $pager->min, $pager->max);
 	if(!$getNews)
 		$rendering->addValue('errore', 'È accaduto un errore.');
-	elseif($pager->getCurrentPage() == $pager->getNumPages()) {
+	elseif($pager->currentPage == $pager->numPages) {
 		for($i=0, $count=count($getNews); $i<$count; ++$i) {
 			if($config[0]->limitenews !== 0)
 				$getNews[$i]->contenuto = $news->reduceLen($getNews[$i]->contenuto, $config[0]->limitenews, '[br][b][url=news.php?titolo='.$getNews[$i]->minititolo.']Leggi oltre...[/url][/b]');
@@ -48,7 +48,7 @@ else {
 		$rendering->addValue('news', $getNews);
 	}
 	else {
-		for($i=0; $i<$pager->getMax(); ++$i) { // È uno spreco di memoria iterare tutti gli elementi, basta iterarne solo quelli che vengono mostrati
+		for($i=0; $i<$pager->max; ++$i) { // È uno spreco di memoria iterare tutti gli elementi, basta iterarne solo quelli che vengono mostrati
 			if($config[0]->limitenews !== 0)
 			$getNews[$i]->contenuto = $news->reduceLen($getNews[$i]->contenuto, $config[0]->limitenews, '[br][b][url=news.php?titolo='.$getNews[$i]->minititolo.']Leggi oltre...[/url][/b]');
 			$getNews[$i]->contenuto = bbcode($getNews[$i]->contenuto);

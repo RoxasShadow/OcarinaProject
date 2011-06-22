@@ -1,23 +1,24 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-06-22 19:30:50
+<?php /* Smarty version Smarty-3.0.8, created on 2011-06-22 23:21:29
          compiled from "/var/www/htdocs/ocarina2/rendering/templates/default/modificaprofilo.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:366142054e0242eacad4e8-44176638%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:20332864934e0278f9eff667-74170870%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '1c094b7fd075fccc7cb47ac442c821152018c8a8' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering/templates/default/modificaprofilo.tpl',
-      1 => 1308770955,
+      1 => 1308784885,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '366142054e0242eacad4e8-44176638',
+  'nocache_hash' => '20332864934e0278f9eff667-74170870',
   'function' => 
   array (
   ),
   'has_nocache_code' => false,
 )); /*/%%SmartyHeaderCode%%*/?>
-<?php $_template = new Smarty_Internal_Template(($_smarty_tpl->getVariable('root_rendering')->value)."/templates/".($_smarty_tpl->getVariable('skin')->value)."/include/header.tpl", $_smarty_tpl->smarty, $_smarty_tpl, $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null);
+<?php if (!is_callable('smarty_modifier_capitalize')) include '/var/www/htdocs/ocarina2/rendering/plugins/modifier.capitalize.php';
+?><?php $_template = new Smarty_Internal_Template(($_smarty_tpl->getVariable('root_rendering')->value)."/templates/".($_smarty_tpl->getVariable('skin')->value)."/include/header.tpl", $_smarty_tpl->smarty, $_smarty_tpl, $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null);
  echo $_template->getRenderedTemplate(); $_template->rendered_content = null;?><?php unset($_template);?>
 	<?php if (!$_smarty_tpl->getVariable('logged')->value){?>
 		<div id="titolo"><?php echo $_smarty_tpl->getVariable('result')->value;?>
@@ -38,17 +39,17 @@ if ($_smarty_tpl->_count($_from) > 0){
 ?>
 			<?php if ($_smarty_tpl->getVariable('listaskin')->value[$_smarty_tpl->tpl_vars['key']->value]==$_smarty_tpl->getVariable('skinattuale')->value){?>
 				<option value="<?php echo $_smarty_tpl->getVariable('listaskin')->value[$_smarty_tpl->tpl_vars['key']->value];?>
-" selected><?php echo $_smarty_tpl->getVariable('listaskin')->value[$_smarty_tpl->tpl_vars['key']->value];?>
+" selected><?php echo smarty_modifier_capitalize($_smarty_tpl->getVariable('listaskin')->value[$_smarty_tpl->tpl_vars['key']->value]);?>
 </option>
 			<?php }else{ ?>
 				<option value="<?php echo $_smarty_tpl->getVariable('listaskin')->value[$_smarty_tpl->tpl_vars['key']->value];?>
-"><?php echo $_smarty_tpl->getVariable('listaskin')->value[$_smarty_tpl->tpl_vars['key']->value];?>
+"><?php echo smarty_modifier_capitalize($_smarty_tpl->getVariable('listaskin')->value[$_smarty_tpl->tpl_vars['key']->value]);?>
 </option>
 			<?php }?>
 		<?php }} ?>
 		</select><br /><br />
 		Bio<br />
-		<textarea name="bio" cols="22" rows="10" tabindex="1"><?php echo $_smarty_tpl->getVariable('bio')->value;?>
+		<textarea name="bio" cols="22" rows="10"><?php echo $_smarty_tpl->getVariable('bio')->value;?>
 </textarea><br /><br />
 		Avatar<br />
 		<input type="text" name="avatar" value="<?php echo $_smarty_tpl->getVariable('avatar')->value;?>

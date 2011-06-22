@@ -3,10 +3,10 @@
 	core/class.MySQL.php
 	(C) Giovanni Capuano 2011
 */
-require_once('class.Security.php');
+require_once('class.Utilities.php');
 
 /* Questa classe mette a disposizione dei metodi per gestire il database. */
-class MySQL extends Security {
+class MySQL extends Utilities {
 	private $host = 'localhost';
 	private $username = 'root';
 	private $password = 'kronos';

@@ -22,8 +22,8 @@ class Rendering extends Configuration {
 		$this->smarty->template_dir = $path.'/templates';
 		$this->smarty->compile_dir = $path.'/templates_c';
 		$this->smarty->config_dir = $path.'/configs';
-		$this->smarty->error_reporting = E_ALL & ~E_NOTICE;
-		$this->smarty->allow_php_tag = true;
+		$this->smarty->error_reporting = E_ALL | E_STRICT;
+		$this->smarty->allow_php_tag = true; // Serve per leggere il numero di commenti di ogni news dalla index :(
 	}
 
 	/* Quando la classe viene distrutta, il distruttore provvede a distruggere l'oggetto Smarty liberando memoria. */
@@ -62,7 +62,6 @@ class Rendering extends Configuration {
 
 	/* Il motore di rendering effettua il rendering del template in input e lo visualizza. */
 	public function renderize($filename) {
-		/* Valori predefiniti. */
 		$config = parent::getConfig();
 		$this->addValue('url_rendering', $config[0]->url_rendering);
 		$this->addValue('root_rendering', $config[0]->root_rendering);
