@@ -180,4 +180,13 @@ class User extends Configuration {
 		else
 			$this->unSetCookie();
 	}
+	
+	/* Registra un'azione di un utente in un log. */
+	public function log($nickname, $azione) {
+		$data = date('d-m-y');
+		$ora = date('G:m:i');
+		$useragent = parent::purge($_SERVER['HTTP_USER_AGENT']);
+		$referer = parent::purge($_SERVER['HTTP_REFERER']);
+		return parent::query("INSERT INTO log(nickname, azione, ip, data, ora, useragent, referer) VALUES('$nickname', '$azione', '{$_SERVER['REMOTE_ADDR']}', '$data', '$ora', '$useragent', '$referer')") ? true : false;
+	}
 }

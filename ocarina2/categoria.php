@@ -18,6 +18,7 @@ $logged = $news->isLogged() ? true : false;
 if($logged)
 	$username = $news->searchUserByField('secret', $news->getCookie());
 $rendering->addValue('utente', $logged ? $username[0]->nickname : '');
+$rendering->skin = $logged ? $username[0]->skin : $config[0]->skin;
 $rendering->addValue('titolo', $categoria !== '' ? 'Categoria: '.$categoria.' &raquo; '.$config[0]->nomesito : $config[0]->nomesito);
 $rendering->addValue('keywords', $config[0]->keywords);
 $rendering->addValue('description', $config[0]->description);
@@ -30,4 +31,4 @@ else {
 	$getPageCat = $pagine->searchPageByCategory($categoria);
 	!$getPageCat ? $rendering->addValue('errore_pagine', 'Nessuna pagina è associata alla categoria `'.$categoria.'`.') : $rendering->addValue('pagine', $getPageCat);
 }
-$rendering->renderize('archivio.tpl');
+(($logged) && ($username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('archivio.tpl');

@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-06-21 22:34:39
+<?php /* Smarty version Smarty-3.0.8, created on 2011-06-22 20:09:53
          compiled from "/var/www/htdocs/ocarina2/rendering/templates/default/profilo.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:6152197384e011c7f8b9db3-65887285%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:13574260834e024c11c23069-80136183%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '2de13991ac7359c1a422f7628b5f01e4f28f745c' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering/templates/default/profilo.tpl',
-      1 => 1308695677,
+      1 => 1308773391,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '6152197384e011c7f8b9db3-65887285',
+  'nocache_hash' => '13574260834e024c11c23069-80136183',
   'function' => 
   array (
   ),
@@ -50,14 +50,15 @@ if ($_smarty_tpl->_count($_from) > 0){
 			<div align="center">
 			<div id="titolo"><?php echo $_smarty_tpl->getVariable('result')->value[$_smarty_tpl->tpl_vars['key']->value]->nickname;?>
 </div>
-			<img src="<?php echo $_smarty_tpl->getVariable('result')->value[$_smarty_tpl->tpl_vars['key']->value]->avatar;?>
-" />
-			<br /><br />
+			<?php if ($_smarty_tpl->getVariable('result')->value[$_smarty_tpl->tpl_vars['key']->value]->avatar!==''){?><img src="<?php echo $_smarty_tpl->getVariable('result')->value[$_smarty_tpl->tpl_vars['key']->value]->avatar;?>
+" /><br /><?php }?>
+			<br />
 			
 			<table border="0" cellpadding="2">
 			<tr>
 			<td><b>Email</b></td>
 			<td><b>Data registrazione</b></td>
+			<td><b>Grado</b></td>
 			<td><b>Bio</b></td>
 			<td><b>Browser</b></td>
 			<td><b>Piattaforma</b></td>
@@ -68,6 +69,7 @@ if ($_smarty_tpl->_count($_from) > 0){
 </td>
 			<td><?php echo $_smarty_tpl->getVariable('result')->value[$_smarty_tpl->tpl_vars['key']->value]->data;?>
 </td>
+			<td><?php if ($_smarty_tpl->getVariable('result')->value[$_smarty_tpl->tpl_vars['key']->value]->grado==1){?>Amministratore<?php }elseif($_smarty_tpl->getVariable('result')->value[$_smarty_tpl->tpl_vars['key']->value]->grado==2){?>Moderatore<?php }elseif($_smarty_tpl->getVariable('result')->value[$_smarty_tpl->tpl_vars['key']->value]->grado==3){?>Editore<?php }elseif($_smarty_tpl->getVariable('result')->value[$_smarty_tpl->tpl_vars['key']->value]->grado==4){?>Grafico<?php }elseif($_smarty_tpl->getVariable('result')->value[$_smarty_tpl->tpl_vars['key']->value]->grado==5){?>SEO<?php }elseif($_smarty_tpl->getVariable('result')->value[$_smarty_tpl->tpl_vars['key']->value]->grado==6){?>Utente<?php }elseif($_smarty_tpl->getVariable('result')->value[$_smarty_tpl->tpl_vars['key']->value]->grado==7){?>Bannato<?php }?></td>
 			<td><?php echo $_smarty_tpl->getVariable('result')->value[$_smarty_tpl->tpl_vars['key']->value]->bio;?>
 </td>
 			<td><?php echo $_smarty_tpl->getVariable('result')->value[$_smarty_tpl->tpl_vars['key']->value]->browsername;?>

@@ -30,6 +30,23 @@ class Security {
 		return $var;
 	}
 	
+	/* Elimina gli slashes per le SQL Injection. */
+	public function unPurge($var) {
+		if(is_array($var)) {
+			foreach($var as $key => $value) {
+				if(is_array($var[$key]))
+					$var[$key] = $this->unPurge($var[$key]);
+				if(is_string($var[$key])) {
+					$var[$key] = stripslashes($var[$key]);
+				}
+			}
+		}
+		if(is_string($var)) {
+			$var = stripslashes($var);
+		}
+		return $var;
+	}
+	
 	/* Controlla l'autenticità di un indirizzo email (solo sintatticamente). */
 	public function isEmail($email) {
 		return preg_match('/^([a-zA-Z0-9])+([\.a-zA-Z0-9_-])*@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-]+)*\.([a-zA-Z]{2,6})$/', $email) ? true : false;
@@ -78,7 +95,7 @@ class Security {
 	
 	/* Ritorna un array contenente informazioni sul client. */
 	function getClient() {
-		$useragent = $_SERVER['HTTP_USER_AGENT'];
+		$useragent = htmlentities($_SERVER['HTTP_USER_AGENT']);
 		$browser = 'Unknown';
 		$browserAgent = '';
 		$platform = 'Unknown';
@@ -211,5 +228,13 @@ class Security {
 			'version'   => $version,
 			'platform'  => $platform
 	    	);
+	}
+	
+	/* Taglia una stringa. */
+	public function reduceLen($news, $max, $append='') {
+		if(strlen($news) <= $max)
+			return $news;
+		$newsreduced = explode('|', wordwrap($news, $max, '|'));
+		return substr($newsreduced[0], 0, -1).'...'.$append;
 	}
 }

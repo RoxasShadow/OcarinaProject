@@ -19,6 +19,7 @@ $logged = $user->isLogged() ? true : false;
 if($logged)
 	$username = $user->searchUserByField('secret', $user->getCookie());
 $rendering->addValue('utente', $logged ? $username[0]->nickname : '');
+$rendering->skin = $logged ? $username[0]->skin : $config[0]->skin;
 $rendering->addValue('keywords', $config[0]->keywords);
 $rendering->addValue('description', $config[0]->description);
 
@@ -27,11 +28,11 @@ if($nickname == '') {
 	$rendering->addValue('listautenti', $user->getUser());
 }
 else {
-	$rendering->addValue('titolo', $nickname == $username[0]->nickname ? 'Il tuo profilo' : 'Profilo di '.$nickname.' &raquo; '.$config[0]->nomesito);
+	$rendering->addValue('titolo', (($logged) && ($nickname == $username[0]->nickname)) ? 'Il tuo profilo' : 'Profilo di '.$nickname.' &raquo; '.$config[0]->nomesito);
 	if($user->isUser($nickname))
 		$rendering->addValue('result', $user->getUser($nickname));
 	else
 		$rendering->addValue('result', 'L\'utente da te cercato non è attualmente registrato.');
 		
 }
-$rendering->renderize('profilo.tpl');
+(($logged) && ($username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('profilo.tpl');

@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-06-21 17:08:35
+<?php /* Smarty version Smarty-3.0.8, created on 2011-06-22 19:30:50
          compiled from "/var/www/htdocs/ocarina2/rendering/templates/default/modificaprofilo.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:16554529124e00d013af5c98-11657824%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:366142054e0242eacad4e8-44176638%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '1c094b7fd075fccc7cb47ac442c821152018c8a8' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering/templates/default/modificaprofilo.tpl',
-      1 => 1308676114,
+      1 => 1308770955,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '16554529124e00d013af5c98-11657824',
+  'nocache_hash' => '366142054e0242eacad4e8-44176638',
   'function' => 
   array (
   ),
@@ -27,6 +27,26 @@ $_smarty_tpl->decodeProperties(array (
 		Email<br />
 		<input type="text" name="email" value="<?php echo $_smarty_tpl->getVariable('email')->value;?>
 " /><br /><br />
+		Skin<br />
+		<select name="skin">
+		<?php  $_smarty_tpl->tpl_vars['item'] = new Smarty_Variable;
+ $_smarty_tpl->tpl_vars['key'] = new Smarty_Variable;
+ $_from = $_smarty_tpl->getVariable('listaskin')->value; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
+if ($_smarty_tpl->_count($_from) > 0){
+    foreach ($_from as $_smarty_tpl->tpl_vars['item']->key => $_smarty_tpl->tpl_vars['item']->value){
+ $_smarty_tpl->tpl_vars['key']->value = $_smarty_tpl->tpl_vars['item']->key;
+?>
+			<?php if ($_smarty_tpl->getVariable('listaskin')->value[$_smarty_tpl->tpl_vars['key']->value]==$_smarty_tpl->getVariable('skinattuale')->value){?>
+				<option value="<?php echo $_smarty_tpl->getVariable('listaskin')->value[$_smarty_tpl->tpl_vars['key']->value];?>
+" selected><?php echo $_smarty_tpl->getVariable('listaskin')->value[$_smarty_tpl->tpl_vars['key']->value];?>
+</option>
+			<?php }else{ ?>
+				<option value="<?php echo $_smarty_tpl->getVariable('listaskin')->value[$_smarty_tpl->tpl_vars['key']->value];?>
+"><?php echo $_smarty_tpl->getVariable('listaskin')->value[$_smarty_tpl->tpl_vars['key']->value];?>
+</option>
+			<?php }?>
+		<?php }} ?>
+		</select><br /><br />
 		Bio<br />
 		<textarea name="bio" cols="22" rows="10" tabindex="1"><?php echo $_smarty_tpl->getVariable('bio')->value;?>
 </textarea><br /><br />

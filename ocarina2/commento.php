@@ -17,6 +17,7 @@ $logged = $comments->isLogged() ? true : false;
 if($logged)
 	$username = $comments->searchUserByField('secret', $comments->getCookie());
 $rendering->addValue('utente', $logged ? $username[0]->nickname : '');
+$rendering->skin = $logged ? $username[0]->skin : $config[0]->skin;
 $rendering->addValue('titolo', $id !== '' ? 'Commento numero #'.$id.' &raquo; '.$config[0]->nomesito : $config[0]->nomesito);
 $rendering->addValue('keywords', $config[0]->keywords);
 $rendering->addValue('description', $config[0]->description);
@@ -28,9 +29,10 @@ else {
 	if(!$getComment)
 		$rendering->addValue('commenti', 'Il commento selezionato non è stato trovato.');
 	else {
-		for($i=0, $count=count($getComment); $i<$count; ++$i)
-			$getComment[$i]->contenuto = bbcodecommenti($getComment[$i]->contenuto);
+		if($config[0]->bbcode == 1)
+			for($i=0, $count=count($getComment); $i<$count; ++$i)
+				$getComment[$i]->contenuto = bbcodecommenti($getComment[$i]->contenuto);
 		$rendering->addValue('commento', $getComment);
 	}
 }
-$rendering->renderize('commento.tpl');
+(($logged) && ($username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('commento.tpl');

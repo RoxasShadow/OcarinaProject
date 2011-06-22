@@ -17,6 +17,7 @@ $logged = $pagina->isLogged() ? true : false;
 if($logged)
 	$username = $pagina->searchUserByField('secret', $pagina->getCookie());
 $rendering->addValue('utente', $logged ? $username[0]->nickname : '');
+$rendering->skin = $logged ? $username[0]->skin : $config[0]->skin;
 $rendering->addValue('titolo', $titolo !== '' ? $titolo.' &raquo; '.$config[0]->nomesito : $config[0]->nomesito);
 $rendering->addValue('keywords', $config[0]->keywords);
 $rendering->addValue('description', $config[0]->description);
@@ -28,9 +29,10 @@ else {
 	if(!$getPage)
 		$rendering->addValue('errore', 'La pagina selezionata non è stata trovata.');
 	else {
-		for($i=0, $count=count($getPage); $i<$count; ++$i)
-			$getPage[$i]->contenuto = bbcode($getPage[$i]->contenuto);
+		if($config[0]->bbcode == 1)
+			for($i=0, $count=count($getPage); $i<$count; ++$i)
+				$getPage[$i]->contenuto = bbcode($getPage[$i]->contenuto);
 		$rendering->addValue('pagina', $getPage);
 	}
 }
-$rendering->renderize('pagina.tpl');
+(($logged) && ($username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('pagina.tpl');

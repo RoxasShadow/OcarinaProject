@@ -21,6 +21,7 @@ $logged = $comment->isLogged() ? true : false;
 if($logged)
 	$username = $comment->searchUserByField('secret', $comment->getCookie());
 $rendering->addValue('utente', $logged ? $username[0]->nickname : '');
+$rendering->skin = $logged ? $username[0]->skin : $config[0]->skin;
 $rendering->addValue('titolo', 'Cerca nel sito &raquo; '.$config[0]->nomesito);
 $rendering->addValue('keywords', $config[0]->keywords);
 $rendering->addValue('description', $config[0]->description);
@@ -50,4 +51,4 @@ elseif($cercaCommenti !== '') {
 	$cerca = false;
 }
 $rendering->addValue('cerca', $cerca);
-$rendering->renderize('ricerca.tpl');
+(($logged) && ($username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('ricerca.tpl');

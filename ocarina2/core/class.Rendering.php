@@ -8,6 +8,7 @@ require_once('class.Configuration.php');
 /* Questa classe mette a disposizione dei metodi per interagire con il motore di rendering. */
 class Rendering extends Configuration {
 	private $smarty = NULL;
+	public $skin = NULL;
 
 	/* Quando la classe viene istanziata, il costruttore provvede a creare un nuovo oggetto Smarty. */
 	public function __construct() {
@@ -23,13 +24,6 @@ class Rendering extends Configuration {
 		$this->smarty->config_dir = $path.'/configs';
 		$this->smarty->error_reporting = E_ALL & ~E_NOTICE;
 		$this->smarty->allow_php_tag = true;
-		
-		/* Valori predefiniti. */
-		$config = parent::getConfig();
-		$this->addValue('url_rendering', $config[0]->url_rendering);
-		$this->addValue('root_rendering', $config[0]->root_rendering);
-		$this->addValue('skin', $config[0]->skin);
-		$this->addValue('nomesito', $config[0]->nomesito);
 	}
 
 	/* Quando la classe viene distrutta, il distruttore provvede a distruggere l'oggetto Smarty liberando memoria. */
@@ -68,7 +62,27 @@ class Rendering extends Configuration {
 
 	/* Il motore di rendering effettua il rendering del template in input e lo visualizza. */
 	public function renderize($filename) {
+		/* Valori predefiniti. */
+		$config = parent::getConfig();
+		$this->addValue('url_rendering', $config[0]->url_rendering);
+		$this->addValue('root_rendering', $config[0]->root_rendering);
+		$this->addValue('nomesito', $config[0]->nomesito);
+		$this->addValue('skin', $this->skin);
+		
+		$this->smarty->templateExists($config[0]->skin.'/'.$filename) ? $this->smarty->display($config[0]->skin.'/'.$filename) : false;
+	}
+
+	/* Visualizza le skin attualmente presenti. */
+	public function getSkinList() {
 		$getConfig = parent::getConfig();
-		$this->smarty->templateExists($getConfig[0]->skin.'/'.$filename) ? $this->smarty->display($getConfig[0]->skin.'/'.$filename) : false;
+		$dir = $getConfig[0]->root_rendering.'/templates/';
+		$apri = opendir($dir);
+		$f = array();
+		while (false !== ($skin = readdir($apri))) {
+			if(($skin !== '.') && ($skin !== '..') && (is_dir($dir.$skin))) {
+				$f[] = $skin;
+			}
+		}
+		return $f;
 	}
 }

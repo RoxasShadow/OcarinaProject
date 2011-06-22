@@ -17,6 +17,7 @@ $logged = $news->isLogged() ? true : false;
 if($logged)
 	$username = $news->searchUserByField('secret', $news->getCookie());
 $rendering->addValue('utente', $logged ? $username[0]->nickname : '');
+$rendering->skin = $logged ? $username[0]->skin : $config[0]->skin;
 $rendering->addValue('titolo', 'Archivio &raquo; '.$config[0]->nomesito);
 $rendering->addValue('keywords', $config[0]->keywords);
 $rendering->addValue('description', $config[0]->description);
@@ -26,4 +27,4 @@ $getNews = $news->getNews();
 $getPage = $pagine->getPage();
 !$getPage ? $rendering->addValue('errore_pagine', 'È accaduto un errore.') : $rendering->addValue('pagine', $getPage);
 
-$rendering->renderize('archivio.tpl');
+(($logged) && ($username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('archivio.tpl');

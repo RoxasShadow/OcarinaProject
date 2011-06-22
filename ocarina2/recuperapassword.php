@@ -19,6 +19,7 @@ $logged = $user->isLogged() ? true : false;
 if($logged)
 	$username = $user->searchUserByField('secret', $user->getCookie());
 $rendering->addValue('utente', $logged ? $username[0]->nickname : '');
+$rendering->skin = $logged ? $username[0]->skin : $config[0]->skin;
 $rendering->addValue('titolo', 'Recupera password &raquo; '.$config[0]->nomesito);
 $rendering->addValue('keywords', $config[0]->keywords);
 $rendering->addValue('description', $config[0]->description);
@@ -29,6 +30,8 @@ if(!$logged) {
 			$username = $user->searchUserByField('codicerecupero', $codiceRecupero);
 		else {
 			$rendering->addValue('result', 'Il codice per il recupero da te inserito non è valido.');
+			if($config[0]->log == 1)
+				$user->log('~', 'Invalid recover code.');
 			$rendering->addValue('logged', $logged);
 			$rendering->addValue('recupera', '');
 			$rendering->renderize('recuperapassword.tpl');
@@ -40,6 +43,8 @@ if(!$logged) {
 			$password = substr($codice, $len-24); // 32-24=8
 			$nickname = $username[0]->nickname;
 			if(($user->editUser('codicerecupero', '', $nickname)) && ($user->editUser('password', md5($password), $nickname))) {
+				if($config[0]->log == 1)
+					$user->log($nickname, 'Password recovered.');
 				$rendering->addValue('result', 'La tua nuova password è '.$password.'. Se vuoi, puoi modificarla dopo aver effettuato l\accesso.');
 				$rendering->addValue('recupera', '');
 			}
@@ -67,22 +72,39 @@ Se non sei tu '.$nickname.' oppure semplicemente non hai richiesto una nuova pas
 
 Il webmaster di '.$config[0]->nomesito.'.');
 						$rendering->addValue('result', 'È stata inviata una email all\'indirizzo da te dato per aiutarti a recuperare la password.');
+						if($config[0]->log == 1)
+							$user->log($nickname, 'Recover mail sended.');
 					}
-					else
+					else {
 						$rendering->addValue('result', 'È accaduto un problema durante il recupero della password.');
-				else
+						if($config[0]->log == 1)
+							$user->log('~', 'Password recovery failed.');
+					}
+				else {
 					$rendering->addValue('result', 'È accaduto un problema durante il recupero della password.');
+					if($config[0]->log == 1)
+						$user->log('~', 'Password recovery failed.');
+				}					
 			}
-			else
+			else {
 				$rendering->addValue('result', 'L\'email da immessa non corrisponde a nessun utente attualmente registrato.');
+				if($config[0]->log == 1)
+					$user->log('~', 'Recover mail was not sended.');
+			}
 		}
-		else
+		else {
 			$rendering->addValue('result', 'L\'email da immessa non corrisponde a nessun utente attualmente registrato.');
-	else
+			if($config[0]->log == 1)
+				$user->log('~', 'Recover mail was not sended.');
+		}
+	else {
 		$rendering->addValue('result', 'È accaduto un problema durante la modifica della password. Controlla di aver inserito correttamente l\'indirizzo email.');
+		if($config[0]->log == 1)
+			$user->log('~', 'Recover mail was not sended.');
+	}
 }
 else
 	$rendering->addValue('result', 'Se hai già effettuato l\'accesso non hai bisogno di recuperare la tua password.');
 $rendering->addValue('logged', $logged);
 $rendering->addValue('submit', $submit);
-$rendering->renderize('recuperapassword.tpl');
+(($logged) && ($username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('recuperapassword.tpl');

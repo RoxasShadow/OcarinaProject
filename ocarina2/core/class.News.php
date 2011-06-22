@@ -90,7 +90,7 @@ class News extends Category {
 		else
 			return false;
 	}
-	
+
 	/* Crea una news. */
 	public function createNews($array) {
 		if(!is_array($array))

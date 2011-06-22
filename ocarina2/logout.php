@@ -8,10 +8,9 @@ require_once('core/class.User.php');
 require_once('core/class.Rendering.php');
 
 $user = new User();
-$logged = $user->isLogged() ? true : false;
 $redirect = ((isset($_GET['redirect'])) && ($_GET['redirect'] !== '')) ? $user->purge($_GET['redirect']) : 'Aindex.php';
 
-if($logged) {
+if($user->isLogged()) {
 	$user->logout();
 	header('Refresh: 0; URL='.$redirect);
 }
