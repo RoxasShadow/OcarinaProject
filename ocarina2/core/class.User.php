@@ -74,9 +74,8 @@ class User extends Configuration {
 			return false;
 		if(parent::count($query) > 0) {
 			$utenti = array();
-			while($result = parent::get($query)) {
+			while($result = parent::get($query))
 				array_push($utenti, $result);
-			}
 			array_push($utenti, parent::get($query));
 			if(is_array($utenti))
 				return $utenti;

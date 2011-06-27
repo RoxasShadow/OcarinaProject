@@ -2,7 +2,7 @@
 	{if isset($errore)}
 		<div id="titolo">{$errore}</div>
 	{else}
-		{if is_array($commento)}
+		{if isset($commento)}
 			{foreach from=$commento key=key item=item}
 				{if $commento[$key]->approvato == 1}
 					<div id="titolo">Commento #{$commento[$key]->id}</div>

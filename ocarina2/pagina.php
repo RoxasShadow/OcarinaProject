@@ -25,8 +25,7 @@ $rendering->addValue('description', $config[0]->description);
 if($titolo == '')
 	$rendering->addValue('errore', 'Non è stata selezionata nessuna pagina.');
 else {
-	$getPage = $pagina->getPage($titolo);
-	if(!$getPage)
+	if(!$getPage = $pagina->getPage($titolo))
 		$rendering->addValue('errore', 'La pagina selezionata non è stata trovata.');
 	else {
 		if($config[0]->bbcode == 1)

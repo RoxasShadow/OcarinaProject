@@ -3,7 +3,6 @@
 	/etc/class.Pager.php
 	(C) Giovanni Capuano 2011
 */
-require_once(realpath(dirname("_FILE_")).'/core/class.News.php');
 
 /* Questa classe permette di creare un navigatore per le news. */
 class Pager extends News {

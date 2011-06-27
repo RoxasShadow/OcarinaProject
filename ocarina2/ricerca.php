@@ -27,24 +27,21 @@ $rendering->addValue('keywords', $config[0]->keywords);
 $rendering->addValue('description', $config[0]->description);
 
 if($cercaNews !== '') {
-	$search = $comment->searchNews($cercaNews);
-	if(!$search)
+	if(!$search = $comment->searchNews($cercaNews))
 		$rendering->addValue('error_news', 'Non è stata trovata nessuna news corrispondente alla tua keyword.');
 	else
 		$rendering->addValue('news', $search);
 	$cerca = false;
 }
 elseif($cercaPagine !== '') {
-	$search = $pagina->searchPage($cercaPagine);
-	if(!$search)
+	if(!$search = $pagina->searchPage($cercaPagine))
 		$rendering->addValue('error_page', 'Non è stata trovata nessuna pagina corrispondente alla tua keyword.');
 	else
 		$rendering->addValue('pagina', $search);
 	$cerca = false;
 }
 elseif($cercaCommenti !== '') {
-	$search = $comment->searchComment($cercaCommenti);
-	if(!$search)
+	if(!$search = $comment->searchComment($cercaCommenti))
 		$rendering->addValue('error_comment', 'Non è stato trovato nessun commento corrispondente alla tua keyword.');
 	else
 		$rendering->addValue('commento', $search);

@@ -28,19 +28,19 @@ if($logged)
 	if(($oldPassword !== '') && ($password !== '') && ($confPassword !== ''))
 		if((md5($oldPassword) == $username[0]->password) && ($password == $confPassword) && (strlen($password) > 4))
 			if($user->editUser('password', md5($password), $username[0]->nickname)) {
-				$rendering->addValue('result', 'La password è stata modificata con successo. Attendi per il redirect...'.header('Refresh: 2; URL=logout.php?redirect=login.php'));
 				if($config[0]->log == 1)
 					$user->log($username[0]->nickname, 'Password modificated.');
+				$rendering->addValue('result', 'La password è stata modificata con successo. Attendi per il redirect...'.header('Refresh: 2; URL=logout.php?redirect=login.php'));
 			}
 			else {
-				$rendering->addValue('result', 'È accaduto un errore durante la modifica della password.');
 				if($config[0]->log == 1)
 					$user->log($username[0]->nickname, 'Password modification failed');
+				$rendering->addValue('result', 'È accaduto un errore durante la modifica della password.');
 			}
 		else {
-			$rendering->addValue('result', 'È accaduto un errore durante la modifica della password. Le cause possono essere diverse, tra cui l\'errato inserimento della vecchia password, la non coincidenza delle password immesse, oppure semplicemente la password da te immessa è minore di 4 caratteri.');
 			if($config[0]->log == 1)
 				$user->log($username[0]->nickname, 'Password modification failed');
+			$rendering->addValue('result', 'È accaduto un errore durante la modifica della password. Le cause possono essere diverse, tra cui l\'errato inserimento della vecchia password, la non coincidenza delle password immesse, oppure semplicemente la password da te immessa è minore di 4 caratteri.');
 		}
 	else
 		$rendering->addValue('result', 'È accaduto un problema durante la modifica della password. Controlla di aver inserito i dati correttamente e di non aver lasciato alcun campo vuoto.');

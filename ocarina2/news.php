@@ -26,11 +26,9 @@ $rendering->addValue('description', $config[0]->description);
 if($titolo == '')
 	$rendering->addValue('errore', 'Non è stata selezionata nessuna news.');
 else {
-	$news = $comment->getNews($titolo);
-	if(!$news)
+	if(!$news = $comment->getNews($titolo))
 		$rendering->addValue('errore', 'La news selezionata non è stata trovata.');
 	else {
-		$getComment = $comment->getComment($news[0]->minititolo);
 		if($config[0]->bbcode == 1) {
 			for($i=0, $count=count($news); $i<$count; ++$i)
 				$news[$i]->contenuto = bbcode($news[$i]->contenuto);
@@ -38,7 +36,7 @@ else {
 		}
 		$rendering->addValue('news', $news);
 		
-		if(!$getComment)
+		if(!$getComment = $comment->getComment($news[0]->minititolo))
 			$rendering->addValue('commenti', 'Nessun commento ancora presente.');
 		else {
 			if($config[0]->bbcode == 1)

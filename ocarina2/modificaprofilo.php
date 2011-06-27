@@ -37,19 +37,19 @@ if($logged)
 	else {
 		if(($user->isEmail($email)) && ($user->isImage($avatar)) && ($email !== '') && ($bio !== '') && ($skin !== '') && ($avatar !== '') && ($password !== ''))
 			if(($user->isEmailUsed($username[0]->nickname, $email)) || (md5($password) !== $username[0]->password)) {
-				$rendering->addValue('result', 'È accaduto un errore durante la modifica del profilo. Controlla che l\'indirizzo email da te dato non sia già in uso e che la password sia corretta.');
 				if($config[0]->log == 1)
 						$user->log($username[0]->nickname, 'Profile modification failed.');
+				$rendering->addValue('result', 'È accaduto un errore durante la modifica del profilo. Controlla che l\'indirizzo email da te dato non sia già in uso e che la password sia corretta.');
 			}
 			elseif(($user->editUser('email', $email, $username[0]->nickname)) && ($user->editUser('bio', $bio, $username[0]->nickname)) && ($user->editUser('skin', $skin, $username[0]->nickname)) && ($user->editUser('avatar', $avatar, $username[0]->nickname))) {
-				$rendering->addValue('result', 'Il profilo è stato modificato con successo. Attendi per il redirect...'.header('Refresh: 2; URL=profilo.php?nickname='.$username[0]->nickname));
 				if($config[0]->log == 1)
 						$user->log($username[0]->nickname, 'Profile modificated.');
+				$rendering->addValue('result', 'Il profilo è stato modificato con successo. Attendi per il redirect...'.header('Refresh: 2; URL=profilo.php?nickname='.$username[0]->nickname));
 			}
 			else {
-				$rendering->addValue('result', 'È accaduto un errore durante la modifica del profilo.');
 				if($config[0]->log == 1)
 						$user->log($username[0]->nickname, 'Profile modification failed.');
+				$rendering->addValue('result', 'È accaduto un errore durante la modifica del profilo.');
 			}
 		else
 			$rendering->addValue('result', 'È accaduto un errore durante la modifica del profilo. Controlla di aver inserito un indirizzo email e un avatar validi e di non aver lasciato alcun campo vuoto.');

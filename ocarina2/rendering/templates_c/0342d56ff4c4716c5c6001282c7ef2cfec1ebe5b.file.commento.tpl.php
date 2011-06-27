@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-06-19 23:28:41
+<?php /* Smarty version Smarty-3.0.8, created on 2011-06-27 00:49:56
          compiled from "/var/www/htdocs/ocarina2/rendering/templates/default/commento.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:17448312814dfe86295959e5-66886661%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:21234747804e07d3b4a70a06-56850355%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '0342d56ff4c4716c5c6001282c7ef2cfec1ebe5b' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering/templates/default/commento.tpl',
-      1 => 1308526117,
+      1 => 1309135793,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '17448312814dfe86295959e5-66886661',
+  'nocache_hash' => '21234747804e07d3b4a70a06-56850355',
   'function' => 
   array (
   ),
@@ -23,7 +23,7 @@ $_smarty_tpl->decodeProperties(array (
 		<div id="titolo"><?php echo $_smarty_tpl->getVariable('errore')->value;?>
 </div>
 	<?php }else{ ?>
-		<?php if (is_array($_smarty_tpl->getVariable('commento')->value)){?>
+		<?php if (isset($_smarty_tpl->getVariable('commento',null,true,false)->value)){?>
 			<?php  $_smarty_tpl->tpl_vars['item'] = new Smarty_Variable;
  $_smarty_tpl->tpl_vars['key'] = new Smarty_Variable;
  $_from = $_smarty_tpl->getVariable('commento')->value; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}

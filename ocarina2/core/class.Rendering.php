@@ -63,12 +63,13 @@ class Rendering extends Configuration {
 	/* Il motore di rendering effettua il rendering del template in input e lo visualizza. */
 	public function renderize($filename) {
 		$config = parent::getConfig();
+		$this->addValue('url_index', $config[0]->url_index);
 		$this->addValue('url_rendering', $config[0]->url_rendering);
 		$this->addValue('root_rendering', $config[0]->root_rendering);
 		$this->addValue('nomesito', $config[0]->nomesito);
 		$this->addValue('skin', $this->skin);
 		
-		$this->smarty->templateExists($config[0]->skin.'/'.$filename) ? $this->smarty->display($config[0]->skin.'/'.$filename) : false;
+		$this->smarty->templateExists($this->skin.'/'.$filename) ? $this->smarty->display($this->skin.'/'.$filename) : false;
 	}
 
 	/* Visualizza le skin attualmente presenti. */
@@ -78,7 +79,7 @@ class Rendering extends Configuration {
 		$apri = opendir($dir);
 		$f = array();
 		while (false !== ($skin = readdir($apri))) {
-			if(($skin !== '.') && ($skin !== '..') && (is_dir($dir.$skin))) {
+			if(($skin !== '.') && ($skin !== '..') && ($skin !== 'admin') && (is_dir($dir.$skin))) {
 				$f[] = $skin;
 			}
 		}

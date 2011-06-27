@@ -22,9 +22,13 @@ $rendering->addValue('titolo', 'Archivio &raquo; '.$config[0]->nomesito);
 $rendering->addValue('keywords', $config[0]->keywords);
 $rendering->addValue('description', $config[0]->description);
 
-$getNews = $news->getNews();
-!$getNews ? $rendering->addValue('errore_news', 'È accaduto un errore.') : $rendering->addValue('news', $getNews);
-$getPage = $pagine->getPage();
-!$getPage ? $rendering->addValue('errore_pagine', 'È accaduto un errore.') : $rendering->addValue('pagine', $getPage);
+if(!$getNews = $news->getNews())
+	$rendering->addValue('errore_news', 'È accaduto un errore.');
+else
+	$rendering->addValue('news', $getNews);
+if(!$getPage = $pagine->getPage())
+	$rendering->addValue('errore_pagine', 'È accaduto un errore.');
+else
+	$rendering->addValue('pagine', $getPage);
 
 (($logged) && ($username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('archivio.tpl');

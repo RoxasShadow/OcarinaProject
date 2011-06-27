@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-06-22 22:11:50
+<?php /* Smarty version Smarty-3.0.8, created on 2011-06-27 00:48:56
          compiled from "/var/www/htdocs/ocarina2/rendering/templates/default/archivio.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:3168487574e0268a6644042-17151249%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:20920858924e07d3782e7423-08466724%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'f51d14a16b3a3e94fbaa5e998f6b665475ec09f8' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering/templates/default/archivio.tpl',
-      1 => 1308771151,
+      1 => 1309135727,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '3168487574e0268a6644042-17151249',
+  'nocache_hash' => '20920858924e07d3782e7423-08466724',
   'function' => 
   array (
   ),
@@ -23,7 +23,7 @@ $_smarty_tpl->decodeProperties(array (
 		<div id="titolo"><?php echo $_smarty_tpl->getVariable('errore')->value;?>
 </div>
 	<?php }else{ ?>
-		<?php if (!is_array($_smarty_tpl->getVariable('news')->value)&&isset($_smarty_tpl->getVariable('errore_news',null,true,false)->value)){?>
+		<?php if (!isset($_smarty_tpl->getVariable('news',null,true,false)->value)&&isset($_smarty_tpl->getVariable('errore_news',null,true,false)->value)){?>
 			<div id="titolo"><?php echo $_smarty_tpl->getVariable('errore_news')->value;?>
 </div>
 		<?php }elseif(isset($_smarty_tpl->getVariable('news',null,true,false)->value)){?>
@@ -43,7 +43,7 @@ if ($_smarty_tpl->_count($_from) > 0){
 			<?php }} ?>
 		<?php }?>
 		<hr />
-		<?php if (!is_array($_smarty_tpl->getVariable('pagine')->value)&&isset($_smarty_tpl->getVariable('errore_pagine',null,true,false)->value)){?>
+		<?php if (!isset($_smarty_tpl->getVariable('pagine',null,true,false)->value)&&isset($_smarty_tpl->getVariable('errore_pagine',null,true,false)->value)){?>
 			<div id="titolo"><?php echo $_smarty_tpl->getVariable('errore_pagine')->value;?>
 </div>
 		<?php }elseif(isset($_smarty_tpl->getVariable('news',null,true,false)->value)){?>

@@ -26,9 +26,13 @@ $rendering->addValue('description', $config[0]->description);
 if($categoria == '')
 	$rendering->addValue('errore', 'Non è stata selezionata nessuna categoria.');
 else {
-	$getNewsCat = $news->searchNewsByCategory($categoria);
-	!$getNewsCat ? $rendering->addValue('errore_news', 'Nessuna news è associata alla categoria `'.$categoria.'`.') : $rendering->addValue('news', $getNewsCat);
-	$getPageCat = $pagine->searchPageByCategory($categoria);
-	!$getPageCat ? $rendering->addValue('errore_pagine', 'Nessuna pagina è associata alla categoria `'.$categoria.'`.') : $rendering->addValue('pagine', $getPageCat);
+	if(!$getNewsCat = $news->searchNewsByCategory($categoria))
+		$rendering->addValue('errore_news', 'Nessuna news è associata alla categoria `'.$categoria.'`.');
+	else
+		$rendering->addValue('news', $getNewsCat);
+	if(!$getPageCat = $pagine->searchPageByCategory($categoria))
+		$rendering->addValue('errore_pagine', 'Nessuna pagina è associata alla categoria `'.$categoria.'`.');
+	else
+		$rendering->addValue('pagine', $getPageCat);
 }
 (($logged) && ($username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('archivio.tpl');

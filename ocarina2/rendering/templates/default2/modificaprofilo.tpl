@@ -8,7 +8,11 @@
 		Skin<br />
 		<select name="skin">
 		{foreach from=$listaskin key=key item=item}
-			<option value="{$listaskin[$key]}">{$listaskin[$key]}</option>
+			{if $listaskin[$key] == $skinattuale}
+				<option value="{$listaskin[$key]}" selected>{$listaskin[$key]|capitalize}</option>
+			{else}
+				<option value="{$listaskin[$key]}">{$listaskin[$key]|capitalize}</option>
+			{/if}
 		{/foreach}
 		</select><br /><br />
 		Bio<br />

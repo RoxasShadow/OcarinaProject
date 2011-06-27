@@ -8,7 +8,7 @@
 	<meta name="robots" content="index,follow" />
 </head>
 <body>
-	<div id="header">2222{$titolo}</div>
+	<div id="header">{$titolo}</div>
 	<div id="menu" align="center">
 	<a href="Aindex.php">News</a> | <a href="archivio.php">Archivio</a> | <a href="ricerca.php">Cerca nel sito</a> | <a href="profilo.php">Profili</a> | <a href="#">Filler</a><br />
 	{if $utente == ''}

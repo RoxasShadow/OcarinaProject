@@ -2,7 +2,7 @@
 /* Proprietà del template */
 
 #header {
-	color: #808080;
+	color: #000000;
 	text-align: center;
 	font-weight: bold;
 	font-size: 20pt;
@@ -10,7 +10,7 @@
 }
 
 #colunica {
-	background-color: #000000;
+	background-color: #c2c2c2;
 	margin-right: 2%;
 	margin-left: 2%;
 	margin-top: 3%;
@@ -22,20 +22,29 @@
 	border: 0.8pt dashed #FFFFFF;
 	margin-bottom: 3%;
 	vertical-align: top;
-	color: #2370B6;
+	color: #8c8c8e;
 	width: 96%;
 }
 
+#colunica a {
+	color: #8c8c8e;
+}	
+
 body {
-	color: #808080;
-	background-color: #070707;
+	color: #000000;
+	background-color: #8c8c8e;
 	font-family: monospace;
 	height: 97%;width: 99%;
 }
 
 a {
 	text-decoration: none;
-	color: #808080;
+	color: #2370B6;
+}
+
+a:hover {
+	text-decoration: underline;
+	color: #2370B6;
 }
 
 hr {

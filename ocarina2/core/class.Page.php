@@ -57,9 +57,8 @@ class Page extends Category {
 			return false;
 		if(parent::count($query) > 0) {
 			$pagine = array();
-			while($result = parent::get($query)) {
+			while($result = parent::get($query))
 				array_push($pagine, $result);
-			}
 			if(is_array($pagine))
 				return $pagine;
 			return false;
@@ -74,9 +73,8 @@ class Page extends Category {
 			return false;
 		if(parent::count($query) > 0) {
 			$pagine = array();
-			while($result = parent::get($query)) {
+			while($result = parent::get($query))
 				array_push($pagine, $result);
-			}
 			if(is_array($pagine))
 				return $pagine;
 			return false;

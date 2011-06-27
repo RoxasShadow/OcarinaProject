@@ -37,7 +37,7 @@ class Category extends User {
 			$result[count($result)+1] = $categoria;
 			$query = "ALTER TABLE $campo CHANGE categoria categoria ENUM(";
 			foreach($result as $var) {
-					$query .= "'$var', ";
+				$query .= "'$var', ";
 			}
 			$query = trim($query, ', ');
 			$query .= ')';

@@ -11,7 +11,7 @@ require_once('etc/function.BBCode.php');
 $comments = new Comments();
 $rendering = new Rendering();
 $config = $comments->getConfig();
-$id = ((isset($_GET['id'])) && is_numeric($_GET['id'])) ? $_GET['id'] : '';
+$id = ((isset($_GET['id'])) && is_numeric($_GET['id'])) ? (int)$_GET['id'] : '';
 
 $logged = $comments->isLogged() ? true : false;
 if($logged)
@@ -25,9 +25,8 @@ $rendering->addValue('description', $config[0]->description);
 if($id == '')
 	$rendering->addValue('errore', 'Non è stato selezionato nessun commento.');
 else {
-	$getComment = $comments->searchCommentById($id);
-	if(!$getComment)
-		$rendering->addValue('commenti', 'Il commento selezionato non è stato trovato.');
+	if(!$getComment = $comments->searchCommentById($id))
+		$rendering->addValue('errore', 'Il commento selezionato non è stato trovato.');
 	else {
 		if($config[0]->bbcode == 1)
 			for($i=0, $count=count($getComment); $i<$count; ++$i)

@@ -23,11 +23,9 @@ $rendering->addValue('titolo', $config[0]->nomesito);
 $rendering->addValue('keywords', $config[0]->keywords);
 $rendering->addValue('description', $config[0]->description);
 
-if(($welcome) && ($logged)) {
-	$lastlogout = $username[0]->lastlogout;
-	if(($lastlogout !== '') && ($lastlogout !== date('d-m-y')))
-		$rendering->addValue('lastlogout', $lastlogout);
-}
+if(($welcome) && ($logged))
+	if(($username[0]->lastlogout !== '') && ($username[0]->lastlogout !== date('d-m-y')))
+		$rendering->addValue('lastlogout', $username[0]->lastlogout);
 		
 $pager = new Pager($config[0]->impaginazionenews);
 $rendering->addValue('navigatore', $pager->getNav());
@@ -36,8 +34,7 @@ $rendering->addValue('currentPage', $pager->currentPage);
 if($pager->currentPage > $pager->numPages)
 	$rendering->addValue('errore', 'È accaduto un errore.');
 else {
-	$getNews = $news->getNews('', $pager->min, $pager->max);
-	if(!$getNews)
+	if(!$getNews = $news->getNews('', $pager->min, $pager->max))
 		$rendering->addValue('errore', 'È accaduto un errore.');
 	elseif($pager->currentPage == $pager->numPages) {
 		for($i=0, $count=count($getNews); $i<$count; ++$i) {

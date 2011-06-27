@@ -29,10 +29,7 @@ if($nickname == '') {
 }
 else {
 	$rendering->addValue('titolo', (($logged) && ($nickname == $username[0]->nickname)) ? 'Il tuo profilo' : 'Profilo di '.$nickname.' &raquo; '.$config[0]->nomesito);
-	if($user->isUser($nickname))
-		$rendering->addValue('result', $user->getUser($nickname));
-	else
-		$rendering->addValue('result', 'L\'utente da te cercato non è attualmente registrato.');
-		
+	$getUser = $user->getUser($nickname);
+	$rendering->addValue('result', $getUser ? $getUser : 'L\'utente da te cercato non è attualmente registrato.');		
 }
 (($logged) && ($username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('profilo.tpl');

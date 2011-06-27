@@ -63,9 +63,8 @@ class News extends Category {
 			return false;
 		if(parent::count($query) > 0) {
 			$news = array();
-			while($result = parent::get($query)) {
+			while($result = parent::get($query))
 				array_push($news, $result);
-			}
 			if(is_array($news))
 				return $news;
 			return false;
@@ -80,9 +79,24 @@ class News extends Category {
 			return false;
 		if(parent::count($query) > 0) {
 			$news = array();
-			while($result = parent::get($query)) {
+			while($result = parent::get($query))
 				array_push($news, $result);
-			}
+			if(is_array($news))
+				return $news;
+			return false;
+		}
+		else
+			return false;
+	}
+	
+	/* Ricerca le news per utente. */
+	public function searchNewsByUser($nickname) {
+		if(!$query = parent::query("SELECT DISTINCT * FROM news WHERE nickname='$nickname' ORDER BY id DESC"))
+			return false;
+		if(parent::count($query) > 0) {
+			$news = array();
+			while($result = parent::get($query))
+				array_push($news, $result);
 			if(is_array($news))
 				return $news;
 			return false;

@@ -152,7 +152,7 @@ $sostituisci_codice = array(
 '<img src="/swanp/wysiwyg/emoticons/ert.png">',
 '<img src="/swanp/wysiwyg/emoticons/rotfl.gif">',
 );
-$testo= preg_replace ($cerca_codice, $sostituisci_codice, $testo);
+$testo= preg_replace($cerca_codice, $sostituisci_codice, $testo);
 return $testo;
 }
 ?>
