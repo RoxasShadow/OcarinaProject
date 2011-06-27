@@ -17,7 +17,7 @@ class Comments extends News {
 					return false;
 				while($result = parent::get($query))
 					array_push($commenti, $result);
-				if(is_array($commenti))
+				if(!empty($commenti))
 					return $commenti;
 				return false;
 			}
@@ -29,7 +29,7 @@ class Comments extends News {
 			if(parent::count($query) > 0) {
 				while($result = parent::get($query))
 					array_push($commenti, $result);
-				if(is_array($commenti))
+				if(!empty($commenti))
 					return $commenti;
 				return false;
 			}
@@ -68,7 +68,7 @@ class Comments extends News {
 			while($result = parent::get($query)) {
 				array_push($commenti, $result);
 			}
-			if(is_array($commenti))
+			if(!empty($commenti))
 				return $commenti;
 			return false;
 		}
@@ -85,7 +85,7 @@ class Comments extends News {
 			while($result = parent::get($query)) {
 				array_push($commenti, $result);
 			}
-			if(is_array($commenti))
+			if(!empty($commenti))
 				return $commenti;
 			return false;
 		}
@@ -95,12 +95,12 @@ class Comments extends News {
 	
 	/* Crea un commento. */
 	public function createComment($array) {
-		if(!is_array($array))
+		if(empty($array))
 			return false;
 		if((parent::isNews($array[2])) && (parent::isUser($array[0]))) {
 			$query = parent::query('SELECT * FROM commenti');
 			$campi = parent::getColumns($query);
-			if(!is_array($campi))
+			if(!empty($campi))
 				return false;
 			$query = 'INSERT INTO commenti(';
 			foreach($campi as $var)

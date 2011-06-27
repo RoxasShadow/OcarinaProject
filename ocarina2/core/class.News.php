@@ -16,7 +16,7 @@ class News extends Category {
 				if(!$query = parent::query("SELECT DISTINCT * FROM news WHERE minititolo='$minititolo' ORDER BY titolo ASC"))
 					return false;
 				array_push($news, parent::get($query));
-				if(is_array($news))
+				if(!empty($news))
 					return $news;
 				return false;
 			}
@@ -34,7 +34,7 @@ class News extends Category {
 			if(parent::count($query) > 0) {
 				while($result = parent::get($query))
 					array_push($news, $result);
-				if(is_array($news))
+				if(!empty($news))
 					return $news;
 				return false;
 			}
@@ -65,7 +65,7 @@ class News extends Category {
 			$news = array();
 			while($result = parent::get($query))
 				array_push($news, $result);
-			if(is_array($news))
+			if(!empty($news))
 				return $news;
 			return false;
 		}
@@ -81,7 +81,7 @@ class News extends Category {
 			$news = array();
 			while($result = parent::get($query))
 				array_push($news, $result);
-			if(is_array($news))
+			if(!empty($news))
 				return $news;
 			return false;
 		}
@@ -97,7 +97,7 @@ class News extends Category {
 			$news = array();
 			while($result = parent::get($query))
 				array_push($news, $result);
-			if(is_array($news))
+			if(!empty($news))
 				return $news;
 			return false;
 		}
@@ -107,12 +107,12 @@ class News extends Category {
 
 	/* Crea una news. */
 	public function createNews($array) {
-		if(!is_array($array))
+		if(empty($array))
 			return false;
 		if((!$this->isNews($array[2])) && (parent::isCategory('news', $array[4])) && (parent::isUser($array[0]))) {
 			$query = parent::query('SELECT * FROM news ORDER BY id DESC');
 			$campi = parent::getColumns($query);
-			if(!is_array($campi))
+			if(empty($campi))
 				return false;
 			$query = 'INSERT INTO news(';
 			foreach($campi as $var)

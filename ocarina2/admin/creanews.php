@@ -10,9 +10,9 @@ require_once('../core/class.Rendering.php');
 $news = new News();
 $rendering = new Rendering();
 $config = $news->getConfig();
-$titolo_news = ((isset($_POST['titolo'])) && ($_POST['titolo'] !== '')) ? addslashes($_POST['titolo']) : '';
-$categoria_news = ((isset($_POST['categoria'])) && ($_POST['categoria'] !== '')) ? addslashes($_POST['categoria']) : '';
-$testo_news = ((isset($_POST['news'])) && ($_POST['news'] !== '')) ? addslashes($_POST['news']) : '';
+$titolo_news = ((isset($_POST['titolo'])) && ($_POST['titolo'] !== '')) ? htmlentities(addslashes($news->purgeByXSS($_POST['titolo']))) : '';
+$categoria_news = ((isset($_POST['categoria'])) && ($_POST['categoria'] !== '')) ? htmlentities(addslashes($news->purgeByXSS($_POST['categoria']))) : '';
+$testo_news = ((isset($_POST['news'])) && ($_POST['news'] !== '')) ? addslashes($news->purgeByXSS($_POST['news'])) : '';
 $submit = isset($_POST['submit']) ? true : false;
 
 $logged = $news->isLogged() ? true : false;

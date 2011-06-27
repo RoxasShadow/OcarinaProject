@@ -16,7 +16,7 @@ class Configuration extends MySQL {
 				return false;
 			if(parent::count($query) > 0) {
 				array_push($config, parent::get($query));
-				if(is_array($config))
+				if(!empty($config))
 					return $config;
 			}
 			return false;
@@ -26,7 +26,7 @@ class Configuration extends MySQL {
 				return false;
 			if(parent::count($query) > 0) {
 				array_push($config, parent::get($query));
-				if(is_array($config))
+				if(!empty($config))
 					return $config;
 			}
 			return false;
@@ -35,7 +35,7 @@ class Configuration extends MySQL {
 	
 	/* Creo una nuova configurazione. */
 	public function createConfig($config) {
-		if(!is_array($config))
+		if(empty($config))
 			return false;
 		if(!$query = parent::query('SELECT * FROM configurazione'))
 			return false;

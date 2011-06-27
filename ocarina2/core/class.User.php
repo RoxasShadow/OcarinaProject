@@ -16,7 +16,7 @@ class User extends Configuration {
 				if(!$query = parent::query("SELECT DISTINCT * FROM utenti WHERE nickname='$nickname' ORDER BY nickname ASC"))
 					return false;
 				array_push($utenti, parent::get($query));
-				if(is_array($utenti))
+				if(!empty($utenti))
 					return $utenti;
 				return false;
 			}
@@ -28,7 +28,7 @@ class User extends Configuration {
 			if(parent::count($query) > 0) {
 				while($result = parent::get($query))
 					array_push($utenti, $result);
-				if(is_array($utenti))
+				if(!empty($utenti))
 					return $utenti;
 				return false;
 			}
@@ -77,7 +77,7 @@ class User extends Configuration {
 			while($result = parent::get($query))
 				array_push($utenti, $result);
 			array_push($utenti, parent::get($query));
-			if(is_array($utenti))
+			if(!empty($utenti))
 				return $utenti;
 			return false;
 		}
@@ -87,12 +87,12 @@ class User extends Configuration {
 	
 	/* Crea un commento. */
 	public function createUser($array) {
-		if(!is_array($array))
+		if(empty($array))
 			return false;
 		if((!$this->isUser($array[0])) && (parent::isEmail($array[2]))) {
 			$query = parent::query('SELECT * FROM utenti ORDER BY nickname ASC');
 			$campi = parent::getColumns($query);
-			if(!is_array($campi))
+			if(empty($campi))
 				return false;
 			$array[1] = md5($array[1]);
 			$query = 'INSERT INTO utenti(';

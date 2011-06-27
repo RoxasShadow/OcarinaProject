@@ -7,11 +7,10 @@
 /* Questa classe include di tutto: dai metodi per la sicurezza alle convalide degli url, fino alla gestione delle stringhe. */
 class Utilities {
 	
-	/* Filtra una stringa. Se l'argomento è un array multidimensionale, ogni array che lo compone viene ripassato nel metodo.
-	   Se, altrimenti, è un semplice array o una stringa, ogni valore è filtrato da mysql_real_escape_string().
-	   ATTENZIONE: Non usare per le news e le pagine, altrimenti l'HTML non sarà parsato! */
+	/* Filtra una stringa o un array multidimensionale.
+	   ATTENZIONE: Non usare per la creazione di news e le pagine, altrimenti l'HTML non sarà parsato! */
 	public function purge($var) {
-		if(is_array($var)) {
+		if(is_array($var))
 			foreach($var as $key => $value) {
 				if(is_array($var[$key]))
 					$var[$key] = $this->purge($var[$key]);
@@ -21,7 +20,6 @@ class Utilities {
 					$var[$key] = trim(mysql_real_escape_string(htmlentities($var[$key])));
 				}
 			}
-		}
 		if(is_string($var)) {
 			if(get_magic_quotes_gpc())
 				$var = stripslashes($var);
@@ -32,20 +30,54 @@ class Utilities {
 	
 	/* Elimina gli slashes per le SQL Injection. */
 	public function unPurge($var) {
-		if(is_array($var)) {
+		if(is_array($var))
 			foreach($var as $key => $value) {
 				if(is_array($var[$key]))
 					$var[$key] = $this->unPurge($var[$key]);
-				if(is_string($var[$key])) {
+				if(is_string($var[$key]))
 					$var[$key] = stripslashes($var[$key]);
-				}
 			}
-		}
-		if(is_string($var)) {
+		if(is_string($var))
 			$var = stripslashes($var);
+		return $var;
+	}
+	
+	/* Filtra una stringa o un array multidimensionale da XSS.
+	   Da usare per la creazione di news e pagine, poichè permette HTML ma non XSS. */
+	public function purgeByXSS($var) {
+		if(is_array($var))
+			foreach($var as $key => $value) {
+				if(is_array($var[$key]))
+					$var[$key] = $this->purgeByXSS($var[$key]);
+				if(is_string($var[$key])) {
+					$var[$key] = str_replace('<script>', '', $var[$key]);
+					$var[$key] = str_replace('%3C%73%63%72%69%70%74%3E', '', $var[$key]);
+					$var[$key] = str_replace('&#x3C;&#x73;&#x63;&#x72;&#x69;&#x70;&#x74;&#x3E;', '', $var[$key]);
+					$var[$key] = str_replace('&#60&#115&#99&#114&#105&#112&#116&#62', '', $var[$key]);
+					$var[$key] = str_replace('PHNjcmlwdD4=', '', $var[$key]);
+					$var[$key] = str_replace('</script>', '', $var[$key]);
+					$var[$key] = str_replace('%3C%2F%73%63%72%69%70%74%3E', '', $var[$key]);
+					$var[$key] = str_replace('&#x3C;&#x2F;&#x73;&#x63;&#x72;&#x69;&#x70;&#x74;&#x3E;', '', $var[$key]);
+					$var[$key] = str_replace('&#60&#47&#115&#99&#114&#105&#112&#116&#62', '', $var[$key]);
+					$var[$key] = str_replace('PC9zY3JpcHQ+', '', $var[$key]);
+				}
+					
+			}
+		if(is_string($var)) {
+			$var = str_replace('<script>', '', $var);
+			$var = str_replace('%3C%73%63%72%69%70%74%3E', '', $var);
+			$var = str_replace('&#x3C;&#x73;&#x63;&#x72;&#x69;&#x70;&#x74;&#x3E;', '', $var);
+			$var = str_replace('&#60&#115&#99&#114&#105&#112&#116&#62', '', $var);
+			$var = str_replace('PHNjcmlwdD4=', '', $var);
+			$var = str_replace('</script>', '', $var);
+			$var = str_replace('%3C%2F%73%63%72%69%70%74%3E', '', $var);
+			$var = str_replace('&#x3C;&#x2F;&#x73;&#x63;&#x72;&#x69;&#x70;&#x74;&#x3E;', '', $var);
+			$var = str_replace('&#60&#47&#115&#99&#114&#105&#112&#116&#62', '', $var);
+			$var = str_replace('PC9zY3JpcHQ+', '', $var);
 		}
 		return $var;
 	}
+		
 	
 	/* Controlla l'autenticità di un indirizzo email (solo sintatticamente). */
 	public function isEmail($email) {

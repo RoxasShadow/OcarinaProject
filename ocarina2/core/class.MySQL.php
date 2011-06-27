@@ -69,7 +69,7 @@ class MySQL extends Utilities {
 	public function getEnum($query) {
 		$array = mysql_fetch_row($query);
 		$category = explode("','", preg_replace("/(enum|set)\('(.+?)'\)/", "\\2", $array[1]));
-		return (is_array($category)) ? $category : false;
+		return (!empty($category)) ? $category : false;
 	}
 	
 	/* Ritorna un array contenente le colonne di una tabella. */

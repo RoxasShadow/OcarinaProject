@@ -16,7 +16,7 @@ class Page extends Category {
 				if(!$query = parent::query("SELECT DISTINCT * FROM pagine WHERE minititolo='$minititolo' ORDER BY titolo ASC"))
 					return false;
 				array_push($pagine, parent::get($query));
-				if(is_array($pagine))
+				if(!empty($pagine))
 					return $pagine;
 				return false;
 			}
@@ -28,7 +28,7 @@ class Page extends Category {
 			if(parent::count($query) > 0) {
 				while($result = parent::get($query))
 					array_push($pagine, $result);
-				if(is_array($pagine))
+				if(!empty($pagine))
 					return $pagine;
 				return false;
 			}
@@ -59,7 +59,7 @@ class Page extends Category {
 			$pagine = array();
 			while($result = parent::get($query))
 				array_push($pagine, $result);
-			if(is_array($pagine))
+			if(!empty($pagine))
 				return $pagine;
 			return false;
 		}
@@ -75,7 +75,7 @@ class Page extends Category {
 			$pagine = array();
 			while($result = parent::get($query))
 				array_push($pagine, $result);
-			if(is_array($pagine))
+			if(!empty($pagine))
 				return $pagine;
 			return false;
 		}
@@ -85,12 +85,12 @@ class Page extends Category {
 	
 	/* Crea una pagina. */
 	public function createPage($array) {
-		if(!is_array($array))
+		if(empty($array))
 			return false;
 		if((!$this->isPage($array[2])) && (parent::isCategory('pagine', $array[4])) && (parent::isUser($array[0]))) {
 			$query = parent::query('SELECT * FROM pagine');
 			$campi = parent::getColumns($query);
-			if(!is_array($campi))
+			if(empty($campi))
 				return false;
 			$query = 'INSERT INTO pagine(';
 			foreach($campi as $var)
