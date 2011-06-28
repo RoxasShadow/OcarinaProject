@@ -66,5 +66,4 @@ else
 $rendering->addValue('logged', $logged);
 $rendering->addValue('submit', $submit);
 $rendering->addValue('sel', $selected);
-$rendering->addValue('whatis', 'Modifica news');
 (($logged) && ($username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('formcontents.tpl');

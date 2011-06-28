@@ -39,6 +39,10 @@
 		<li><a href="creanews.php">Crea news</a></li>
 		<li><a href="modificanews.php">Modifica news</a></li>
 		<li><a href="cancellanews.php">Cancella news</a></li>
+		<li><a class="active">Pagine</a></li>
+		<li><a href="creapagina.php">Crea pagina</a></li>
+		<li><a href="modificapagina.php">Modifica pagina</a></li>
+		<li><a href="cancellapagina.php">Cancella pagina</a></li>
 		<li><a class="active">Categorie</a></li>
 		<li><a href="gestiscicategorie.php">Gestisci categorie</a></li>
 		<li><a class="active">Pagine</a></li>
@@ -54,6 +58,10 @@
 		<li><a href="creanews.php">Crea news</a></li>
 		<li><a href="modificanews.php">Modifica news</a></li>
 		<li><a href="cancellanews.php">Cancella news</a></li>
+		<li><a class="active">Pagine</a></li>
+		<li><a href="creapagina.php">Crea pagina</a></li>
+		<li><a href="modificapagina.php">Modifica pagina</a></li>
+		<li><a href="cancellapagina.php">Cancella pagina</a></li>
 		<li><a class="active">Categorie</a></li>
 		<li><a href="gestiscicategorie.php">Gestisci categorie</a></li>
 		<li><a class="active">Pagine</a></li>
@@ -71,6 +79,10 @@
 		<li><a href="creanews.php">Crea news</a></li>
 		<li><a href="modificanews.php">Modifica news</a></li>
 		<li><a href="cancellanews.php">Cancella news</a></li>
+		<li><a class="active">Pagine</a></li>
+		<li><a href="creapagina.php">Crea pagina</a></li>
+		<li><a href="modificapagina.php">Modifica pagina</a></li>
+		<li><a href="cancellapagina.php">Cancella pagina</a></li>
 		<li><a class="active">Categorie</a></li>
 		<li><a href="gestiscicategorie.php">Gestisci categorie</a></li>
 		<li><a class="active">Pagine</a></li>

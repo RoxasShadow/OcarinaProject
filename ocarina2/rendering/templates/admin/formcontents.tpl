@@ -46,7 +46,7 @@
 		{/if}
 		<textarea name="testo" cols="59" rows="10" id="txtQuota">{if (isset($testo))}{$testo}{/if}</textarea><br />
 		{if isset($sel)}<input type="hidden" name="selected" value="{$sel}" />{/if}
-		<input type="submit" name="submit" {if (isset($whatis) && ($whatis !== ''))}value="{$whatis}"{/if} />
+		<input type="submit" name="submit" value="Conferma" />
 		</form>
 	{elseif $grado < 4 && $submit && isset($result) || (!$submit && isset($result))}
 		{$result}
