@@ -83,6 +83,22 @@ class Page extends Category {
 			return false;
 	}
 	
+	/* Ricerca le pagine per utente. */
+	public function searchPageByUser($nickname) {
+		if(!$query = parent::query("SELECT DISTINCT * FROM pagine WHERE nickname='$nickname' ORDER BY id DESC"))
+			return false;
+		if(parent::count($query) > 0) {
+			$news = array();
+			while($result = parent::get($query))
+				array_push($news, $result);
+			if(!empty($news))
+				return $news;
+			return false;
+		}
+		else
+			return false;
+	}
+	
 	/* Crea una pagina. */
 	public function createPage($array) {
 		if(empty($array))

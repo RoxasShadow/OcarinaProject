@@ -10,7 +10,7 @@ require_once('../core/class.Rendering.php');
 $news = new News();
 $rendering = new Rendering();
 $config = $news->getConfig();
-$minititolo_news = ((isset($_POST['news'])) && ($_POST['news'] !== '')) ? $news->purge($_POST['news']) : '';
+$minititolo_news = ((isset($_POST['content'])) && ($_POST['content'] !== '')) ? $news->purge($_POST['content']) : '';
 $submit = isset($_POST['submit']) ? true : false;
 
 $logged = $news->isLogged() ? true : false;
@@ -25,7 +25,7 @@ $rendering->addValue('description', $config[0]->description);
 
 if($logged)
 	if(!$submit)
-		$rendering->addValue('news', $news->getNews());
+		$rendering->addValue('content', $news->getNews());
 	elseif($submit)
 		if(($minititolo_news !== '') && ($username[0]->grado < 3))
 			if($news->deleteNews($minititolo_news))
@@ -38,4 +38,5 @@ else
 	$rendering->addValue('result', 'Accesso negato.');
 $rendering->addValue('logged', $logged);
 $rendering->addValue('submit', $submit);
-(($logged) && ($username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('cancellanews.tpl');
+$rendering->addValue('whatis', 'news');
+(($logged) && ($username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('deletecontent.tpl');

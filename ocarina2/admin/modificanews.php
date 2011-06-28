@@ -12,8 +12,8 @@ $rendering = new Rendering();
 $config = $news->getConfig();
 $titolo_news = ((isset($_POST['titolo'])) && ($_POST['titolo'] !== '')) ? htmlentities(addslashes($news->purgeByXSS($_POST['titolo']))) : '';
 $categoria_news = ((isset($_POST['categoria'])) && ($_POST['categoria'] !== '')) ? htmlentities(addslashes($news->purgeByXSS($_POST['categoria']))) : '';
-$testo_news = ((isset($_POST['news'])) && ($_POST['news'] !== '')) ? addslashes($news->purgeByXSS($_POST['news'])) : '';
-$sel_news = ((isset($_POST['sel_news'])) && ($_POST['sel_news'] !== '')) ? htmlentities(addslashes($news->purgeByXSS($_POST['sel_news']))) : '';
+$testo_news = ((isset($_POST['testo'])) && ($_POST['testo'] !== '')) ? addslashes($news->purgeByXSS($_POST['testo'])) : '';
+$selected = ((isset($_POST['selected'])) && ($_POST['selected'] !== '')) ? htmlentities(addslashes($news->purgeByXSS($_POST['selected']))) : '';
 $submit = isset($_POST['submit']) ? true : false;
 
 $logged = $news->isLogged() ? true : false;
@@ -27,8 +27,8 @@ $rendering->addValue('keywords', $config[0]->keywords);
 $rendering->addValue('description', $config[0]->description);
 
 if($logged)
-	if((!$submit) && ($sel_news == '')) {
-		$result = '<form action="" method="post">Scegli la news da modificare <select name="sel_news">';
+	if((!$submit) && ($selected == '')) {
+		$result = '<form action="" method="post">Scegli la news da modificare <select name="selected">';
 		if($username[0]->grado == 3)
 			foreach($news->searchNewsByUser($username[0]->nickname) as $v)
 				$result .= '<option value="'.$v->minititolo.'">'.$v->titolo.'</option>';
@@ -38,20 +38,20 @@ if($logged)
 		$result .= '</select><input type="submit" name="sel_submit" value="Modifica news">';
 		$rendering->addValue('result', $result);
 	}	
-	elseif((!$submit) && ($sel_news !== '')) {
+	elseif((!$submit) && ($selected !== '')) {
 		$rendering->addValue('bbcode', $config[0]->bbcode);
 		$rendering->addValue('categorie', $news->getCategory('news'));
-		if($this_news = $news->getNews($sel_news)) {
-			$rendering->addValue('titolo_news', $this_news[0]->titolo);
-			$rendering->addValue('categoria_news', $this_news[0]->categoria);
-			$rendering->addValue('testo_news', $this_news[0]->contenuto);
+		if($this_news = $news->getNews($selected)) {
+			$rendering->addValue('titolo_default', $this_news[0]->titolo);
+			$rendering->addValue('categoria', $this_news[0]->categoria);
+			$rendering->addValue('testo', $this_news[0]->contenuto);
 		}
 		else
 			$rendering->addValue('result', 'È accaduto un errore, la news selezionata non esiste.');
 	}
-	elseif(($submit) && ($sel_news !== '')) {
+	elseif(($submit) && ($selected !== '')) {
 		if(($titolo_news !== '') && ($categoria_news !== '') && ($testo_news !== '') && ($username[0]->grado < 4)) {
-			$this_news = $news->getNews($sel_news);
+			$this_news = $news->getNews($selected);
 			if(($username[0]->grado == 3) && ($this_news[0]->nickname !== $username[0]->nickname))
 				$rendering->addValue('result', 'Non sei abilitato a modificare questa news.');
 			elseif((($username[0]->grado == 3) && ($this_news[0]->nickname == $username[0]->nickname)) || ($username[0]->grado < 3)) 
@@ -65,5 +65,6 @@ else
 	$rendering->addValue('result', 'Accesso negato.');
 $rendering->addValue('logged', $logged);
 $rendering->addValue('submit', $submit);
-$rendering->addValue('sel_news', $sel_news);
-(($logged) && ($username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('modificanews.tpl');
+$rendering->addValue('sel', $selected);
+$rendering->addValue('whatis', 'Modifica news');
+(($logged) && ($username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('formcontents.tpl');

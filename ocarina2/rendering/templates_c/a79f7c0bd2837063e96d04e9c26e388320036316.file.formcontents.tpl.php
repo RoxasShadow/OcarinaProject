@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-06-27 23:44:07
-         compiled from "/var/www/htdocs/ocarina2/rendering/templates/admin/creanews.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:4532188584e0915c75ac581-09376737%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /* Smarty version Smarty-3.0.8, created on 2011-06-28 22:54:49
+         compiled from "/var/www/htdocs/ocarina2/rendering/templates/admin/formcontents.tpl" */ ?>
+<?php /*%%SmartyHeaderCode:8492869474e0a5bb9c864e5-23550579%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
-    '859a944845edd4eaf7b1cdfbdec0989b4e7c72b7' => 
+    'a79f7c0bd2837063e96d04e9c26e388320036316' => 
     array (
-      0 => '/var/www/htdocs/ocarina2/rendering/templates/admin/creanews.tpl',
-      1 => 1309218244,
+      0 => '/var/www/htdocs/ocarina2/rendering/templates/admin/formcontents.tpl',
+      1 => 1309301683,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '4532188584e0915c75ac581-09376737',
+  'nocache_hash' => '8492869474e0a5bb9c864e5-23550579',
   'function' => 
   array (
   ),
@@ -24,7 +24,8 @@ $_smarty_tpl->decodeProperties(array (
 	<?php }elseif($_smarty_tpl->getVariable('grado')->value<4&&!$_smarty_tpl->getVariable('submit')->value&&!isset($_smarty_tpl->getVariable('result',null,true,false)->value)){?>
 		<form action="" method="post">
 		Titolo<br />
-		<input type="text" name="titolo" /><br /><br />
+		<input type="text" name="titolo" <?php if ((isset($_smarty_tpl->getVariable('titolo_default',null,true,false)->value))){?>value="<?php echo $_smarty_tpl->getVariable('titolo_default')->value;?>
+"<?php }?> /><br /><br />
 		Categoria<br />
 		<select name="categoria">
 		<?php  $_smarty_tpl->tpl_vars['item'] = new Smarty_Variable;
@@ -34,9 +35,15 @@ if ($_smarty_tpl->_count($_from) > 0){
     foreach ($_from as $_smarty_tpl->tpl_vars['item']->key => $_smarty_tpl->tpl_vars['item']->value){
  $_smarty_tpl->tpl_vars['key']->value = $_smarty_tpl->tpl_vars['item']->key;
 ?>
-			<option value="<?php echo $_smarty_tpl->getVariable('categorie')->value[$_smarty_tpl->tpl_vars['key']->value];?>
+			 <?php if (((isset($_smarty_tpl->getVariable('categoria',null,true,false)->value))&&($_smarty_tpl->getVariable('categorie')->value[$_smarty_tpl->tpl_vars['key']->value]==$_smarty_tpl->getVariable('categoria')->value))){?>
+			 	<option value="<?php echo $_smarty_tpl->getVariable('categorie')->value[$_smarty_tpl->tpl_vars['key']->value];?>
+" selected><?php echo $_smarty_tpl->getVariable('categorie')->value[$_smarty_tpl->tpl_vars['key']->value];?>
+</option>
+			 <?php }else{ ?>
+				<option value="<?php echo $_smarty_tpl->getVariable('categorie')->value[$_smarty_tpl->tpl_vars['key']->value];?>
 "><?php echo $_smarty_tpl->getVariable('categorie')->value[$_smarty_tpl->tpl_vars['key']->value];?>
 </option>
+			<?php }?>
 		<?php }} ?>
 		</select><br /><br />
 		<?php if ($_smarty_tpl->getVariable('bbcode')->value==1){?>
@@ -68,13 +75,12 @@ if ($_smarty_tpl->_count($_from) > 0){
 			<a onclick="javascript:add('[code][/code]');"><b>Codice</b></a>
 			<a onclick="javascript:add('[quote][/quote]');"><b>Citazione</b></a>
 		<?php }?>
-		<?php if ($_smarty_tpl->getVariable('what')->value=='pagina'){?>
-			<textarea name="pagina" cols="59" rows="10" id="txtQuota"></textarea><br />
-			<input type="submit" name="submit" value="Crea pagina" />
-		<?php }else{ ?>
-			<textarea name="news" cols="59" rows="10" id="txtQuota"></textarea><br />
-			<input type="submit" name="submit" value="Crea news" />
-		<?php }?>
+		<textarea name="testo" cols="59" rows="10" id="txtQuota"><?php if ((isset($_smarty_tpl->getVariable('testo',null,true,false)->value))){?><?php echo $_smarty_tpl->getVariable('testo')->value;?>
+<?php }?></textarea><br />
+		<?php if (isset($_smarty_tpl->getVariable('sel',null,true,false)->value)){?><input type="hidden" name="selected" value="<?php echo $_smarty_tpl->getVariable('sel')->value;?>
+" /><?php }?>
+		<input type="submit" name="submit" <?php if ((isset($_smarty_tpl->getVariable('whatis',null,true,false)->value)&&($_smarty_tpl->getVariable('whatis')->value!==''))){?>value="<?php echo $_smarty_tpl->getVariable('whatis')->value;?>
+"<?php }?> />
 		</form>
 	<?php }elseif($_smarty_tpl->getVariable('grado')->value<4&&$_smarty_tpl->getVariable('submit')->value&&isset($_smarty_tpl->getVariable('result',null,true,false)->value)||(!$_smarty_tpl->getVariable('submit')->value&&isset($_smarty_tpl->getVariable('result',null,true,false)->value))){?>
 		<?php echo $_smarty_tpl->getVariable('result')->value;?>
