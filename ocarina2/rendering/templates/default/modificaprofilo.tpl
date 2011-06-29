@@ -1,6 +1,6 @@
 {include file="$root_rendering/templates/$skin/include/header.tpl"}
 	{if !$logged}
-		<div id="titolo">{$result}</div>
+		<div class="titolo">{$result}</div>
 	{elseif !$submit}
 		<form action="" method="post">
 		Email<br />
@@ -24,6 +24,6 @@
 		<input type="submit" value="Modifica profilo" name="submit" />
 		</form>
 	{else}
-		<div id="titolo">{$result}</div>
+		<div class="titolo">{$result}</div>
 	{/if}
 {include file="$root_rendering/templates/$skin/include/footer.tpl"}

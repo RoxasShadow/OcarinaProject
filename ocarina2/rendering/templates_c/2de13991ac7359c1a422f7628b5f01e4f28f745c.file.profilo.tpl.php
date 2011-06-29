@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-06-22 20:09:53
+<?php /* Smarty version Smarty-3.0.8, created on 2011-06-29 16:07:09
          compiled from "/var/www/htdocs/ocarina2/rendering/templates/default/profilo.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:13574260834e024c11c23069-80136183%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:15269294944e0b4dad128a50-39833016%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '2de13991ac7359c1a422f7628b5f01e4f28f745c' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering/templates/default/profilo.tpl',
-      1 => 1308773391,
+      1 => 1309363433,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '13574260834e024c11c23069-80136183',
+  'nocache_hash' => '15269294944e0b4dad128a50-39833016',
   'function' => 
   array (
   ),
@@ -48,7 +48,7 @@ if ($_smarty_tpl->_count($_from) > 0){
  $_smarty_tpl->tpl_vars['key']->value = $_smarty_tpl->tpl_vars['item']->key;
 ?>
 			<div align="center">
-			<div id="titolo"><?php echo $_smarty_tpl->getVariable('result')->value[$_smarty_tpl->tpl_vars['key']->value]->nickname;?>
+			<div class="titolo"><?php echo $_smarty_tpl->getVariable('result')->value[$_smarty_tpl->tpl_vars['key']->value]->nickname;?>
 </div>
 			<?php if ($_smarty_tpl->getVariable('result')->value[$_smarty_tpl->tpl_vars['key']->value]->avatar!==''){?><img src="<?php echo $_smarty_tpl->getVariable('result')->value[$_smarty_tpl->tpl_vars['key']->value]->avatar;?>
 " /><br /><?php }?>
@@ -82,7 +82,7 @@ if ($_smarty_tpl->_count($_from) > 0){
 			</div>
 		<?php }} ?>
 	<?php }else{ ?>
-		<div id="titolo"><?php echo $_smarty_tpl->getVariable('result')->value;?>
+		<div class="titolo"><?php echo $_smarty_tpl->getVariable('result')->value;?>
 </div>
 	<?php }?>
 <?php $_template = new Smarty_Internal_Template(($_smarty_tpl->getVariable('root_rendering')->value)."/templates/".($_smarty_tpl->getVariable('skin')->value)."/include/footer.tpl", $_smarty_tpl->smarty, $_smarty_tpl, $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null);

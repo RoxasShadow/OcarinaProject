@@ -1,53 +1,55 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-06-21 23:26:29
+<?php /* Smarty version Smarty-3.0.8, created on 2011-06-29 15:53:14
          compiled from "/var/www/htdocs/ocarina2/rendering/templates/default/include/header.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:18935917874e0128a5e14587-18763239%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:3381869924e0b4a6a50b183-69734668%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '9cd30aac40a119258fa7385e7e04e4d3860ad49b' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering/templates/default/include/header.tpl',
-      1 => 1308698786,
+      1 => 1309362790,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '18935917874e0128a5e14587-18763239',
+  'nocache_hash' => '3381869924e0b4a6a50b183-69734668',
   'function' => 
   array (
   ),
   'has_nocache_code' => false,
 )); /*/%%SmartyHeaderCode%%*/?>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title><?php echo $_smarty_tpl->getVariable('titolo')->value;?>
+<title><?php echo $_smarty_tpl->getVariable('titolo')->value;?>
 </title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<meta name="description" content="<?php echo $_smarty_tpl->getVariable('description')->value;?>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="description" content="<?php echo $_smarty_tpl->getVariable('description')->value;?>
 " />
-	<meta name="keywords" content="<?php echo $_smarty_tpl->getVariable('keywords')->value;?>
+<meta name="keywords" content="<?php echo $_smarty_tpl->getVariable('keywords')->value;?>
 " />
-	<link rel="stylesheet" type="text/css" href="<?php echo $_smarty_tpl->getVariable('url_rendering')->value;?>
+<link rel="stylesheet" type="text/css" href="<?php echo $_smarty_tpl->getVariable('url_rendering')->value;?>
 /templates/<?php echo $_smarty_tpl->getVariable('skin')->value;?>
 /resources/style.css" />
-	<meta name="robots" content="index,follow" />
+<meta name="robots" content="index,follow" />
 </head>
 <body>
-	<div id="header"><?php echo $_smarty_tpl->getVariable('titolo')->value;?>
+<div id="header"><?php echo $_smarty_tpl->getVariable('titolo')->value;?>
 </div>
-	<div id="menu" align="center">
-	<a href="Aindex.php">News</a> | <a href="archivio.php">Archivio</a> | <a href="ricerca.php">Cerca nel sito</a> | <a href="profilo.php">Profili</a> | <a href="#">Filler</a><br />
-	<?php if ($_smarty_tpl->getVariable('utente')->value==''){?>
-		Benvenuto su <?php echo $_smarty_tpl->getVariable('nomesito')->value;?>
+<div id="menu" align="center">
+<a href="Aindex.php">News</a> | <a href="archivio.php">Archivio</a> | <a href="ricerca.php">Cerca nel sito</a> | <a href="profilo.php">Profili</a> | <a href="#">Filler</a><br />
+<?php if ($_smarty_tpl->getVariable('utente')->value==''){?>
+Benvenuto su <?php echo $_smarty_tpl->getVariable('nomesito')->value;?>
 ! Per usufruire di tutte le funzionalità che ti offriamo <a href="login.php">accedi</a> oppure <a href="registrazione.php">registrati</a>. (<a href="recuperapassword.php">Password persa?</a>)
-	<?php }else{ ?>
-		Bentornato <?php echo $_smarty_tpl->getVariable('utente')->value;?>
+<?php }else{ ?>
+Bentornato <?php echo $_smarty_tpl->getVariable('utente')->value;?>
  (<a href="logout.php">Logout</a> | <a href="profilo.php?nickname=<?php echo $_smarty_tpl->getVariable('utente')->value;?>
 ">Profilo</a> | <a href="modificaprofilo.php">Modifica profilo</a> | <a href="modificapassword.php">Modifica password</a>)
-	<?php }?>
-	<br />
-	<table id="colunica">
-	<tr>
-	<td>
-	<table style="width:50%; margin-left:auto; margin-right:auto;">
-	<tr>
-	<td style="width:50%">
+<?php }?>
+</div>
+<br />
+<table id="colunica">
+<tr>
+<td>
+<table style="width:50%; margin-left:auto; margin-right:auto;">
+<tr>
+<td style="width:50%">

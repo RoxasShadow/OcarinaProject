@@ -9,9 +9,11 @@ require_once('class.Configuration.php');
 class Rendering extends Configuration {
 	private $smarty = NULL;
 	public $skin = NULL;
-
+	private $time_start = NULL;
+	
 	/* Quando la classe viene istanziata, il costruttore provvede a creare un nuovo oggetto Smarty. */
 	public function __construct() {
+		$this->time_start = $this->microtime_float(); // Il timer lo avvio qui poichè la classe viene istanziata ad ogni script.
 		$config = parent::getConfig();
 		require_once($config[0]->root_rendering.'/Smarty.class.php');
 		parent::__construct(); // Eredito il costruttore della superclasse
@@ -68,6 +70,8 @@ class Rendering extends Configuration {
 		$this->addValue('root_rendering', $config[0]->root_rendering);
 		$this->addValue('nomesito', $config[0]->nomesito);
 		$this->addValue('skin', $this->skin);
+		$this->addValue('query', $this->numQuery);
+		$this->addValue('time', $this->microtime_float() - $this->time_start);
 		
 		$this->smarty->templateExists($this->skin.'/'.$filename) ? $this->smarty->display($this->skin.'/'.$filename) : false;
 	}

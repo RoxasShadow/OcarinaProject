@@ -13,7 +13,7 @@
 	{elseif is_array($result)}
 		{foreach from=$result key=key item=item}
 			<div align="center">
-			<div id="titolo">{$result[$key]->nickname}</div>
+			<div class="titolo">{$result[$key]->nickname}</div>
 			{if $result[$key]->avatar !== ''}<img src="{$result[$key]->avatar}" /><br />{/if}
 			<br />
 			
@@ -38,6 +38,6 @@
 			</div>
 		{/foreach}
 	{else}
-		<div id="titolo">{$result}</div>
+		<div class="titolo">{$result}</div>
 	{/if}
 {include file="$root_rendering/templates/$skin/include/footer.tpl"}

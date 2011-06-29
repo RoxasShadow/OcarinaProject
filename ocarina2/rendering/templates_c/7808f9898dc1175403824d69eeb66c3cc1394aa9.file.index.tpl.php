@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-06-22 23:45:38
+<?php /* Smarty version Smarty-3.0.8, created on 2011-06-29 16:31:25
          compiled from "/var/www/htdocs/ocarina2/rendering/templates/default/index.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:12271069524e027ea260a629-77549240%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:7582018274e0b535d01d412-62507728%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '7808f9898dc1175403824d69eeb66c3cc1394aa9' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering/templates/default/index.tpl',
-      1 => 1308786296,
+      1 => 1309363433,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '12271069524e027ea260a629-77549240',
+  'nocache_hash' => '7582018274e0b535d01d412-62507728',
   'function' => 
   array (
   ),
@@ -27,7 +27,7 @@ $_smarty_tpl->decodeProperties(array (
 , siamo felici di rivederti!</div>
 	<?php }?>
 	<?php if (isset($_smarty_tpl->getVariable('errore',null,true,false)->value)){?>
-		<div id="titolo"><?php echo $_smarty_tpl->getVariable('errore')->value;?>
+		<div class="titolo"><?php echo $_smarty_tpl->getVariable('errore')->value;?>
 </div>
 	<?php }else{ ?>
 		<?php if (is_array($_smarty_tpl->getVariable('news')->value)){?>
@@ -39,17 +39,17 @@ if ($_smarty_tpl->_count($_from) > 0){
  $_smarty_tpl->tpl_vars['key']->value = $_smarty_tpl->tpl_vars['item']->key;
 ?>
 				<?php if ($_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->approvato==1){?>
-					<div id="titolo"><a href="news.php?titolo=<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->minititolo;?>
+					<div class="titolo"><a href="news.php?titolo=<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->minititolo;?>
 "><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->titolo;?>
 </a></div>
-					<div id="newsheader" align="center">Scritto da <a href="profilo.php?nickname=<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->autore;?>
+					<div class="newsheader" align="center">Scritto da <a href="profilo.php?nickname=<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->autore;?>
 "><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->autore;?>
 </a> il giorno <?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->data;?>
  alle ore <?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->ora;?>
  nella categoria <a href="categoria.php?cat=<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->categoria;?>
 "><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->categoria;?>
 </a>.</div><br />
-					<div id="news"><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->contenuto;?>
+					<div class="news"><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->contenuto;?>
 </div>
 					<div align="right"><a href="news.php?titolo=<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->minititolo;?>
 ">Lascia un commento <?php $_smarty_tpl->smarty->_tag_stack[] = array('php', array()); $_block_repeat=true; smarty_block_php(array(), null, $_smarty_tpl, $_block_repeat);while ($_block_repeat) { ob_start();?>

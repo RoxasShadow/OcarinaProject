@@ -132,13 +132,13 @@ class User extends Configuration {
 	}
 	
 	/* Crea un cookie. */
-	public function setCookie($value) {
+	protected function setCookie($value) {
 		$config = parent::getConfig('cookie');
 		setcookie($config[0]->cookie, $value, time()+3600);  /* expire in 1 hour */
 	}
 	
 	/* Distrugge un cookie. */
-	public function unSetCookie() {
+	protected function unSetCookie() {
 		$config = parent::getConfig('cookie');
 		setcookie($config[0]->cookie, '', -3600);
 	}

@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-06-26 19:25:58
+<?php /* Smarty version Smarty-3.0.8, created on 2011-06-29 16:06:46
          compiled from "/var/www/htdocs/ocarina2/rendering/templates/default/news.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:3127009374e0787c65cbce0-71512033%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:16634472844e0b4d96c0ec03-57924395%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '9cb4f5c50b2d3313d7bf585cdd7872350ac63864' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering/templates/default/news.tpl',
-      1 => 1309111254,
+      1 => 1309363433,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '3127009374e0787c65cbce0-71512033',
+  'nocache_hash' => '16634472844e0b4d96c0ec03-57924395',
   'function' => 
   array (
   ),
@@ -20,10 +20,10 @@ $_smarty_tpl->decodeProperties(array (
 <?php $_template = new Smarty_Internal_Template(($_smarty_tpl->getVariable('root_rendering')->value)."/templates/".($_smarty_tpl->getVariable('skin')->value)."/include/header.tpl", $_smarty_tpl->smarty, $_smarty_tpl, $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null);
  echo $_template->getRenderedTemplate(); $_template->rendered_content = null;?><?php unset($_template);?>
 	<?php if (isset($_smarty_tpl->getVariable('errore',null,true,false)->value)){?>
-		<div id="titolo"><?php echo $_smarty_tpl->getVariable('errore')->value;?>
+		<div class="titolo"><?php echo $_smarty_tpl->getVariable('errore')->value;?>
 </div>
 	<?php }elseif(isset($_smarty_tpl->getVariable('commentSended',null,true,false)->value)){?>
-		<div id="titolo"><?php echo $_smarty_tpl->getVariable('commentSended')->value;?>
+		<div class="titolo"><?php echo $_smarty_tpl->getVariable('commentSended')->value;?>
 </div>
 	<?php }elseif(is_array($_smarty_tpl->getVariable('news')->value)){?>
 		<?php  $_smarty_tpl->tpl_vars['item'] = new Smarty_Variable;
@@ -36,16 +36,16 @@ if ($_smarty_tpl->_count($_from) > 0){
  $_smarty_tpl->tpl_vars['item']->iteration++;
 ?>
 			<?php if ($_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->approvato==1){?>
-				<div id="titolo"><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->titolo;?>
+				<div class="titolo"><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->titolo;?>
 </div>
-				<div id="newsheader" align="center">Scritto da <a href="profilo.php?nickname=<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->autore;?>
+				<div class="newsheader" align="center">Scritto da <a href="profilo.php?nickname=<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->autore;?>
 "><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->autore;?>
 </a> il giorno <?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->data;?>
  alle ore <?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->ora;?>
  nella categoria <a href="categoria.php?cat=<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->categoria;?>
 "><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->categoria;?>
 </a>.</div><br />
-				<div id="news"><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->contenuto;?>
+				<div class="news"><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->contenuto;?>
 </div>
 			<?php }else{ ?>
 				La news non è stata approvata, e quindi non è visibile.
@@ -53,7 +53,7 @@ if ($_smarty_tpl->_count($_from) > 0){
 		<?php }} ?>
 		<?php if (!is_array($_smarty_tpl->getVariable('commenti')->value)){?>
 			<br /><hr /><br />
-			<div id="news"><?php echo $_smarty_tpl->getVariable('commenti')->value;?>
+			<div class="news"><?php echo $_smarty_tpl->getVariable('commenti')->value;?>
 </div>
 		<?php }else{ ?>
 			<br /><hr /><br />
@@ -125,7 +125,7 @@ if ($_smarty_tpl->_count($_from) > 0){
 			<a onclick="javascript:add('[quote][/quote]');"><b>Citazione</b></a>
 		<?php }?>
 		<form action="" method="post">
-		<textarea name="comment" cols="59" rows="10" id="txtQuota"></textarea><br />
+		<textarea name="comment" cols="59" rows="10" class="txtQuota"></textarea><br />
 		<input type="submit" value="Invia commento" />
 		</form>
 	<?php }?>

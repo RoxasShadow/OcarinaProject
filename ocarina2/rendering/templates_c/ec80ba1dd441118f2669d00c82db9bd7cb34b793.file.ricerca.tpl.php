@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-06-27 13:41:02
+<?php /* Smarty version Smarty-3.0.8, created on 2011-06-29 16:08:22
          compiled from "/var/www/htdocs/ocarina2/rendering/templates/default/ricerca.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:21360451714e08886ed4add0-85911120%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:8895550954e0b4df6a4e5b4-06359766%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'ec80ba1dd441118f2669d00c82db9bd7cb34b793' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering/templates/default/ricerca.tpl',
-      1 => 1308771151,
+      1 => 1309363433,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '21360451714e08886ed4add0-85911120',
+  'nocache_hash' => '8895550954e0b4df6a4e5b4-06359766',
   'function' => 
   array (
   ),
@@ -37,7 +37,7 @@ $_smarty_tpl->decodeProperties(array (
 	<?php }else{ ?>
 	
 	<?php if (isset($_smarty_tpl->getVariable('error_news',null,true,false)->value)){?>
-		<div id="titolo"><?php echo $_smarty_tpl->getVariable('error_news')->value;?>
+		<div class="titolo"><?php echo $_smarty_tpl->getVariable('error_news')->value;?>
 </div>
 	<?php }elseif(isset($_smarty_tpl->getVariable('news',null,true,false)->value)){?>
 		&bull; <b>News</b><br />
@@ -57,7 +57,7 @@ if ($_smarty_tpl->_count($_from) > 0){
 	<?php }?>
 	
 	<?php if (isset($_smarty_tpl->getVariable('error_page',null,true,false)->value)){?>
-		<div id="titolo"><?php echo $_smarty_tpl->getVariable('error_page')->value;?>
+		<div class="titolo"><?php echo $_smarty_tpl->getVariable('error_page')->value;?>
 </div>
 	<?php }elseif(isset($_smarty_tpl->getVariable('pagina',null,true,false)->value)){?>
 		&bull; <b>Pagine</b><br />
@@ -77,7 +77,7 @@ if ($_smarty_tpl->_count($_from) > 0){
 	<?php }?>
 	
 	<?php if (isset($_smarty_tpl->getVariable('error_comment',null,true,false)->value)){?>
-		<div id="titolo"><?php echo $_smarty_tpl->getVariable('error_comment')->value;?>
+		<div class="titolo"><?php echo $_smarty_tpl->getVariable('error_comment')->value;?>
 </div>
 	<?php }elseif(isset($_smarty_tpl->getVariable('commento',null,true,false)->value)){?>
 		&bull; <b>Commenti</b><br />

@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-06-22 23:21:29
+<?php /* Smarty version Smarty-3.0.8, created on 2011-06-29 22:16:01
          compiled from "/var/www/htdocs/ocarina2/rendering/templates/default/modificaprofilo.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:20332864934e0278f9eff667-74170870%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:20420107374e0ba42106c262-59849175%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '1c094b7fd075fccc7cb47ac442c821152018c8a8' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering/templates/default/modificaprofilo.tpl',
-      1 => 1308784885,
+      1 => 1309363433,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '20332864934e0278f9eff667-74170870',
+  'nocache_hash' => '20420107374e0ba42106c262-59849175',
   'function' => 
   array (
   ),
@@ -21,7 +21,7 @@ $_smarty_tpl->decodeProperties(array (
 ?><?php $_template = new Smarty_Internal_Template(($_smarty_tpl->getVariable('root_rendering')->value)."/templates/".($_smarty_tpl->getVariable('skin')->value)."/include/header.tpl", $_smarty_tpl->smarty, $_smarty_tpl, $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null);
  echo $_template->getRenderedTemplate(); $_template->rendered_content = null;?><?php unset($_template);?>
 	<?php if (!$_smarty_tpl->getVariable('logged')->value){?>
-		<div id="titolo"><?php echo $_smarty_tpl->getVariable('result')->value;?>
+		<div class="titolo"><?php echo $_smarty_tpl->getVariable('result')->value;?>
 </div>
 	<?php }elseif(!$_smarty_tpl->getVariable('submit')->value){?>
 		<form action="" method="post">
@@ -59,7 +59,7 @@ if ($_smarty_tpl->_count($_from) > 0){
 		<input type="submit" value="Modifica profilo" name="submit" />
 		</form>
 	<?php }else{ ?>
-		<div id="titolo"><?php echo $_smarty_tpl->getVariable('result')->value;?>
+		<div class="titolo"><?php echo $_smarty_tpl->getVariable('result')->value;?>
 </div>
 	<?php }?>
 <?php $_template = new Smarty_Internal_Template(($_smarty_tpl->getVariable('root_rendering')->value)."/templates/".($_smarty_tpl->getVariable('skin')->value)."/include/footer.tpl", $_smarty_tpl->smarty, $_smarty_tpl, $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null);

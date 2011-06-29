@@ -1,6 +1,6 @@
 {include file="$root_rendering/templates/$skin/include/header.tpl"}
 	{if $logged || isset($recupera)}
-		<div id="titolo">{$result}</div>
+		<div class="titolo">{$result}</div>
 	{elseif !$submit && !$recupero}
 		<form action="" method="post">
 		<table border="0">
@@ -17,6 +17,6 @@
 		</table>
 		</form>
 	{else}
-		<div id="titolo">{$result}</div>
+		<div class="titolo">{$result}</div>
 	{/if}
 {include file="$root_rendering/templates/$skin/include/footer.tpl"}

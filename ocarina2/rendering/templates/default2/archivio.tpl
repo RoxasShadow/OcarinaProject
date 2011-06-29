@@ -1,9 +1,9 @@
 {include file="$root_rendering/templates/$skin/include/header.tpl"}
 	{if isset($errore)}
-		<div id="titolo">{$errore}</div>
+		<div class="titolo">{$errore}</div>
 	{else}
-		{if !is_array($news) AND isset($errore_news)}
-			<div id="titolo">{$errore_news}</div>
+		{if !isset($news) AND isset($errore_news)}
+			<div class="titolo">{$errore_news}</div>
 		{elseif isset($news)}
 			&bull; <b>News</b><br />
 			{foreach from=$news key=key item=item}
@@ -13,8 +13,8 @@
 			{/foreach}
 		{/if}
 		<hr />
-		{if !is_array($pagine) AND isset($errore_pagine)}
-			<div id="titolo">{$errore_pagine}</div>
+		{if !isset($pagine) AND isset($errore_pagine)}
+			<div class="titolo">{$errore_pagine}</div>
 		{elseif isset($news)}
 			&bull; <b>Pagine</b><br />
 			{foreach from=$pagine key=key item=item}

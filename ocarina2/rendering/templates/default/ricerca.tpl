@@ -17,7 +17,7 @@
 	{else}
 	
 	{if isset($error_news)}
-		<div id="titolo">{$error_news}</div>
+		<div class="titolo">{$error_news}</div>
 	{else if isset($news)}
 		&bull; <b>News</b><br />
 		{foreach from=$news key=key item=item}
@@ -28,7 +28,7 @@
 	{/if}
 	
 	{if isset($error_page)}
-		<div id="titolo">{$error_page}</div>
+		<div class="titolo">{$error_page}</div>
 	{else if isset($pagina)}
 		&bull; <b>Pagine</b><br />
 		{foreach from=$pagina key=key item=item}
@@ -39,7 +39,7 @@
 	{/if}
 	
 	{if isset($error_comment)}
-		<div id="titolo">{$error_comment}</div>
+		<div class="titolo">{$error_comment}</div>
 	{else if isset($commento)}
 		&bull; <b>Commenti</b><br />
 		{foreach from=$commento key=key item=item}

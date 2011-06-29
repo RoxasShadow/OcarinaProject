@@ -12,6 +12,7 @@ class MySQL extends Utilities {
 	private $password = 'kronos';
 	private $database = 'ocarina2';
 	private $connected;
+	public $numQuery = 0;
 	
 	/* Quando la classe viene istanziata, il costruttore provvede a connettersi al database. */
 	public function __construct() {
@@ -24,7 +25,7 @@ class MySQL extends Utilities {
 	}
 	
 	/* Esegue una connessione al database. */
-	private function connect() {
+	protected function connect() {
 		if(!$this->connected) {
 			if(!$connessione = mysql_connect($this->host,$this->username,$this->password))
 				return false;
@@ -35,7 +36,7 @@ class MySQL extends Utilities {
 	}
 	
 	/* Esegue una disconnessione dal database. */
-	private function disconnect() {
+	protected function disconnect() {
 		if($this->connected) {
 			if(!mysql_close())
 				return false;
@@ -44,13 +45,16 @@ class MySQL extends Utilities {
 	}
 
 	/* Esegue una query. */
-	public function query($query) {
+	protected function query($query) {
 		$result = mysql_query($query);
-		return (!$result) ? false : $result;
+		if(!$result)
+			return false;
+		$this->numQuery++;
+		return $result;
 	}
 
 	/* Conta le occorrenze di una query. */
-	public function count($query) {
+	protected function count($query) {
 		$result = mysql_num_rows($query);
 		if(!$result)
 			return 0;
@@ -60,20 +64,20 @@ class MySQL extends Utilities {
 	}
 	
 	/* Estrae un oggetto con dei record provenienti da una query. */
-	public function get($query) {
+	protected function get($query) {
 		$result = mysql_fetch_object($query);
 		return (!$result) ? false : $result;
 	}
 	
 	/* Estrae un oggetto con dei record provenienti da una query. */
-	public function getEnum($query) {
+	protected function getEnum($query) {
 		$array = mysql_fetch_row($query);
 		$category = explode("','", preg_replace("/(enum|set)\('(.+?)'\)/", "\\2", $array[1]));
 		return (!empty($category)) ? $category : false;
 	}
 	
 	/* Ritorna un array contenente le colonne di una tabella. */
-	public function getColumns($query) {
+	protected function getColumns($query) {
 		$array = array();
 		$columns = mysql_num_fields($query);
 		for($i=0; $i<$columns; $i++)

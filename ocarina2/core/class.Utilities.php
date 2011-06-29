@@ -283,4 +283,10 @@ class Utilities {
 		$newsreduced = explode('|', wordwrap($news, $max, '|'));
 		return substr($newsreduced[0], 0, -1).'...'.$append;
 	}
+	
+	/* Ritorna il timestamp in millisecondi. */
+	function microtime_float() {
+		list($usec, $sec) = explode(' ', microtime());
+		return ((float)$usec + (float)$sec);
+	}
 }
