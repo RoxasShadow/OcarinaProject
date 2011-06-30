@@ -19,12 +19,10 @@
 			{literal}
 			<script type="text/javascript">
 			function add(emoticons) {
-			    var text = document.getElementById("txtQuota").value;
-			    document.getElementById("txtQuota").value = text + emoticons;
+			    document.getElementById("txtQuota").value = document.getElementById("txtQuota").value + emoticons;
 			}
 			function requestcolor() {
-			    var colore = prompt("Digita il nome del colore (esempio: red, black, white)");
-			    add('[color='+colore+'][/color]');
+			    add('[color='+prompt("Digita il nome del colore (esempio: red, black, white)")+'][/color]');
 			}
 			</script>
 			{/literal}
@@ -43,6 +41,7 @@
 
 			<a onclick="javascript:add('[code][/code]');"><b>Codice</b></a>
 			<a onclick="javascript:add('[quote][/quote]');"><b>Citazione</b></a>
+			<a onclick="javascript:add('[youtube][/youtube]');"><b>Youtube</b></a>
 		{/if}
 		<textarea name="testo" cols="59" rows="10" id="txtQuota">{if (isset($testo))}{$testo}{/if}</textarea><br />
 		{if isset($sel)}<input type="hidden" name="selected" value="{$sel}" />{/if}

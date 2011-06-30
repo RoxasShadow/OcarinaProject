@@ -7,10 +7,11 @@ ob_start('ob_gzhandler');
 require_once('core/class.News.php');
 require_once('core/class.Rendering.php');
 require_once('etc/class.Pager.php');
-require_once('etc/function.BBCode.php');
+require_once('etc/class.BBCode.php');
 
 $news = new News();
 $rendering = new Rendering();
+$bbcode = new BBCode();
 $config = $news->getConfig();
 $welcome = ((isset($_GET['welcome'])) && ($_GET['welcome'] == 'true')) ? true : false;
 
@@ -40,7 +41,7 @@ else {
 		for($i=0, $count=count($getNews); $i<$count; ++$i) {
 			if($config[0]->limitenews !== 0)
 				$getNews[$i]->contenuto = $news->reduceLen($getNews[$i]->contenuto, $config[0]->limitenews, '[br][b][url=news.php?titolo='.$getNews[$i]->minititolo.']Leggi oltre...[/url][/b]');
-			$getNews[$i]->contenuto = bbcode($getNews[$i]->contenuto);
+			$getNews[$i]->contenuto = $bbcode->bbcode($getNews[$i]->contenuto);
 		}
 		$rendering->addValue('news', $getNews);
 	}
@@ -48,7 +49,7 @@ else {
 		for($i=0; $i<$pager->max; ++$i) { // È uno spreco di memoria iterare tutti gli elementi, basta iterarne solo quelli che vengono mostrati
 			if($config[0]->limitenews !== 0)
 			$getNews[$i]->contenuto = $news->reduceLen($getNews[$i]->contenuto, $config[0]->limitenews, '[br][b][url=news.php?titolo='.$getNews[$i]->minititolo.']Leggi oltre...[/url][/b]');
-			$getNews[$i]->contenuto = bbcode($getNews[$i]->contenuto);
+			$getNews[$i]->contenuto = $bbcode->bbcode($getNews[$i]->contenuto);
 		}
 		$rendering->addValue('news', $getNews);
 	}

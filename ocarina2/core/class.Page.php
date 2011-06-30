@@ -52,8 +52,12 @@ class Page extends Category {
 	}
 	
 	/* Ricerca le pagine da una keyword. */
-	public function searchPage($keyword) {
-		if(!$query = parent::query("SELECT DISTINCT * FROM pagine WHERE (titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%') ORDER BY titolo ASC"))
+	public function searchPage($keyword, $orderById = '') {
+		if($orderById !== '')
+			$query = parent::query("SELECT DISTINCT * FROM pagine WHERE (titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%') ORDER BY id DESC");
+		else
+			$query = parent::query("SELECT DISTINCT * FROM pagine WHERE (titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%') ORDER BY titolo ASC");
+		if(!$query)
 			return false;
 		if(parent::count($query) > 0) {
 			$pagine = array();
@@ -69,7 +73,7 @@ class Page extends Category {
 	
 	/* Ricerca le pagine per categoria. */
 	public function searchPageByCategory($keyword) {
-		if(!$query = parent::query("SELECT DISTINCT * FROM pagine WHERE categoria='$keyword' ORDER BY titolo ASC"))
+		if(!$query = parent::query("SELECT DISTINCT * FROM pagine WHERE categoria='$keyword' ORDER BY id DESC"))
 			return false;
 		if(parent::count($query) > 0) {
 			$pagine = array();

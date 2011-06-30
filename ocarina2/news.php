@@ -6,10 +6,11 @@
 ob_start('ob_gzhandler');
 require_once('core/class.Comments.php');
 require_once('core/class.Rendering.php');
-require_once('etc/function.BBCode.php');
+require_once('etc/class.BBCode.php');
 
 $comment = new Comments();
 $rendering = new Rendering();
+$bbcode = new BBCode();
 $config = $comment->getConfig();
 $titolo = isset($_GET['titolo']) ? $comment->purge($_GET['titolo']) : '';
 $commento = isset($_POST['comment']) ? $comment->purge($_POST['comment']) : '';
@@ -31,7 +32,7 @@ else {
 	else {
 		if($config[0]->bbcode == 1) {
 			for($i=0, $count=count($news); $i<$count; ++$i)
-				$news[$i]->contenuto = bbcode($news[$i]->contenuto);
+				$news[$i]->contenuto = $bbcode->bbcode($news[$i]->contenuto);
 			$rendering->addValue('bbcode', $config[0]->bbcode);
 		}
 		$rendering->addValue('news', $news);
@@ -41,7 +42,7 @@ else {
 		else {
 			if($config[0]->bbcode == 1)
 				for($i=0, $count=count($getComment); $i<$count; ++$i)
-					$getComment[$i]->contenuto = bbcodecommenti($getComment[$i]->contenuto);
+					$getComment[$i]->contenuto = $bbcode->bbcodecommenti($getComment[$i]->contenuto);
 			$rendering->addValue('commenti', $getComment);
 		}
 		if(($commento !== '') && ($logged)) {
@@ -63,4 +64,7 @@ else {
 			$rendering->addValue('commentSended', 'Solo gli utenti registrati possono commentare le news, attendi per il redirect...'.header('Refresh: 2; URL=login.php'));
 	}
 }
+$rendering->addValue('logged', $logged);
+if($logged)
+	$rendering->addValue('grado', $username[0]->grado);
 (($logged) && ($username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('news.tpl');

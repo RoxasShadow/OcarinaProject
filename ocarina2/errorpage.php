@@ -10,11 +10,11 @@ require_once('core/class.Rendering.php');
 $news = new News();
 $rendering = new Rendering();
 $config = $news->getConfig();
-$id = ((isset($_GET['id'])) && is_numeric($_GET['id'])) ? (int)$_GET['id'] : '0x00';
+$id = ((isset($_GET['id'])) && is_numeric($_GET['id'])) ? (int)$_GET['id'] : '';
 
 $logged = $news->isLogged() ? true : false;
 if($logged)
-	$username = $rendering->searchUserByField('secret', $news->getCookie());
+	$username = $news->searchUserByField('secret', $news->getCookie());
 $rendering->addValue('utente', $logged ? $username[0]->nickname : '');
 $rendering->skin = $logged ? $username[0]->skin : $config[0]->skin;
 $rendering->addValue('titolo', 'Errore '.$id.' &raquo; '.$config[0]->nomesito);

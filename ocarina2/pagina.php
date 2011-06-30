@@ -6,10 +6,11 @@
 ob_start('ob_gzhandler');
 require_once('core/class.Page.php');
 require_once('core/class.Rendering.php');
-require_once('etc/function.BBCode.php');
+require_once('etc/class.BBCode.php');
 
 $pagina = new Page();
 $rendering = new Rendering();
+$bbcode = new BBCode();
 $config = $pagina->getConfig();
 $titolo = ((isset($_GET['titolo'])) && ($_GET['titolo'] !== '')) ? $pagina->purge($_GET['titolo']) : '';
 
@@ -30,7 +31,7 @@ else {
 	else {
 		if($config[0]->bbcode == 1)
 			for($i=0, $count=count($getPage); $i<$count; ++$i)
-				$getPage[$i]->contenuto = bbcode($getPage[$i]->contenuto);
+				$getPage[$i]->contenuto = $bbcode->bbcode($getPage[$i]->contenuto);
 		$rendering->addValue('pagina', $getPage);
 	}
 }

@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-06-29 15:16:35
+<?php /* Smarty version Smarty-3.0.8, created on 2011-06-30 17:41:04
          compiled from "/var/www/htdocs/ocarina2/rendering/templates/admin/formcontents.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:6374961364e0b41d32dca63-72820450%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:3407228454e0cb53027d321-50772516%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'a79f7c0bd2837063e96d04e9c26e388320036316' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering/templates/admin/formcontents.tpl',
-      1 => 1309303227,
+      1 => 1309455052,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '6374961364e0b41d32dca63-72820450',
+  'nocache_hash' => '3407228454e0cb53027d321-50772516',
   'function' => 
   array (
   ),
@@ -74,6 +74,7 @@ if ($_smarty_tpl->_count($_from) > 0){
 
 			<a onclick="javascript:add('[code][/code]');"><b>Codice</b></a>
 			<a onclick="javascript:add('[quote][/quote]');"><b>Citazione</b></a>
+			<a onclick="javascript:add('[youtube][/youtube]');"><b>Youtube</b></a>
 		<?php }?>
 		<textarea name="testo" cols="59" rows="10" id="txtQuota"><?php if ((isset($_smarty_tpl->getVariable('testo',null,true,false)->value))){?><?php echo $_smarty_tpl->getVariable('testo')->value;?>
 <?php }?></textarea><br />

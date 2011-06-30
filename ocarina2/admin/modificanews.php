@@ -33,7 +33,7 @@ if($logged)
 			foreach($news->searchNewsByUser($username[0]->nickname) as $v)
 				$result .= '<option value="'.$v->minititolo.'">'.$v->titolo.'</option>';
 		elseif($username[0]->grado < 3)
-			foreach($news->getNews() as $v)
+			foreach($news->searchNews('') as $v) // È come una wildcard 
 				$result .= '<option value="'.$v->minititolo.'">'.$v->titolo.'</option>';
 		$result .= '</select><input type="submit" name="sel_submit" value="Modifica news">';
 		$rendering->addValue('result', $result);

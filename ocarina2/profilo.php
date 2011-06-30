@@ -6,7 +6,6 @@
 ob_start('ob_gzhandler');
 require_once('core/class.Page.php');
 require_once('core/class.Rendering.php');
-require_once('etc/function.BBCode.php');
 
 $user = new User();
 $rendering = new Rendering();

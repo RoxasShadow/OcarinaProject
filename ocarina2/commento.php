@@ -6,10 +6,11 @@
 ob_start('ob_gzhandler');
 require_once('core/class.Comments.php');
 require_once('core/class.Rendering.php');
-require_once('etc/function.BBCode.php');
+require_once('etc/class.BBCode.php');
 
 $comments = new Comments();
 $rendering = new Rendering();
+$bbcode = new BBCode();
 $config = $comments->getConfig();
 $id = ((isset($_GET['id'])) && is_numeric($_GET['id'])) ? (int)$_GET['id'] : '';
 
@@ -30,7 +31,7 @@ else {
 	else {
 		if($config[0]->bbcode == 1)
 			for($i=0, $count=count($getComment); $i<$count; ++$i)
-				$getComment[$i]->contenuto = bbcodecommenti($getComment[$i]->contenuto);
+				$getComment[$i]->contenuto = $bbcode->bbcodecommenti($getComment[$i]->contenuto);
 		$rendering->addValue('commento', $getComment);
 	}
 }

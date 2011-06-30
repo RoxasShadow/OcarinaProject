@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-06-30 17:11:19
-         compiled from "/var/www/htdocs/ocarina2/rendering/templates/admin/index.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:5670316844e0cae3773ef89-77335767%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /* Smarty version Smarty-3.0.8, created on 2011-06-30 19:00:04
+         compiled from "/var/www/htdocs/ocarina2/rendering/templates/default/errorpage.tpl" */ ?>
+<?php /*%%SmartyHeaderCode:16923753344e0cc7b41f0fb1-73066198%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
-    '46b6c22da01160288c4f4080e2b38bd608f0315e' => 
+    'cc5651b32337f901effcc6f277645505c1494e0d' => 
     array (
-      0 => '/var/www/htdocs/ocarina2/rendering/templates/admin/index.tpl',
-      1 => 1309092536,
+      0 => '/var/www/htdocs/ocarina2/rendering/templates/default/errorpage.tpl',
+      1 => 1309460403,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '5670316844e0cae3773ef89-77335767',
+  'nocache_hash' => '16923753344e0cc7b41f0fb1-73066198',
   'function' => 
   array (
   ),
@@ -19,13 +19,11 @@ $_smarty_tpl->decodeProperties(array (
 )); /*/%%SmartyHeaderCode%%*/?>
 <?php $_template = new Smarty_Internal_Template(($_smarty_tpl->getVariable('root_rendering')->value)."/templates/".($_smarty_tpl->getVariable('skin')->value)."/include/header.tpl", $_smarty_tpl->smarty, $_smarty_tpl, $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null);
  echo $_template->getRenderedTemplate(); $_template->rendered_content = null;?><?php unset($_template);?>
-	<?php if ($_smarty_tpl->getVariable('utente')->value==''||$_smarty_tpl->getVariable('grado')->value==''){?>
-		Accesso negato.
-	<?php }elseif($_smarty_tpl->getVariable('grado')->value<6){?>
-		Ciao <?php echo $_smarty_tpl->getVariable('utente')->value;?>
-, benvenuto nell'amministrazione.
+	<?php if (isset($_smarty_tpl->getVariable('id',null,true,false)->value)){?>
+		<div class="titolo">Errore <?php echo $_smarty_tpl->getVariable('id')->value;?>
+</div>
 	<?php }else{ ?>
-		Accesso negato.
+		<div class="titolo">Errore indefinito</div>
 	<?php }?>
 <?php $_template = new Smarty_Internal_Template(($_smarty_tpl->getVariable('root_rendering')->value)."/templates/".($_smarty_tpl->getVariable('skin')->value)."/include/footer.tpl", $_smarty_tpl->smarty, $_smarty_tpl, $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null);
  echo $_template->getRenderedTemplate(); $_template->rendered_content = null;?><?php unset($_template);?>

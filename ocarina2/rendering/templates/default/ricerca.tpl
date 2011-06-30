@@ -44,7 +44,7 @@
 		&bull; <b>Commenti</b><br />
 		{foreach from=$commento key=key item=item}
 			{if $commento[$key]->approvato == 1}
-				&raquo; <a href="news.php?titolo={$commento[$key]->news}">#{$commento[$key]->id}</a><br />
+				&raquo; <a href="commento.php?id={$commento[$key]->id}">#{$commento[$key]->id} - {$commento[$key]->autore}</a><br />
 			{/if}
 		{/foreach}
 	{/if}

@@ -25,7 +25,7 @@ $rendering->addValue('description', $config[0]->description);
 
 if($logged)
 	if(!$submit)
-		$rendering->addValue('content', $news->getNews());
+		$rendering->addValue('content', $news->searchNews(''));
 	elseif($submit)
 		if(($minititolo_news !== '') && ($username[0]->grado < 3))
 			if($news->deleteNews($minititolo_news))

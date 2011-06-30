@@ -25,7 +25,7 @@ $rendering->addValue('description', $config[0]->description);
 
 if($logged)
 	if(!$submit)
-		$rendering->addValue('content', $pagina->getPage());
+		$rendering->addValue('content', $pagina->searchPage('', 'wildcard'));
 	elseif($submit)
 		if(($minititolo_pagina !== '') && ($username[0]->grado < 3))
 			if($pagina->deletePage($minititolo_pagina))

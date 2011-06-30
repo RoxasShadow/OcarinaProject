@@ -22,11 +22,11 @@ $rendering->addValue('titolo', 'Archivio &raquo; '.$config[0]->nomesito);
 $rendering->addValue('keywords', $config[0]->keywords);
 $rendering->addValue('description', $config[0]->description);
 
-if(!$getNews = $news->getNews())
+if(!$getNews = $news->searchNews(''))
 	$rendering->addValue('errore_news', 'È accaduto un errore.');
 else
 	$rendering->addValue('news', $getNews);
-if(!$getPage = $pagine->getPage())
+if(!$getPage = $pagine->searchPage('', 'wildcard'))
 	$rendering->addValue('errore_pagine', 'È accaduto un errore.');
 else
 	$rendering->addValue('pagine', $getPage);

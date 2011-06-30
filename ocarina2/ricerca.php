@@ -34,7 +34,7 @@ if($cercaNews !== '') {
 	$cerca = false;
 }
 elseif($cercaPagine !== '') {
-	if(!$search = $pagina->searchPage($cercaPagine))
+	if(!$search = $pagina->searchPage($cercaPagine, 'wildcard'))
 		$rendering->addValue('error_page', 'Non è stata trovata nessuna pagina corrispondente alla tua keyword.');
 	else
 		$rendering->addValue('pagina', $search);

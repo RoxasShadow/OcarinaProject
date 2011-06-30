@@ -33,7 +33,7 @@ if($logged)
 			foreach($news->searchPageByUser($username[0]->nickname) as $v)
 				$result .= '<option value="'.$v->minititolo.'">'.$v->titolo.'</option>';
 		elseif($username[0]->grado < 3)
-			foreach($pagina->getPage() as $v)
+			foreach($pagina->searchPage('', 'wildcard') as $v)
 				$result .= '<option value="'.$v->minititolo.'">'.$v->titolo.'</option>';
 		$result .= '</select><input type="submit" name="sel_submit" value="Modifica news">';
 		$rendering->addValue('result', $result);

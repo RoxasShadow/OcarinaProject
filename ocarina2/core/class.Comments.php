@@ -61,7 +61,7 @@ class Comments extends News {
 	
 	/* Ricerca i commenti da una keyword. */
 	public function searchComment($keyword) {
-		if(!$query = parent::query("SELECT DISTINCT * FROM commenti WHERE contenuto LIKE '%$keyword%'"))
+		if(!$query = parent::query("SELECT DISTINCT * FROM commenti WHERE contenuto LIKE '%$keyword%' ORDER BY id DESC"))
 			return false;
 		if(parent::count($query) > 0) {
 			$commenti = array();
