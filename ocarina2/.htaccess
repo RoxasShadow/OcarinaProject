@@ -1,0 +1,16 @@
+ErrorDocument 301 /ocarina2/errorpage.php?id=401
+ErrorDocument 404 /ocarina2/errorpage.php?id=403
+ErrorDocument 404 /ocarina2/errorpage.php?id=404
+ErrorDocument 404 /ocarina2/errorpage.php?id=500
+
+#RewriteEngine On
+#RewriteRule ^p/([0-9]+).html$ Aindex.php?p=$1 [L] # Da /Aindex.php?p=1 a /pagina/1.html # ([0-9]+) -> Numeri # ([^/]+) -> tutto
+#RewriteRule ^welcome/([^/]+).html$ Aindex.php?welcome=$1 [L]
+#RewriteRule ^categoria/([^/]+).html$ categoria.php?cat=$1 [L]
+#RewriteRule ^commento/([0-9]+).html$ commento.php?id=$1 [L]
+#RewriteRule ^errorpage/([0-9]+).html$ errorpage.php?id=$1 [L]
+#RewriteRule ^logout/([^/]+).html$ logout.php?redirect=$1 [L]
+#RewriteRule ^news/([^/]+).html$ news.php?titolo=$1 [L]
+#RewriteRule ^pagina/([^/]+).html$ pagina.php?titolo=$1 [L]
+#RewriteRule ^profilo/([^/]+).html$ profilo.php?nickname=$1 [L]
+#RewriteRule ^recuperapassword/([^/]+).html$ recuperapassword.php?codice=$1 [L]

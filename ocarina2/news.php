@@ -45,20 +45,13 @@ else {
 			$rendering->addValue('commenti', $getComment);
 		}
 		if(($commento !== '') && ($logged)) {
-			if($config[0]->approvacommenti == 0)
-				$array = array($username[0]->nickname, $commento, $news[0]->minititolo, date('d-m-y'), date('G:m:s'), 1);
-			else
-				$array = array($username[0]->nickname, $commento, $news[0]->minititolo, date('d-m-y'), date('G:m:s'), 0);
+			$array = ($config[0]->approvacommenti == 0) ? array($username[0]->nickname, $commento, $news[0]->minititolo, date('d-m-y'), date('G:m:s'), 1) : array($username[0]->nickname, $commento, $news[0]->minititolo, date('d-m-y'), date('G:m:s'), 0);
 			if($config[0]->commenti == 0)
 				$rendering->addValue('commentSended', 'I commenti sono attualmente bloccati, attendi per il redirect...'.header('Refresh: 2; URL=news.php?titolo='.$titolo));
 			elseif($comment->createComment($array)) {
 				if($config[0]->log == 1)
 					$comment->log($username[0]->nickname, 'Comment sended.');
-				if($config[0]->approvacommenti == 0)
-					$rendering->addValue('commentSended', 'Il commento è stato inviato, attendi per il redirect...'.header('Refresh: 2; URL=news.php?titolo='.$titolo));
-				else
-					$rendering->addValue('commentSended', 'Il commento è stato inviato ed è in attesa per essere approvato, attendi per il redirect...'.header('Refresh: 2; URL=news.php?titolo='.$titolo));
-					
+				($config[0]->approvacommenti == 0) ? $rendering->addValue('commentSended', 'Il commento è stato inviato, attendi per il redirect...'.header('Refresh: 2; URL=news.php?titolo='.$titolo)) : $rendering->addValue('commentSended', 'Il commento è stato inviato ed è in attesa per essere approvato, attendi per il redirect...'.header('Refresh: 2; URL=news.php?titolo='.$titolo));
 			}
 			else {
 				if($config[0]->log == 1)

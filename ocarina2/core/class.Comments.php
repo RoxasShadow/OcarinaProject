@@ -99,8 +99,7 @@ class Comments extends News {
 			return false;
 		if((parent::isNews($array[2])) && (parent::isUser($array[0]))) {
 			$query = parent::query('SELECT * FROM commenti');
-			$campi = parent::getColumns($query);
-			if(!empty($campi))
+			if(!$campi = parent::getColumns($query))
 				return false;
 			$query = 'INSERT INTO commenti(';
 			foreach($campi as $var)

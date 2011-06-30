@@ -14,16 +14,16 @@ class Utilities {
 			foreach($var as $key => $value) {
 				if(is_array($var[$key]))
 					$var[$key] = $this->purge($var[$key]);
-				if(is_string($var[$key])) {
+				if((is_string($var[$key])) && (!is_numeric($var[$key]))) {
 					if(get_magic_quotes_gpc())
 						$var[$key] = stripslashes($var[$key]);
-					$var[$key] = trim(mysql_real_escape_string(htmlentities($var[$key])));
+					$var[$key] = trim(mysql_real_escape_string(htmlentities($this->purgeByXSS($var[$key]))));
 				}
 			}
-		if(is_string($var)) {
+		if((is_string($var)) && (!is_numeric($var))) {
 			if(get_magic_quotes_gpc())
 				$var = stripslashes($var);
-			$var = trim(mysql_real_escape_string(htmlentities($var)));
+			$var = trim(mysql_real_escape_string(htmlentities($this->purgeByXSS($var))));
 		}
 		return $var;
 	}
@@ -34,10 +34,10 @@ class Utilities {
 			foreach($var as $key => $value) {
 				if(is_array($var[$key]))
 					$var[$key] = $this->unPurge($var[$key]);
-				if(is_string($var[$key]))
+				if((is_string($var[$key])) && (!is_numeric($var[$key])))
 					$var[$key] = stripslashes($var[$key]);
 			}
-		if(is_string($var))
+		if((is_string($var)) && (!is_numeric($var)))
 			$var = stripslashes($var);
 		return $var;
 	}
@@ -49,7 +49,7 @@ class Utilities {
 			foreach($var as $key => $value) {
 				if(is_array($var[$key]))
 					$var[$key] = $this->purgeByXSS($var[$key]);
-				if(is_string($var[$key])) {
+				if((is_string($var[$key])) && (!is_numeric($var[$key]))) {
 					$var[$key] = str_replace('<script>', '', $var[$key]);
 					$var[$key] = str_replace('%3C%73%63%72%69%70%74%3E', '', $var[$key]);
 					$var[$key] = str_replace('&#x3C;&#x73;&#x63;&#x72;&#x69;&#x70;&#x74;&#x3E;', '', $var[$key]);
@@ -63,7 +63,7 @@ class Utilities {
 				}
 					
 			}
-		if(is_string($var)) {
+		if((is_string($var)) && (!is_numeric($var))) {
 			$var = str_replace('<script>', '', $var);
 			$var = str_replace('%3C%73%63%72%69%70%74%3E', '', $var);
 			$var = str_replace('&#x3C;&#x73;&#x63;&#x72;&#x69;&#x70;&#x74;&#x3E;', '', $var);

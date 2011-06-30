@@ -91,8 +91,7 @@ class User extends Configuration {
 			return false;
 		if((!$this->isUser($array[0])) && (parent::isEmail($array[2]))) {
 			$query = parent::query('SELECT * FROM utenti ORDER BY nickname ASC');
-			$campi = parent::getColumns($query);
-			if(empty($campi))
+			if(!$campi = parent::getColumns($query))
 				return false;
 			$array[1] = md5($array[1]);
 			$query = 'INSERT INTO utenti(';

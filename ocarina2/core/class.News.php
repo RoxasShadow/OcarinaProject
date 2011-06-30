@@ -111,8 +111,7 @@ class News extends Category {
 			return false;
 		if((!$this->isNews($array[2])) && (parent::isCategory('news', $array[4])) && (parent::isUser($array[0]))) {
 			$query = parent::query('SELECT * FROM news ORDER BY id DESC');
-			$campi = parent::getColumns($query);
-			if(empty($campi))
+			if(!$campi = parent::getColumns($query))
 				return false;
 			$query = 'INSERT INTO news(';
 			foreach($campi as $var)

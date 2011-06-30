@@ -105,8 +105,7 @@ class Page extends Category {
 			return false;
 		if((!$this->isPage($array[2])) && (parent::isCategory('pagine', $array[4])) && (parent::isUser($array[0]))) {
 			$query = parent::query('SELECT * FROM pagine');
-			$campi = parent::getColumns($query);
-			if(empty($campi))
+			if(!$campi = parent::getColumns($query))
 				return false;
 			$query = 'INSERT INTO pagine(';
 			foreach($campi as $var)

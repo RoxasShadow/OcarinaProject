@@ -82,6 +82,6 @@ class MySQL extends Utilities {
 		$columns = mysql_num_fields($query);
 		for($i=0; $i<$columns; $i++)
 			$array[$i] = mysql_field_name($query, $i);
-		return $array;
+		return (empty($array)) ? false : $array;
 	}
 }

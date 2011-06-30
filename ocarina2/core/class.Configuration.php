@@ -39,7 +39,8 @@ class Configuration extends MySQL {
 			return false;
 		if(!$query = parent::query('SELECT * FROM configurazione'))
 			return false;
-		$campi = parent::getColumns($query);
+		if(!$campi = parent::getColumns($query))
+			return false;
 		$query = 'INSERT INTO configurazione(';
 		foreach($campi as $var)
 			if($var !== 'id')
