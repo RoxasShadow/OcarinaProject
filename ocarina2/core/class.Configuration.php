@@ -7,6 +7,12 @@ require_once('class.MySQL.php');
 
 /* Questa classe mette a disposizione dei metodi per gestire la configurazione. */
 class Configuration extends MySQL {
+	public $config = NULL;
+	
+	public function __construct() {
+		parent::__construct();
+		$this->config = $this->getConfig();
+	}
 
 	/* Ottengo un oggetto contenente la configurazione. */
 	public function getConfig($campo = '') {

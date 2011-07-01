@@ -1,9 +1,41 @@
-ErrorDocument 301 /ocarina2/errorpage.php?id=401
-ErrorDocument 404 /ocarina2/errorpage.php?id=403
-ErrorDocument 404 /ocarina2/errorpage.php?id=404
-ErrorDocument 404 /ocarina2/errorpage.php?id=500
+# /.htaccess
+# (C) Giovanni Capuano 2011
+<Files .htaccess>
+order allow,deny
+deny from all
+</Files>
+Options All +Indexes
 
-#RewriteEngine On
+ErrorDocument 301 /ocarina2/errorpage.php?id=401
+ErrorDocument 403 /ocarina2/errorpage.php?id=403
+ErrorDocument 404 /ocarina2/errorpage.php?id=404
+ErrorDocument 500 /ocarina2/errorpage.php?id=500
+
+AddType text/html php htm html
+AddDefaultCharset UTF-8
+SetOutputFilter DEFLATE
+SetEnv TZ Europe/Rome
+
+<IfModule mod_expires.c>
+<IfModule mod_headers.c>
+<FilesMatch "\.(jpg|jpeg|png|gif|swf|js|css)$"> # Estensioni che verranno messe in cache per 15 giorni (1296000 secondi)
+Header set Cache-Control "max-age=1296000, public"
+</FilesMatch>
+</IfModule>
+</IfModule>
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+ 
+# Security
+RewriteCond %{QUERY_STRING} proc/self/environ [OR]
+RewriteCond %{QUERY_STRING} mosConfig_[a-zA-Z_]{1,21}(=|\%3D) [OR]
+RewriteCond %{QUERY_STRING} base64_encode.*(.*) [OR]
+RewriteCond %{QUERY_STRING} (<|%3C).*script.*(>|%3E) [NC,OR]
+RewriteCond %{QUERY_STRING} GLOBALS(=|[|\%[0-9A-Z]{0,2}) [OR]
+RewriteCond %{QUERY_STRING} _REQUEST(=|[|\%[0-9A-Z]{0,2})
+RewriteRule ^(.*)$ errorpage.php?id=403 [F,L]
+
 #RewriteRule ^p/([0-9]+).html$ Aindex.php?p=$1 [L] # Da /Aindex.php?p=1 a /pagina/1.html # ([0-9]+) -> Numeri # ([^/]+) -> tutto
 #RewriteRule ^welcome/([^/]+).html$ Aindex.php?welcome=$1 [L]
 #RewriteRule ^categoria/([^/]+).html$ categoria.php?cat=$1 [L]
@@ -14,3 +46,4 @@ ErrorDocument 404 /ocarina2/errorpage.php?id=500
 #RewriteRule ^pagina/([^/]+).html$ pagina.php?titolo=$1 [L]
 #RewriteRule ^profilo/([^/]+).html$ profilo.php?nickname=$1 [L]
 #RewriteRule ^recuperapassword/([^/]+).html$ recuperapassword.php?codice=$1 [L]
+</IfModule>

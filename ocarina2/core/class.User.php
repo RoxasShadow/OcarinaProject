@@ -132,20 +132,17 @@ class User extends Configuration {
 	
 	/* Crea un cookie. */
 	protected function setCookie($value) {
-		$config = parent::getConfig('cookie');
-		setcookie($config[0]->cookie, $value, time()+3600);  /* expire in 1 hour */
+		setcookie($this->config[0]->cookie, $value, time()+3600);  /* expire in 1 hour */
 	}
 	
 	/* Distrugge un cookie. */
 	protected function unSetCookie() {
-		$config = parent::getConfig('cookie');
-		setcookie($config[0]->cookie, '', -3600);
+		setcookie($this->config[0]->cookie, '', -3600);
 	}
 	
 	/* Ottiene un cookie. */
 	public function getCookie() {
-		$config = parent::getConfig('cookie');
-		return isset($_COOKIE[$config[0]->cookie]) ? parent::purge($_COOKIE[$config[0]->cookie]) : false;
+		return isset($_COOKIE[$this->config[0]->cookie]) ? parent::purge($_COOKIE[$this->config[0]->cookie]) : false;
 	}
 	
 	/* Logga un utente. */

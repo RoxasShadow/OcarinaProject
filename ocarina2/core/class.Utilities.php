@@ -50,30 +50,30 @@ class Utilities {
 				if(is_array($var[$key]))
 					$var[$key] = $this->purgeByXSS($var[$key]);
 				if((is_string($var[$key])) && (!is_numeric($var[$key]))) {
-					$var[$key] = str_replace('<script', '', $var[$key]);
-					$var[$key] = str_replace('%3C%73%63%72%69%70%74%3E', '', $var[$key]);
-					$var[$key] = str_replace('&#x3C;&#x73;&#x63;&#x72;&#x69;&#x70;&#x74;&#x3E;', '', $var[$key]);
-					$var[$key] = str_replace('&#60&#115&#99&#114&#105&#112&#116&#62', '', $var[$key]);
-					$var[$key] = str_replace('PHNjcmlwdD4=', '', $var[$key]);
-					$var[$key] = str_replace('script>', '', $var[$key]);
-					$var[$key] = str_replace('%3C%2F%73%63%72%69%70%74%3E', '', $var[$key]);
-					$var[$key] = str_replace('&#x3C;&#x2F;&#x73;&#x63;&#x72;&#x69;&#x70;&#x74;&#x3E;', '', $var[$key]);
-					$var[$key] = str_replace('&#60&#47&#115&#99&#114&#105&#112&#116&#62', '', $var[$key]);
-					$var[$key] = str_replace('PC9zY3JpcHQ+', '', $var[$key]);
+					$var[$key] = str_replace('<script', '&lt;script', $var[$key]);
+					$var[$key] = str_replace('%3C%73%63%72%69%70%74%3E', '&lt;script', $var[$key]);
+					$var[$key] = str_replace('&#x3C;&#x73;&#x63;&#x72;&#x69;&#x70;&#x74;&#x3E;', '&lt;script', $var[$key]);
+					$var[$key] = str_replace('&#60&#115&#99&#114&#105&#112&#116&#62', '&lt;script', $var[$key]);
+					$var[$key] = str_replace('PHNjcmlwdD4=', '&lt;script', $var[$key]);
+					$var[$key] = str_replace('script>', 'script&gt;', $var[$key]);
+					$var[$key] = str_replace('%3C%2F%73%63%72%69%70%74%3E', 'script&gt;', $var[$key]);
+					$var[$key] = str_replace('&#x3C;&#x2F;&#x73;&#x63;&#x72;&#x69;&#x70;&#x74;&#x3E;', 'script&gt;', $var[$key]);
+					$var[$key] = str_replace('&#60&#47&#115&#99&#114&#105&#112&#116&#62', 'script&gt;', $var[$key]);
+					$var[$key] = str_replace('PC9zY3JpcHQ+', 'script&gt;', $var[$key]);
 				}
 					
 			}
 		if((is_string($var)) && (!is_numeric($var))) {
-			$var = str_replace('<script', '', $var);
-			$var = str_replace('%3C%73%63%72%69%70%74', '', $var);
-			$var = str_replace('&#x3C;&#x73;&#x63;&#x72;&#x69;&#x70;&#x74;', '', $var);
-			$var = str_replace('&#60&#115&#99&#114&#105&#112&#116', '', $var);
-			$var = str_replace('PHNjcmlwdA==', '', $var);
-			$var = str_replace('script>', '', $var);
-			$var = str_replace('%73%63%72%69%70%74%3E', '', $var);
-			$var = str_replace('&#x73;&#x63;&#x72;&#x69;&#x70;&#x74;&#x3E;', '', $var);
-			$var = str_replace('&#115&#99&#114&#105&#112&#116&#62', '', $var);
-			$var = str_replace('c2NyaXB0Pg==', '', $var);
+			$var = str_replace('<script', '&lt;script', $var);
+			$var = str_replace('%3C%73%63%72%69%70%74', '&lt;script', $var);
+			$var = str_replace('&#x3C;&#x73;&#x63;&#x72;&#x69;&#x70;&#x74;', '&lt;script', $var);
+			$var = str_replace('&#60&#115&#99&#114&#105&#112&#116', '&lt;script', $var);
+			$var = str_replace('PHNjcmlwdA==', '&lt;script', $var);
+			$var = str_replace('script>', 'script&gt;', $var);
+			$var = str_replace('%73%63%72%69%70%74%3E', 'script&gt;', $var);
+			$var = str_replace('&#x73;&#x63;&#x72;&#x69;&#x70;&#x74;&#x3E;', 'script&gt;', $var);
+			$var = str_replace('&#115&#99&#114&#105&#112&#116&#62', 'script&gt;', $var);
+			$var = str_replace('c2NyaXB0Pg==', 'script&gt;', $var);
 		}
 		return $var;
 	}

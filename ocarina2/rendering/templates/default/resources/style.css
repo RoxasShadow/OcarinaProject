@@ -1,3 +1,8 @@
+/**	/rendering/templates/default/resources/style.css
+	Opera derivata dal template originale rilasciato da Paolo 'nessuno' Galeone sotto licenza Creative Commons BY-SA 2.5 <http://nessuno.gotdns.org>
+	(C) Giovanni Capuano 2011
+*/
+
 #header{color:#808080;text-align:center;font-weight:bold;font-size:20pt;margin-top:1%;}
 #colunica{background-color:#000000;margin-right:2%;margin-left:2%;margin-top:3%;padding-top:2pt;padding-bottom:2pt;padding-left:2pt;padding-right:2pt;font-size:9pt;border:0.8pt dashed #FFFFFF;margin-bottom:3%;vertical-align:top;color:#2370B6;width:96%;}
 body{color:#808080;background-color:#070707;font-family:monospace;height:97%;width:99%;}

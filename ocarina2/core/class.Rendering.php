@@ -13,19 +13,19 @@ class Rendering extends Configuration {
 	
 	/* Quando la classe viene istanziata, il costruttore provvede a creare un nuovo oggetto Smarty. */
 	public function __construct() {
-		$this->time_start = $this->microtime_float(); // Il timer lo avvio qui poichè la classe viene istanziata ad ogni script.
-		$config = parent::getConfig();
-		require_once($config[0]->root_rendering.'/Smarty.class.php');
 		parent::__construct(); // Eredito il costruttore della superclasse
+		$this->time_start = $this->microtime_float(); // Il timer lo avvio qui poichè la classe viene istanziata ad ogni script.
+		require_once(parent::$this->config[0]->root_rendering.'/Smarty.class.php');
 		$this->smarty = new Smarty;
-		$getConfig = parent::getConfig();
-		$path = $getConfig[0]->root_rendering;
+		$path = $this->config[0]->root_rendering;
 		$this->smarty->cache_dir = $path.'/cache';
 		$this->smarty->template_dir = $path.'/templates';
 		$this->smarty->compile_dir = $path.'/templates_c';
 		$this->smarty->config_dir = $path.'/configs';
-		$this->smarty->error_reporting = E_ALL | E_STRICT;
+		$this->smarty->error_reporting = E_ALL | E_STRICT; // Mostra tutti i tipi di errore
 		$this->smarty->allow_php_tag = true; // Serve per leggere il numero di commenti di ogni news dalla index :(
+		$this->smarty->force_compile = false; // Permette di non recompilare ogni volta il template
+		$this->smarty->loadFilter('output', 'trimwhitespace'); // Plugin che comprime l'HTML velocizzando la renderizzazione da parte del browser
 	}
 
 	/* Quando la classe viene distrutta, il distruttore provvede a distruggere l'oggetto Smarty liberando memoria. */
@@ -64,11 +64,10 @@ class Rendering extends Configuration {
 
 	/* Il motore di rendering effettua il rendering del template in input e lo visualizza. */
 	public function renderize($filename) {
-		$config = parent::getConfig();
-		$this->addValue('url_index', $config[0]->url_index);
-		$this->addValue('url_rendering', $config[0]->url_rendering);
-		$this->addValue('root_rendering', $config[0]->root_rendering);
-		$this->addValue('nomesito', $config[0]->nomesito);
+		$this->addValue('url_index', $this->config[0]->url_index);
+		$this->addValue('url_rendering', $this->config[0]->url_rendering);
+		$this->addValue('root_rendering', $this->config[0]->root_rendering);
+		$this->addValue('nomesito', $this->config[0]->nomesito);
 		$this->addValue('skin', $this->skin);
 		$this->addValue('query', $this->numQuery);
 		$this->addValue('time', $this->microtime_float() - $this->time_start);

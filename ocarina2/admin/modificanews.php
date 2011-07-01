@@ -3,13 +3,11 @@
 	/admin/modificanews.php
 	(C) Giovanni Capuano 2011
 */
-ob_start('ob_gzhandler');
 require_once('../core/class.News.php');
 require_once('../core/class.Rendering.php');
 
 $news = new News();
 $rendering = new Rendering();
-$config = $news->getConfig();
 $titolo_news = ((isset($_POST['titolo'])) && ($_POST['titolo'] !== '')) ? htmlentities(addslashes($news->purgeByXSS($_POST['titolo']))) : '';
 $categoria_news = ((isset($_POST['categoria'])) && ($_POST['categoria'] !== '')) ? htmlentities(addslashes($news->purgeByXSS($_POST['categoria']))) : '';
 $testo_news = ((isset($_POST['testo'])) && ($_POST['testo'] !== '')) ? addslashes($news->purgeByXSS($_POST['testo'])) : '';
@@ -22,9 +20,9 @@ if($logged)
 $rendering->addValue('utente', $logged ? $username[0]->nickname : '');
 $rendering->addValue('grado', $logged ? $username[0]->grado : '');
 $rendering->skin = 'admin';
-$rendering->addValue('titolo', 'Modifica news &raquo; Amministrazione &raquo; '.$config[0]->nomesito);
-$rendering->addValue('keywords', $config[0]->keywords);
-$rendering->addValue('description', $config[0]->description);
+$rendering->addValue('titolo', 'Modifica news &raquo; Amministrazione &raquo; '.$news->config[0]->nomesito);
+$rendering->addValue('keywords', $news->config[0]->keywords);
+$rendering->addValue('description', $news->config[0]->description);
 
 if($logged)
 	if((!$submit) && ($selected == '')) {
@@ -39,7 +37,7 @@ if($logged)
 		$rendering->addValue('result', $result);
 	}	
 	elseif((!$submit) && ($selected !== '')) {
-		$rendering->addValue('bbcode', $config[0]->bbcode);
+		$rendering->addValue('bbcode', $news->config[0]->bbcode);
 		$rendering->addValue('categorie', $news->getCategory('news'));
 		if($this_news = $news->getNews($selected)) {
 			$rendering->addValue('titolo_default', $this_news[0]->titolo);

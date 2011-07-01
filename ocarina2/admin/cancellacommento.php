@@ -3,7 +3,6 @@
 	/admin/cancellanews.php
 	(C) Giovanni Capuano 2011
 */
-ob_start('ob_gzhandler');
 require_once('../core/class.Comments.php');
 
 $comments = new Comments();
@@ -13,10 +12,13 @@ $logged = $comments->isLogged() ? true : false;
 if($logged)
 	$username = $comments->searchUserByField('secret', $comments->getCookie());
 
-if(($logged) && ($username[0]->grado < 3))
+if(($logged) && ($username[0]->grado < 3)) {
 	$comments->deleteComment($id);
+	if($comments->config[0]->log == 1)
+		$comments->log($username[0]->nickname, 'Comment '.$id.' deleted.');
+}
 
 if(isset($_SERVER['HTTP_REFERER']))
 	header('Location: '.$_SERVER['HTTP_REFERER']);
 else
-	header('Location: index.php');
+	header('Location: '.$config[0]->url_index.'/Aindex.php');

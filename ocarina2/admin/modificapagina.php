@@ -3,13 +3,11 @@
 	/admin/modificapagina.php
 	(C) Giovanni Capuano 2011
 */
-ob_start('ob_gzhandler');
 require_once('../core/class.Page.php');
 require_once('../core/class.Rendering.php');
 
 $pagina = new Page();
 $rendering = new Rendering();
-$config = $pagina->getConfig();
 $titolo_pagina = ((isset($_POST['titolo'])) && ($_POST['titolo'] !== '')) ? htmlentities(addslashes($pagina->purgeByXSS($_POST['titolo']))) : '';
 $categoria_pagina = ((isset($_POST['categoria'])) && ($_POST['categoria'] !== '')) ? htmlentities(addslashes($pagina->purgeByXSS($_POST['categoria']))) : '';
 $testo_pagina = ((isset($_POST['testo'])) && ($_POST['testo'] !== '')) ? addslashes($pagina->purgeByXSS($_POST['testo'])) : '';
@@ -22,9 +20,9 @@ if($logged)
 $rendering->addValue('utente', $logged ? $username[0]->nickname : '');
 $rendering->addValue('grado', $logged ? $username[0]->grado : '');
 $rendering->skin = 'admin';
-$rendering->addValue('titolo', 'Modifica pagina &raquo; Amministrazione &raquo; '.$config[0]->nomesito);
-$rendering->addValue('keywords', $config[0]->keywords);
-$rendering->addValue('description', $config[0]->description);
+$rendering->addValue('titolo', 'Modifica pagina &raquo; Amministrazione &raquo; '.$pagina->config[0]->nomesito);
+$rendering->addValue('keywords', $pagina->config[0]->keywords);
+$rendering->addValue('description', $pagina->config[0]->description);
 
 if($logged)
 	if((!$submit) && ($selected == '')) {
@@ -39,7 +37,7 @@ if($logged)
 		$rendering->addValue('result', $result);
 	}	
 	elseif((!$submit) && ($selected !== '')) {
-		$rendering->addValue('bbcode', $config[0]->bbcode);
+		$rendering->addValue('bbcode', $pagina->config[0]->bbcode);
 		$rendering->addValue('categorie', $pagina->getCategory('pagine'));
 		if($this_pagina = $pagina->getPage($selected)) {
 			$rendering->addValue('titolo_default', $this_pagina[0]->titolo);
