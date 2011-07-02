@@ -19,5 +19,7 @@ $rendering->addValue('titolo', 'Errore '.$id.' &raquo; '.$news->config[0]->nomes
 $rendering->addValue('keywords', $news->config[0]->keywords);
 $rendering->addValue('description', $news->config[0]->description);
 
+if($news->config[0]->log == 1)
+	$news->log(($logged) ? $username[0]->nickname : '~', 'Error '.$id);
 $rendering->addValue('id', $id);
 (($logged) && ($username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('errorpage.tpl');

@@ -39,9 +39,9 @@ class Page extends Category {
 	
 	/* Controlla se la pagina esiste. */
 	public function isPage($minititolo) {
-		if(!$query = parent::query("SELECT id FROM pagine WHERE minititolo='$minititolo' ORDER BY titolo ASC LIMIT 1"))
+		if(!$query = parent::query("SELECT COUNT(*) FROM pagine WHERE minititolo='$minititolo'"))
 			return false;
-		return parent::count($query) > 0 ? true : false;
+		return mysql_result($query, 0, 0) > 0 ? true : false;
 	}
 	
 	/* Conta quante pagine sono presenti nel database. */

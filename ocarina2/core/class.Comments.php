@@ -40,13 +40,13 @@ class Comments extends News {
 	
 	/* Controlla se il commento esiste. */
 	public function isComment($news) {
-		if(!$query = parent::query("SELECT id FROM commenti WHERE news='$news' LIMIT 1"))
+		if(!$query = parent::query("SELECT COUNT(*) FROM commenti WHERE news='$news'"))
 			return false;
-		return parent::count($query) > 0 ? true : false;
+		return mysql_result($query, 0, 0) > 0 ? true : false;
 	}
 	
 	/* Conta quanti commenti sono presenti nel database. */
-	public function countNews() {
+	public function countComments() {
 		if(!$query = parent::query('SELECT COUNT(*) FROM commenti'))
 			return false;
 		return mysql_result($query, 0, 0);

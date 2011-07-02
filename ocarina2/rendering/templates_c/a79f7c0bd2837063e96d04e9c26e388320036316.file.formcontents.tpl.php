@@ -1,22 +1,23 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-06-30 17:41:04
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-02 15:33:51
          compiled from "/var/www/htdocs/ocarina2/rendering/templates/admin/formcontents.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:3407228454e0cb53027d321-50772516%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:15377775424e0f3a5f161af2-57407062%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'a79f7c0bd2837063e96d04e9c26e388320036316' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering/templates/admin/formcontents.tpl',
-      1 => 1309455052,
+      1 => 1309526080,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '3407228454e0cb53027d321-50772516',
+  'nocache_hash' => '15377775424e0f3a5f161af2-57407062',
   'function' => 
   array (
   ),
   'has_nocache_code' => false,
 )); /*/%%SmartyHeaderCode%%*/?>
+
 <?php $_template = new Smarty_Internal_Template(($_smarty_tpl->getVariable('root_rendering')->value)."/templates/".($_smarty_tpl->getVariable('skin')->value)."/include/header.tpl", $_smarty_tpl->smarty, $_smarty_tpl, $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null);
  echo $_template->getRenderedTemplate(); $_template->rendered_content = null;?><?php unset($_template);?>
 	<?php if ($_smarty_tpl->getVariable('utente')->value==''||$_smarty_tpl->getVariable('grado')->value==''||!$_smarty_tpl->getVariable('logged')->value){?>
@@ -50,12 +51,10 @@ if ($_smarty_tpl->_count($_from) > 0){
 			
 			<script type="text/javascript">
 			function add(emoticons) {
-			    var text = document.getElementById("txtQuota").value;
-			    document.getElementById("txtQuota").value = text + emoticons;
+			    document.getElementById("txtQuota").value = document.getElementById("txtQuota").value + emoticons;
 			}
 			function requestcolor() {
-			    var colore = prompt("Digita il nome del colore (esempio: red, black, white)");
-			    add('[color='+colore+'][/color]');
+			    add('[color='+prompt("Digita il nome del colore (esempio: red, black, white)")+'][/color]');
 			}
 			</script>
 			

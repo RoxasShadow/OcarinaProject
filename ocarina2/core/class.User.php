@@ -13,7 +13,7 @@ class User extends Configuration {
 		$utenti = array();
 		if($nickname !== '') {
 			if($this->isUser($nickname)) {
-				if(!$query = parent::query("SELECT * FROM utenti WHERE nickname='$nickname' ORDER BY nickname ASC"))
+				if(!$query = parent::query("SELECT * FROM utenti WHERE nickname='$nickname' LIMIT 1"))
 					return false;
 				array_push($utenti, parent::get($query));
 				if(!empty($utenti))
@@ -39,16 +39,16 @@ class User extends Configuration {
 	
 	/* Controlla se l'utente esiste. */
 	public function isUser($nickname) {
-		if(!$query = parent::query("SELECT id FROM utenti WHERE nickname='$nickname' LIMIT 1"))
+		if(!$query = parent::query("SELECT COUNT(*) FROM utenti WHERE nickname='$nickname'"))
 			return false;
-		return parent::count($query) > 0 ? true : false;
+		return mysql_result($query, 0, 0) > 0 ? true : false;
 	}
 	
 	/* Controlla se l'email è già usata da un altro utente. */
 	public function isEmailUsed($nickname, $email) {
-		if(!$query = parent::query("SELECT id FROM utenti WHERE email='$email' AND nickname<>'$nickname' LIMIT 1"))
+		if(!$query = parent::query("SELECT COUNT(*) FROM utenti WHERE email='$email' AND nickname<>'$nickname'"))
 			return false;
-		return parent::count($query) > 0 ? true : false;
+		return mysql_result($query, 0, 0) > 0 ? true : false;
 	}
 	
 	/* Conta quanti utenti sono presenti nel database. */
@@ -63,9 +63,9 @@ class User extends Configuration {
 		$cookie = $this->getCookie();
 		if(!$cookie)
 			return false;
-		if(!$query = parent::query("SELECT id FROM utenti WHERE secret='$cookie' LIMIT 1"))
+		if(!$query = parent::query("SELECT COUNT(*) FROM utenti WHERE secret='$cookie'"))
 			return false;
-		return parent::count($query) > 0 ? true : false;
+		return mysql_result($query, 0, 0) > 0 ? true : false;
 	}
 	
 	/* Ricerca gli utenti per un campo specifico. */
@@ -122,11 +122,11 @@ class User extends Configuration {
 	/* Crea e ritorna un secret code. */
 	public function getCode() {
 		$code = parent::rng(12);
-		$query = parent::query("SELECT * FROM utenti WHERE secret='$code'");
-		if(parent::count($query) > 0)
-			while(parent::count($query) > 0) {
+		$query = parent::query("SELECT COUNT(*) FROM utenti WHERE secret='$code'");
+		if(mysql_result($query, 0, 0) > 0)
+			while(mysql_result($query, 0, 0) > 0) {
 				$code = parent::rng(12);
-				$query = parent::query("SELECT * FROM utenti WHERE secret='$code' LIMIT 1");
+				$query = parent::query("SELECT COUNT(*) FROM utenti WHERE secret='$code'");
 			}
 		return $code;
 	}
@@ -151,9 +151,9 @@ class User extends Configuration {
 		if(!$this->isUser($nickname))
 			return false;
 		$password = md5($password);
-		if(!$query = parent::query("SELECT id FROM utenti WHERE nickname='$nickname' AND password='$password' LIMIT 1"))
+		if(!$query = parent::query("SELECT COUNT(*) FROM utenti WHERE nickname='$nickname' AND password='$password'"))
 			return false;
-		if(parent::count($query) > 0) {
+		if(mysql_result($query, 0, 0) > 0) {
 			$code = $this->getCode();
 			$client = parent::getClient();
 			parent::query("UPDATE utenti SET secret='$code', browsername='{$client['browser']}', browserversion='{$client['version']}', platform='{$client['platform']}' WHERE nickname='$nickname'");
@@ -166,8 +166,8 @@ class User extends Configuration {
 	
 	/* Effettua il logout dell'utente. */
 	public function logout() {
-		$query = parent::query("SELECT * FROM utenti WHERE secret='{$this->getCookie()}' LIMIT 1");
-		if(parent::count($query) > 0) {
+		$query = parent::query("SELECT COUNT(*) FROM utenti WHERE secret='{$this->getCookie()}'");
+		if(mysql_result($query, 0, 0) > 0) {
 			parent::query("UPDATE utenti SET secret='', lastlogout='".date('d-m-y')."' WHERE secret='{$this->getCookie()}'");
 			$this->unSetCookie();
 		}
@@ -180,7 +180,44 @@ class User extends Configuration {
 		$data = date('d-m-y');
 		$ora = date('G:m:i');
 		$useragent = parent::purge($_SERVER['HTTP_USER_AGENT']);
-		$referer = parent::purge($_SERVER['HTTP_REFERER']);
-		return parent::query("INSERT INTO log(nickname, azione, ip, data, ora, useragent, referer) VALUES('$nickname', '$azione', '{$_SERVER['REMOTE_ADDR']}', '$data', '$ora', '$useragent', '$referer')") ? true : false;
+		$referer = $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'].'?';
+		foreach($_GET as $key => $value)
+		    $referer .= "$key=$value&";
+		$referer = parent::purge($referer);
+		return parent::query("INSERT INTO log(nickname, azione, ip, data, ora, useragent, referer) VALUES('$nickname', '$azione', '{$_SERVER['REMOTE_ADDR']}', '$data', '$ora', '{$useragent}', '$referer')") ? true : false;
+	}
+
+	/* Visualizza i log. */
+	public function getLog($nickname = '') {
+		$log = array();
+		if($nickname !== '') {
+			if($this->isUser($nickname)) {
+				if(!$query = parent::query("SELECT * FROM log WHERE nickname='$nickname' ORDER BY id DESC"))
+					return false;
+				array_push($log, parent::get($query));
+				if(!empty($log))
+					return $log;
+				return false;
+			}
+			return false;
+		}
+		else {
+			if(!$query = parent::query('SELECT * FROM log ORDER BY id DESC'))
+				return false;
+			if(parent::count($query) > 0) {
+				while($result = parent::get($query))
+					array_push($log, $result);
+				if(!empty($log))
+					return $log;
+				return false;
+			}
+			return false;
+		}
+		return false;
+	}
+	
+	/* Elimina i log. */
+	public function deleteLog() {
+		return parent::query('DELETE FROM log') ? true : false;
 	}
 }

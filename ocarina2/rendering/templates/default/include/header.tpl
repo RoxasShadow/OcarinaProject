@@ -9,6 +9,8 @@
 <meta name="description" content="{$description}" />
 <meta name="keywords" content="{$keywords}" />
 <link rel="stylesheet" type="text/css" href="{$url_rendering}/templates/{$skin}/resources/style.css" />
+<script type="text/javascript" src="{$url_rendering}/templates/{$skin}/resources/jquery-1.6.1.min.js"></script>
+<script type="text/javascript" src="{$url_rendering}/templates/{$skin}/resources/spoiler.js"></script>
 <meta name="robots" content="index,follow" />
 </head>
 <body>

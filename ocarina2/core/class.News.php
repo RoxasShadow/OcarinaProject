@@ -45,9 +45,9 @@ class News extends Category {
 	
 	/* Controlla se la news esiste. */
 	public function isNews($minititolo) {
-		if(!$query = parent::query("SELECT id FROM news WHERE minititolo='$minititolo' LIMIT 1"))
+		if(!$query = parent::query("SELECT COUNT(*) FROM news WHERE minititolo='$minititolo' LIMIT 1"))
 			return false;
-		return parent::count($query) > 0 ? true : false;
+		return mysql_result($query, 0, 0) > 0 ? true : false;
 	}
 	
 	/* Conta quante news sono presenti nel database. */
