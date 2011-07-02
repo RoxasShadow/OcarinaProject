@@ -11,7 +11,7 @@
 			{if $news[$key]->approvato == 1}
 				<div class="titolo">{$news[$key]->titolo}</div>
 				<div class="newsheader" align="center">Scritto da <a href="{$url_index}/profilo.php?nickname={$news[$key]->autore}">{$news[$key]->autore}</a> il giorno {$news[$key]->data} alle ore {$news[$key]->ora} nella categoria <a href="{$url_index}/categoria.php?cat={$news[$key]->categoria}">{$news[$key]->categoria}</a>.</div><br />
-				<div class="news">{$news[$key]->contenuto}</div>
+				<div class="news"><p>{$news[$key]->contenuto}</p></div>
 			{else}
 				La news non è stata approvata, e quindi non è visibile.
 			{/if}
@@ -23,7 +23,7 @@
 			<br /><hr /><br />
 			{foreach from=$commenti key=key item=item}
 				{if $commenti[$key]->approvato == 1}
-					<fieldset><legend><a href="{$url_index}/commento.php?id={$commenti[$key]->id}">#{$item@iteration}</a> Commento inviato il giorno {$commenti[$key]->data} alle ore {$commenti[$key]->ora} da <a href="{$url_index}/profilo.php?nickname={$commenti[$key]->autore}">{$commenti[$key]->autore}</a>. {if ((isset($grado)) && (is_numeric($grado)) && ($grado < 3))}<a href="{$url_index}/admin/cancellacommento.php?id={$commenti[$key]->id}">(X)</a>{/if}</legend><div onclick="javascript:quota(this);">{$commenti[$key]->contenuto}</div></fieldset><br />
+					<fieldset><legend><a href="{$url_index}/commento.php?id={$commenti[$key]->id}">#{$item@iteration}</a> Commento inviato il giorno {$commenti[$key]->data} alle ore {$commenti[$key]->ora} da <a href="{$url_index}/profilo.php?nickname={$commenti[$key]->autore}">{$commenti[$key]->autore}</a>. {if ((isset($grado)) && (is_numeric($grado)) && ($grado < 3))}<a href="{$url_index}/admin/cancellacommento.php?id={$commenti[$key]->id}">(X)</a>{/if}</legend><div onclick="quota(this);">{$commenti[$key]->contenuto}</div></fieldset><br />
 				{/if}
 			{/foreach}
 		{/if}
@@ -32,38 +32,25 @@
 			<a href="{$url_index}/registrazione.php">Registrati</a> o <a href="{$url_index}/login.php">accedi</a> per commentare questa news.
 		{else}
 			{if $bbcode == 1}
-				{literal}
-				<script type="text/javascript">
-				function quota(objDom) {
-					document.getElementById("txtQuota").value = document.getElementById("txtQuota").value+'[quote]'+objDom.textContent+'[/quote]';
-				}
-				function add(emoticons) {
-					document.getElementById("txtQuota").value = document.getElementById("txtQuota").value + emoticons;
-				}
-				function requestcolor() {
-					add('[color='+prompt("Digita il nome del colore (esempio: red, black, white)")+'][/color]');
-				}
-				</script>
-				{/literal}
-				<a onclick="javascript:add('[b][/b]');"><b>Grassetto</b></a>
-				<a onclick="javascript:add('[i][/i]');"><b>Corsivo</b></a>
+				<a onclick="add('[b][/b]');"><b>Grassetto</b></a>
+				<a onclick="add('[i][/i]');"><b>Corsivo</b></a>
 
-				<a onclick="javascript:add('[u][/u]');"><b>Sottolineato</b></a>
-				<a onclick="javascript:add('[s][/s]');"><b>Barrato</b></a>
-				<a onclick="javascript:requestcolor();"><b>Colore</b></a>
-				<a onclick="javascript:add('[url=http://][/url]');"><b>URL</b></a>
-				<a onclick="javascript:add('[spoiler][/spoiler]');"><b>Spoiler</b></a>
-				<a onclick="javascript:add('[left][/left]');"><b>Allineato a sinistra</b></a>
-				<a onclick="javascript:add('[center][/center]');"><b>Allineato a centro</b></a>
-				<a onclick="javascript:add('[right][/right]');"><b>Allineato a destra</b></a>
-				<a onclick="javascript:add('[br]');"><b>Accapo</b></a>
+				<a onclick="add('[u][/u]');"><b>Sottolineato</b></a>
+				<a onclick="add('[s][/s]');"><b>Barrato</b></a>
+				<a onclick="requestcolor();"><b>Colore</b></a>
+				<a onclick="add('[url=http://][/url]');"><b>URL</b></a>
+				<a onclick="add('[spoiler][/spoiler]');"><b>Spoiler</b></a>
+				<a onclick="add('[left][/left]');"><b>Allineato a sinistra</b></a>
+				<a onclick="add('[center][/center]');"><b>Allineato a centro</b></a>
+				<a onclick="add('[right][/right]');"><b>Allineato a destra</b></a>
+				<a onclick="add('[br]');"><b>Accapo</b></a>
 
-				<a onclick="javascript:add('[code][/code]');"><b>Codice</b></a>
-				<a onclick="javascript:add('[quote][/quote]');"><b>Citazione</b></a>
-				<a onclick="javascript:add('[user][/user]');"><b>Utente</b></a>
+				<a onclick="add('[code][/code]');"><b>Codice</b></a>
+				<a onclick="add('[quote][/quote]');"><b>Citazione</b></a>
+				<a onclick="add('[user][/user]');"><b>Utente</b></a>
 			{/if}
 			<form action="" method="post">
-			<textarea name="comment" cols="59" rows="10" id="txtQuota"></textarea><br />
+			<textarea name="comment" cols="59" rows="10" id="targetForm"></textarea><br />
 			<input type="submit" value="Invia commento" />
 			</form>
 		{/if}

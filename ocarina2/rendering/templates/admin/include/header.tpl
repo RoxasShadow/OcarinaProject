@@ -12,6 +12,7 @@
 <link rel="stylesheet" type="text/css" href="{$url_rendering}/templates/{$skin}/resources/layout.css" />
 <!--[if IE 6]><link rel="stylesheet" type="text/css" href="{$url_rendering}/templates/{$skin}/resources/ie6.css" /><![endif]-->
 <!--[if IE 7]><link rel="stylesheet" type="text/css" href="{$url_rendering}/templates/{$skin}/resources/ie7.css" /><![endif]-->
+<script type="text/javascript" src="{$url_index}/etc/loadJavascript.js.php"></script>
 </head>
 <body>
 <div id="wrapper">

@@ -13,7 +13,7 @@
 				{if $news[$key]->approvato == 1}
 					<div class="titolo"><a href="{$url_index}/news.php?titolo={$news[$key]->minititolo}">{$news[$key]->titolo}</a></div>
 					<div class="newsheader" align="center">Scritto da <a href="{$url_index}/profilo.php?nickname={$news[$key]->autore}">{$news[$key]->autore}</a> il giorno {$news[$key]->data} alle ore {$news[$key]->ora} nella categoria <a href="{$url_index}/categoria.php?cat={$news[$key]->categoria}">{$news[$key]->categoria}</a>.</div><br />
-					<div class="news">{$news[$key]->contenuto}</div>
+					<div class="news"><p>{$news[$key]->contenuto}</p></div>
 					<div align="right"><a href="{$url_index}/news.php?titolo={$news[$key]->minititolo}">Lascia un commento {php}require_once('core/class.Comments.php'); $v = new Comments(); echo $v->countCommentByNews('{$news[$key]->minititolo}');{/php}</a></div>
 					<hr />
 				{/if}

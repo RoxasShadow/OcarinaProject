@@ -42,7 +42,7 @@ class BBCode extends Configuration {
 			'<s>$1</s>',
 			'<font color="$1">$2</font>',
 			'<a href="$1">$2</a>',
-			'<div align="center"><input type="submit" onclick="spoiler();" value="Mostra/Nascondi" /></div><div class="spoiler">$1</div>',
+			'<div align="center"><input type="submit" class="buttonSpoiler" value="Mostra/Nascondi" /></div><div class="spoiler">$1</div>',
 			'<img src="$1">',
 			'<a href="$3"><img src="$3" width="$1" height="$2"></a>',
 			'<div align="center">$1</div>',

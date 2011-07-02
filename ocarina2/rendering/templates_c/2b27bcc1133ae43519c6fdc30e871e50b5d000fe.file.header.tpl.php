@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-02 15:37:28
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-02 20:19:09
          compiled from "/var/www/htdocs/ocarina2/rendering/templates/admin/include/header.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:8239643194e0f3b38b41575-54680996%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:8947994054e0f7d3d63bca0-71519506%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '2b27bcc1133ae43519c6fdc30e871e50b5d000fe' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering/templates/admin/include/header.tpl',
-      1 => 1309621046,
+      1 => 1309637819,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '8239643194e0f3b38b41575-54680996',
+  'nocache_hash' => '8947994054e0f7d3d63bca0-71519506',
   'function' => 
   array (
   ),
@@ -40,6 +40,8 @@ $_smarty_tpl->decodeProperties(array (
 <!--[if IE 7]><link rel="stylesheet" type="text/css" href="<?php echo $_smarty_tpl->getVariable('url_rendering')->value;?>
 /templates/<?php echo $_smarty_tpl->getVariable('skin')->value;?>
 /resources/ie7.css" /><![endif]-->
+<script type="text/javascript" src="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/etc/loadJavascript.js.php"></script>
 </head>
 <body>
 <div id="wrapper">

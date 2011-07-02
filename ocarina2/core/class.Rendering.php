@@ -81,11 +81,9 @@ class Rendering extends Configuration {
 		$dir = $getConfig[0]->root_rendering.'/templates/';
 		$apri = opendir($dir);
 		$f = array();
-		while (false !== ($skin = readdir($apri))) {
-			if(($skin !== '.') && ($skin !== '..') && ($skin !== 'admin') && (is_dir($dir.$skin))) {
+		while($skin = readdir($apri))
+			if(($skin !== '.') && ($skin !== '..') && ($skin !== 'admin') && (is_dir($dir.$skin)))
 				$f[] = $skin;
-			}
-		}
 		return $f;
 	}
 }

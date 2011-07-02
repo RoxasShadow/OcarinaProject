@@ -10,7 +10,7 @@
 				{if $pagina[$key]->approvato == 1}
 					<div class="titolo">{$pagina[$key]->titolo}</div>
 					<div class="newsheader" align="center">Scritto da <a href="{$url_index}/profilo.php?nickname={$pagina[$key]->autore}">{$pagina[$key]->autore}</a> il giorno {$pagina[$key]->data} alle ore {$pagina[$key]->ora} nella categoria <a href="{$url_index}/categoria.php?cat={$pagina[$key]->categoria}">{$pagina[$key]->categoria}</a>.</div><br />
-					<div class="news">{$pagina[$key]->contenuto}</div>
+					<div class="news"><p>{$pagina[$key]->contenuto}</p></div>
 				{else}
 					La pagina non è stata approvata, e quindi non è visibile.
 				{/if}

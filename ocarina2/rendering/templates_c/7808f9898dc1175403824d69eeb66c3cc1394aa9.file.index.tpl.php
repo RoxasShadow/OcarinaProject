@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-01 23:52:09
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-02 18:24:13
          compiled from "/var/www/htdocs/ocarina2/rendering/templates/default/index.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:1523808844e0e5da94ae206-31521966%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:5456152114e0f624d6098e8-23042081%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '7808f9898dc1175403824d69eeb66c3cc1394aa9' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering/templates/default/index.tpl',
-      1 => 1309526080,
+      1 => 1309631020,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '1523808844e0e5da94ae206-31521966',
+  'nocache_hash' => '5456152114e0f624d6098e8-23042081',
   'function' => 
   array (
   ),
@@ -53,8 +53,8 @@ if ($_smarty_tpl->_count($_from) > 0){
 /categoria.php?cat=<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->categoria;?>
 "><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->categoria;?>
 </a>.</div><br />
-					<div class="news"><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->contenuto;?>
-</div>
+					<div class="news"><p><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->contenuto;?>
+</p></div>
 					<div align="right"><a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /news.php?titolo=<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->minititolo;?>
 ">Lascia un commento <?php $_smarty_tpl->smarty->_tag_stack[] = array('php', array()); $_block_repeat=true; smarty_block_php(array(), null, $_smarty_tpl, $_block_repeat);while ($_block_repeat) { ob_start();?>

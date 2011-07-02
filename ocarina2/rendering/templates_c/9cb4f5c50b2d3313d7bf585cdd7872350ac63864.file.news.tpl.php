@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-01 23:55:04
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-02 20:54:32
          compiled from "/var/www/htdocs/ocarina2/rendering/templates/default/news.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:4614132874e0e5e588d1728-10175698%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:13037718524e0f8588b10568-08196075%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '9cb4f5c50b2d3313d7bf585cdd7872350ac63864' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering/templates/default/news.tpl',
-      1 => 1309526080,
+      1 => 1309640066,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '4614132874e0e5e588d1728-10175698',
+  'nocache_hash' => '13037718524e0f8588b10568-08196075',
   'function' => 
   array (
   ),
@@ -48,8 +48,8 @@ if ($_smarty_tpl->_count($_from) > 0){
 /categoria.php?cat=<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->categoria;?>
 "><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->categoria;?>
 </a>.</div><br />
-				<div class="news"><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->contenuto;?>
-</div>
+				<div class="news"><p><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->contenuto;?>
+</p></div>
 			<?php }else{ ?>
 				La news non è stata approvata, e quindi non è visibile.
 			<?php }?>
@@ -80,7 +80,7 @@ if ($_smarty_tpl->_count($_from) > 0){
 "><?php echo $_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->autore;?>
 </a>. <?php if (((isset($_smarty_tpl->getVariable('grado',null,true,false)->value))&&(is_numeric($_smarty_tpl->getVariable('grado')->value))&&($_smarty_tpl->getVariable('grado')->value<3))){?><a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /admin/cancellacommento.php?id=<?php echo $_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->id;?>
-">(X)</a><?php }?></legend><div onclick="javascript:quota(this);"><?php echo $_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->contenuto;?>
+">(X)</a><?php }?></legend><div onclick="quota(this);"><?php echo $_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->contenuto;?>
 </div></fieldset><br />
 				<?php }?>
 			<?php }} ?>
@@ -92,38 +92,25 @@ if ($_smarty_tpl->_count($_from) > 0){
 /login.php">accedi</a> per commentare questa news.
 		<?php }else{ ?>
 			<?php if ($_smarty_tpl->getVariable('bbcode')->value==1){?>
-				
-				<script type="text/javascript">
-				function quota(objDom) {
-					document.getElementById("txtQuota").value = document.getElementById("txtQuota").value+'[quote]'+objDom.textContent+'[/quote]';
-				}
-				function add(emoticons) {
-					document.getElementById("txtQuota").value = document.getElementById("txtQuota").value + emoticons;
-				}
-				function requestcolor() {
-					add('[color='+prompt("Digita il nome del colore (esempio: red, black, white)")+'][/color]');
-				}
-				</script>
-				
-				<a onclick="javascript:add('[b][/b]');"><b>Grassetto</b></a>
-				<a onclick="javascript:add('[i][/i]');"><b>Corsivo</b></a>
+				<a onclick="add('[b][/b]');"><b>Grassetto</b></a>
+				<a onclick="add('[i][/i]');"><b>Corsivo</b></a>
 
-				<a onclick="javascript:add('[u][/u]');"><b>Sottolineato</b></a>
-				<a onclick="javascript:add('[s][/s]');"><b>Barrato</b></a>
-				<a onclick="javascript:requestcolor();"><b>Colore</b></a>
-				<a onclick="javascript:add('[url=http://][/url]');"><b>URL</b></a>
-				<a onclick="javascript:add('[spoiler][/spoiler]');"><b>Spoiler</b></a>
-				<a onclick="javascript:add('[left][/left]');"><b>Allineato a sinistra</b></a>
-				<a onclick="javascript:add('[center][/center]');"><b>Allineato a centro</b></a>
-				<a onclick="javascript:add('[right][/right]');"><b>Allineato a destra</b></a>
-				<a onclick="javascript:add('[br]');"><b>Accapo</b></a>
+				<a onclick="add('[u][/u]');"><b>Sottolineato</b></a>
+				<a onclick="add('[s][/s]');"><b>Barrato</b></a>
+				<a onclick="requestcolor();"><b>Colore</b></a>
+				<a onclick="add('[url=http://][/url]');"><b>URL</b></a>
+				<a onclick="add('[spoiler][/spoiler]');"><b>Spoiler</b></a>
+				<a onclick="add('[left][/left]');"><b>Allineato a sinistra</b></a>
+				<a onclick="add('[center][/center]');"><b>Allineato a centro</b></a>
+				<a onclick="add('[right][/right]');"><b>Allineato a destra</b></a>
+				<a onclick="add('[br]');"><b>Accapo</b></a>
 
-				<a onclick="javascript:add('[code][/code]');"><b>Codice</b></a>
-				<a onclick="javascript:add('[quote][/quote]');"><b>Citazione</b></a>
-				<a onclick="javascript:add('[user][/user]');"><b>Utente</b></a>
+				<a onclick="add('[code][/code]');"><b>Codice</b></a>
+				<a onclick="add('[quote][/quote]');"><b>Citazione</b></a>
+				<a onclick="add('[user][/user]');"><b>Utente</b></a>
 			<?php }?>
 			<form action="" method="post">
-			<textarea name="comment" cols="59" rows="10" id="txtQuota"></textarea><br />
+			<textarea name="comment" cols="59" rows="10" id="targetForm"></textarea><br />
 			<input type="submit" value="Invia commento" />
 			</form>
 		<?php }?>

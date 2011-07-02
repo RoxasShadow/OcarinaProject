@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-02 15:33:51
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-02 20:34:37
          compiled from "/var/www/htdocs/ocarina2/rendering/templates/admin/formcontents.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:15377775424e0f3a5f161af2-57407062%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:18307213224e0f80dd7a9429-05475332%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'a79f7c0bd2837063e96d04e9c26e388320036316' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering/templates/admin/formcontents.tpl',
-      1 => 1309526080,
+      1 => 1309638659,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '15377775424e0f3a5f161af2-57407062',
+  'nocache_hash' => '18307213224e0f80dd7a9429-05475332',
   'function' => 
   array (
   ),
@@ -48,16 +48,6 @@ if ($_smarty_tpl->_count($_from) > 0){
 		<?php }} ?>
 		</select><br /><br />
 		<?php if ($_smarty_tpl->getVariable('bbcode')->value==1){?>
-			
-			<script type="text/javascript">
-			function add(emoticons) {
-			    document.getElementById("txtQuota").value = document.getElementById("txtQuota").value + emoticons;
-			}
-			function requestcolor() {
-			    add('[color='+prompt("Digita il nome del colore (esempio: red, black, white)")+'][/color]');
-			}
-			</script>
-			
 			<a onclick="javascript:add('[b][/b]');"><b>Grassetto</b></a>
 			<a onclick="javascript:add('[i][/i]');"><b>Corsivo</b></a>
 
@@ -75,7 +65,7 @@ if ($_smarty_tpl->_count($_from) > 0){
 			<a onclick="javascript:add('[quote][/quote]');"><b>Citazione</b></a>
 			<a onclick="javascript:add('[youtube][/youtube]');"><b>Youtube</b></a>
 		<?php }?>
-		<textarea name="testo" cols="59" rows="10" id="txtQuota"><?php if ((isset($_smarty_tpl->getVariable('testo',null,true,false)->value))){?><?php echo $_smarty_tpl->getVariable('testo')->value;?>
+		<textarea name="testo" cols="59" rows="10" id="targetForm"><?php if ((isset($_smarty_tpl->getVariable('testo',null,true,false)->value))){?><?php echo $_smarty_tpl->getVariable('testo')->value;?>
 <?php }?></textarea><br />
 		<?php if (isset($_smarty_tpl->getVariable('sel',null,true,false)->value)){?><input type="hidden" name="selected" value="<?php echo $_smarty_tpl->getVariable('sel')->value;?>
 " /><?php }?>
