@@ -1,30 +1,39 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-06-30 17:11:20
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-02 00:04:47
          compiled from "/var/www/htdocs/ocarina2/rendering/templates/admin/include/footer.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:14334420504e0cae38b20063-28002640%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:21388025884e0e609f7031d0-85382434%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '9e15721588110ebed6d7223969530e97df5b04b5' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering/templates/admin/include/footer.tpl',
-      1 => 1309379068,
+      1 => 1309534396,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '14334420504e0cae38b20063-28002640',
+  'nocache_hash' => '21388025884e0e609f7031d0-85382434',
   'function' => 
   array (
   ),
   'has_nocache_code' => false,
 )); /*/%%SmartyHeaderCode%%*/?>
+
 <br /><br />
 </div>
 <div class="clear"></div>
 </div>
 </div>
 </div> <!-- /wrapper -->
-<p align="center">Pagina generata in <?php echo $_smarty_tpl->getVariable('time')->value;?>
- millisecondi effettuando <?php echo $_smarty_tpl->getVariable('query')->value;?>
+<div align="center">
+<p>Pagina generata in <?php echo $_smarty_tpl->getVariable('time')->value;?>
+ secondi effettuando <?php echo $_smarty_tpl->getVariable('query')->value;?>
  query.</p>
+<a href="http://validator.w3.org/check?uri=referer"><img src="<?php echo $_smarty_tpl->getVariable('url_rendering')->value;?>
+/templates/<?php echo $_smarty_tpl->getVariable('skin')->value;?>
+/resources/img/valid-xhtml10-blue.png" alt="Valid XHTML 1.0 Transitional" height="31" width="88" /></a>
+<a href="http://jigsaw.w3.org/css-validator/check/referer"><img src="<?php echo $_smarty_tpl->getVariable('url_rendering')->value;?>
+/templates/<?php echo $_smarty_tpl->getVariable('skin')->value;?>
+/resources/img/vcss-blue.png" alt="CSS Valido!" height="31" width="88" /></a>
+</div>
 </body>
 </html>

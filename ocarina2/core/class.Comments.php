@@ -13,7 +13,7 @@ class Comments extends News {
 		$commenti = array();
 		if($news !== '') {
 			if($this->isComment($news)) {
-				if(!$query = parent::query("SELECT DISTINCT * FROM commenti WHERE news='$news' ORDER BY id ASC"))
+				if(!$query = parent::query("SELECT * FROM commenti WHERE news='$news' ORDER BY id ASC"))
 					return false;
 				while($result = parent::get($query))
 					array_push($commenti, $result);
@@ -24,7 +24,7 @@ class Comments extends News {
 			return false;
 		}
 		else {
-			if(!$query = parent::query('SELECT DISTINCT * FROM commenti ORDER BY id ASC'))
+			if(!$query = parent::query('SELECT * FROM commenti ORDER BY id ASC'))
 				return false;
 			if(parent::count($query) > 0) {
 				while($result = parent::get($query))
@@ -40,7 +40,7 @@ class Comments extends News {
 	
 	/* Controlla se il commento esiste. */
 	public function isComment($news) {
-		if(!$query = parent::query("SELECT * FROM commenti WHERE news='$news'"))
+		if(!$query = parent::query("SELECT id FROM commenti WHERE news='$news' LIMIT 1"))
 			return false;
 		return parent::count($query) > 0 ? true : false;
 	}
@@ -61,7 +61,7 @@ class Comments extends News {
 	
 	/* Ricerca i commenti da una keyword. */
 	public function searchComment($keyword) {
-		if(!$query = parent::query("SELECT DISTINCT * FROM commenti WHERE contenuto LIKE '%$keyword%' ORDER BY id DESC"))
+		if(!$query = parent::query("SELECT * FROM commenti WHERE contenuto LIKE '%$keyword%' ORDER BY id DESC"))
 			return false;
 		if(parent::count($query) > 0) {
 			$commenti = array();
@@ -78,7 +78,7 @@ class Comments extends News {
 	
 	/* Ricerca il commento da un id. */
 	public function searchCommentById($id) {
-		if(!$query = parent::query("SELECT DISTINCT * FROM commenti WHERE id='$id'"))
+		if(!$query = parent::query("SELECT * FROM commenti WHERE id='$id'"))
 			return false;
 		if(parent::count($query) > 0) {
 			$commenti = array();
@@ -98,7 +98,7 @@ class Comments extends News {
 		if(empty($array))
 			return false;
 		if((parent::isNews($array[2])) && (parent::isUser($array[0]))) {
-			$query = parent::query('SELECT * FROM commenti');
+			$query = parent::query('SELECT * FROM commenti LIMIT 1');
 			if(!$campi = parent::getColumns($query))
 				return false;
 			$query = 'INSERT INTO commenti(';

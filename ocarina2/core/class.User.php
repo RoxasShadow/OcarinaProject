@@ -13,7 +13,7 @@ class User extends Configuration {
 		$utenti = array();
 		if($nickname !== '') {
 			if($this->isUser($nickname)) {
-				if(!$query = parent::query("SELECT DISTINCT * FROM utenti WHERE nickname='$nickname' ORDER BY nickname ASC"))
+				if(!$query = parent::query("SELECT * FROM utenti WHERE nickname='$nickname' ORDER BY nickname ASC"))
 					return false;
 				array_push($utenti, parent::get($query));
 				if(!empty($utenti))
@@ -23,7 +23,7 @@ class User extends Configuration {
 			return false;
 		}
 		else {
-			if(!$query = parent::query('SELECT DISTINCT * FROM utenti ORDER BY nickname ASC'))
+			if(!$query = parent::query('SELECT * FROM utenti ORDER BY nickname ASC'))
 				return false;
 			if(parent::count($query) > 0) {
 				while($result = parent::get($query))
@@ -39,14 +39,14 @@ class User extends Configuration {
 	
 	/* Controlla se l'utente esiste. */
 	public function isUser($nickname) {
-		if(!$query = parent::query("SELECT * FROM utenti WHERE nickname='$nickname' ORDER BY nickname ASC"))
+		if(!$query = parent::query("SELECT id FROM utenti WHERE nickname='$nickname' LIMIT 1"))
 			return false;
 		return parent::count($query) > 0 ? true : false;
 	}
 	
 	/* Controlla se l'email è già usata da un altro utente. */
 	public function isEmailUsed($nickname, $email) {
-		if(!$query = parent::query("SELECT * FROM utenti WHERE email='$email' AND nickname<>'$nickname' ORDER BY nickname ASC"))
+		if(!$query = parent::query("SELECT id FROM utenti WHERE email='$email' AND nickname<>'$nickname' LIMIT 1"))
 			return false;
 		return parent::count($query) > 0 ? true : false;
 	}
@@ -63,14 +63,14 @@ class User extends Configuration {
 		$cookie = $this->getCookie();
 		if(!$cookie)
 			return false;
-		if(!$query = parent::query("SELECT * FROM utenti WHERE secret='$cookie' ORDER BY nickname ASC"))
+		if(!$query = parent::query("SELECT id FROM utenti WHERE secret='$cookie' LIMIT 1"))
 			return false;
 		return parent::count($query) > 0 ? true : false;
 	}
 	
 	/* Ricerca gli utenti per un campo specifico. */
 	public function searchUserByField($campo, $valore) {
-		if(!$query = parent::query("SELECT DISTINCT * FROM utenti WHERE $campo='$valore' ORDER BY nickname ASC"))
+		if(!$query = parent::query("SELECT * FROM utenti WHERE $campo='$valore' ORDER BY nickname ASC"))
 			return false;
 		if(parent::count($query) > 0) {
 			$utenti = array();
@@ -90,7 +90,7 @@ class User extends Configuration {
 		if(empty($array))
 			return false;
 		if((!$this->isUser($array[0])) && (parent::isEmail($array[2]))) {
-			$query = parent::query('SELECT * FROM utenti ORDER BY nickname ASC');
+			$query = parent::query('SELECT * FROM utenti LIMIT 1');
 			if(!$campi = parent::getColumns($query))
 				return false;
 			$array[1] = md5($array[1]);
@@ -122,11 +122,12 @@ class User extends Configuration {
 	/* Crea e ritorna un secret code. */
 	public function getCode() {
 		$code = parent::rng(12);
-		$query = parent::query("SELECT DISTINCT * FROM utenti WHERE secret='$code' ORDER BY nickname ASC");
-		while(parent::count($query) > 0) {
-			$code = parent::rng(12);
-			$query = parent::query("SELECT DISTINCT * FROM utenti WHERE secret='$code' ORDER BY nickname ASC");
-		}
+		$query = parent::query("SELECT * FROM utenti WHERE secret='$code'");
+		if(parent::count($query) > 0)
+			while(parent::count($query) > 0) {
+				$code = parent::rng(12);
+				$query = parent::query("SELECT * FROM utenti WHERE secret='$code' LIMIT 1");
+			}
 		return $code;
 	}
 	
@@ -150,7 +151,7 @@ class User extends Configuration {
 		if(!$this->isUser($nickname))
 			return false;
 		$password = md5($password);
-		if(!$query = parent::query("SELECT DISTINCT * FROM utenti WHERE nickname='$nickname' AND password='$password' ORDER BY nickname ASC"))
+		if(!$query = parent::query("SELECT id FROM utenti WHERE nickname='$nickname' AND password='$password' LIMIT 1"))
 			return false;
 		if(parent::count($query) > 0) {
 			$code = $this->getCode();
@@ -165,11 +166,9 @@ class User extends Configuration {
 	
 	/* Effettua il logout dell'utente. */
 	public function logout() {
-		$code = $this->getCookie();
-		$query = parent::query("SELECT DISTINCT * FROM utenti WHERE secret='$code' ORDER BY nickname ASC");
+		$query = parent::query("SELECT * FROM utenti WHERE secret='{$this->getCookie()}' LIMIT 1");
 		if(parent::count($query) > 0) {
-			$data = date('d-m-y');
-			parent::query("UPDATE utenti SET secret='', lastlogout='$data' WHERE secret='$code'");
+			parent::query("UPDATE utenti SET secret='', lastlogout='".date('d-m-y')."' WHERE secret='{$this->getCookie()}'");
 			$this->unSetCookie();
 		}
 		else

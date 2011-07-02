@@ -13,7 +13,7 @@ class News extends Category {
 		$news = array();
 		if($minititolo !== '') {
 			if($this->isNews($minititolo)) {
-				if(!$query = parent::query("SELECT DISTINCT * FROM news WHERE minititolo='$minititolo' ORDER BY titolo ASC"))
+				if(!$query = parent::query("SELECT * FROM news WHERE minititolo='$minititolo' ORDER BY titolo ASC"))
 					return false;
 				array_push($news, parent::get($query));
 				if(!empty($news))
@@ -24,11 +24,11 @@ class News extends Category {
 		}
 		else {
 			if(($min == '') && ($max == '')) {
-				if(!$query = parent::query('SELECT DISTINCT * FROM news ORDER BY titolo ASC'))
+				if(!$query = parent::query('SELECT * FROM news ORDER BY titolo ASC'))
 					return false;
 			}
 			else {
-				if(!$query = parent::query("SELECT DISTINCT * FROM news ORDER BY id DESC LIMIT $min, $max"))
+				if(!$query = parent::query("SELECT * FROM news ORDER BY id DESC LIMIT $min, $max"))
 					return false;
 			}
 			if(parent::count($query) > 0) {
@@ -45,7 +45,7 @@ class News extends Category {
 	
 	/* Controlla se la news esiste. */
 	public function isNews($minititolo) {
-		if(!$query = parent::query("SELECT * FROM news WHERE minititolo='$minititolo'"))
+		if(!$query = parent::query("SELECT id FROM news WHERE minititolo='$minititolo' LIMIT 1"))
 			return false;
 		return parent::count($query) > 0 ? true : false;
 	}
@@ -59,7 +59,7 @@ class News extends Category {
 	
 	/* Ricerca le news da una keyword. */
 	public function searchNews($keyword) {
-		if(!$query = parent::query("SELECT DISTINCT * FROM news WHERE (titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%') ORDER BY id DESC"))
+		if(!$query = parent::query("SELECT * FROM news WHERE (titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%') ORDER BY id DESC"))
 			return false;
 		if(parent::count($query) > 0) {
 			$news = array();
@@ -75,7 +75,7 @@ class News extends Category {
 	
 	/* Ricerca le news per categoria. */
 	public function searchNewsByCategory($keyword) {
-		if(!$query = parent::query("SELECT DISTINCT * FROM news WHERE categoria='$keyword' ORDER BY id DESC"))
+		if(!$query = parent::query("SELECT * FROM news WHERE categoria='$keyword' ORDER BY id DESC"))
 			return false;
 		if(parent::count($query) > 0) {
 			$news = array();
@@ -110,7 +110,7 @@ class News extends Category {
 		if(empty($array))
 			return false;
 		if((!$this->isNews($array[2])) && (parent::isCategory('news', $array[4])) && (parent::isUser($array[0]))) {
-			$query = parent::query('SELECT * FROM news ORDER BY id DESC');
+			$query = parent::query('SELECT * FROM news ORDER BY id DESC LIMIT 1');
 			if(!$campi = parent::getColumns($query))
 				return false;
 			$query = 'INSERT INTO news(';

@@ -17,15 +17,6 @@ class Pager extends News {
 		$this->min = ($this->currentPage - 1) * $this->max;
 	}
 	
-	public function __distruct() {
-		parent::__distruct();
-		unset($this->totale);
-		unset($this->max);
-		unset($this->currentPage);
-		unset($this->numPages);
-		unset($this->min);
-	}
-	
 	public function getNav() {
 		$nav = array();
 		for($i=1; $i<=$this->numPages; ++$i)

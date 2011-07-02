@@ -1,22 +1,23 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-06-30 19:11:26
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-01 23:55:04
          compiled from "/var/www/htdocs/ocarina2/rendering/templates/default/news.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:14356629044e0cca5eab25d5-57699679%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:4614132874e0e5e588d1728-10175698%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '9cb4f5c50b2d3313d7bf585cdd7872350ac63864' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering/templates/default/news.tpl',
-      1 => 1309461085,
+      1 => 1309526080,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '14356629044e0cca5eab25d5-57699679',
+  'nocache_hash' => '4614132874e0e5e588d1728-10175698',
   'function' => 
   array (
   ),
   'has_nocache_code' => false,
 )); /*/%%SmartyHeaderCode%%*/?>
+
 <?php $_template = new Smarty_Internal_Template(($_smarty_tpl->getVariable('root_rendering')->value)."/templates/".($_smarty_tpl->getVariable('skin')->value)."/include/header.tpl", $_smarty_tpl->smarty, $_smarty_tpl, $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null);
  echo $_template->getRenderedTemplate(); $_template->rendered_content = null;?><?php unset($_template);?>
 	<?php if (isset($_smarty_tpl->getVariable('errore',null,true,false)->value)){?>
@@ -38,11 +39,13 @@ if ($_smarty_tpl->_count($_from) > 0){
 			<?php if ($_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->approvato==1){?>
 				<div class="titolo"><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->titolo;?>
 </div>
-				<div class="newsheader" align="center">Scritto da <a href="profilo.php?nickname=<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->autore;?>
+				<div class="newsheader" align="center">Scritto da <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/profilo.php?nickname=<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->autore;?>
 "><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->autore;?>
 </a> il giorno <?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->data;?>
  alle ore <?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->ora;?>
- nella categoria <a href="categoria.php?cat=<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->categoria;?>
+ nella categoria <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/categoria.php?cat=<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->categoria;?>
 "><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->categoria;?>
 </a>.</div><br />
 				<div class="news"><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->contenuto;?>
@@ -67,13 +70,16 @@ if ($_smarty_tpl->_count($_from) > 0){
  $_smarty_tpl->tpl_vars['item']->iteration++;
 ?>
 				<?php if ($_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->approvato==1){?>
-					<fieldset><legend><a href="commento.php?id=<?php echo $_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->id;?>
+					<fieldset><legend><a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/commento.php?id=<?php echo $_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->id;?>
 ">#<?php echo $_smarty_tpl->tpl_vars['item']->iteration;?>
 </a> Commento inviato il giorno <?php echo $_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->data;?>
  alle ore <?php echo $_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->ora;?>
- da <a href="profilo.php?nickname=<?php echo $_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->autore;?>
+ da <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/profilo.php?nickname=<?php echo $_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->autore;?>
 "><?php echo $_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->autore;?>
-</a>. <?php if (((isset($_smarty_tpl->getVariable('grado',null,true,false)->value))&&(is_numeric($_smarty_tpl->getVariable('grado')->value))&&($_smarty_tpl->getVariable('grado')->value<3))){?><a href="admin/cancellacommento.php?id=<?php echo $_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->id;?>
+</a>. <?php if (((isset($_smarty_tpl->getVariable('grado',null,true,false)->value))&&(is_numeric($_smarty_tpl->getVariable('grado')->value))&&($_smarty_tpl->getVariable('grado')->value<3))){?><a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/admin/cancellacommento.php?id=<?php echo $_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->id;?>
 ">(X)</a><?php }?></legend><div onclick="javascript:quota(this);"><?php echo $_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->contenuto;?>
 </div></fieldset><br />
 				<?php }?>
@@ -81,7 +87,9 @@ if ($_smarty_tpl->_count($_from) > 0){
 		<?php }?>
 		<br />
 		<?php if (!$_smarty_tpl->getVariable('logged')->value){?>
-			<a href="registrazione.php">Registrati</a> o <a href="login.php">accedi</a> per commentare questa news.
+			<a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/registrazione.php">Registrati</a> o <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/login.php">accedi</a> per commentare questa news.
 		<?php }else{ ?>
 			<?php if ($_smarty_tpl->getVariable('bbcode')->value==1){?>
 				

@@ -18,7 +18,7 @@ class Configuration extends MySQL {
 	public function getConfig($campo = '') {
 		$config = array();
 		if($campo !== '') {
-			if(!$query = parent::query("SELECT DISTINCT $campo FROM configurazione"))
+			if(!$query = parent::query("SELECT $campo FROM configurazione LIMIT 1"))
 				return false;
 			if(parent::count($query) > 0) {
 				array_push($config, parent::get($query));
@@ -28,7 +28,7 @@ class Configuration extends MySQL {
 			return false;
 		}
 		else {
-			if(!$query = parent::query('SELECT DISTINCT * FROM configurazione'))
+			if(!$query = parent::query('SELECT * FROM configurazione LIMIT 1'))
 				return false;
 			if(parent::count($query) > 0) {
 				array_push($config, parent::get($query));
@@ -43,7 +43,7 @@ class Configuration extends MySQL {
 	public function createConfig($config) {
 		if(empty($config))
 			return false;
-		if(!$query = parent::query('SELECT * FROM configurazione'))
+		if(!$query = parent::query('SELECT * FROM configurazione LIMIT 1'))
 			return false;
 		if(!$campi = parent::getColumns($query))
 			return false;

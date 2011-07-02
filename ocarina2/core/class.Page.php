@@ -13,7 +13,7 @@ class Page extends Category {
 		$pagine = array();
 		if($minititolo !== '') {
 			if($this->isPage($minititolo)) {
-				if(!$query = parent::query("SELECT DISTINCT * FROM pagine WHERE minititolo='$minititolo' ORDER BY titolo ASC"))
+				if(!$query = parent::query("SELECT * FROM pagine WHERE minititolo='$minititolo' ORDER BY titolo ASC"))
 					return false;
 				array_push($pagine, parent::get($query));
 				if(!empty($pagine))
@@ -23,7 +23,7 @@ class Page extends Category {
 			return false;
 		}
 		else {
-			if(!$query = parent::query('SELECT DISTINCT * FROM pagine ORDER BY titolo ASC'))
+			if(!$query = parent::query('SELECT * FROM pagine ORDER BY titolo ASC'))
 				return false;
 			if(parent::count($query) > 0) {
 				while($result = parent::get($query))
@@ -39,7 +39,7 @@ class Page extends Category {
 	
 	/* Controlla se la pagina esiste. */
 	public function isPage($minititolo) {
-		if(!$query = parent::query("SELECT * FROM pagine WHERE minititolo='$minititolo' ORDER BY titolo ASC"))
+		if(!$query = parent::query("SELECT id FROM pagine WHERE minititolo='$minititolo' ORDER BY titolo ASC LIMIT 1"))
 			return false;
 		return parent::count($query) > 0 ? true : false;
 	}
@@ -54,9 +54,9 @@ class Page extends Category {
 	/* Ricerca le pagine da una keyword. */
 	public function searchPage($keyword, $orderById = '') {
 		if($orderById !== '')
-			$query = parent::query("SELECT DISTINCT * FROM pagine WHERE (titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%') ORDER BY id DESC");
+			$query = parent::query("SELECT * FROM pagine WHERE (titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%') ORDER BY id DESC");
 		else
-			$query = parent::query("SELECT DISTINCT * FROM pagine WHERE (titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%') ORDER BY titolo ASC");
+			$query = parent::query("SELECT * FROM pagine WHERE (titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%') ORDER BY titolo ASC");
 		if(!$query)
 			return false;
 		if(parent::count($query) > 0) {
@@ -108,7 +108,7 @@ class Page extends Category {
 		if(empty($array))
 			return false;
 		if((!$this->isPage($array[2])) && (parent::isCategory('pagine', $array[4])) && (parent::isUser($array[0]))) {
-			$query = parent::query('SELECT * FROM pagine');
+			$query = parent::query('SELECT * FROM pagine LIMIT 1');
 			if(!$campi = parent::getColumns($query))
 				return false;
 			$query = 'INSERT INTO pagine(';
