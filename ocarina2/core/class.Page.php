@@ -151,4 +151,28 @@ class Page extends Category {
 	public function deletePage($minititolo) {
 		return parent::query("DELETE FROM pagine WHERE minititolo='$minititolo'") ? true : false;
 	}
+	
+	/* Crea una sitemap di tutte le pagine approvate. */
+	public function sitemapPage() {
+		if(!$page = $this->getPage())
+			return false;
+		$sitemap = '<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+		foreach($page as $v) {
+			list($d, $m, $y) = ((isset($v->dataultimamodifica)) && ($v->dataultimamodifica !== '')) ? explode('-', $v->dataultimamodifica) : explode('-', $v->data);
+			$sitemap .= "
+	<url>
+		<loc>{$this->config[0]->url_index}/pagina.php?titolo={$v->minititolo}</loc>
+		<lastmod>$y-$m-$d</lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+	</url>";
+		}
+		$sitemap .= '
+</urlset>';
+		$f = fopen($this->config[0]->root_index.'/sitemap_page.xml', 'w');
+		fwrite($f, $sitemap);
+		fclose($f);
+		return $sitemap;
+	}
 }

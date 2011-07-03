@@ -32,7 +32,8 @@
 <li><a href="{$url_index}/logout.php">Logout</a></li>
 <li><a href="{$url_index}/admin/log.php">Logs</a></li>
 <li><a class="active">SEO</a></li>
-<li><a href="#">Filler ~</a></li>
+<li><a href="{$url_index}/admin/sitemap.php">Sitemap</a></li>
+<li><a href="{$url_index}/admin/robots.php">Robots</a></li>
 {elseif $grado == 4}
 <li><a class="active">{$nomesito}</a></li>
 <li><a href="{$url_index}/logout.php">Logout</a></li>
@@ -53,14 +54,15 @@
 <li><a href="{$url_index}/admin/cancellapagina.php">Cancella pagina</a></li>
 <li><a class="active">Categorie</a></li>
 <li><a href="{$url_index}/admin/gestiscicategorie.php">Gestisci categorie</a></li>
-<li><a class="active">Pagine</a></li>
-<li><a href="#">Filler ~</a></li>
 <li><a class="active">Uploader</a></li>
 <li><a href="#">Filler ~</a></li>
 {elseif $grado == 2}
 <li><a class="active">{$nomesito}</a></li>
 <li><a href="{$url_index}/logout.php">Logout</a></li>
 <li><a href="{$url_index}/admin/log.php">Logs</a></li>
+<li><a class="active">SEO</a></li>
+<li><a href="{$url_index}/admin/sitemap.php">Sitemap</a></li>
+<li><a href="{$url_index}/admin/robots.php">Robots</a></li>
 <li><a class="active">Utenti</a></li>
 <li><a href="#">Filler ~</a></li>
 <li><a class="active">News</a></li>
@@ -73,8 +75,6 @@
 <li><a href="{$url_index}/admin/cancellapagina.php">Cancella pagina</a></li>
 <li><a class="active">Categorie</a></li>
 <li><a href="{$url_index}/admin/gestiscicategorie.php">Gestisci categorie</a></li>
-<li><a class="active">Pagine</a></li>
-<li><a href="#">Filler ~</a></li>
 <li><a class="active">Uploader</a></li>
 <li><a href="#">Filler ~</a></li>
 {elseif $grado == 1}
@@ -82,7 +82,8 @@
 <li><a href="{$url_index}/logout.php">Logout</a></li>
 <li><a href="{$url_index}/admin/log.php">Logs</a></li>
 <li><a class="active">SEO</a></li>
-<li><a href="#">Filler ~</a></li>
+<li><a href="{$url_index}/admin/sitemap.php">Sitemap</a></li>
+<li><a href="{$url_index}/admin/robots.php">Robots</a></li>
 <li><a class="active">Utenti</a></li>
 <li><a href="#">Filler ~</a></li>
 <li><a class="active">News</a></li>
@@ -95,8 +96,6 @@
 <li><a href="{$url_index}/admin/cancellapagina.php">Cancella pagina</a></li>
 <li><a class="active">Categorie</a></li>
 <li><a href="{$url_index}/admin/gestiscicategorie.php">Gestisci categorie</a></li>
-<li><a class="active">Pagine</a></li>
-<li><a href="#">Filler ~</a></li>
 <li><a class="active">Uploader</a></li>
 <li><a href="#">Filler ~</a></li>
 <li><a class="active">Webdesign</a></li>

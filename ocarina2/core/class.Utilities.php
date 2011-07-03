@@ -289,4 +289,120 @@ class Utilities {
 		list($usec, $sec) = explode(' ', microtime());
 		return ((float)$usec + (float)$sec);
 	}
+	
+	/* Carica un'immagine. */
+	function uploadImage($path, $FILES) {
+		if((empty($FILES)) || (!is_array($FILES)))
+			return false;
+		do {
+			if(is_uploaded_file($_FILES['image']['tmp_name'])) {
+				list($width, $height, $type) = getimagesize($_FILES['image']['tmp_name']);
+				if(($type !== 1) && ($type !== 2) && ($type !== 3)) // gif, jpg, png
+					return false;
+				if(file_exists($path.$_FILES['image']['name']))
+					$_FILES['image']['name'] = rand(1,100).'_'.$_FILES['image']['name'];
+				if(!move_uploaded_file($_FILES['image']['tmp_name'], $path.$_FILES['image']['name']))
+					return false;
+			}
+		} while(false);
+		return $_FILES['image']['name'];
+	}
+	
+	/* Carica più immagini.
+	L'attributo "name" di ogni tag input-file deve finire con due parentesi quadre (ex.: images[])*/
+	function uploadMultipleImage($path, $FILES) {
+		if((empty($FILES)) || (!is_array($FILES)))
+			return false;
+		$name = array();
+		for($i=0, $count=count($FILES)-1; $i<$count; $i++) {
+			do {
+				if(is_uploaded_file($_FILES['image']['tmp_name'][$i])) {
+					list($width, $height, $type) = getimagesize($_FILES['image']['tmp_name'][$i]);
+					if(($type !== 1) && ($type !== 2) && ($type !== 3)) // gif, jpg, png
+						return false;
+					if(file_exists($path.$_FILES['image']['name'][$i]))
+						$_FILES['image']['name'][$i] = rand(1,100).'_'.$_FILES['image']['name'][$i];
+					if(!move_uploaded_file($_FILES['image']['tmp_name'][$i], $path.$_FILES['image']['name'][$i]))
+						return false;
+				}
+			} while(false);
+			$name[$i] = $_FILES['image']['name'][$i];
+		}
+		return $name;
+	}
+	
+	/* Carica un'immagine da remoto. Richiede allow_url_fopen. */
+	function uploadImageByRemote($path, $link) {
+		$array = explode('/', $link);
+		$name = $array[count($array)-1];
+		$ext = substr($name, -3);
+		while(file_exists($path.$name))
+			$name = rand(1,100).'_'.$name;
+		if(($ext == 'jpg') || ($ext == 'peg'))
+			imagejpeg(imagecreatefromjpeg($link), $path.$name);
+		elseif($ext == 'gif')
+			imagegif(imagecreatefromgif($link), $path.$name);
+		elseif($ext == 'png')
+			imagepng(imagecreatefrompng($link), $path.$name);
+		else
+			return false;
+		return $name;
+	}
+	
+	/* Carica un'immagine da remoto per chi ha allow_url_fopen disabilitato. Richiede cURL. */
+	function uploadImageByRemoteWithCurl($path, $link) {
+		$ch = curl_init($link);
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
+		$rawdata = curl_exec($ch);
+		curl_close($ch);
+		$array = explode('/', $link);
+		$name = $array[count($array)-1];
+		while(file_exists($path.$name))
+			$name = rand(1,100).'_'.$name;
+		$f = fopen($path.$name, 'w');
+		fwrite($f, $rawdata);
+		fclose($f);
+		return $name;
+	}
+	
+	/* Ridimensiona un'immagine. */
+	function resizeImage($path, $newPath, $newWidth, $newHeight) {
+		list($width, $height) = getimagesize($path);
+		$thumb = imagecreatetruecolor($newWidth, $newHeight);
+		$ext = substr($path, -3);
+		while(file_exists($path.$name))
+			$name = rand(1,100).'_'.$name;
+		if(($ext == 'jpg') || ($ext == 'peg')) {
+			imagecopyresized($thumb, imagecreatefromjpeg($path), 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+			imagejpeg($thumb, $newPath, 75);
+		}
+		elseif($ext == 'gif') {
+			imagecopyresized($thumb, imagecreatefromgif($path), 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+			imagegif($thumb, $newPath);
+		}
+		elseif($ext == 'png') {
+			imagecopyresized($thumb, imagecreatefrompng($path), 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+			imagepng($thumb, $newPath);
+		}
+		else
+			return false;
+		return $newPath;
+	}
+	
+	/* Elimina un'immagine. */
+	function deleteImage($path) {
+		if(!file_exists($path))
+			return false;
+		return (unlink($path)) ? true : false;
+	}
+	
+	/* Ritorna un array con le dimensioni di un'immagine in pixel. */
+	function dimImage($path) {
+		if(!file_exists($path))
+			return false;
+		list($width, $height) = getimagesize($path);
+		return array($width, $height);
+	}
 }

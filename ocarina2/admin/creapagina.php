@@ -37,11 +37,14 @@ if($logged)
 			$array = array($username[0]->nickname, $titolo_pagina, $pagina->permalink($titolo_pagina), $testo_pagina, $categoria_pagina, date('d-m-y'), date('G:m:i'), $approva_pagina);
 			if($pagina->isPage($pagina->permalink($titolo_pagina)))
 				$rendering->addValue('result', 'È accaduto un errore durante la creazione della pagina. Esiste già una pagina con lo stesso titolo, prova a sceglierne un altro.');
-			elseif($pagina->createPage($array))
+			elseif($pagina->createPage($array)) {
+				if($pagina->config[0]->sitemap == 1)
+					$pagina->sitemapPage();
 				if($approva_pagina == 0)
 					$rendering->addValue('result', 'La pagina è stata creata con successo ed è in attesa di approvazione.');
 				elseif($approva_pagina == 1)
 					$rendering->addValue('result', 'La pagina è stata creata con successo.');
+			}
 			else
 				$rendering->addValue('result', 'È accaduto un errore durante la creazione della pagina.');
 		}

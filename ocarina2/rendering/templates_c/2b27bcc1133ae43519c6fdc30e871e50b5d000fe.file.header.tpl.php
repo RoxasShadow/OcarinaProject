@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-02 20:19:09
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-03 17:16:06
          compiled from "/var/www/htdocs/ocarina2/rendering/templates/admin/include/header.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:8947994054e0f7d3d63bca0-71519506%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:6223524804e10a3d67b78a6-52765486%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '2b27bcc1133ae43519c6fdc30e871e50b5d000fe' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering/templates/admin/include/header.tpl',
-      1 => 1309637819,
+      1 => 1309713363,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '8947994054e0f7d3d63bca0-71519506',
+  'nocache_hash' => '6223524804e10a3d67b78a6-52765486',
   'function' => 
   array (
   ),
@@ -69,7 +69,10 @@ $_smarty_tpl->decodeProperties(array (
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /admin/log.php">Logs</a></li>
 <li><a class="active">SEO</a></li>
-<li><a href="#">Filler ~</a></li>
+<li><a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/admin/sitemap.php">Sitemap</a></li>
+<li><a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/admin/robots.php">Robots</a></li>
 <?php }elseif($_smarty_tpl->getVariable('grado')->value==4){?>
 <li><a class="active"><?php echo $_smarty_tpl->getVariable('nomesito')->value;?>
 </a></li>
@@ -103,8 +106,6 @@ $_smarty_tpl->decodeProperties(array (
 <li><a class="active">Categorie</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /admin/gestiscicategorie.php">Gestisci categorie</a></li>
-<li><a class="active">Pagine</a></li>
-<li><a href="#">Filler ~</a></li>
 <li><a class="active">Uploader</a></li>
 <li><a href="#">Filler ~</a></li>
 <?php }elseif($_smarty_tpl->getVariable('grado')->value==2){?>
@@ -114,6 +115,11 @@ $_smarty_tpl->decodeProperties(array (
 /logout.php">Logout</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /admin/log.php">Logs</a></li>
+<li><a class="active">SEO</a></li>
+<li><a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/admin/sitemap.php">Sitemap</a></li>
+<li><a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/admin/robots.php">Robots</a></li>
 <li><a class="active">Utenti</a></li>
 <li><a href="#">Filler ~</a></li>
 <li><a class="active">News</a></li>
@@ -133,8 +139,6 @@ $_smarty_tpl->decodeProperties(array (
 <li><a class="active">Categorie</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /admin/gestiscicategorie.php">Gestisci categorie</a></li>
-<li><a class="active">Pagine</a></li>
-<li><a href="#">Filler ~</a></li>
 <li><a class="active">Uploader</a></li>
 <li><a href="#">Filler ~</a></li>
 <?php }elseif($_smarty_tpl->getVariable('grado')->value==1){?>
@@ -145,7 +149,10 @@ $_smarty_tpl->decodeProperties(array (
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /admin/log.php">Logs</a></li>
 <li><a class="active">SEO</a></li>
-<li><a href="#">Filler ~</a></li>
+<li><a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/admin/sitemap.php">Sitemap</a></li>
+<li><a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/admin/robots.php">Robots</a></li>
 <li><a class="active">Utenti</a></li>
 <li><a href="#">Filler ~</a></li>
 <li><a class="active">News</a></li>
@@ -165,8 +172,6 @@ $_smarty_tpl->decodeProperties(array (
 <li><a class="active">Categorie</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /admin/gestiscicategorie.php">Gestisci categorie</a></li>
-<li><a class="active">Pagine</a></li>
-<li><a href="#">Filler ~</a></li>
 <li><a class="active">Uploader</a></li>
 <li><a href="#">Filler ~</a></li>
 <li><a class="active">Webdesign</a></li>

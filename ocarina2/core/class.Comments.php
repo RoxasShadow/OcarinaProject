@@ -146,4 +146,28 @@ class Comments extends News {
 			return false;
 		return parent::query("DELETE FROM commenti WHERE id='$id'") ? true : false;
 	}
+	
+	/* Crea una sitemap di tutti i commenti approvati. */
+	public function sitemapComment() {
+		if(!$comment = $this->getComment())
+			return false;
+		$sitemap = '<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+		foreach($comment as $v) {
+			list($d, $m, $y) = explode('-', $v->data);
+			$sitemap .= "
+	<url>
+		<loc>{$this->config[0]->url_index}/commento.php?id={$v->id}</loc>
+		<lastmod>$y-$m-$d</lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+	</url>";
+		}
+		$sitemap .= '
+</urlset>';
+		$f = fopen($this->config[0]->root_index.'/sitemap_comment.xml', 'w');
+		fwrite($f, $sitemap);
+		fclose($f);
+		return $sitemap;
+	}
 }

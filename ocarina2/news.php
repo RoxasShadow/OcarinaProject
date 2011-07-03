@@ -50,6 +50,8 @@ else {
 			elseif($comment->createComment($array)) {
 				if($comment->config[0]->log == 1)
 					$comment->log($username[0]->nickname, 'Comment sended.');
+				if($comment->config[0]->sitemap == 1)
+					$comment->sitemapComment();
 				($comment->config[0]->approvacommenti == 0) ? $rendering->addValue('commentSended', 'Il commento è stato inviato, attendi per il redirect...'.header('Refresh: 2; URL='.$comment->config[0]->url_index.'/news.php?titolo='.$titolo)) : $rendering->addValue('commentSended', 'Il commento è stato inviato ed è in attesa per essere approvato, attendi per il redirect...'.header('Refresh: 2; URL='.$comment->config[0]->url_index.'/news.php?titolo='.$titolo));
 			}
 			else {

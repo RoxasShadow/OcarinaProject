@@ -37,11 +37,14 @@ if($logged)
 			$array = array($username[0]->nickname, $titolo_news, $news->permalink($titolo_news), $testo_news, $categoria_news, date('d-m-y'), date('G:m:i'), $approva_news);
 			if($news->isNews($news->permalink($titolo_news)))
 				$rendering->addValue('result', 'È accaduto un errore durante la creazione della news. Esiste già una news con lo stesso titolo, prova a sceglierne un altro.');
-			elseif($news->createNews($array))
+			elseif($news->createNews($array)) {
+				if($news->config[0]->sitemap == 1)
+					$news->sitemapNews();
 				if($approva_news == 0)
 					$rendering->addValue('result', 'La news è stata creata con successo ed è in attesa di approvazione.');
 				elseif($approva_news == 1)
 					$rendering->addValue('result', 'La news è stata creata con successo.');
+			}
 			else
 				$rendering->addValue('result', 'È accaduto un errore durante la creazione della news.');
 		}

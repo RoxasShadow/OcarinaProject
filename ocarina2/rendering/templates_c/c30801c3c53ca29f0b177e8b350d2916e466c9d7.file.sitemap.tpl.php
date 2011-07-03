@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-03 16:56:27
-         compiled from "/var/www/htdocs/ocarina2/rendering/templates/admin/index.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:5827429094e109f3bb91b89-47322371%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-03 17:15:26
+         compiled from "/var/www/htdocs/ocarina2/rendering/templates/admin/sitemap.tpl" */ ?>
+<?php /*%%SmartyHeaderCode:12368360984e10a3ae6b1999-86985101%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
-    '46b6c22da01160288c4f4080e2b38bd608f0315e' => 
+    'c30801c3c53ca29f0b177e8b350d2916e466c9d7' => 
     array (
-      0 => '/var/www/htdocs/ocarina2/rendering/templates/admin/index.tpl',
-      1 => 1309709982,
+      0 => '/var/www/htdocs/ocarina2/rendering/templates/admin/sitemap.tpl',
+      1 => 1309713219,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '5827429094e109f3bb91b89-47322371',
+  'nocache_hash' => '12368360984e10a3ae6b1999-86985101',
   'function' => 
   array (
   ),
@@ -22,9 +22,14 @@ $_smarty_tpl->decodeProperties(array (
  echo $_template->getRenderedTemplate(); $_template->rendered_content = null;?><?php unset($_template);?>
 	<?php if ($_smarty_tpl->getVariable('utente')->value==''||$_smarty_tpl->getVariable('grado')->value==''){?>
 		Accesso negato.
-	<?php }elseif($_smarty_tpl->getVariable('grado')->value<6){?>
-		Ciao <?php echo $_smarty_tpl->getVariable('utente')->value;?>
-, benvenuto nell'amministrazione.
+	<?php }elseif((($_smarty_tpl->getVariable('grado')->value<3)||($_smarty_tpl->getVariable('grado')->value==5))){?>
+		<?php if (!$_smarty_tpl->getVariable('submit')->value){?>
+			<form action="" method="post">
+			<input type="submit" name="submit" value="Ricostruisci le sitemap" />
+			</form>
+		<?php }else{ ?>
+			Sitemap ricostruite.
+		<?php }?>
 	<?php }else{ ?>
 		Accesso negato.
 	<?php }?>

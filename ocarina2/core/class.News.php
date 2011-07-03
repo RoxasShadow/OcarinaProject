@@ -153,4 +153,28 @@ class News extends Category {
 	public function deleteNews($minititolo) {
 		return parent::query("DELETE FROM news WHERE minititolo='$minititolo'") ? true : false;
 	}
+	
+	/* Crea una sitemap di tutte le news approvate. */
+	public function sitemapNews() {
+		if(!$news = $this->getNews())
+			return false;
+		$sitemap = '<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+		foreach($news as $v) {
+			list($d, $m, $y) = ((isset($v->dataultimamodifica)) && ($v->dataultimamodifica !== '')) ? explode('-', $v->dataultimamodifica) : explode('-', $v->data);
+			$sitemap .= "
+	<url>
+		<loc>{$this->config[0]->url_index}/news.php?titolo={$v->minititolo}</loc>
+		<lastmod>$y-$m-$d</lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+	</url>";
+		}
+		$sitemap .= '
+</urlset>';
+		$f = fopen($this->config[0]->root_index.'/sitemap_news.xml', 'w');
+		fwrite($f, $sitemap);
+		fclose($f);
+		return $sitemap;
+	}
 }
