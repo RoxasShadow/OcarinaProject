@@ -4,6 +4,8 @@
 {include file="$root_rendering/templates/$skin/include/header.tpl"}
 	{if $logged}
 		<div class="titolo">{$result}</div>
+	{elseif ((isset($codiceRegistrazione)) && ($codiceRegistrazione !== ''))}
+		<div class="titolo">{$result}</div>
 	{elseif !$submit}
 		<form action="" method="post">
 		<table border="0">

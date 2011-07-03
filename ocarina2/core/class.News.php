@@ -91,7 +91,23 @@ class News extends Category {
 	
 	/* Ricerca le news per utente. */
 	public function searchNewsByUser($nickname) {
-		if(!$query = parent::query("SELECT DISTINCT * FROM news WHERE nickname='$nickname' ORDER BY id DESC"))
+		if(!$query = parent::query("SELECT * FROM news WHERE nickname='$nickname' ORDER BY id DESC"))
+			return false;
+		if(parent::count($query) > 0) {
+			$news = array();
+			while($result = parent::get($query))
+				array_push($news, $result);
+			if(!empty($news))
+				return $news;
+			return false;
+		}
+		else
+			return false;
+	}
+	
+	/* Ricerca le news per approvazione. */
+	public function searchNewsByApprovation() {
+		if(!$query = parent::query("SELECT * FROM news WHERE approvato='0' ORDER BY id DESC"))
 			return false;
 		if(parent::count($query) > 0) {
 			$news = array();

@@ -16,8 +16,8 @@ while($script = readdir($apri))
 		$f[] = $script;
 
 for($i=0, $count=count($f), $content=''; $i<$count; ++$i)
-	$content .= 'var element=document.createElement("script");element.src="'.$config->config[0]->url_index.'/etc/js/'.$f[$i].'";document.body.appendChild(element);
+	$content .= 'var element=document.createElement(\'script\');element.src=\''.$config->config[0]->url_index.'/etc/js/'.$f[$i].'\';document.body.appendChild(element);
 	';
 
-echo 'function downloadJSAtOnload(){'.$content.'}if(window.addEventListener)window.addEventListener("load",downloadJSAtOnload,false);else if(window.attachEvent)window.attachEvent("onload",downloadJSAtOnload);else window.onload=downloadJSAtOnload;';
+echo 'function downloadJSAtOnload(){'.$content.'}if(window.addEventListener)window.addEventListener(\'load\',downloadJSAtOnload,false);else if(window.attachEvent)window.attachEvent(\'onload\',downloadJSAtOnload);else window.onload=downloadJSAtOnload;';
 unset($config);

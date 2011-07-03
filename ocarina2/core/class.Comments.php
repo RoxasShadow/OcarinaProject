@@ -93,6 +93,23 @@ class Comments extends News {
 			return false;
 	}
 	
+	/* Ricerca i commenti per approvazione. */
+	public function searchCommentByApprovation() {
+		if(!$query = parent::query("SELECT * FROM commenti WHERE approvato='0'"))
+			return false;
+		if(parent::count($query) > 0) {
+			$commenti = array();
+			while($result = parent::get($query)) {
+				array_push($commenti, $result);
+			}
+			if(!empty($commenti))
+				return $commenti;
+			return false;
+		}
+		else
+			return false;
+	}
+	
 	/* Crea un commento. */
 	public function createComment($array) {
 		if(empty($array))

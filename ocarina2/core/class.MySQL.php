@@ -9,7 +9,7 @@ require_once('class.Utilities.php');
 class MySQL extends Utilities {
 	private $host = 'localhost';
 	private $username = 'root';
-	private $password = 'kronos';
+	private $password = 'asd';
 	private $database = 'ocarina2';
 	private $connected;
 	public $numQuery = 0;

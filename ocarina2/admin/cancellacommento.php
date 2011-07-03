@@ -6,7 +6,7 @@
 require_once('../core/class.Comments.php');
 
 $comments = new Comments();
-$id = ((isset($_GET['id'])) && is_numeric($_GET['id'])) ? (int)$_GET['id'] : '';
+$id = ((isset($_GET['id'])) && ($_GET['id'] !== '') && (is_numeric($_GET['id']))) ? (int)$_GET['id'] : '';
 
 $logged = $comments->isLogged() ? true : false;
 if($logged)

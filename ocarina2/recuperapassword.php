@@ -24,18 +24,14 @@ $rendering->addValue('description', $user->config[0]->description);
 
 if(!$logged) {
 	if(($email == '') && ($recupero) && ($codiceRecupero !== '')) {
-		if($user->searchUserByField('codicerecupero', $codiceRecupero) !== false)
-			$username = $user->searchUserByField('codicerecupero', $codiceRecupero);
-		else {
+		$username = $user->searchUserByField('codicerecupero', $codiceRecupero);
+		if(!$username)
 			$rendering->addValue('result', 'Il codice per il recupero da te inserito non è valido.');
 			if($user->config[0]->log == 1)
 				$user->log('~', 'Invalid recover code.');
-			$rendering->addValue('logged', $logged);
 			$rendering->addValue('recupera', '');
-			$rendering->renderize('recuperapassword.tpl');
-			exit();
 		}
-		if($username[0]->codicerecupero == $codiceRecupero) {
+		elseif($username[0]->codicerecupero == $codiceRecupero) {
 			$codice = $user->getCode();
 			$len = strlen($codice);
 			$password = substr($codice, $len-24); // 32-24=8
@@ -55,8 +51,8 @@ if(!$logged) {
 			$rendering->addValue('result', 'Il codice per il recupero da te inserito non è valido.');
 	}
 	elseif(($email !== '') && (!$recupero))
-		if($user->searchUserByField('email', $email) !== false) {
-			$username = $user->searchUserByField('email', $email);
+		$username = $user->searchUserByField('email', $email) !== false;
+		if($username !== false) {
 			if($username[0]->email == $email) {
 				$nickname = $username[0]->nickname;
 				$codice = $user->getCode();

@@ -96,7 +96,7 @@ class User extends Configuration {
 			$array[1] = md5($array[1]);
 			$query = 'INSERT INTO utenti(';
 			foreach($campi as $var)
-				if(($var !== 'id') && ($var !== 'secret') && ($var !== 'bio') && ($var !== 'avatar') && ($var !== 'lastlogout') && ($var !== 'browsername') && ($var !== 'browserversion') && ($var !== 'platform') && ($var !== 'codicerecupero'))
+				if(($var !== 'id') && ($var !== 'secret') && ($var !== 'bio') && ($var !== 'avatar') && ($var !== 'lastlogout') && ($var !== 'ip') && ($var !== 'browsername') && ($var !== 'browserversion') && ($var !== 'platform') && ($var !== 'codicerecupero'))
 					$query .= $var.', ';
 			$query = trim($query, ', ');
 			$query .= ') VALUES(';
@@ -151,12 +151,13 @@ class User extends Configuration {
 		if(!$this->isUser($nickname))
 			return false;
 		$password = md5($password);
-		if(!$query = parent::query("SELECT COUNT(*) FROM utenti WHERE nickname='$nickname' AND password='$password'"))
+		if(!$query = parent::query("SELECT COUNT(*) FROM utenti WHERE nickname='$nickname' AND password='$password' AND codiceregistrazione=''"))
 			return false;
 		if(mysql_result($query, 0, 0) > 0) {
 			$code = $this->getCode();
 			$client = parent::getClient();
-			parent::query("UPDATE utenti SET secret='$code', browsername='{$client['browser']}', browserversion='{$client['version']}', platform='{$client['platform']}' WHERE nickname='$nickname'");
+			$ip = parent::purge($_SERVER['REMOTE_ADDR']);
+			parent::query("UPDATE utenti SET secret='$code', ip='$ip', browsername='{$client['browser']}', browserversion='{$client['version']}', platform='{$client['platform']}' WHERE nickname='$nickname'");
 			$this->setCookie($code);
 			return true;
 		}
@@ -180,11 +181,12 @@ class User extends Configuration {
 		$data = date('d-m-y');
 		$ora = date('G:m:i');
 		$useragent = parent::purge($_SERVER['HTTP_USER_AGENT']);
+		$ip = parent::purge($_SERVER['REMOTE_ADDR']);
 		$referer = $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'].'?';
 		foreach($_GET as $key => $value)
 		    $referer .= "$key=$value&";
 		$referer = parent::purge($referer);
-		return parent::query("INSERT INTO log(nickname, azione, ip, data, ora, useragent, referer) VALUES('$nickname', '$azione', '{$_SERVER['REMOTE_ADDR']}', '$data', '$ora', '{$useragent}', '$referer')") ? true : false;
+		return parent::query("INSERT INTO log(nickname, azione, ip, data, ora, useragent, referer) VALUES('$nickname', '$azione', '$ip', '$data', '$ora', '{$useragent}', '$referer')") ? true : false;
 	}
 
 	/* Visualizza i log. */

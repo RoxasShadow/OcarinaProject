@@ -73,7 +73,7 @@ class Page extends Category {
 	
 	/* Ricerca le pagine per categoria. */
 	public function searchPageByCategory($keyword) {
-		if(!$query = parent::query("SELECT DISTINCT * FROM pagine WHERE categoria='$keyword' ORDER BY id DESC"))
+		if(!$query = parent::query("SELECT * FROM pagine WHERE categoria='$keyword' ORDER BY id DESC"))
 			return false;
 		if(parent::count($query) > 0) {
 			$pagine = array();
@@ -89,14 +89,30 @@ class Page extends Category {
 	
 	/* Ricerca le pagine per utente. */
 	public function searchPageByUser($nickname) {
-		if(!$query = parent::query("SELECT DISTINCT * FROM pagine WHERE nickname='$nickname' ORDER BY id DESC"))
+		if(!$query = parent::query("SELECT * FROM pagine WHERE nickname='$nickname' ORDER BY id DESC"))
 			return false;
 		if(parent::count($query) > 0) {
-			$news = array();
+			$pagine = array();
 			while($result = parent::get($query))
-				array_push($news, $result);
-			if(!empty($news))
-				return $news;
+				array_push($pagine, $result);
+			if(!empty($pagine))
+				return $pagine;
+			return false;
+		}
+		else
+			return false;
+	}
+	
+	/* Ricerca le pagine per approvazione. */
+	public function searchPageByApprovation() {
+		if(!$query = parent::query("SELECT * FROM pagine WHERE approvato='0' ORDER BY id DESC"))
+			return false;
+		if(parent::count($query) > 0) {
+			$pagine = array();
+			while($result = parent::get($query))
+				array_push($pagine, $result);
+			if(!empty($pagine))
+				return $pagine;
 			return false;
 		}
 		else

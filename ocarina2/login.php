@@ -26,15 +26,14 @@ if($logged)
 elseif($submit)
 	if(($nickname !== '') && ($password !== '')) {
 		if($user->login($nickname, $password)) {
-			$redirect = (($user->purge($_SERVER['HTTP_REFERER'])) == $user->config[0]->url_index.'/login.php') ? $user->config[0]->url_index.'/Aindex.php?welcome=true' : $user->purge($_SERVER['HTTP_REFERER']);
 			if($user->config[0]->log == 1)
 				$user->log($nickname, 'Logged in.');
-			$rendering->addValue('result', 'Login effettuato. Attendi per il redirect...'.header('Refresh: 2; URL='.$redirect));
+			$rendering->addValue('result', 'Login effettuato. Attendi per il redirect...'.header('Refresh: 2; URL='.$user->config[0]->url_index.'/Aindex.php?welcome=true'));
 		}
 		else {
 			if($user->config[0]->log == 1)
 				$user->log($nickname, 'Login failed.');
-			$rendering->addValue('result', 'È accaduto un problema durante l\'accesso. Controlla di aver inserito i dati correttamente.');
+			$rendering->addValue('result', 'È accaduto un problema durante l\'accesso. Controlla di aver inserito i dati correttamente e che il tuo account sia attivo.');
 		}
 	}
 	else {

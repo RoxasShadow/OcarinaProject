@@ -165,6 +165,7 @@ CREATE TABLE IF NOT EXISTS `utenti` (
   `data` varchar(10) NOT NULL,
   `ora` varchar(10) NOT NULL,
   `lastlogout` varchar(10) NOT NULL,
+  `codiceregistrazione` varchar(40) NOT NULL,
   `codicerecupero` varchar(40) NOT NULL,
   `skin` varchar(100) NOT NULL DEFAULT '',
   `bio` text NOT NULL,
