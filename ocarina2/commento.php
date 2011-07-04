@@ -12,11 +12,8 @@ $rendering = new Rendering();
 $bbcode = new BBCode();
 $id = ((isset($_GET['id'])) && is_numeric($_GET['id'])) ? (int)$_GET['id'] : '';
 
-$logged = $comments->isLogged() ? true : false;
-if($logged)
-	$username = $comments->searchUserByField('secret', $comments->getCookie());
-$rendering->addValue('utente', $logged ? $username[0]->nickname : '');
-$rendering->skin = $logged ? $username[0]->skin : $comments->config[0]->skin;
+$rendering->addValue('utente', $comments->isLogged() ? $comments->username[0]->nickname : '');
+$rendering->skin = $comments->isLogged() ? $comments->username[0]->skin : $comments->config[0]->skin;
 $rendering->addValue('titolo', $id !== '' ? 'Commento numero #'.$id.' &raquo; '.$comments->config[0]->nomesito : $comments->config[0]->nomesito);
 $rendering->addValue('keywords', $comments->config[0]->keywords);
 $rendering->addValue('description', $comments->config[0]->description);
@@ -33,4 +30,4 @@ else {
 		$rendering->addValue('commento', $getComment);
 	}
 }
-(($logged) && ($username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('commento.tpl');
+(($comments->isLogged()) && ($comments->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('commento.tpl');

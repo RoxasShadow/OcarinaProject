@@ -12,11 +12,8 @@ $pagine = new Page();
 $rendering = new Rendering();
 $categoria = isset($_GET['cat']) ? $news->purge($_GET['cat']) : '';
 
-$logged = $news->isLogged() ? true : false;
-if($logged)
-	$username = $news->searchUserByField('secret', $news->getCookie());
-$rendering->addValue('utente', $logged ? $username[0]->nickname : '');
-$rendering->skin = $logged ? $username[0]->skin : $news->config[0]->skin;
+$rendering->addValue('utente', $news->isLogged() ? $news->username[0]->nickname : '');
+$rendering->skin = $news->isLogged() ? $news->username[0]->skin : $news->config[0]->skin;
 $rendering->addValue('titolo', $categoria !== '' ? 'Categoria: '.$categoria.' &raquo; '.$news->config[0]->nomesito : $news->config[0]->nomesito);
 $rendering->addValue('keywords', $news->config[0]->keywords);
 $rendering->addValue('description', $news->config[0]->description);
@@ -33,4 +30,4 @@ else {
 	else
 		$rendering->addValue('pagine', $getPageCat);
 }
-(($logged) && ($username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('archivio.tpl');
+(($news->isLogged()) && ($news->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('archivio.tpl');

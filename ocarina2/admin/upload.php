@@ -12,15 +12,11 @@ $multiple = ((isset($_GET['multiple'])) && ($_GET['multiple'] !== '') && (is_num
 $user = new User();
 $rendering = new Rendering();
 
-$logged = $user->isLogged() ? true : false;
-if($logged)
-	$username = $user->searchUserByField('secret', $user->getCookie());
-$rendering->addValue('utente', $logged ? $username[0]->nickname : '');
-$rendering->addValue('grado', $logged ? $username[0]->grado : '');
+$rendering->addValue('grado', $user->isLogged() ? $user->username[0]->grado : '');
 $rendering->skin = 'admin';
 $rendering->addValue('titolo', 'Upload &raquo; Amministrazione &raquo; '.$user->config[0]->nomesito);
 
-if(($logged) && ($username[0]->grado < 4)) {
+if(($user->isLogged()) && ($user->username[0]->grado < 4)) {
 	if($image !== '')
 		if(count($image)-1 < 2)
 			if(!$upload = $user->uploadImage($user->config[0]->root_immagini.'/', $image))
@@ -38,4 +34,4 @@ else
 	$rendering->addValue('result', 'Accesso negato.');
 $rendering->addValue('multiple', $multiple);
 $rendering->addValue('submit', $submit);
-(($logged) && ($username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('upload.tpl');
+(($user->isLogged()) && ($user->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('upload.tpl');

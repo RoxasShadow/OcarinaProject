@@ -2,9 +2,7 @@
 	(C) Giovanni Capuano 2011
 *}
 {include file="$root_rendering/templates/$skin/include/header.tpl"}
-	{if $utente == '' || $grado == ''}
-		Accesso negato.
-	{elseif (($grado < 3) || ($grado == 5))}
+	{if (($grado < 3) || ($grado == 5))}
 		{if !$submit}
 			<a href="http://www.robotstxt.org/robotstxt.html" target="_blank">About the robots...</a><br />
 			<form action="" method="post">

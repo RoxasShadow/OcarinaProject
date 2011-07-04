@@ -19,7 +19,7 @@
 <div id="container">
 <div id="sidebar">
 <ul class="sideNav">
-{if $utente == '' || $grado == ''}
+{if $grado == ''}
 <li><a class="active">{$nomesito}</a></li>
 <li><a href="{$url_index}/login.php">Login</a></li>
 {elseif $grado > 5}
@@ -30,7 +30,6 @@
 <li><a href="{$url_index}/logout.php">Logout</a></li>
 <li><a href="{$url_admin}/log.php">Logs</a></li>
 <li><a class="active">SEO</a></li>
-<li><a href="{$url_admin}/sitemap.php">Sitemap</a></li>
 <li><a href="{$url_admin}/robots.php">Robots</a></li>
 {elseif $grado == 4}
 <li><a class="active">{$nomesito}</a></li>
@@ -46,10 +45,12 @@
 <li><a href="{$url_admin}/creanews.php">Crea news</a></li>
 <li><a href="{$url_admin}/modificanews.php">Modifica news</a></li>
 <li><a href="{$url_admin}/cancellanews.php">Cancella news</a></li>
+<li><a href="{$url_admin}/approva.php">Approva news</a></li>
 <li><a class="active">Pagine</a></li>
 <li><a href="{$url_admin}/creapagina.php">Crea pagina</a></li>
 <li><a href="{$url_admin}/modificapagina.php">Modifica pagina</a></li>
 <li><a href="{$url_admin}/cancellapagina.php">Cancella pagina</a></li>
+<li><a href="{$url_admin}/approva.php">Approva pagine</a></li>
 <li><a class="active">Categorie</a></li>
 <li><a href="{$url_admin}/gestiscicategorie.php">Gestisci categorie</a></li>
 <li><a class="active">Uploader</a></li>
@@ -60,7 +61,6 @@
 <li><a href="{$url_index}/logout.php">Logout</a></li>
 <li><a href="{$url_admin}/log.php">Logs</a></li>
 <li><a class="active">SEO</a></li>
-<li><a href="{$url_admin}/sitemap.php">Sitemap</a></li>
 <li><a href="{$url_admin}/robots.php">Robots</a></li>
 <li><a class="active">Utenti</a></li>
 <li><a href="#">Filler ~</a></li>
@@ -68,10 +68,12 @@
 <li><a href="{$url_admin}/creanews.php">Crea news</a></li>
 <li><a href="{$url_admin}/modificanews.php">Modifica news</a></li>
 <li><a href="{$url_admin}/cancellanews.php">Cancella news</a></li>
+<li><a href="{$url_admin}/approva.php">Approva news</a></li>
 <li><a class="active">Pagine</a></li>
 <li><a href="{$url_admin}/creapagina.php">Crea pagina</a></li>
 <li><a href="{$url_admin}/modificapagina.php">Modifica pagina</a></li>
 <li><a href="{$url_admin}/cancellapagina.php">Cancella pagina</a></li>
+<li><a href="{$url_admin}/approva.php">Approva pagine</a></li>
 <li><a class="active">Categorie</a></li>
 <li><a href="{$url_admin}/gestiscicategorie.php">Gestisci categorie</a></li>
 <li><a class="active">Uploader</a></li>
@@ -82,7 +84,6 @@
 <li><a href="{$url_index}/logout.php">Logout</a></li>
 <li><a href="{$url_admin}/log.php">Logs</a></li>
 <li><a class="active">SEO</a></li>
-<li><a href="{$url_admin}/sitemap.php">Sitemap</a></li>
 <li><a href="{$url_admin}/robots.php">Robots</a></li>
 <li><a class="active">Utenti</a></li>
 <li><a href="#">Filler ~</a></li>
@@ -90,10 +91,12 @@
 <li><a href="{$url_admin}/creanews.php">Crea news</a></li>
 <li><a href="{$url_admin}/modificanews.php">Modifica news</a></li>
 <li><a href="{$url_admin}/cancellanews.php">Cancella news</a></li>
+<li><a href="{$url_admin}/approva.php">Approva news</a></li>
 <li><a class="active">Pagine</a></li>
 <li><a href="{$url_admin}/creapagina.php">Crea pagina</a></li>
 <li><a href="{$url_admin}/modificapagina.php">Modifica pagina</a></li>
 <li><a href="{$url_admin}/cancellapagina.php">Cancella pagina</a></li>
+<li><a href="{$url_admin}/approva.php">Approva pagine</a></li>
 <li><a class="active">Categorie</a></li>
 <li><a href="{$url_admin}/gestiscicategorie.php">Gestisci categorie</a></li>
 <li><a class="active">Uploader</a></li>

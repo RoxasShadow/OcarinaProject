@@ -13,18 +13,15 @@ $rendering = new Rendering();
 $bbcode = new BBCode();
 $welcome = ((isset($_GET['welcome'])) && ($_GET['welcome'] == 'true')) ? true : false;
 
-$logged = $news->isLogged() ? true : false;
-if($logged)
-	$username = $news->searchUserByField('secret', $news->getCookie());
-$rendering->addValue('utente', $logged ? $username[0]->nickname : '');
-$rendering->skin = $logged ? $username[0]->skin : $news->config[0]->skin;
+$rendering->addValue('utente', $news->isLogged() ? $news->username[0]->nickname : '');
+$rendering->skin = $news->isLogged() ? $news->username[0]->skin : $news->config[0]->skin;
 $rendering->addValue('titolo', $news->config[0]->nomesito);
 $rendering->addValue('keywords', $news->config[0]->keywords);
 $rendering->addValue('description', $news->config[0]->description);
 
-if(($welcome) && ($logged))
-	if(($username[0]->lastlogout !== '') && ($username[0]->lastlogout !== date('d-m-y')))
-		$rendering->addValue('lastlogout', $username[0]->lastlogout);
+if(($welcome) && ($news->isLogged()))
+	if(($news->username[0]->lastlogout !== '') && ($news->username[0]->lastlogout !== date('d-m-y')))
+		$rendering->addValue('lastlogout', $news->username[0]->lastlogout);
 		
 $pager = new Pager($news->config[0]->impaginazionenews);
 $rendering->addValue('navigatore', $pager->getNav());
@@ -52,4 +49,4 @@ else {
 		$rendering->addValue('news', $getNews);
 	}
 }
-(($logged) && ($username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('index.tpl');
+(($news->isLogged()) && ($news->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('index.tpl');

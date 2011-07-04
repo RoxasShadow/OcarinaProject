@@ -11,15 +11,11 @@ $rendering = new Rendering();
 $robots = ((isset($_POST['robots'])) && ($_POST['robots'] !== '')) ? $rendering->purgeByXSS($_POST['robots']) : '';
 $submit = isset($_POST['submit']) ? true : false;
 
-$logged = $user->isLogged() ? true : false;
-if($logged)
-	$username = $user->searchUserByField('secret', $user->getCookie());
-$rendering->addValue('utente', $logged ? $username[0]->nickname : '');
-$rendering->addValue('grado', $logged ? $username[0]->grado : '');
+$rendering->addValue('grado', $user->isLogged() ? $user->username[0]->grado : '');
 $rendering->skin = 'admin';
 $rendering->addValue('titolo', 'Robots &raquo; Amministrazione &raquo; '.$user->config[0]->nomesito);
 
-if(($logged) && (($username[0]->grado < 3) || ($username[0]->grado == 5))) {
+if(($user->isLogged()) && (($user->username[0]->grado < 3) || ($user->username[0]->grado == 5))) {
 	if(!$submit) {
 		$robots = '';
 		if(file_exists($user->config[0]->root_index.'/robots.txt')) {
@@ -43,6 +39,5 @@ Sitemap: '.$user->config[0]->url_index.'/sitemap.php');
 }
 else
 	$rendering->addValue('result', 'Accesso negato.');
-$rendering->addValue('logged', $logged);
 $rendering->addValue('submit', $submit);
-(($logged) && ($username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('robots.tpl');
+(($user->isLogged()) && ($user->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('robots.tpl');

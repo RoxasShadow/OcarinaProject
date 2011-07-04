@@ -2,9 +2,8 @@
 	(C) Giovanni Capuano 2011
 *}
 {include file="$root_rendering/templates/$skin/include/header.tpl"}
-	{if $utente == '' || $grado == '' || !$logged}
-		Accesso negato.
-	{elseif $grado < 3 && !$submit}
+	{if (($grado == '') || ($grado > 2))}
+	{elseif !$submit}
 		<form action="" method="post">
 		<table>
 		<tr>
@@ -48,9 +47,7 @@
 		</tr>
 		</table>
 		</form>
-	{elseif $grado < 3 && $submit}
+	{elseif $submit}
 		{$result}
-	{else}
-		Accesso negato.
 	{/if}
 {include file="$root_rendering/templates/$skin/include/footer.tpl"}

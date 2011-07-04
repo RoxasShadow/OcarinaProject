@@ -2,9 +2,9 @@
 	(C) Giovanni Capuano 2011
 *}
 {include file="$root_rendering/templates/$skin/include/header.tpl"}
-	{if $utente == '' || $grado == '' || !$logged}
+	{if (($grado == '') || ($grado > 3))}
 		Accesso negato.
-	{elseif $grado < 4 && !$submit && !isset($result)}
+	{elseif !$submit && !isset($result)}
 		<form action="" method="post">
 		Titolo<br />
 		<input type="text" name="titolo" {if (isset($titolo_default))}value="{$titolo_default}"{/if} /><br /><br />
@@ -40,11 +40,9 @@
 		{if isset($sel)}<input type="hidden" name="selected" value="{$sel}" />{/if}
 		<input type="submit" name="submit" value="Conferma" />
 		</form>
-	{elseif $grado < 4 && $submit && isset($result) || (!$submit && isset($result))}
+	{elseif $submit && isset($result) || (!$submit && isset($result))}
 		{$result}
 	{elseif isset($result)}
 		{$result}
-	{else}
-		Accesso negato.
 	{/if}
 {include file="$root_rendering/templates/$skin/include/footer.tpl"}

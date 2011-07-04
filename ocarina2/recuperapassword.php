@@ -13,29 +13,26 @@ $codiceRecupero = ((isset($_GET['codice'])) && ($_GET['codice'] !== '')) ? $user
 $recupero = ($codiceRecupero !== '') ? true : false;
 $submit = isset($_POST['submit']) ? true : false;
 
-$logged = $user->isLogged() ? true : false;
-if($logged)
-	$username = $user->searchUserByField('secret', $user->getCookie());
-$rendering->addValue('utente', $logged ? $username[0]->nickname : '');
-$rendering->skin = $logged ? $username[0]->skin : $user->config[0]->skin;
+$rendering->addValue('utente', $user->isLogged() ? $user->username[0]->nickname : '');
+$rendering->skin = $user->isLogged() ? $user->username[0]->skin : $user->config[0]->skin;
 $rendering->addValue('titolo', 'Recupera password &raquo; '.$user->config[0]->nomesito);
 $rendering->addValue('keywords', $user->config[0]->keywords);
 $rendering->addValue('description', $user->config[0]->description);
 
-if(!$logged) {
+if(!$user->isLogged()) {
 	if(($email == '') && ($recupero) && ($codiceRecupero !== '')) {
-		$username = $user->searchUserByField('codicerecupero', $codiceRecupero);
-		if(!$username)
+		$user->username = $user->searchUserByField('codicerecupero', $codiceRecupero);
+		if(!$user->username)
 			$rendering->addValue('result', 'Il codice per il recupero da te inserito non è valido.');
 			if($user->config[0]->log == 1)
 				$user->log('~', 'Invalid recover code.');
 			$rendering->addValue('recupera', '');
 		}
-		elseif($username[0]->codicerecupero == $codiceRecupero) {
+		elseif($user->username[0]->codicerecupero == $codiceRecupero) {
 			$codice = $user->getCode();
 			$len = strlen($codice);
 			$password = substr($codice, $len-24); // 32-24=8
-			$nickname = $username[0]->nickname;
+			$nickname = $user->username[0]->nickname;
 			if(($user->editUser('codicerecupero', '', $nickname)) && ($user->editUser('password', md5($password), $nickname))) {
 				if($user->config[0]->log == 1)
 					$user->log($nickname, 'Password recovered.');
@@ -51,10 +48,10 @@ if(!$logged) {
 			$rendering->addValue('result', 'Il codice per il recupero da te inserito non è valido.');
 	}
 	elseif(($email !== '') && (!$recupero))
-		$username = $user->searchUserByField('email', $email) !== false;
-		if($username !== false) {
-			if($username[0]->email == $email) {
-				$nickname = $username[0]->nickname;
+		$user->username = $user->searchUserByField('email', $email) !== false;
+		if($user->username !== false) {
+			if($user->username[0]->email == $email) {
+				$nickname = $user->username[0]->nickname;
 				$codice = $user->getCode();
 				if($user->editUser('codicerecupero', $codice, $nickname))
 					if($codice !== '') {
@@ -99,6 +96,6 @@ Il webmaster di '.$user->config[0]->nomesito.'.');
 }
 else
 	$rendering->addValue('result', 'Se hai già effettuato l\'accesso non hai bisogno di recuperare la tua password.');
-$rendering->addValue('logged', $logged);
+$rendering->addValue('logged', $user->isLogged());
 $rendering->addValue('submit', $submit);
-(($logged) && ($username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('recuperapassword.tpl');
+(($user->isLogged()) && ($user->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('recuperapassword.tpl');

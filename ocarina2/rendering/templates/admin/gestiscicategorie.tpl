@@ -2,9 +2,9 @@
 	(C) Giovanni Capuano 2011
 *}
 {include file="$root_rendering/templates/$skin/include/header.tpl"}
-	{if $utente == '' || $grado == '' || !$logged}
+	{if (($grado == '') || ($grado > 3))}
 		Accesso negato.
-	{elseif $grado < 4 && !$submit && !isset($result)}
+	{elseif !$submit && !isset($result)}
 		<form action="" method="post">
 		Crea categoria per le news<br />
 		<input type="text" name="categoria_news" /><br />
@@ -30,7 +30,7 @@
 		</select><br />
 		<input type="submit" name="rimuoviCategoriaPagine" value="Rimuovi categoria" />
 		</form>
-	{elseif $grado < 4 && $submit || (!$submit && isset($result))}
+	{elseif $submit || (!$submit && isset($result))}
 		{$result}
 	{else}
 		Accesso negato.

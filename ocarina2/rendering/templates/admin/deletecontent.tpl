@@ -2,9 +2,9 @@
 	(C) Giovanni Capuano 2011
 *}
 {include file="$root_rendering/templates/$skin/include/header.tpl"}
-	{if $utente == '' || $grado == '' || !$logged}
+	{if (($grado == '') || ($grado > 3))}
 		Accesso negato.
-	{elseif $grado < 3 && !$submit}
+	{elseif !$submit}
 		<form action="" method="post">
 		{if (isset($whatis) && ($whatis == 'pagina'))}Pagina{elseif (isset($whatis) && ($whatis == 'news'))}News{/if} da cancellare<br />
 		<select name="content">
@@ -14,9 +14,7 @@
 		</select>
 		<input type="submit" name="submit" value="Cancella {if (isset($whatis) && ($whatis == 'pagina'))}pagina{elseif (isset($whatis) && ($whatis == 'pagina'))}news{/if}" />
 		</form>
-	{elseif $grado < 3 && $submit}
+	{elseif $submit}
 		{$result}
-	{else}
-		Accesso negato.
 	{/if}
 {include file="$root_rendering/templates/$skin/include/footer.tpl"}

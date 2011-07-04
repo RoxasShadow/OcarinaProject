@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-02 00:04:45
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-04 20:14:43
          compiled from "/var/www/htdocs/ocarina2/rendering/templates/admin/gestiscicategorie.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:15140529154e0e609d2e9120-84386393%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:5997146314e121f330180c1-99293991%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '95dd2c85a08a391a57f60347d985f6d9def7165f' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering/templates/admin/gestiscicategorie.tpl',
-      1 => 1309551350,
+      1 => 1309810477,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '15140529154e0e609d2e9120-84386393',
+  'nocache_hash' => '5997146314e121f330180c1-99293991',
   'function' => 
   array (
   ),
@@ -20,9 +20,9 @@ $_smarty_tpl->decodeProperties(array (
 
 <?php $_template = new Smarty_Internal_Template(($_smarty_tpl->getVariable('root_rendering')->value)."/templates/".($_smarty_tpl->getVariable('skin')->value)."/include/header.tpl", $_smarty_tpl->smarty, $_smarty_tpl, $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null);
  echo $_template->getRenderedTemplate(); $_template->rendered_content = null;?><?php unset($_template);?>
-	<?php if ($_smarty_tpl->getVariable('utente')->value==''||$_smarty_tpl->getVariable('grado')->value==''||!$_smarty_tpl->getVariable('logged')->value){?>
+	<?php if ((($_smarty_tpl->getVariable('grado')->value=='')||($_smarty_tpl->getVariable('grado')->value>3))){?>
 		Accesso negato.
-	<?php }elseif($_smarty_tpl->getVariable('grado')->value<4&&!$_smarty_tpl->getVariable('submit')->value&&!isset($_smarty_tpl->getVariable('result',null,true,false)->value)){?>
+	<?php }elseif(!$_smarty_tpl->getVariable('submit')->value&&!isset($_smarty_tpl->getVariable('result',null,true,false)->value)){?>
 		<form action="" method="post">
 		Crea categoria per le news<br />
 		<input type="text" name="categoria_news" /><br />
@@ -64,7 +64,7 @@ if ($_smarty_tpl->_count($_from) > 0){
 		</select><br />
 		<input type="submit" name="rimuoviCategoriaPagine" value="Rimuovi categoria" />
 		</form>
-	<?php }elseif($_smarty_tpl->getVariable('grado')->value<4&&$_smarty_tpl->getVariable('submit')->value||(!$_smarty_tpl->getVariable('submit')->value&&isset($_smarty_tpl->getVariable('result',null,true,false)->value))){?>
+	<?php }elseif($_smarty_tpl->getVariable('submit')->value||(!$_smarty_tpl->getVariable('submit')->value&&isset($_smarty_tpl->getVariable('result',null,true,false)->value))){?>
 		<?php echo $_smarty_tpl->getVariable('result')->value;?>
 
 	<?php }else{ ?>

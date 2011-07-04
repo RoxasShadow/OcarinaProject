@@ -2,9 +2,9 @@
 	(C) Giovanni Capuano 2011
 *}
 {include file="$root_rendering/templates/$skin/include/header.tpl"}
-	{if $utente == '' || $grado == '' || !$logged}
+	{if (($grado == '') || ($grado >= 6))}
 		Accesso negato.
-	{elseif $grado < 6 && !$submit}
+	{elseif !$submit}
 		<table>
 		<tr>
 		<td><b>Nickname</b></td>

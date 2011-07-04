@@ -11,11 +11,8 @@ $news = new News();
 $pagine = new Page();
 $rendering = new Rendering();
 
-$logged = $news->isLogged() ? true : false;
-if($logged)
-	$username = $news->searchUserByField('secret', $news->getCookie());
-$rendering->addValue('utente', $logged ? $username[0]->nickname : '');
-$rendering->skin = $logged ? $username[0]->skin : $news->config[0]->skin;
+$rendering->addValue('utente', $news->isLogged() ? $news->username[0]->nickname : '');
+$rendering->skin = $news->isLogged() ? $news->username[0]->skin : $news->config[0]->skin;
 $rendering->addValue('titolo', 'Archivio &raquo; '.$news->config[0]->nomesito);
 $rendering->addValue('keywords', $news->config[0]->keywords);
 $rendering->addValue('description', $news->config[0]->description);
@@ -29,4 +26,4 @@ if(!$getPage = $pagine->searchPage('', 'wildcard'))
 else
 	$rendering->addValue('pagine', $getPage);
 
-(($logged) && ($username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('archivio.tpl');
+(($news->isLogged()) && ($news->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('archivio.tpl');

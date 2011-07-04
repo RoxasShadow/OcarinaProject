@@ -14,21 +14,17 @@ $testo_news = ((isset($_POST['testo'])) && ($_POST['testo'] !== '')) ? addslashe
 $selected = ((isset($_POST['selected'])) && ($_POST['selected'] !== '')) ? htmlentities(addslashes($news->purgeByXSS($_POST['selected']))) : '';
 $submit = isset($_POST['submit']) ? true : false;
 
-$logged = $news->isLogged() ? true : false;
-if($logged)
-	$username = $news->searchUserByField('secret', $news->getCookie());
-$rendering->addValue('utente', $logged ? $username[0]->nickname : '');
-$rendering->addValue('grado', $logged ? $username[0]->grado : '');
+$rendering->addValue('grado', $news->isLogged() ? $news->username[0]->grado : '');
 $rendering->skin = 'admin';
 $rendering->addValue('titolo', 'Modifica news &raquo; Amministrazione &raquo; '.$news->config[0]->nomesito);
 
-if(($logged) && ($username[0]->grado < 4))
+if(($news->isLogged()) && ($news->username[0]->grado < 4))
 	if((!$submit) && ($selected == '')) {
 		$result = '<form action="" method="post">Scegli la news da modificare <select name="selected">';
-		if($username[0]->grado == 3)
-			foreach($news->searchNewsByUser($username[0]->nickname) as $v)
+		if($news->username[0]->grado == 3)
+			foreach($news->searchNewsByUser($news->username[0]->nickname) as $v)
 				$result .= '<option value="'.$v->minititolo.'">'.$v->titolo.'</option>';
-		elseif($username[0]->grado < 3)
+		elseif($news->username[0]->grado < 3)
 			foreach($news->searchNews('') as $v) // È come una wildcard 
 				$result .= '<option value="'.$v->minititolo.'">'.$v->titolo.'</option>';
 		$result .= '</select><input type="submit" name="sel_submit" value="Modifica news">';
@@ -46,12 +42,12 @@ if(($logged) && ($username[0]->grado < 4))
 			$rendering->addValue('result', 'È accaduto un errore, la news selezionata non esiste.');
 	}
 	elseif(($submit) && ($selected !== '')) {
-		if(($titolo_news !== '') && ($categoria_news !== '') && ($testo_news !== '') && ($username[0]->grado < 4)) {
+		if(($titolo_news !== '') && ($categoria_news !== '') && ($testo_news !== '') && ($news->username[0]->grado < 4)) {
 			$this_news = $news->getNews($selected);
-			if(($username[0]->grado == 3) && ($this_news[0]->nickname !== $username[0]->nickname))
+			if(($news->username[0]->grado == 3) && ($this_news[0]->nickname !== $news->username[0]->nickname))
 				$rendering->addValue('result', 'Non sei abilitato a modificare questa news.');
-			elseif((($username[0]->grado == 3) && ($this_news[0]->nickname == $username[0]->nickname)) || ($username[0]->grado < 3)) 
-				if(($news->editNews('titolo', $titolo_news, $this_news[0]->minititolo)) && ($news->editNews('categoria', $categoria_news, $this_news[0]->minititolo)) && ($news->editNews('contenuto', $testo_news, $this_news[0]->minititolo)) && ($news->editNews('dataultimamodifica', date('d-m-y'), $this_news[0]->minititolo)) && ($news->editNews('oraultimamodifica', date('G:m:i'), $this_news[0]->minititolo)) && ($news->editNews('autoreultimamodifica', $username[0]->nickname, $this_news[0]->minititolo)))
+			elseif((($news->username[0]->grado == 3) && ($this_news[0]->nickname == $news->username[0]->nickname)) || ($news->username[0]->grado < 3)) 
+				if(($news->editNews('titolo', $titolo_news, $this_news[0]->minititolo)) && ($news->editNews('categoria', $categoria_news, $this_news[0]->minititolo)) && ($news->editNews('contenuto', $testo_news, $this_news[0]->minititolo)) && ($news->editNews('dataultimamodifica', date('d-m-y'), $this_news[0]->minititolo)) && ($news->editNews('oraultimamodifica', date('G:m:i'), $this_news[0]->minititolo)) && ($news->editNews('autoreultimamodifica', $news->username[0]->nickname, $this_news[0]->minititolo)))
 					$rendering->addValue('result', 'La news è stata modificata.');
 		}
 		else
@@ -59,7 +55,6 @@ if(($logged) && ($username[0]->grado < 4))
 	}
 else
 	$rendering->addValue('result', 'Accesso negato.');
-$rendering->addValue('logged', $logged);
 $rendering->addValue('submit', $submit);
 $rendering->addValue('sel', $selected);
-(($logged) && ($username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('formcontents.tpl');
+(($news->isLogged()) && ($news->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('formcontents.tpl');

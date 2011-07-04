@@ -15,11 +15,8 @@ $cercaPagine = ((isset($_POST['pagine'])) && (isset($_POST['submitPage']))) ? $c
 $cercaCommenti = ((isset($_POST['commenti'])) && (isset($_POST['submitComment']))) ? $comment->purge($_POST['commenti']) : '';
 $cerca = true;
 
-$logged = $comment->isLogged() ? true : false;
-if($logged)
-	$username = $comment->searchUserByField('secret', $comment->getCookie());
-$rendering->addValue('utente', $logged ? $username[0]->nickname : '');
-$rendering->skin = $logged ? $username[0]->skin : $comment->config[0]->skin;
+$rendering->addValue('utente', $comment->isLogged() ? $comment->username[0]->nickname : '');
+$rendering->skin = $comment->isLogged() ? $comment->username[0]->skin : $comment->config[0]->skin;
 $rendering->addValue('titolo', 'Cerca nel sito &raquo; '.$comment->config[0]->nomesito);
 $rendering->addValue('keywords', $comment->config[0]->keywords);
 $rendering->addValue('description', $comment->config[0]->description);
@@ -46,4 +43,4 @@ elseif($cercaCommenti !== '') {
 	$cerca = false;
 }
 $rendering->addValue('cerca', $cerca);
-(($logged) && ($username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('ricerca.tpl');
+(($comment->isLogged()) && ($comment->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('ricerca.tpl');

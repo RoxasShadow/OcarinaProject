@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-04 14:52:35
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-04 20:02:51
          compiled from "/var/www/htdocs/ocarina2/rendering/templates/admin/include/header.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:11307774004e11d3b3d0f195-35554912%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:20378998684e121c6b04e1d9-78845691%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '2b27bcc1133ae43519c6fdc30e871e50b5d000fe' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering/templates/admin/include/header.tpl',
-      1 => 1309791138,
+      1 => 1309809769,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '11307774004e11d3b3d0f195-35554912',
+  'nocache_hash' => '20378998684e121c6b04e1d9-78845691',
   'function' => 
   array (
   ),
@@ -47,7 +47,7 @@ $_smarty_tpl->decodeProperties(array (
 <div id="container">
 <div id="sidebar">
 <ul class="sideNav">
-<?php if ($_smarty_tpl->getVariable('utente')->value==''||$_smarty_tpl->getVariable('grado')->value==''){?>
+<?php if ($_smarty_tpl->getVariable('grado')->value==''){?>
 <li><a class="active"><?php echo $_smarty_tpl->getVariable('nomesito')->value;?>
 </a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
@@ -65,8 +65,6 @@ $_smarty_tpl->decodeProperties(array (
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /log.php">Logs</a></li>
 <li><a class="active">SEO</a></li>
-<li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
-/sitemap.php">Sitemap</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /robots.php">Robots</a></li>
 <?php }elseif($_smarty_tpl->getVariable('grado')->value==4){?>
@@ -92,6 +90,8 @@ $_smarty_tpl->decodeProperties(array (
 /modificanews.php">Modifica news</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /cancellanews.php">Cancella news</a></li>
+<li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
+/approva.php">Approva news</a></li>
 <li><a class="active">Pagine</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /creapagina.php">Crea pagina</a></li>
@@ -99,6 +99,8 @@ $_smarty_tpl->decodeProperties(array (
 /modificapagina.php">Modifica pagina</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /cancellapagina.php">Cancella pagina</a></li>
+<li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
+/approva.php">Approva pagine</a></li>
 <li><a class="active">Categorie</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /gestiscicategorie.php">Gestisci categorie</a></li>
@@ -116,8 +118,6 @@ $_smarty_tpl->decodeProperties(array (
 /log.php">Logs</a></li>
 <li><a class="active">SEO</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
-/sitemap.php">Sitemap</a></li>
-<li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /robots.php">Robots</a></li>
 <li><a class="active">Utenti</a></li>
 <li><a href="#">Filler ~</a></li>
@@ -128,6 +128,8 @@ $_smarty_tpl->decodeProperties(array (
 /modificanews.php">Modifica news</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /cancellanews.php">Cancella news</a></li>
+<li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
+/approva.php">Approva news</a></li>
 <li><a class="active">Pagine</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /creapagina.php">Crea pagina</a></li>
@@ -135,6 +137,8 @@ $_smarty_tpl->decodeProperties(array (
 /modificapagina.php">Modifica pagina</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /cancellapagina.php">Cancella pagina</a></li>
+<li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
+/approva.php">Approva pagine</a></li>
 <li><a class="active">Categorie</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /gestiscicategorie.php">Gestisci categorie</a></li>
@@ -152,8 +156,6 @@ $_smarty_tpl->decodeProperties(array (
 /log.php">Logs</a></li>
 <li><a class="active">SEO</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
-/sitemap.php">Sitemap</a></li>
-<li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /robots.php">Robots</a></li>
 <li><a class="active">Utenti</a></li>
 <li><a href="#">Filler ~</a></li>
@@ -164,6 +166,8 @@ $_smarty_tpl->decodeProperties(array (
 /modificanews.php">Modifica news</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /cancellanews.php">Cancella news</a></li>
+<li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
+/approva.php">Approva news</a></li>
 <li><a class="active">Pagine</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /creapagina.php">Crea pagina</a></li>
@@ -171,6 +175,8 @@ $_smarty_tpl->decodeProperties(array (
 /modificapagina.php">Modifica pagina</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /cancellapagina.php">Cancella pagina</a></li>
+<li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
+/approva.php">Approva pagine</a></li>
 <li><a class="active">Categorie</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /gestiscicategorie.php">Gestisci categorie</a></li>

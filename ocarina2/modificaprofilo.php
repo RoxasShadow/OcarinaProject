@@ -15,38 +15,35 @@ $avatar = ((isset($_POST['avatar'])) && ($_POST['avatar'] !== '')) ? $user->purg
 $password = ((isset($_POST['password'])) && ($_POST['password'] !== '')) ? $user->purge($_POST['password']) : '';
 $submit = isset($_POST['submit']) ? true : false;
 
-$logged = $user->isLogged() ? true : false;
-if($logged)
-	$username = $user->searchUserByField('secret', $user->getCookie());
-$rendering->addValue('utente', $logged ? $username[0]->nickname : '');
-$rendering->skin = $logged ? $username[0]->skin : $user->config[0]->skin;
+$rendering->addValue('utente', $user->isLogged() ? $user->username[0]->nickname : '');
+$rendering->skin = $user->isLogged() ? $user->username[0]->skin : $user->config[0]->skin;
 $rendering->addValue('titolo', 'Modifica profilo &raquo; '.$user->config[0]->nomesito);
 $rendering->addValue('keywords', $user->config[0]->keywords);
 $rendering->addValue('description', $user->config[0]->description);
 
-if($logged)
+if($user->isLogged())
 	if(!$submit) {
-		$rendering->addValue('email', $username[0]->email);
-		$rendering->addValue('bio', $username[0]->bio);
-		$rendering->addValue('avatar', $username[0]->avatar);
+		$rendering->addValue('email', $user->username[0]->email);
+		$rendering->addValue('bio', $user->username[0]->bio);
+		$rendering->addValue('avatar', $user->username[0]->avatar);
 		$rendering->addValue('listaskin', $rendering->getSkinList());
 		$rendering->addValue('skinattuale', $rendering->skin);
 	}
 	else {
 		if(($user->isEmail($email)) && ($user->isImage($avatar)) && ($email !== '') && ($bio !== '') && ($skin !== '') && ($avatar !== '') && ($password !== ''))
-			if(($user->isEmailUsed($username[0]->nickname, $email)) || (md5($password) !== $username[0]->password)) {
+			if(($user->isEmailUsed($user->username[0]->nickname, $email)) || (md5($password) !== $user->username[0]->password)) {
 				if($user->config[0]->log == 1)
-						$user->log($username[0]->nickname, 'Profile modification failed.');
+						$user->log($user->username[0]->nickname, 'Profile modification failed.');
 				$rendering->addValue('result', 'È accaduto un errore durante la modifica del profilo. Controlla che l\'indirizzo email da te dato non sia già in uso e che la password sia corretta.');
 			}
-			elseif(($user->editUser('email', $email, $username[0]->nickname)) && ($user->editUser('bio', $bio, $username[0]->nickname)) && ($user->editUser('skin', $skin, $username[0]->nickname)) && ($user->editUser('avatar', $avatar, $username[0]->nickname))) {
+			elseif(($user->editUser('email', $email, $user->username[0]->nickname)) && ($user->editUser('bio', $bio, $user->username[0]->nickname)) && ($user->editUser('skin', $skin, $user->username[0]->nickname)) && ($user->editUser('avatar', $avatar, $user->username[0]->nickname))) {
 				if($user->config[0]->log == 1)
-						$user->log($username[0]->nickname, 'Profile modificated.');
-				$rendering->addValue('result', 'Il profilo è stato modificato con successo. Attendi per il redirect...'.header('Refresh: 2; URL='.$user->config[0]->url_index.'/profilo.php?nickname='.$username[0]->nickname));
+						$user->log($user->username[0]->nickname, 'Profile modificated.');
+				$rendering->addValue('result', 'Il profilo è stato modificato con successo. Attendi per il redirect...'.header('Refresh: 2; URL='.$user->config[0]->url_index.'/profilo.php?nickname='.$user->username[0]->nickname));
 			}
 			else {
 				if($user->config[0]->log == 1)
-						$user->log($username[0]->nickname, 'Profile modification failed.');
+						$user->log($user->username[0]->nickname, 'Profile modification failed.');
 				$rendering->addValue('result', 'È accaduto un errore durante la modifica del profilo.');
 			}
 		else
@@ -54,6 +51,6 @@ if($logged)
 	}
 else
 	$rendering->addValue('result', 'Devi effettuare l\'accesso prima di poter modificare il tuo profilo.');
-$rendering->addValue('logged', $logged);
+$rendering->addValue('logged', $user->isLogged());
 $rendering->addValue('submit', $submit);
-(($logged) && ($username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('modificaprofilo.tpl');
+(($user->isLogged()) && ($user->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('modificaprofilo.tpl');

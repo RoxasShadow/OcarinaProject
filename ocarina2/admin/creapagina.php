@@ -13,26 +13,22 @@ $categoria_pagina = ((isset($_POST['categoria'])) && ($_POST['categoria'] !== ''
 $testo_pagina = ((isset($_POST['testo'])) && ($_POST['testo'] !== '')) ? addslashes($pagina->purgeByXSS($_POST['testo'])) : '';
 $submit = isset($_POST['submit']) ? true : false;
 
-$logged = $pagina->isLogged() ? true : false;
-if($logged)
-	$username = $pagina->searchUserByField('secret', $pagina->getCookie());
-$rendering->addValue('utente', $logged ? $username[0]->nickname : '');
-$rendering->addValue('grado', $logged ? $username[0]->grado : '');
+$rendering->addValue('grado', $pagina->isLogged() ? $pagina->username[0]->grado : '');
 $rendering->skin = 'admin';
 $rendering->addValue('titolo', 'Crea pagina &raquo; Amministrazione &raquo; '.$pagina->config[0]->nomesito);
 
-if($logged)
+if(($pagina->isLogged()) && ($pagina->username[0]->grado <= 3))
 	if(!$submit) {
 		$rendering->addValue('bbcode', $pagina->config[0]->bbcode);
 		$rendering->addValue('categorie', $pagina->getCategory('news'));
 	}
 	else {
-		if(($titolo_pagina !== '') && ($categoria_pagina !== '') && ($testo_pagina !== '') && ($username[0]->grado < 4)) {
-			if($username[0]->grado == 3)
+		if(($titolo_pagina !== '') && ($categoria_pagina !== '') && ($testo_pagina !== '')) {
+			if($pagina->username[0]->grado == 3)
 				$approva_pagina = 0; // non approvato
-			elseif($username[0]->grado < 3)
+			else
 				$approva_pagina = 1; // approvato
-			$array = array($username[0]->nickname, $titolo_pagina, $pagina->permalink($titolo_pagina), $testo_pagina, $categoria_pagina, date('d-m-y'), date('G:m:i'), $approva_pagina);
+			$array = array($pagina->username[0]->nickname, $titolo_pagina, $pagina->permalink($titolo_pagina), $testo_pagina, $categoria_pagina, date('d-m-y'), date('G:m:i'), $approva_pagina);
 			if($pagina->isPage($pagina->permalink($titolo_pagina)))
 				$rendering->addValue('result', 'È accaduto un errore durante la creazione della pagina. Esiste già una pagina con lo stesso titolo, prova a sceglierne un altro.');
 			elseif($pagina->createPage($array)) {
@@ -49,6 +45,5 @@ if($logged)
 	}
 else
 	$rendering->addValue('result', 'Accesso negato.');
-$rendering->addValue('logged', $logged);
 $rendering->addValue('submit', $submit);
-(($logged) && ($username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('formcontents.tpl');
+(($pagina->isLogged()) && ($pagina->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('formcontents.tpl');

@@ -14,37 +14,34 @@ $password = ((isset($_POST['password'])) && ($_POST['password'] !== '')) ? $user
 $confPassword = ((isset($_POST['confPassword'])) && ($_POST['confPassword'] !== '')) ? $user->purge($_POST['confPassword']) : '';
 $submit = isset($_POST['submit']) ? true : false;
 
-$logged = $user->isLogged() ? true : false;
-if($logged)
-	$username = $user->searchUserByField('secret', $user->getCookie());
-$rendering->addValue('utente', $logged ? $username[0]->nickname : '');
-$rendering->skin = $logged ? $username[0]->skin : $user->config[0]->skin;
+$rendering->addValue('utente', $user->isLogged() ? $user->username[0]->nickname : '');
+$rendering->skin = $user->isLogged() ? $user->username[0]->skin : $user->config[0]->skin;
 $rendering->addValue('titolo', 'Modifica password &raquo; '.$user->config[0]->nomesito);
 $rendering->addValue('keywords', $user->config[0]->keywords);
 $rendering->addValue('description', $user->config[0]->description);
 
-if($logged) 
+if($user->isLogged()) 
 	if(($oldPassword !== '') && ($password !== '') && ($confPassword !== ''))
-		if((md5($oldPassword) == $username[0]->password) && ($password == $confPassword) && (strlen($password) > 4))
-			if($user->editUser('password', md5($password), $username[0]->nickname)) {
+		if((md5($oldPassword) == $user->username[0]->password) && ($password == $confPassword) && (strlen($password) > 4))
+			if($user->editUser('password', md5($password), $user->username[0]->nickname)) {
 				if($user->config[0]->log == 1)
-					$user->log($username[0]->nickname, 'Password modificated.');
+					$user->log($user->username[0]->nickname, 'Password modificated.');
 				$rendering->addValue('result', 'La password è stata modificata con successo. Attendi per il redirect...'.header('Refresh: 2; URL='.$user->config[0]->url_index.'/logout.php?redirect=login.php'));
 			}
 			else {
 				if($user->config[0]->log == 1)
-					$user->log($username[0]->nickname, 'Password modification failed');
+					$user->log($user->username[0]->nickname, 'Password modification failed');
 				$rendering->addValue('result', 'È accaduto un errore durante la modifica della password.');
 			}
 		else {
 			if($user->config[0]->log == 1)
-				$user->log($username[0]->nickname, 'Password modification failed');
+				$user->log($user->username[0]->nickname, 'Password modification failed');
 			$rendering->addValue('result', 'È accaduto un errore durante la modifica della password. Le cause possono essere diverse, tra cui l\'errato inserimento della vecchia password, la non coincidenza delle password immesse, oppure semplicemente la password da te immessa è minore di 4 caratteri.');
 		}
 	else
 		$rendering->addValue('result', 'È accaduto un problema durante la modifica della password. Controlla di aver inserito i dati correttamente e di non aver lasciato alcun campo vuoto.');
 else
 	$rendering->addValue('result', 'Devi effettuare l\'accesso prima di poter modificare la password.');
-$rendering->addValue('logged', $logged);
+$rendering->addValue('logged', $user->isLogged());
 $rendering->addValue('submit', $submit);
-(($logged) && ($username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('modificapassword.tpl');
+(($user->isLogged()) && ($user->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('modificapassword.tpl');

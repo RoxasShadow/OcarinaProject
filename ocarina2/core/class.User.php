@@ -7,6 +7,14 @@ require_once('class.Configuration.php');
 
 /* Questa classe mette a disposizione dei metodi per gestire gli utenti. */
 class User extends Configuration {
+	public $logged = NULL;
+	public $username = NULL;
+	
+	public function __construct() {
+		parent::__construct();
+		$this->logged = $this->isLogged();
+		$this->username = $this->logged ? $this->searchUserByField('secret', $this->getCookie()) : false;
+	}
 
 	/* Ottiene uno o più utenti. */
 	public function getUser($nickname = '') {

@@ -15,29 +15,26 @@ $email = ((isset($_POST['email'])) && ($_POST['email'] !== '')) ? $user->purge($
 $submit = isset($_POST['submit']) ? true : false;
 $codiceRegistrazione = ((isset($_GET['codice'])) && ($_GET['codice'] !== '')) ? $user->purge($_GET['codice']) : '';
 
-$logged = $user->isLogged() ? true : false;
-if($logged)
-	$username = $user->searchUserByField('secret', $user->getCookie());
-$rendering->addValue('utente', $logged ? $username[0]->nickname : '');
-$rendering->skin = $logged ? $username[0]->skin : $user->config[0]->skin;
+$rendering->addValue('utente', $user->isLogged() ? $user->username[0]->nickname : '');
+$rendering->skin = $user->isLogged() ? $user->username[0]->skin : $user->config[0]->skin;
 $rendering->addValue('titolo', 'Registrazione &raquo; '.$user->config[0]->nomesito);
 $rendering->addValue('keywords', $user->config[0]->keywords);
 $rendering->addValue('description', $user->config[0]->description);
 
-if($logged)
+if($user->isLogged())
 	$rendering->addValue('result', 'Sei già registrato, non hai bisogno di registrarti nuovamente.');
 elseif($codiceRegistrazione !== '') {
 	if($user->config[0]->validazioneaccount == 0)
 		$rendering->addValue('result', 'Non hai bisogno di validare il tuo account, puoi accedere senza problemi già da ora.');
 	else {
-		$username = $user->searchUserByField('codiceregistrazione', $codiceRegistrazione);
-		if(!$username) {
+		$user->username = $user->searchUserByField('codiceregistrazione', $codiceRegistrazione);
+		if(!$user->username) {
 			if($user->config[0]->log == 1)
 				$user->log('~', 'Invalid validation code.');
 			$rendering->addValue('result', 'Il codice per la validazione dell\'account da te inserito non è valido.');
 		}
-		elseif($username[0]->codiceregistrazione == $codiceRegistrazione) {
-			if($user->editUser('codiceregistrazione', '', $username[0]->nickname)) {
+		elseif($user->username[0]->codiceregistrazione == $codiceRegistrazione) {
+			if($user->editUser('codiceregistrazione', '', $user->username[0]->nickname)) {
 				if($user->config[0]->log == 1)
 					$user->log('~', 'Validation account complete.');
 				$rendering->addValue('result', 'Account validato. Ora è possibile accedere.'.header('Refresh: 2; URL='.$user->config[0]->url_index.'/login.php'));
@@ -103,6 +100,6 @@ elseif($submit) {
 		$rendering->addValue('result', 'È accaduto un problema durante la registrazione. Controlla di aver inserito i dati correttamente e di non aver lasciato alcun campo vuoto.');
 }
 $rendering->addValue('codiceRegistrazione', $codiceRegistrazione);
-$rendering->addValue('logged', $logged);
+$rendering->addValue('logged', $user->isLogged());
 $rendering->addValue('submit', $submit);
-(($logged) && ($username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('registrazione.tpl');
+(($user->isLogged()) && ($user->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('registrazione.tpl');

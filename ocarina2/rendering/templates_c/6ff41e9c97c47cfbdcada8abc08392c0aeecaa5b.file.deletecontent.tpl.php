@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-04 01:28:38
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-04 20:09:35
          compiled from "/var/www/htdocs/ocarina2/rendering/templates/admin/deletecontent.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:2988518004e111746278eb9-15412213%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:4169162084e121dff16d380-83861429%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '6ff41e9c97c47cfbdcada8abc08392c0aeecaa5b' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering/templates/admin/deletecontent.tpl',
-      1 => 1309633135,
+      1 => 1309810172,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '2988518004e111746278eb9-15412213',
+  'nocache_hash' => '4169162084e121dff16d380-83861429',
   'function' => 
   array (
   ),
@@ -20,9 +20,9 @@ $_smarty_tpl->decodeProperties(array (
 
 <?php $_template = new Smarty_Internal_Template(($_smarty_tpl->getVariable('root_rendering')->value)."/templates/".($_smarty_tpl->getVariable('skin')->value)."/include/header.tpl", $_smarty_tpl->smarty, $_smarty_tpl, $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null);
  echo $_template->getRenderedTemplate(); $_template->rendered_content = null;?><?php unset($_template);?>
-	<?php if ($_smarty_tpl->getVariable('utente')->value==''||$_smarty_tpl->getVariable('grado')->value==''||!$_smarty_tpl->getVariable('logged')->value){?>
+	<?php if ((($_smarty_tpl->getVariable('grado')->value=='')||($_smarty_tpl->getVariable('grado')->value>3))){?>
 		Accesso negato.
-	<?php }elseif($_smarty_tpl->getVariable('grado')->value<3&&!$_smarty_tpl->getVariable('submit')->value){?>
+	<?php }elseif(!$_smarty_tpl->getVariable('submit')->value){?>
 		<form action="" method="post">
 		<?php if ((isset($_smarty_tpl->getVariable('whatis',null,true,false)->value)&&($_smarty_tpl->getVariable('whatis')->value=='pagina'))){?>Pagina<?php }elseif((isset($_smarty_tpl->getVariable('whatis',null,true,false)->value)&&($_smarty_tpl->getVariable('whatis')->value=='news'))){?>News<?php }?> da cancellare<br />
 		<select name="content">
@@ -40,11 +40,9 @@ if ($_smarty_tpl->_count($_from) > 0){
 		</select>
 		<input type="submit" name="submit" value="Cancella <?php if ((isset($_smarty_tpl->getVariable('whatis',null,true,false)->value)&&($_smarty_tpl->getVariable('whatis')->value=='pagina'))){?>pagina<?php }elseif((isset($_smarty_tpl->getVariable('whatis',null,true,false)->value)&&($_smarty_tpl->getVariable('whatis')->value=='pagina'))){?>news<?php }?>" />
 		</form>
-	<?php }elseif($_smarty_tpl->getVariable('grado')->value<3&&$_smarty_tpl->getVariable('submit')->value){?>
+	<?php }elseif($_smarty_tpl->getVariable('submit')->value){?>
 		<?php echo $_smarty_tpl->getVariable('result')->value;?>
 
-	<?php }else{ ?>
-		Accesso negato.
 	<?php }?>
 <?php $_template = new Smarty_Internal_Template(($_smarty_tpl->getVariable('root_rendering')->value)."/templates/".($_smarty_tpl->getVariable('skin')->value)."/include/footer.tpl", $_smarty_tpl->smarty, $_smarty_tpl, $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null);
  echo $_template->getRenderedTemplate(); $_template->rendered_content = null;?><?php unset($_template);?>
