@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-02 20:19:16
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-04 17:03:19
          compiled from "/var/www/htdocs/ocarina2/rendering/templates/default/include/footer.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:8450114844e0f7d441676d5-07062631%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:16011868844e11f257223e09-43090377%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '0696c4c4b89d7bb07d7178fc7e2e03395ed9e292' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering/templates/default/include/footer.tpl',
-      1 => 1309637819,
+      1 => 1309798931,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '8450114844e0f7d441676d5-07062631',
+  'nocache_hash' => '16011868844e11f257223e09-43090377',
   'function' => 
   array (
   ),
@@ -34,6 +34,10 @@ $_smarty_tpl->decodeProperties(array (
 <a href="http://jigsaw.w3.org/css-validator/check/referer"><img src="<?php echo $_smarty_tpl->getVariable('url_rendering')->value;?>
 /templates/<?php echo $_smarty_tpl->getVariable('skin')->value;?>
 /resources/images/vcss-blue.png" alt="CSS Valido!" height="31" width="88" /></a>
+<a href="http://feed2.w3.org/check.cgi?url=<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/feed.php"><img src="<?php echo $_smarty_tpl->getVariable('url_rendering')->value;?>
+/templates/<?php echo $_smarty_tpl->getVariable('skin')->value;?>
+/resources/images/valid-rss-blue.gif" alt="[Valid RSS]" height="31" width="88" /></a>
 </div>
 </body>
 </html>

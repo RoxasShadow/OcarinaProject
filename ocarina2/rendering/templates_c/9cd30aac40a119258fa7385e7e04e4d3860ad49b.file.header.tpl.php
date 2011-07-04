@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-02 20:19:13
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-04 17:23:35
          compiled from "/var/www/htdocs/ocarina2/rendering/templates/default/include/header.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:17829053444e0f7d41de6356-59929104%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:6530515804e11f7176b96c9-86257901%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '9cd30aac40a119258fa7385e7e04e4d3860ad49b' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering/templates/default/include/header.tpl',
-      1 => 1309637819,
+      1 => 1309800150,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '17829053444e0f7d41de6356-59929104',
+  'nocache_hash' => '6530515804e11f7176b96c9-86257901',
   'function' => 
   array (
   ),
@@ -33,6 +33,10 @@ $_smarty_tpl->decodeProperties(array (
 /resources/style.css" />
 <script type="text/javascript" src="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /etc/loadJavascript.js.php"></script>
+<link rel="alternate" type="application/rss+xml" title="Feed RSS News" href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/feed.php?content=news" />
+<link rel="alternate" type="application/rss+xml" title="Feed RSS Pagine" href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/feed.php?content=page" />
 <meta name="robots" content="index,follow" />
 </head>
 <body>

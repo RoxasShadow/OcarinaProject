@@ -26,8 +26,13 @@ if(($logged) && (($username[0]->grado < 3) || ($username[0]->grado == 5))) {
 			$f = fopen($user->config[0]->root_index.'/robots.txt', 'r');
 			$robots .= fread($f, filesize($user->config[0]->root_index.'/robots.txt'));
 			fclose($f);
+			$rendering->addValue('robots', '# Robots generato il '.date('d-m-y').' tramite Ocarina CMS.
+User-agent: *
+Disallow: 
+Sitemap: '.$user->config[0]->url_index.'/sitemap.php');
 		}
-		$rendering->addValue('robots', '# Robots generato il '.date('d-m-y').' tramite Ocarina CMS.
+		else
+			$rendering->addValue('robots', '# Robots generato il '.date('d-m-y').' tramite Ocarina CMS.
 '.$robots);
 	}
 	if($submit) {

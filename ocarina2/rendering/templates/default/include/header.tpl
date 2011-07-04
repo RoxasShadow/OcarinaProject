@@ -10,6 +10,8 @@
 <meta name="keywords" content="{$keywords}" />
 <link rel="stylesheet" type="text/css" href="{$url_rendering}/templates/{$skin}/resources/style.css" />
 <script type="text/javascript" src="{$url_index}/etc/loadJavascript.js.php"></script>
+<link rel="alternate" type="application/rss+xml" title="Feed RSS News" href="{$url_index}/feed.php?content=news" />
+<link rel="alternate" type="application/rss+xml" title="Feed RSS Pagine" href="{$url_index}/feed.php?content=page" />
 <meta name="robots" content="index,follow" />
 </head>
 <body>

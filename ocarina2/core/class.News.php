@@ -154,7 +154,7 @@ class News extends Category {
 		return parent::query("DELETE FROM news WHERE minititolo='$minititolo'") ? true : false;
 	}
 	
-	/* Crea una sitemap di tutte le news approvate. */
+	/* Crea una sitemap di tutte le news. */
 	public function sitemapNews() {
 		if(!$news = $this->getNews())
 			return false;
@@ -165,16 +165,46 @@ class News extends Category {
 			$sitemap .= "
 	<url>
 		<loc>{$this->config[0]->url_index}/news.php?titolo={$v->minititolo}</loc>
-		<lastmod>$y-$m-$d</lastmod>
+		<lastmod>20$y-$m-$d</lastmod>
 		<changefreq>weekly</changefreq>
 		<priority>0.8</priority>
 	</url>";
 		}
 		$sitemap .= '
 </urlset>';
-		$f = fopen($this->config[0]->root_index.'/sitemap_news.xml', 'w');
-		fwrite($f, $sitemap);
-		fclose($f);
 		return $sitemap;
+	}
+	
+	/* Crea un feed di X news. */
+	public function feedNews($url, $min, $max) {
+		if(!$news = $this->getNews('', $min, $max))
+			return false;
+		$feed = '<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+<atom:link href="'.$url.'" rel="self" type="application/rss+xml" />
+<title>'.$this->config[0]->nomesito.'</title>
+<description>'.$this->config[0]->description.'</description>
+<link>'.$this->config[0]->url_index.'/index.php</link>';
+		foreach($news as $v) {
+			list($d, $m, $y) = explode('-', $v->data);
+			list($h, $mn, $s) = explode(':', $v->ora);
+			$nickname = parent::getUser($v->autore);
+			$feed .= "
+	<item>
+		<title>".htmlentities($v->titolo)."</title>
+		<description>".parent::reduceLen(htmlentities($v->contenuto), 500, '...')."</description>
+		<author>".htmlentities($nickname[0]->email)."(".htmlentities($v->autore).")</author>
+		<category>".htmlentities($v->categoria)."</category>
+		<pubDate>".str_replace('+0000', '+0200', date('r', mktime($h,$mn,$s,$m,$d,$y)))."</pubDate>
+		<link>{$this->config[0]->url_index}/news.php?titolo={$v->minititolo}</link>
+		<comments>{$this->config[0]->url_index}/news.php?titolo={$v->minititolo}</comments>
+		<guid>{$this->config[0]->url_index}/news.php?titolo={$v->minititolo}</guid>
+	</item>";
+		}
+		$feed .= '
+</channel>
+</rss>';
+		return $feed;
 	}
 }

@@ -6,7 +6,7 @@
 		Accesso negato.
 	{elseif (($grado < 3) || ($grado == 5))}
 		{if !$submit}
-			<a href="http://www.robotstxt.org/robotstxt.html">About the robots...</a><br />
+			<a href="http://www.robotstxt.org/robotstxt.html" target="_blank">About the robots...</a><br />
 			<form action="" method="post">
 			<textarea name="robots" cols="59" rows="10">{if (isset($robots))}{$robots}{/if}</textarea><br />
 			<input type="submit" name="submit" value="Salva" />

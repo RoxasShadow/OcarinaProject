@@ -185,6 +185,8 @@ class User extends Configuration {
 		$referer = $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'].'?';
 		foreach($_GET as $key => $value)
 		    $referer .= "$key=$value&";
+		$referer = trim($referer, '?');
+		$referer = trim($referer, '&');
 		$referer = parent::purge($referer);
 		return parent::query("INSERT INTO log(nickname, azione, ip, data, ora, useragent, referer) VALUES('$nickname', '$azione', '$ip', '$data', '$ora', '{$useragent}', '$referer')") ? true : false;
 	}
@@ -221,5 +223,26 @@ class User extends Configuration {
 	/* Elimina i log. */
 	public function deleteLog() {
 		return parent::query('DELETE FROM log') ? true : false;
+	}
+	
+	/* Crea una sitemap di tutti gli utenti registrati */
+	public function sitemapUser() {
+		if(!$page = $this->getUser())
+			return false;
+		$sitemap = '<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+		foreach($page as $v) {
+			list($d, $m, $y) = explode('-', $v->data);
+			$sitemap .= "
+	<url>
+		<loc>{$this->config[0]->url_index}/profilo.php?nickname={$v->nickname}</loc>
+		<lastmod>20$y-$m-$d</lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+	</url>";
+		}
+		$sitemap .= '
+</urlset>';
+		return $sitemap;
 	}
 }

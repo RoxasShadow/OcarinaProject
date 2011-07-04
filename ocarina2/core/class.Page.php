@@ -9,7 +9,7 @@ require_once('class.Category.php');
 class Page extends Category {
 
 	/* Ottiene una o più pagine. */
-	public function getPage($minititolo = '') {
+	public function getPage($minititolo = '', $min = '', $max = '') {
 		$pagine = array();
 		if($minititolo !== '') {
 			if($this->isPage($minititolo)) {
@@ -23,8 +23,14 @@ class Page extends Category {
 			return false;
 		}
 		else {
-			if(!$query = parent::query('SELECT * FROM pagine ORDER BY titolo ASC'))
-				return false;
+			if(($min == '') && ($max == '')) {
+				if(!$query = parent::query('SELECT * FROM pagine ORDER BY titolo ASC'))
+					return false;
+			}
+			else {
+				if(!$query = parent::query("SELECT * FROM pagine ORDER BY titolo ASC LIMIT $min, $max"))
+					return false;
+			}
 			if(parent::count($query) > 0) {
 				while($result = parent::get($query))
 					array_push($pagine, $result);
@@ -152,7 +158,7 @@ class Page extends Category {
 		return parent::query("DELETE FROM pagine WHERE minititolo='$minititolo'") ? true : false;
 	}
 	
-	/* Crea una sitemap di tutte le pagine approvate. */
+	/* Crea una sitemap di tutte le pagine. */
 	public function sitemapPage() {
 		if(!$page = $this->getPage())
 			return false;
@@ -163,16 +169,46 @@ class Page extends Category {
 			$sitemap .= "
 	<url>
 		<loc>{$this->config[0]->url_index}/pagina.php?titolo={$v->minititolo}</loc>
-		<lastmod>$y-$m-$d</lastmod>
+		<lastmod>20$y-$m-$d</lastmod>
 		<changefreq>weekly</changefreq>
 		<priority>0.8</priority>
 	</url>";
 		}
 		$sitemap .= '
 </urlset>';
-		$f = fopen($this->config[0]->root_index.'/sitemap_page.xml', 'w');
-		fwrite($f, $sitemap);
-		fclose($f);
 		return $sitemap;
+	}
+	
+	/* Crea un feed di X pagine. */
+	public function feedPage($url, $min, $max) {
+		if(!$page = $this->getPage('', $min, $max))
+			return false;
+		$feed = '<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+<atom:link href="'.$url.'" rel="self" type="application/rss+xml" />
+<title>'.$this->config[0]->nomesito.'</title>
+<description>'.$this->config[0]->description.'</description>
+<link>'.$this->config[0]->url_index.'/index.php</link>';
+		foreach($page as $v) {
+			list($d, $m, $y) = explode('-', $v->data);
+			list($h, $mn, $s) = explode(':', $v->ora);
+			$nickname = parent::getUser($v->autore);
+			$feed .= "
+	<item>
+		<title>".htmlentities($v->titolo)."</title>
+		<description>".parent::reduceLen(htmlentities($v->contenuto), 500, '...')."</description>
+		<author>".htmlentities($nickname[0]->email)."(".htmlentities($v->autore).")</author>
+		<category>".htmlentities($v->categoria)."</category>
+		<pubDate>".str_replace('+0000', '+0200', date('r', mktime($h,$mn,$s,$m,$d,$y)))."</pubDate>
+		<link>{$this->config[0]->url_index}/pagina.php?titolo={$v->minititolo}</link>
+		<comments>{$this->config[0]->url_index}/pagina.php?titolo={$v->minititolo}</comments>
+		<guid>{$this->config[0]->url_index}/newspaginaphp?titolo={$v->minititolo}</guid>
+	</item>";
+		}
+		$feed .= '
+</channel>
+</rss>';
+		return $feed;
 	}
 }

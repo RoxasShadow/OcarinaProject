@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-01 23:53:12
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-04 17:28:24
          compiled from "/var/www/htdocs/ocarina2/rendering/templates/default/archivio.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:18703780364e0e5de8a54b02-52495997%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:10781713014e11f838026e27-35365861%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'f51d14a16b3a3e94fbaa5e998f6b665475ec09f8' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering/templates/default/archivio.tpl',
-      1 => 1309526080,
+      1 => 1309800500,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '18703780364e0e5de8a54b02-52495997',
+  'nocache_hash' => '10781713014e11f838026e27-35365861',
   'function' => 
   array (
   ),
@@ -28,7 +28,10 @@ $_smarty_tpl->decodeProperties(array (
 			<div class="titolo"><?php echo $_smarty_tpl->getVariable('errore_news')->value;?>
 </div>
 		<?php }elseif(isset($_smarty_tpl->getVariable('news',null,true,false)->value)){?>
-			&bull; <b>News</b><br />
+			&bull; <b>News</b> <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/feed.php?content=news"><img src="<?php echo $_smarty_tpl->getVariable('url_rendering')->value;?>
+/templates/<?php echo $_smarty_tpl->getVariable('skin')->value;?>
+/resources/images/rss.png" alt="Feed RSS News" height="12" width="18" /></a><br />
 			<?php  $_smarty_tpl->tpl_vars['item'] = new Smarty_Variable;
  $_smarty_tpl->tpl_vars['key'] = new Smarty_Variable;
  $_from = $_smarty_tpl->getVariable('news')->value; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
@@ -49,7 +52,10 @@ if ($_smarty_tpl->_count($_from) > 0){
 			<div class="titolo"><?php echo $_smarty_tpl->getVariable('errore_pagine')->value;?>
 </div>
 		<?php }elseif(isset($_smarty_tpl->getVariable('news',null,true,false)->value)){?>
-			&bull; <b>Pagine</b><br />
+			&bull; <b>Pagine <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/feed.php?content=page"><img src="<?php echo $_smarty_tpl->getVariable('url_rendering')->value;?>
+/templates/<?php echo $_smarty_tpl->getVariable('skin')->value;?>
+/resources/images/rss.png" alt="Feed RSS News" height="12" width="18" /></a></b><br />
 			<?php  $_smarty_tpl->tpl_vars['item'] = new Smarty_Variable;
  $_smarty_tpl->tpl_vars['key'] = new Smarty_Variable;
  $_from = $_smarty_tpl->getVariable('pagine')->value; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}

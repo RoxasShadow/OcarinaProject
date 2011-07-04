@@ -28,4 +28,4 @@ elseif(($logged) && ($delete !== ''))
 			header('Location: '.$config[0]->url_admin.'/immagini.php');
 else
 	$rendering->addValue('result', 'Accesso negato.');
-(($logged) && ($username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('sitemap.tpl');
+(($logged) && ($username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('index.tpl');
