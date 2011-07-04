@@ -20,9 +20,7 @@ if($logged)
 $rendering->addValue('utente', $logged ? $username[0]->nickname : '');
 $rendering->addValue('grado', $logged ? $username[0]->grado : '');
 $rendering->skin = 'admin';
-$rendering->addValue('titolo', 'Amministrazione &raquo; '.$user->config[0]->nomesito);
-$rendering->addValue('keywords', $user->config[0]->keywords);
-$rendering->addValue('description', $user->config[0]->description);
+$rendering->addValue('titolo', 'Sitemap &raquo; Amministrazione &raquo; '.$user->config[0]->nomesito);
 
 if(($logged) && ($submit) && (($username[0]->grado < 3) || ($username[0]->grado == 5))) {
 		$sitemap = '<?xml version="1.0" encoding="UTF-8"?>

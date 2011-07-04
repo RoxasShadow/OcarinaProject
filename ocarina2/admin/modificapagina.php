@@ -21,10 +21,8 @@ $rendering->addValue('utente', $logged ? $username[0]->nickname : '');
 $rendering->addValue('grado', $logged ? $username[0]->grado : '');
 $rendering->skin = 'admin';
 $rendering->addValue('titolo', 'Modifica pagina &raquo; Amministrazione &raquo; '.$pagina->config[0]->nomesito);
-$rendering->addValue('keywords', $pagina->config[0]->keywords);
-$rendering->addValue('description', $pagina->config[0]->description);
 
-if($logged)
+if(($logged) && ($username[0]->grado < 4))
 	if((!$submit) && ($selected == '')) {
 		$result = '<form action="" method="post">Scegli la news da modificare <select name="selected">';
 		if($username[0]->grado == 3)

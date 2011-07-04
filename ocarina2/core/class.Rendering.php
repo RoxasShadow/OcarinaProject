@@ -64,9 +64,16 @@ class Rendering extends Configuration {
 
 	/* Il motore di rendering effettua il rendering del template in input e lo visualizza. */
 	public function renderize($filename) {
+		$this->addValue('url', $this->config[0]->url);
+		$this->addValue('root', $this->config[0]->root);
 		$this->addValue('url_index', $this->config[0]->url_index);
+		$this->addValue('root_index', $this->config[0]->root_index);
+		$this->addValue('url_admin', $this->config[0]->url_admin);
+		$this->addValue('root_admin', $this->config[0]->root_admin);
 		$this->addValue('url_rendering', $this->config[0]->url_rendering);
 		$this->addValue('root_rendering', $this->config[0]->root_rendering);
+		$this->addValue('url_immagini', $this->config[0]->url_immagini);
+		$this->addValue('root_immagini', $this->config[0]->root_immagini);
 		$this->addValue('nomesito', $this->config[0]->nomesito);
 		$this->addValue('skin', $this->skin);
 		$this->addValue('query', $this->numQuery);
@@ -77,8 +84,7 @@ class Rendering extends Configuration {
 
 	/* Visualizza le skin attualmente presenti. */
 	public function getSkinList() {
-		$getConfig = parent::getConfig();
-		$dir = $getConfig[0]->root_rendering.'/templates/';
+		$dir = $this->config[0]->root_rendering.'/templates/';
 		$apri = opendir($dir);
 		$f = array();
 		while($skin = readdir($apri))

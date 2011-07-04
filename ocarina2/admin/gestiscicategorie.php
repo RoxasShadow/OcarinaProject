@@ -21,8 +21,6 @@ $rendering->addValue('utente', $logged ? $username[0]->nickname : '');
 $rendering->addValue('grado', $logged ? $username[0]->grado : '');
 $rendering->skin = 'admin';
 $rendering->addValue('titolo', 'Gestisci categorie &raquo; Amministrazione &raquo; '.$categoria->config[0]->nomesito);
-$rendering->addValue('keywords', $categoria->config[0]->keywords);
-$rendering->addValue('description', $categoria->config[0]->description);
 
 if($logged) {
 	if(!$submit) {

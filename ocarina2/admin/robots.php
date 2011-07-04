@@ -18,8 +18,6 @@ $rendering->addValue('utente', $logged ? $username[0]->nickname : '');
 $rendering->addValue('grado', $logged ? $username[0]->grado : '');
 $rendering->skin = 'admin';
 $rendering->addValue('titolo', 'Robots &raquo; Amministrazione &raquo; '.$user->config[0]->nomesito);
-$rendering->addValue('keywords', $rendering->config[0]->keywords);
-$rendering->addValue('description', $rendering->config[0]->description);
 
 if(($logged) && (($username[0]->grado < 3) || ($username[0]->grado == 5))) {
 	if(!$submit) {

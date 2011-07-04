@@ -308,13 +308,12 @@ class Utilities {
 		return $_FILES['image']['name'];
 	}
 	
-	/* Carica più immagini.
-	L'attributo "name" di ogni tag input-file deve finire con due parentesi quadre (ex.: images[])*/
+	/* Carica più immagini.*/
 	function uploadMultipleImage($path, $FILES) {
 		if((empty($FILES)) || (!is_array($FILES)))
 			return false;
 		$name = array();
-		for($i=0, $count=count($FILES)-1; $i<$count; $i++) {
+		for($i=0, $count=count($_FILES['image']['name']); $i<$count; ++$i) {
 			do {
 				if(is_uploaded_file($_FILES['image']['tmp_name'][$i])) {
 					list($width, $height, $type) = getimagesize($_FILES['image']['tmp_name'][$i]);
@@ -404,5 +403,16 @@ class Utilities {
 			return false;
 		list($width, $height) = getimagesize($path);
 		return array($width, $height);
+	}
+
+	/* Visualizza le immagini attualmente presenti. */
+	public function getImage() {
+		$dir = $this->config[0]->root_immagini.'/';
+		$apri = opendir($dir);
+		$f = array();
+		while($image = readdir($apri))
+			if(!is_dir($image))
+				$f[] = $image;
+		return $f;
 	}
 }

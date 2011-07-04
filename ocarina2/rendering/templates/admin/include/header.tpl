@@ -6,8 +6,6 @@
 <head>
 <title>{$titolo}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="description" content="{$description}" />
-<meta name="keywords" content="{$keywords}" />
 <link rel="stylesheet" type="text/css" href="{$url_rendering}/templates/{$skin}/resources/reset.css" />
 <link rel="stylesheet" type="text/css" href="{$url_rendering}/templates/{$skin}/resources/layout.css" />
 <!--[if IE 6]><link rel="stylesheet" type="text/css" href="{$url_rendering}/templates/{$skin}/resources/ie6.css" /><![endif]-->
@@ -55,7 +53,8 @@
 <li><a class="active">Categorie</a></li>
 <li><a href="{$url_index}/admin/gestiscicategorie.php">Gestisci categorie</a></li>
 <li><a class="active">Uploader</a></li>
-<li><a href="#">Filler ~</a></li>
+<li><a href="{$url_index}/admin/upload.php">Upload</a></li>
+<li><a href="{$url_index}/admin/immagini.php">Immagini</a></li>
 {elseif $grado == 2}
 <li><a class="active">{$nomesito}</a></li>
 <li><a href="{$url_index}/logout.php">Logout</a></li>
@@ -76,7 +75,8 @@
 <li><a class="active">Categorie</a></li>
 <li><a href="{$url_index}/admin/gestiscicategorie.php">Gestisci categorie</a></li>
 <li><a class="active">Uploader</a></li>
-<li><a href="#">Filler ~</a></li>
+<li><a href="{$url_index}/admin/upload.php">Upload</a></li>
+<li><a href="{$url_index}/admin/immagini.php">Immagini</a></li>
 {elseif $grado == 1}
 <li><a class="active">{$nomesito}</a></li>
 <li><a href="{$url_index}/logout.php">Logout</a></li>
@@ -97,7 +97,8 @@
 <li><a class="active">Categorie</a></li>
 <li><a href="{$url_index}/admin/gestiscicategorie.php">Gestisci categorie</a></li>
 <li><a class="active">Uploader</a></li>
-<li><a href="#">Filler ~</a></li>
+<li><a href="{$url_index}/admin/upload.php">Upload</a></li>
+<li><a href="{$url_index}/admin/immagini.php">Immagini</a></li>
 <li><a class="active">Webdesign</a></li>
 <li><a href="#">Filler ~</a></li>
 {/if}

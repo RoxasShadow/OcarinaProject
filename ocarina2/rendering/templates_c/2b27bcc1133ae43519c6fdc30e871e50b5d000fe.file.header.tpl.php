@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-03 17:16:06
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-04 01:27:21
          compiled from "/var/www/htdocs/ocarina2/rendering/templates/admin/include/header.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:6223524804e10a3d67b78a6-52765486%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:16849686344e1116f8f2bda6-71756800%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '2b27bcc1133ae43519c6fdc30e871e50b5d000fe' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering/templates/admin/include/header.tpl',
-      1 => 1309713363,
+      1 => 1309742734,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '6223524804e10a3d67b78a6-52765486',
+  'nocache_hash' => '16849686344e1116f8f2bda6-71756800',
   'function' => 
   array (
   ),
@@ -24,10 +24,6 @@ $_smarty_tpl->decodeProperties(array (
 <title><?php echo $_smarty_tpl->getVariable('titolo')->value;?>
 </title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="description" content="<?php echo $_smarty_tpl->getVariable('description')->value;?>
-" />
-<meta name="keywords" content="<?php echo $_smarty_tpl->getVariable('keywords')->value;?>
-" />
 <link rel="stylesheet" type="text/css" href="<?php echo $_smarty_tpl->getVariable('url_rendering')->value;?>
 /templates/<?php echo $_smarty_tpl->getVariable('skin')->value;?>
 /resources/reset.css" />
@@ -107,7 +103,10 @@ $_smarty_tpl->decodeProperties(array (
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /admin/gestiscicategorie.php">Gestisci categorie</a></li>
 <li><a class="active">Uploader</a></li>
-<li><a href="#">Filler ~</a></li>
+<li><a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/admin/upload.php">Upload</a></li>
+<li><a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/admin/immagini.php">Immagini</a></li>
 <?php }elseif($_smarty_tpl->getVariable('grado')->value==2){?>
 <li><a class="active"><?php echo $_smarty_tpl->getVariable('nomesito')->value;?>
 </a></li>
@@ -140,7 +139,10 @@ $_smarty_tpl->decodeProperties(array (
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /admin/gestiscicategorie.php">Gestisci categorie</a></li>
 <li><a class="active">Uploader</a></li>
-<li><a href="#">Filler ~</a></li>
+<li><a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/admin/upload.php">Upload</a></li>
+<li><a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/admin/immagini.php">Immagini</a></li>
 <?php }elseif($_smarty_tpl->getVariable('grado')->value==1){?>
 <li><a class="active"><?php echo $_smarty_tpl->getVariable('nomesito')->value;?>
 </a></li>
@@ -173,7 +175,10 @@ $_smarty_tpl->decodeProperties(array (
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /admin/gestiscicategorie.php">Gestisci categorie</a></li>
 <li><a class="active">Uploader</a></li>
-<li><a href="#">Filler ~</a></li>
+<li><a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/admin/upload.php">Upload</a></li>
+<li><a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/admin/immagini.php">Immagini</a></li>
 <li><a class="active">Webdesign</a></li>
 <li><a href="#">Filler ~</a></li>
 <?php }?>

@@ -17,8 +17,6 @@ $rendering->addValue('utente', $logged ? $username[0]->nickname : '');
 $rendering->addValue('grado', $logged ? $username[0]->grado : '');
 $rendering->skin = 'admin';
 $rendering->addValue('titolo', 'Log &raquo; Amministrazione &raquo; '.$user->config[0]->nomesito);
-$rendering->addValue('keywords', $user->config[0]->keywords);
-$rendering->addValue('description', $user->config[0]->description);
 
 if($logged)
 	if(!$submit) {

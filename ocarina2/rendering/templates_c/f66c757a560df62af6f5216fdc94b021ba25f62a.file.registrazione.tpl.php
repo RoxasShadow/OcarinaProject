@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-03 15:02:44
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-04 01:19:22
          compiled from "/var/www/htdocs/ocarina2/rendering/templates/default/registrazione.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:13135966654e10849487fa91-67193735%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:19062629414e11151a7706b0-09369406%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'f66c757a560df62af6f5216fdc94b021ba25f62a' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering/templates/default/registrazione.tpl',
-      1 => 1309705061,
+      1 => 1309705668,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '13135966654e10849487fa91-67193735',
+  'nocache_hash' => '19062629414e11151a7706b0-09369406',
   'function' => 
   array (
   ),
@@ -24,8 +24,8 @@ $_smarty_tpl->decodeProperties(array (
 		<div class="titolo"><?php echo $_smarty_tpl->getVariable('result')->value;?>
 </div>
 	<?php }elseif(((isset($_smarty_tpl->getVariable('codiceRegistrazione',null,true,false)->value))&&($_smarty_tpl->getVariable('codiceRegistrazione')->value!==''))){?>
-		<?php echo $_smarty_tpl->getVariable('result')->value;?>
-
+		<div class="titolo"><?php echo $_smarty_tpl->getVariable('result')->value;?>
+</div>
 	<?php }elseif(!$_smarty_tpl->getVariable('submit')->value){?>
 		<form action="" method="post">
 		<table border="0">

@@ -27,28 +27,32 @@ $rendering->addValue('description', $user->config[0]->description);
 if($logged)
 	$rendering->addValue('result', 'Sei già registrato, non hai bisogno di registrarti nuovamente.');
 elseif($codiceRegistrazione !== '') {
-	$username = $user->searchUserByField('codiceregistrazione', $codiceRegistrazione);
-	if(!$username) {
-		if($user->config[0]->log == 1)
-			$user->log('~', 'Invalid validation code.');
-		$rendering->addValue('result', 'Il codice per la validazione dell\'account da te inserito non è valido.');
-	}
-	elseif($username[0]->codiceregistrazione == $codiceRegistrazione) {
-		if($user->editUser('codiceregistrazione', '', $username[0]->nickname)) {
+	if($user->config[0]->validazioneaccount == 0)
+		$rendering->addValue('result', 'Non hai bisogno di validare il tuo account, puoi accedere senza problemi già da ora.');
+	else {
+		$username = $user->searchUserByField('codiceregistrazione', $codiceRegistrazione);
+		if(!$username) {
 			if($user->config[0]->log == 1)
-				$user->log('~', 'Validation account complete.');
-			$rendering->addValue('result', 'Account validato. Ora è possibile accedere.'.header('Refresh: 2; URL='.$user->config[0]->url_index.'/login.php'));
+				$user->log('~', 'Invalid validation code.');
+			$rendering->addValue('result', 'Il codice per la validazione dell\'account da te inserito non è valido.');
+		}
+		elseif($username[0]->codiceregistrazione == $codiceRegistrazione) {
+			if($user->editUser('codiceregistrazione', '', $username[0]->nickname)) {
+				if($user->config[0]->log == 1)
+					$user->log('~', 'Validation account complete.');
+				$rendering->addValue('result', 'Account validato. Ora è possibile accedere.'.header('Refresh: 2; URL='.$user->config[0]->url_index.'/login.php'));
+			}
+			else {
+				if($user->config[0]->log == 1)
+					$user->log('~', 'Validation account failed.');
+				$rendering->addValue('result', 'È accaduto un errore nella validazione dell\'account.');
+			}		
 		}
 		else {
+			$rendering->addValue('result', 'Il codice per la validazione dell\'account da te inserito non è valido.');
 			if($user->config[0]->log == 1)
-				$user->log('~', 'Validation account failed.');
-			$rendering->addValue('result', 'È accaduto un errore nella validazione dell\'account.');
-		}		
-	}
-	else {
-		$rendering->addValue('result', 'Il codice per la validazione dell\'account da te inserito non è valido.');
-		if($user->config[0]->log == 1)
-			$user->log('~', 'Invalid validation code.');
+				$user->log('~', 'Invalid validation code.');
+		}
 	}
 }
 elseif($submit) {
@@ -57,24 +61,39 @@ elseif($submit) {
 	elseif(($nickname !== '') && ($password !== '') && ($confPassword !== '') && ($email !== '')) {
 		if((($password == $confPassword) && (strlen($password) > 4)) || (strlen($nickname) > 4)) {
 			unset($confPassword);
-			$codice = $user->getCode(); // Validazione account
-			$array = array($nickname, $password, $email, 6, date('d-m-y'), date('G:m:s'), $codice, $user->config[0]->skin);
-			if($user->createUser($array)) {
-				mail($email, $user->config[0]->nomesito.' @ Validazione account per '.$nickname.'.', 'Ciao '.$nickname.',
-				dal momento che ti sei registrato, il sistema ha bisogno di essere sicuro che la tua email sia valida.
-				Per validarla ti basta cliccare il seguente link: '.$user->config[0]->url_index.'/registrazione.php?codice='.$codice.'
+			if($user->config[0]->validazioneaccount == 1) {
+				$codice = $user->getCode(); // Validazione account
+				$array = array($nickname, $password, $email, 6, date('d-m-y'), date('G:m:s'), $codice, $user->config[0]->skin);
+				if($user->createUser($array)) {
+					mail($email, $user->config[0]->nomesito.' @ Validazione account per '.$nickname.'.', 'Ciao '.$nickname.',
+					dal momento che ti sei registrato, il sistema ha bisogno di essere sicuro che la tua email sia valida.
+					Per validarla ti basta cliccare il seguente link: '.$user->config[0]->url_index.'/registrazione.php?codice='.$codice.'
 
-				Se non sei tu '.$nickname.', ignora questa email.
+					Se non sei tu '.$nickname.', ignora questa email.
 
-				Il webmaster di '.$user->config[0]->nomesito.'.');
-				$rendering->addValue('result', 'Registrazione completata. A breve riceverai l\'email per attivare il tuo account. Attendi per il redirect...'.header('Refresh: 2; URL='.$user->config[0]->url_index.'/login.php'));
-				if($user->config[0]->log == 1)
-					$user->log($nickname, 'Registrated.');
+					Il webmaster di '.$user->config[0]->nomesito.'.');
+					$rendering->addValue('result', 'Registrazione completata. A breve riceverai l\'email per attivare il tuo account. Attendi per il redirect...'.header('Refresh: 2; URL='.$user->config[0]->url_index.'/login.php'));
+					if($user->config[0]->log == 1)
+						$user->log($nickname, 'Registrated.');
+				}
+				else {
+					$rendering->addValue('result', 'È accaduto un problema durante la registrazione. Controlla di non usare un nickname o un\'email già usata da un altro utente, e che quest\'ultima sia valida.');
+					if($user->config[0]->log == 1)
+						$user->log($nickname, 'Registration failed.');
+				}
 			}
 			else {
-				$rendering->addValue('result', 'È accaduto un problema durante la registrazione. Controlla di non usare un nickname o un\'email già usata da un altro utente, e che quest\'ultima sia valida.');
-				if($user->config[0]->log == 1)
-					$user->log($nickname, 'Registration failed.');
+				$array = array($nickname, $password, $email, 6, date('d-m-y'), date('G:m:s'), '', $user->config[0]->skin);
+				if($user->createUser($array)) {
+					$rendering->addValue('result', 'Registrazione completata. Attendi per il redirect...'.header('Refresh: 2; URL='.$user->config[0]->url_index.'/login.php'));
+					if($user->config[0]->log == 1)
+						$user->log($nickname, 'Registrated.');
+				}
+				else {
+					$rendering->addValue('result', 'È accaduto un problema durante la registrazione. Controlla di non usare un nickname o un\'email già usata da un altro utente, e che quest\'ultima sia valida.');
+					if($user->config[0]->log == 1)
+						$user->log($nickname, 'Registration failed.');
+				}
 			}
 		}
 		else

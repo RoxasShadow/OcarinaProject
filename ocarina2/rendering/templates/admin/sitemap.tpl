@@ -5,7 +5,11 @@
 	{if $utente == '' || $grado == ''}
 		Accesso negato.
 	{elseif (($grado < 3) || ($grado == 5))}
-		{if !$submit}
+		{if isset($immagini)}
+			{for $var=0 to count($immagini)-1}
+				<a href="{$url_immagini}/{$immagini[$var]}" target="_blank">{$immagini[$var]}</a> (<a href="{$url_admin}/immagini.php?delete={$immagini[$var]}">X</a>)<br />
+			{/for}
+		{elseif !$submit}
 			<form action="" method="post">
 			<input type="submit" name="submit" value="Ricostruisci le sitemap" />
 			</form>
