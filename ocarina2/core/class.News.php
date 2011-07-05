@@ -202,10 +202,10 @@ class News extends Category {
 			$nickname = parent::getUser($v->autore);
 			$feed .= "
 	<item>
-		<title>".htmlentities($v->titolo)."</title>
-		<description>".parent::reduceLen(htmlentities($v->contenuto), 500, '...')."</description>
-		<author>".htmlentities($nickname[0]->email)."(".htmlentities($v->autore).")</author>
-		<category>".htmlentities($v->categoria)."</category>
+		<title>".parent::xmlentities(htmlentities($v->titolo))."</title>
+		<description>".parent::xmlentities(htmlentities($v->contenuto))."</description>
+		<author>".parent::xmlentities(htmlentities($nickname[0]->email)).'('.parent::xmlentities(htmlentities($v->autore)).")</author>
+		<category>".parent::xmlentities(htmlentities($v->categoria))."</category>
 		<pubDate>".str_replace('+0000', '+0200', date('r', mktime($h,$mn,$s,$m,$d,$y)))."</pubDate>
 		<link>{$this->config[0]->url_index}/news.php?titolo={$v->minititolo}</link>
 		<comments>{$this->config[0]->url_index}/news.php?titolo={$v->minititolo}</comments>
