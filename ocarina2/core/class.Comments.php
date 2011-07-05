@@ -110,6 +110,23 @@ class Comments extends News {
 			return false;
 	}
 	
+	/* Ricerca i commenti per utente. */
+	public function searchCommentByUser($nickname) {
+		if(!$query = parent::query("SELECT * FROM commenti WHERE autore='$nickname'"))
+			return false;
+		if(parent::count($query) > 0) {
+			$commenti = array();
+			while($result = parent::get($query)) {
+				array_push($commenti, $result);
+			}
+			if(!empty($commenti))
+				return $commenti;
+			return false;
+		}
+		else
+			return false;
+	}
+	
 	/* Crea un commento. */
 	public function createComment($array) {
 		if(empty($array))
@@ -145,6 +162,16 @@ class Comments extends News {
 		if(!is_numeric($id))
 			return false;
 		return parent::query("DELETE FROM commenti WHERE id='$id'") ? true : false;
+	}
+	
+	/* Elimina i commenti di un utente. */
+	public function deleteCommentByUser($nickname) {
+		$comments = $this->searchCommentByUser($nickname);
+		if(!$comments)
+			return false;
+		foreach($comments as $v)
+			$this->deleteComment($v->id);
+		return true;
 	}
 	
 	/* Crea una sitemap di tutti i commenti. */

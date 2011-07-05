@@ -4,7 +4,7 @@
 {include file="$root_rendering/templates/$skin/include/header.tpl"}
 	{if $logged || isset($recupera)}
 		<div class="titolo">{$result}</div>
-	{elseif !$submit && !$recupero}
+	{elseif !$submit && !isset($recupero)}
 		<form action="" method="post">
 		<table border="0">
 		<tr>

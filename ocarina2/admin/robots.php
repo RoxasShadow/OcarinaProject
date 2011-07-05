@@ -31,7 +31,7 @@ Sitemap: '.$user->config[0]->url_index.'/sitemap.php');
 			$rendering->addValue('robots', '# Robots generato il '.date('d-m-y').' tramite Ocarina CMS.
 '.$robots);
 	}
-	if($submit) {
+	else {
 		$f = fopen($user->config[0]->root_index.'/robots.txt', 'w');
 		fwrite($f, $robots);
 		fclose($f);

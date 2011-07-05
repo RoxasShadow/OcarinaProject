@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-04 20:02:51
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-04 23:27:10
          compiled from "/var/www/htdocs/ocarina2/rendering/templates/admin/include/header.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:20378998684e121c6b04e1d9-78845691%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:12250508394e124c4ebf1e98-49292733%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '2b27bcc1133ae43519c6fdc30e871e50b5d000fe' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering/templates/admin/include/header.tpl',
-      1 => 1309809769,
+      1 => 1309822028,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '20378998684e121c6b04e1d9-78845691',
+  'nocache_hash' => '12250508394e124c4ebf1e98-49292733',
   'function' => 
   array (
   ),
@@ -119,8 +119,6 @@ $_smarty_tpl->decodeProperties(array (
 <li><a class="active">SEO</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /robots.php">Robots</a></li>
-<li><a class="active">Utenti</a></li>
-<li><a href="#">Filler ~</a></li>
 <li><a class="active">News</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /creanews.php">Crea news</a></li>
@@ -158,7 +156,10 @@ $_smarty_tpl->decodeProperties(array (
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /robots.php">Robots</a></li>
 <li><a class="active">Utenti</a></li>
-<li><a href="#">Filler ~</a></li>
+<li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
+/modificagrado.php">Modifica grado</a></li>
+<li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
+/cancellautente.php">Cancella utente</a></li>
 <li><a class="active">News</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /creanews.php">Crea news</a></li>

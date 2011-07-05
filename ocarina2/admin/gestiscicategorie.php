@@ -23,7 +23,7 @@ if(($categoria->isLogged()) && ($categoria->username[0]->grado <= 3))
 		$rendering->addValue('categorie_news', $categoria->getCategory('news'));
 		$rendering->addValue('categorie_pagine', $categoria->getCategory('pagine'));
 	}
-	elseif($submit)
+	else
 		if($categoria_news !== '')
 			if($categoria->createCategory('news', $categoria_news)) {
 				$rendering->addValue('result', 'La categoria è stata creata con successo.');

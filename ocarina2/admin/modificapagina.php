@@ -21,12 +21,18 @@ $rendering->addValue('titolo', 'Modifica pagina &raquo; Amministrazione &raquo; 
 if(($pagina->isLogged()) && ($pagina->username[0]->grado < 4))
 	if((!$submit) && ($selected == '')) {
 		$result = '<form action="" method="post">Scegli la news da modificare <select name="selected">';
-		if($pagina->username[0]->grado == 3)
-			foreach($news->searchPageByUser($pagina->username[0]->nickname) as $v)
+		if($pagina->username[0]->grado == 3) {
+			$pageByUser = $pagina->searchPageByUser($pagina->username[0]->nickname);
+			if($pageByUser !== false)
+				foreach($pageByUser as $v)
+					$result .= '<option value="'.$v->minititolo.'">'.$v->titolo.'</option>';
+		}
+		elseif($pagina->username[0]->grado < 3) {
+			$allPage = $pagina->searchPage('', 'wildcard');
+			if($allPage !== false)
+			foreach(allPage as $v)
 				$result .= '<option value="'.$v->minititolo.'">'.$v->titolo.'</option>';
-		elseif($pagina->username[0]->grado < 3)
-			foreach($pagina->searchPage('', 'wildcard') as $v)
-				$result .= '<option value="'.$v->minititolo.'">'.$v->titolo.'</option>';
+		}
 		$result .= '</select><input type="submit" name="sel_submit" value="Modifica news">';
 		$rendering->addValue('result', $result);
 	}	

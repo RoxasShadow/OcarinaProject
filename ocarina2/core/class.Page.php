@@ -95,7 +95,7 @@ class Page extends Category {
 	
 	/* Ricerca le pagine per utente. */
 	public function searchPageByUser($nickname) {
-		if(!$query = parent::query("SELECT * FROM pagine WHERE nickname='$nickname' ORDER BY id DESC"))
+		if(!$query = parent::query("SELECT * FROM pagine WHERE autore='$nickname' ORDER BY id DESC"))
 			return false;
 		if(parent::count($query) > 0) {
 			$pagine = array();
@@ -156,6 +156,16 @@ class Page extends Category {
 	/* Elimina una pagina. */
 	public function deletePage($minititolo) {
 		return parent::query("DELETE FROM pagine WHERE minititolo='$minititolo'") ? true : false;
+	}
+	
+	/* Elimina le pagine di un utente. */
+	public function deletePageByUser($nickname) {
+		$page = $this->searchPageByUser($nickname);
+		if(!$page)
+			return false;
+		foreach($page as $v)
+			$this->deletePage($v->minititolo);
+		return true;
 	}
 	
 	/* Crea una sitemap di tutte le pagine. */

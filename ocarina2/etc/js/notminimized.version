@@ -2,8 +2,33 @@
 function quota(objDom) {
 	document.getElementById("txtQuota").value = document.getElementById("txtQuota").value+'[quote]'+objDom.textContent+'[/quote]';
 }
+/* OLD */
 function add(emoticons) {
 	document.getElementById("txtQuota").value = document.getElementById("txtQuota").value + emoticons;
+} */
+function add(bbcode) {
+	var textbox = document.getElementById('targetForm');
+	textbox.focus();
+	
+	if(textbox.selectionStart !== undefined) {
+		var startPos = textbox.selectionStart;
+		var endPos = textbox.selectionEnd;
+		var selectedText = textbox.value.substring(startPos, endPos);
+		textbox.value = textbox.value.substring (0, startPos) +	bbcode + selectedText +	textbox.value.substring(endPos, textbox.value.length);
+		textbox.selectionStart = startPos + preText.length;
+       		textbox.selectionEnd = textbox.selectionStart;
+	}
+	else if(document.selection !== undefined) { // IE
+		textRange = document.selection.createRange();
+		var originalText = textRange.text;
+		textRange.text = preText + textRange.text;
+		textRange.moveStart("character", -(postText.length + originalText.length));
+		textRange.moveEnd("character", -(postText.length + originalText.length));
+		textRange.select();
+	}
+	else
+		textbox.value += text;
+	textbox.focus();
 }
 function requestcolor() {
 	add('[color='+prompt("Digita il nome del colore (esempio: red, black, white)")+'][/color]');

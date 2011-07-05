@@ -12,8 +12,8 @@ $rendering = new Rendering();
 $bbcode = new BBCode();
 $titolo = ((isset($_GET['titolo'])) && ($_GET['titolo'] !== '')) ? $pagina->purge($_GET['titolo']) : '';
 
-$rendering->addValue('utente', $user->isLogged() ? $pagina->username[0]->nickname : '');
-$rendering->skin = $user->isLogged() ? $pagina->username[0]->skin : $pagina->config[0]->skin;
+$rendering->addValue('utente', $pagina->isLogged() ? $pagina->username[0]->nickname : '');
+$rendering->skin = $pagina->isLogged() ? $pagina->username[0]->skin : $pagina->config[0]->skin;
 $rendering->addValue('titolo', $titolo !== '' ? $titolo.' &raquo; '.$pagina->config[0]->nomesito : $pagina->config[0]->nomesito);
 $rendering->addValue('keywords', $pagina->config[0]->keywords);
 $rendering->addValue('description', $pagina->config[0]->description);
@@ -30,4 +30,4 @@ else {
 		$rendering->addValue('pagina', $getPage);
 	}
 }
-(($user->isLogged()) && ($pagina->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('pagina.tpl');
+(($pagina->isLogged()) && ($pagina->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('pagina.tpl');

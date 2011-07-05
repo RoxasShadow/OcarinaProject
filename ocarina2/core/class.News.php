@@ -91,7 +91,7 @@ class News extends Category {
 	
 	/* Ricerca le news per utente. */
 	public function searchNewsByUser($nickname) {
-		if(!$query = parent::query("SELECT * FROM news WHERE nickname='$nickname' ORDER BY id DESC"))
+		if(!$query = parent::query("SELECT * FROM news WHERE autore='$nickname' ORDER BY id DESC"))
 			return false;
 		if(parent::count($query) > 0) {
 			$news = array();
@@ -152,6 +152,16 @@ class News extends Category {
 	/* Elimina una news. */
 	public function deleteNews($minititolo) {
 		return parent::query("DELETE FROM news WHERE minititolo='$minititolo'") ? true : false;
+	}
+	
+	/* Elimina le news di un utente. */
+	public function deleteNewsByUser($nickname) {
+		$news = $this->searchNewsByUser($nickname);
+		if(!$news)
+			return false;
+		foreach($news as $v)
+			$this->deleteNews($v->minititolo);
+		return true;
 	}
 	
 	/* Crea una sitemap di tutte le news. */

@@ -13,8 +13,8 @@ $bbcode = new BBCode();
 $titolo = isset($_GET['titolo']) ? $comment->purge($_GET['titolo']) : '';
 $commento = isset($_POST['comment']) ? $comment->purge($_POST['comment']) : '';
 
-$rendering->addValue('utente', $user->isLogged() ? $comments->username[0]->nickname : '');
-$rendering->skin = $user->isLogged() ? $comments->username[0]->skin : $comment->config[0]->skin;
+$rendering->addValue('utente', $comment->isLogged() ? $comment->username[0]->nickname : '');
+$rendering->skin = $comment->isLogged() ? $comment->username[0]->skin : $comment->config[0]->skin;
 $rendering->addValue('titolo', $titolo !== '' ? $titolo.' &raquo; '.$comment->config[0]->nomesito : $comment->config[0]->nomesito);
 $rendering->addValue('keywords', $comment->config[0]->keywords);
 $rendering->addValue('description', $comment->config[0]->description);
@@ -40,26 +40,26 @@ else {
 					$getComment[$i]->contenuto = $bbcode->bbcodecommenti($getComment[$i]->contenuto);
 			$rendering->addValue('commenti', $getComment);
 		}
-		if(($commento !== '') && ($user->isLogged())) {
-			$array = ($comment->config[0]->approvacommenti == 0) ? array($comments->username[0]->nickname, $commento, $news[0]->minititolo, date('d-m-y'), date('G:m:s'), 1) : array($comments->username[0]->nickname, $commento, $news[0]->minititolo, date('d-m-y'), date('G:m:s'), 0);
+		if(($commento !== '') && ($comment->isLogged())) {
+			$array = ($comment->config[0]->approvacommenti == 0) ? array($comment->username[0]->nickname, $commento, $news[0]->minititolo, date('d-m-y'), date('G:m:s'), 1) : array($comment->username[0]->nickname, $commento, $news[0]->minititolo, date('d-m-y'), date('G:m:s'), 0);
 			if($comment->config[0]->commenti == 0)
 				$rendering->addValue('commentSended', 'I commenti sono attualmente bloccati, attendi per il redirect...'.header('Refresh: 2; URL='.$comment->config[0]->url_index.'/news.php?titolo='.$titolo));
 			elseif($comment->createComment($array)) {
 				if($comment->config[0]->log == 1)
-					$comment->log($comments->username[0]->nickname, 'Comment sended.');
+					$comment->log($comment->username[0]->nickname, 'Comment sended.');
 				($comment->config[0]->approvacommenti == 0) ? $rendering->addValue('commentSended', 'Il commento è stato inviato, attendi per il redirect...'.header('Refresh: 2; URL='.$comment->config[0]->url_index.'/news.php?titolo='.$titolo)) : $rendering->addValue('commentSended', 'Il commento è stato inviato ed è in attesa per essere approvato, attendi per il redirect...'.header('Refresh: 2; URL='.$comment->config[0]->url_index.'/news.php?titolo='.$titolo));
 			}
 			else {
 				if($comment->config[0]->log == 1)
-					$comment->log($comments->username[0]->nickname, 'Comment was not sended.');
+					$comment->log($comment->username[0]->nickname, 'Comment was not sended.');
 				$rendering->addValue('commentSended', 'È accaduto un errore nell\'invio del commento, attendi per il redirect...'.header('Refresh: 2; URL='.$comment->config[0]->url_index.'/news.php?titolo='.$titolo));
 			}
 		}
-		elseif(($commento !== '') && (!$user->isLogged()))
+		elseif(($commento !== '') && (!$comment->isLogged()))
 			$rendering->addValue('commentSended', 'Solo gli utenti registrati possono commentare le news, attendi per il redirect...'.header('Refresh: 2; URL='.$comment->config[0]->url_index.'/login.php'));
 	}
 }
-$rendering->addValue('logged', $user->isLogged());
-if($user->isLogged())
-	$rendering->addValue('grado', $comments->username[0]->grado);
-(($user->isLogged()) && ($comments->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('news.tpl');
+$rendering->addValue('logged', $comment->isLogged());
+if($comment->isLogged())
+	$rendering->addValue('grado', $comment->username[0]->grado);
+(($comment->isLogged()) && ($comment->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('news.tpl');

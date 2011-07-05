@@ -415,4 +415,9 @@ class Utilities {
 				$f[] = $image;
 		return $f;
 	}
+
+	/* Invia una email. */
+	public function sendMail($destinatario, $titolo, $contenuto) {
+		return mail($destinatario, $titolo, $contenuto) ? true : false;			
+	}
 }

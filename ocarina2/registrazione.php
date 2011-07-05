@@ -62,7 +62,7 @@ elseif($submit) {
 				$codice = $user->getCode(); // Validazione account
 				$array = array($nickname, $password, $email, 6, date('d-m-y'), date('G:m:s'), $codice, $user->config[0]->skin);
 				if($user->createUser($array)) {
-					mail($email, $user->config[0]->nomesito.' @ Validazione account per '.$nickname.'.', 'Ciao '.$nickname.',
+					$user->sendMail($email, $user->config[0]->nomesito.' @ Validazione account per '.$nickname.'.', 'Ciao '.$nickname.',
 					dal momento che ti sei registrato, il sistema ha bisogno di essere sicuro che la tua email sia valida.
 					Per validarla ti basta cliccare il seguente link: '.$user->config[0]->url_index.'/registrazione.php?codice='.$codice.'
 

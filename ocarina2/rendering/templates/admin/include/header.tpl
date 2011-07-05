@@ -62,8 +62,6 @@
 <li><a href="{$url_admin}/log.php">Logs</a></li>
 <li><a class="active">SEO</a></li>
 <li><a href="{$url_admin}/robots.php">Robots</a></li>
-<li><a class="active">Utenti</a></li>
-<li><a href="#">Filler ~</a></li>
 <li><a class="active">News</a></li>
 <li><a href="{$url_admin}/creanews.php">Crea news</a></li>
 <li><a href="{$url_admin}/modificanews.php">Modifica news</a></li>
@@ -86,7 +84,8 @@
 <li><a class="active">SEO</a></li>
 <li><a href="{$url_admin}/robots.php">Robots</a></li>
 <li><a class="active">Utenti</a></li>
-<li><a href="#">Filler ~</a></li>
+<li><a href="{$url_admin}/modificagrado.php">Modifica grado</a></li>
+<li><a href="{$url_admin}/cancellautente.php">Cancella utente</a></li>
 <li><a class="active">News</a></li>
 <li><a href="{$url_admin}/creanews.php">Crea news</a></li>
 <li><a href="{$url_admin}/modificanews.php">Modifica news</a></li>

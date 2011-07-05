@@ -21,12 +21,18 @@ $rendering->addValue('titolo', 'Modifica news &raquo; Amministrazione &raquo; '.
 if(($news->isLogged()) && ($news->username[0]->grado < 4))
 	if((!$submit) && ($selected == '')) {
 		$result = '<form action="" method="post">Scegli la news da modificare <select name="selected">';
-		if($news->username[0]->grado == 3)
-			foreach($news->searchNewsByUser($news->username[0]->nickname) as $v)
-				$result .= '<option value="'.$v->minititolo.'">'.$v->titolo.'</option>';
-		elseif($news->username[0]->grado < 3)
-			foreach($news->searchNews('') as $v) // È come una wildcard 
-				$result .= '<option value="'.$v->minititolo.'">'.$v->titolo.'</option>';
+		if($news->username[0]->grado == 3) {
+			$newsByUser = $news->searchNewsByUser($news->username[0]->nickname);
+			if($newsByUser !== false)
+				foreach($news->searchNewsByUser($news->username[0]->nickname) as $v)
+					$result .= '<option value="'.$v->minititolo.'">'.$v->titolo.'</option>';
+		}
+		elseif($news->username[0]->grado < 3) {
+			$allNews = $news->searchNews(''); // È come una wildcard 
+			if($allNews !== false)
+				foreach($allNews as $v)
+					$result .= '<option value="'.$v->minititolo.'">'.$v->titolo.'</option>';
+		}
 		$result .= '</select><input type="submit" name="sel_submit" value="Modifica news">';
 		$rendering->addValue('result', $result);
 	}	
