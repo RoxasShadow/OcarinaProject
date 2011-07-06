@@ -15,8 +15,7 @@ $categoria = isset($_GET['cat']) ? $news->purge($_GET['cat']) : '';
 $rendering->addValue('utente', $news->isLogged() ? $news->username[0]->nickname : '');
 $rendering->skin = $news->isLogged() ? $news->username[0]->skin : $news->config[0]->skin;
 $rendering->addValue('titolo', $categoria !== '' ? 'Categoria: '.$categoria.' &raquo; '.$news->config[0]->nomesito : $news->config[0]->nomesito);
-$rendering->addValue('keywords', $news->config[0]->keywords);
-$rendering->addValue('description', $news->config[0]->description);
+$rendering->addValue('description', $news->getLanguage('description', 1));
 
 if($categoria == '')
 	$rendering->addValue('errore', 'Non è stata selezionata nessuna categoria.');

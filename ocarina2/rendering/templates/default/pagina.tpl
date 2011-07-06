@@ -9,7 +9,7 @@
 			{foreach from=$pagina key=key item=item}
 				{if $pagina[$key]->approvato == 1}
 					<div class="titolo">{$pagina[$key]->titolo}</div>
-					<div class="newsheader" align="center">Scritto da <a href="{$url_index}/profilo.php?nickname={$pagina[$key]->autore}">{$pagina[$key]->autore}</a> il giorno {$pagina[$key]->data} alle ore {$pagina[$key]->ora} nella categoria <a href="{$url_index}/categoria.php?cat={$pagina[$key]->categoria}">{$pagina[$key]->categoria}</a>.</div><br />
+					<div class="newsheader" align="center">Scritto da <a href="{$url_index}/profilo.php?nickname={$pagina[$key]->autore}">{$pagina[$key]->autore}</a> il giorno {$pagina[$key]->data} alle ore {$pagina[$key]->ora} nella categoria <a href="{$url_index}/categoria.php?cat={$pagina[$key]->categoria}">{$pagina[$key]->categoria}</a>. {if $pagina[$key]->oraultimamodifica == $pagina[$key]->ora}Ultima modifica {if $pagina[$key]->dataultimamodifica == $pagina[$key]->data}oggi{else} il giorno {$pagina[$key]->dataultimamodifica}{/if} alle ore {$pagina[$key]->ora} {if $pagina[$key]->autoreultimamodifica !== $pagina[$key]->autore}da parte di {$pagina[$key]->autoreultimamodifica}.{/if}{/if}</div><br />
 					<div class="news"><p>{$pagina[$key]->contenuto}</p></div>
 				{else}
 					La pagina non è stata approvata, e quindi non è visibile.

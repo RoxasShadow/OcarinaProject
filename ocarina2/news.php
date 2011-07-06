@@ -16,8 +16,6 @@ $commento = isset($_POST['comment']) ? $comment->purge($_POST['comment']) : '';
 $rendering->addValue('utente', $comment->isLogged() ? $comment->username[0]->nickname : '');
 $rendering->skin = $comment->isLogged() ? $comment->username[0]->skin : $comment->config[0]->skin;
 $rendering->addValue('titolo', $titolo !== '' ? $titolo.' &raquo; '.$comment->config[0]->nomesito : $comment->config[0]->nomesito);
-$rendering->addValue('keywords', $comment->config[0]->keywords);
-$rendering->addValue('description', $comment->config[0]->description);
 
 if($titolo == '')
 	$rendering->addValue('errore', 'Non è stata selezionata nessuna news.');
@@ -30,6 +28,7 @@ else {
 				$news[$i]->contenuto = $bbcode->bbcode($news[$i]->contenuto);
 			$rendering->addValue('bbcode', $comment->config[0]->bbcode);
 		}
+		$rendering->addValue('description', $comment->getDescription($news[0]->contenuto));
 		$rendering->addValue('news', $news);
 		
 		if(!$getComment = $comment->getComment($news[0]->minititolo))

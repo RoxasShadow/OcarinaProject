@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-04 17:23:35
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-06 08:07:08
          compiled from "/var/www/htdocs/ocarina2/rendering/templates/default/include/header.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:6530515804e11f7176b96c9-86257901%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:19634435524e1417acf41518-31480078%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '9cd30aac40a119258fa7385e7e04e4d3860ad49b' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering/templates/default/include/header.tpl',
-      1 => 1309800150,
+      1 => 1309939627,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '6530515804e11f7176b96c9-86257901',
+  'nocache_hash' => '19634435524e1417acf41518-31480078',
   'function' => 
   array (
   ),
@@ -24,10 +24,9 @@ $_smarty_tpl->decodeProperties(array (
 <title><?php echo $_smarty_tpl->getVariable('titolo')->value;?>
 </title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<meta name="description" content="<?php echo $_smarty_tpl->getVariable('description')->value;?>
-" />
-<meta name="keywords" content="<?php echo $_smarty_tpl->getVariable('keywords')->value;?>
-" />
+<?php if (((isset($_smarty_tpl->getVariable('description',null,true,false)->value))&&($_smarty_tpl->getVariable('description')->value!==''))){?><meta name="description" content="<?php echo $_smarty_tpl->getVariable('description')->value;?>
+" /><?php }?>
+
 <link rel="stylesheet" type="text/css" href="<?php echo $_smarty_tpl->getVariable('url_rendering')->value;?>
 /templates/<?php echo $_smarty_tpl->getVariable('skin')->value;?>
 /resources/style.css" />

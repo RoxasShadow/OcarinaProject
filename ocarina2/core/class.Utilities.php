@@ -285,12 +285,38 @@ class Utilities {
 	    	);
 	}
 	
+	/* Ritorna la lingua usata dall'utente. */
+	public function getLanguage($category, $val) {
+		$language = substr($this->purge($_SERVER['HTTP_ACCEPT_LANGUAGE']), 0, 2);
+		if($language == 'it')
+			$language = array(
+				'description' => array(
+					'In questa pagina troverai raccolte tutte le pagine e le news che sono state create.',
+					'In questa pagina troverai raccolte tutte le pagine e le news raccolte in una determinata categoria.',
+					'In questa pagina potrai accedere al sito e usufruire di tutti i suoi servizi.',
+					'In questa pagina potrai modificare la tua password.',
+					'In questa pagina potrai modificare il tuo profilo.',
+					'In questa pagina potrai visualizzare i profili degli utenti registrati.',
+					'Il profilo di ',
+					'In questa pagina potrai recuperare la tua password.',
+					'In questa pagina potrai registrarti al sito e usufruire di tutti i suoi servizi.',
+					'In questa pagina potrai cercare tutti i contenuti che desideri.'
+				)
+			);
+		return ((!isset($language[$category])) || (!is_array($language[$category])) || (empty($language[$category])) || ((count($language[$category])) < $val)) ? 'Description not found.' : $language[$category][$val];
+	}
+	
 	/* Taglia una stringa. */
-	public function reduceLen($news, $max, $append='') {
-		if(strlen($news) <= $max)
-			return $news;
-		$newsreduced = explode('|', wordwrap($news, $max, '|'));
-		return substr($newsreduced[0], 0, -1).'...'.$append;
+	public function reduceLen($text, $max, $append='') {
+		if(strlen($text) <= $max)
+			return $text;
+		$textreduced = explode('|', wordwrap($text, $max, '|'));
+		return substr($textreduced[0], 0, -1).'...'.$append;
+	}
+	
+	/* Crea un metatag description partendo da un testo. */
+	public function getDescription($text) {
+		return $this->reduceLen(strip_tags($text), 151);
 	}
 	
 	/* Ritorna il timestamp in millisecondi. */

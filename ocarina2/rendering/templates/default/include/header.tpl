@@ -6,8 +6,8 @@
 <head>
 <title>{$titolo}</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<meta name="description" content="{$description}" />
-<meta name="keywords" content="{$keywords}" />
+{if ((isset($description)) && ($description !== ''))}<meta name="description" content="{$description}" />{/if}
+
 <link rel="stylesheet" type="text/css" href="{$url_rendering}/templates/{$skin}/resources/style.css" />
 <script type="text/javascript" src="{$url_index}/etc/loadJavascript.js.php"></script>
 <link rel="alternate" type="application/rss+xml" title="Feed RSS News" href="{$url_index}/feed.php?content=news" />

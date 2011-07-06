@@ -15,8 +15,6 @@ $titolo = ((isset($_GET['titolo'])) && ($_GET['titolo'] !== '')) ? $pagina->purg
 $rendering->addValue('utente', $pagina->isLogged() ? $pagina->username[0]->nickname : '');
 $rendering->skin = $pagina->isLogged() ? $pagina->username[0]->skin : $pagina->config[0]->skin;
 $rendering->addValue('titolo', $titolo !== '' ? $titolo.' &raquo; '.$pagina->config[0]->nomesito : $pagina->config[0]->nomesito);
-$rendering->addValue('keywords', $pagina->config[0]->keywords);
-$rendering->addValue('description', $pagina->config[0]->description);
 
 if($titolo == '')
 	$rendering->addValue('errore', 'Non è stata selezionata nessuna pagina.');
@@ -27,6 +25,7 @@ else {
 		if($pagina->config[0]->bbcode == 1)
 			for($i=0, $count=count($getPage); $i<$count; ++$i)
 				$getPage[$i]->contenuto = $bbcode->bbcode($getPage[$i]->contenuto);
+		$rendering->addValue('description', $pagina->getDescription($getPage[0]->contenuto));
 		$rendering->addValue('pagina', $getPage);
 	}
 }

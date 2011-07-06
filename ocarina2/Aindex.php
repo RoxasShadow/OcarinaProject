@@ -16,7 +16,6 @@ $welcome = ((isset($_GET['welcome'])) && ($_GET['welcome'] == 'true')) ? true : 
 $rendering->addValue('utente', $news->isLogged() ? $news->username[0]->nickname : '');
 $rendering->skin = $news->isLogged() ? $news->username[0]->skin : $news->config[0]->skin;
 $rendering->addValue('titolo', $news->config[0]->nomesito);
-$rendering->addValue('keywords', $news->config[0]->keywords);
 $rendering->addValue('description', $news->config[0]->description);
 
 if(($welcome) && ($news->isLogged()))

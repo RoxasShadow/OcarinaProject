@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-04 16:02:45
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-06 08:45:40
          compiled from "/var/www/htdocs/ocarina2/rendering/templates/default/pagina.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:15990045084e11e4255892a3-04591863%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:15835257114e1420b4ca7361-36265741%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '7a235a5ee18631e826d09a6a45133301ecf03149' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering/templates/default/pagina.tpl',
-      1 => 1309631047,
+      1 => 1309938293,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '15990045084e11e4255892a3-04591863',
+  'nocache_hash' => '15835257114e1420b4ca7361-36265741',
   'function' => 
   array (
   ),
@@ -43,7 +43,10 @@ if ($_smarty_tpl->_count($_from) > 0){
  nella categoria <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /categoria.php?cat=<?php echo $_smarty_tpl->getVariable('pagina')->value[$_smarty_tpl->tpl_vars['key']->value]->categoria;?>
 "><?php echo $_smarty_tpl->getVariable('pagina')->value[$_smarty_tpl->tpl_vars['key']->value]->categoria;?>
-</a>.</div><br />
+</a>. <?php if ($_smarty_tpl->getVariable('pagina')->value[$_smarty_tpl->tpl_vars['key']->value]->oraultimamodifica==$_smarty_tpl->getVariable('pagina')->value[$_smarty_tpl->tpl_vars['key']->value]->ora){?>Ultima modifica <?php if ($_smarty_tpl->getVariable('pagina')->value[$_smarty_tpl->tpl_vars['key']->value]->dataultimamodifica==$_smarty_tpl->getVariable('pagina')->value[$_smarty_tpl->tpl_vars['key']->value]->data){?>oggi<?php }else{ ?> il giorno <?php echo $_smarty_tpl->getVariable('pagina')->value[$_smarty_tpl->tpl_vars['key']->value]->dataultimamodifica;?>
+<?php }?> alle ore <?php echo $_smarty_tpl->getVariable('pagina')->value[$_smarty_tpl->tpl_vars['key']->value]->ora;?>
+ <?php if ($_smarty_tpl->getVariable('pagina')->value[$_smarty_tpl->tpl_vars['key']->value]->autoreultimamodifica!==$_smarty_tpl->getVariable('pagina')->value[$_smarty_tpl->tpl_vars['key']->value]->autore){?>da parte di <?php echo $_smarty_tpl->getVariable('pagina')->value[$_smarty_tpl->tpl_vars['key']->value]->autoreultimamodifica;?>
+.<?php }?><?php }?></div><br />
 					<div class="news"><p><?php echo $_smarty_tpl->getVariable('pagina')->value[$_smarty_tpl->tpl_vars['key']->value]->contenuto;?>
 </p></div>
 				<?php }else{ ?>

@@ -18,8 +18,7 @@ $cerca = true;
 $rendering->addValue('utente', $comment->isLogged() ? $comment->username[0]->nickname : '');
 $rendering->skin = $comment->isLogged() ? $comment->username[0]->skin : $comment->config[0]->skin;
 $rendering->addValue('titolo', 'Cerca nel sito &raquo; '.$comment->config[0]->nomesito);
-$rendering->addValue('keywords', $comment->config[0]->keywords);
-$rendering->addValue('description', $comment->config[0]->description);
+$rendering->addValue('description', $comment->getLanguage('description', 9));
 
 if($cercaNews !== '') {
 	if(!$search = $comment->searchNews($cercaNews))

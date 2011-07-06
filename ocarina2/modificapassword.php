@@ -17,8 +17,7 @@ $submit = isset($_POST['submit']) ? true : false;
 $rendering->addValue('utente', $user->isLogged() ? $user->username[0]->nickname : '');
 $rendering->skin = $user->isLogged() ? $user->username[0]->skin : $user->config[0]->skin;
 $rendering->addValue('titolo', 'Modifica password &raquo; '.$user->config[0]->nomesito);
-$rendering->addValue('keywords', $user->config[0]->keywords);
-$rendering->addValue('description', $user->config[0]->description);
+$rendering->addValue('description', $user->getLanguage('description', 3));
 
 if($user->isLogged()) 
 	if(($oldPassword !== '') && ($password !== '') && ($confPassword !== ''))
