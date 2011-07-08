@@ -62,6 +62,6 @@ class Configuration extends MySQL {
 	
 	/* Modifica una configurazione. */
 	public function editConfig($campo, $valore) {
-		return parent::query("UPDATE configurazione SET $campo='$valore''") ? true : false;
+		return parent::query("UPDATE configurazione SET $campo='$valore'") ? true : false;
 	}
 }
