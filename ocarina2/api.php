@@ -23,7 +23,7 @@
 		pagina($minititoloPagina)
 		user()
 		user($nickname)
-		login($nickname, $password)
+		login($nickname, md5($password))
 		logout()
 */
 require_once('core/class.Comments.php');
@@ -215,7 +215,7 @@ elseif(($action == 'user') && ($nickname == '')) {
 	}
 }
 elseif(($action == 'login') && ($nickname !== '') && ($password !== '')) {
-	if($user->login($nickname, md5($password))) {
+	if($user->login($nickname, $password)) {
 		if($user->config[0]->log == 1)
 			$user->log($nickname, 'Logged in by API.');
 		echo '{"response":"4"}';
