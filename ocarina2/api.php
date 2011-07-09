@@ -13,6 +13,7 @@
 		5: Logged out
 		6: Undefinited error
 		7: Error request
+		8: Action not found
 	JSON request (GET):
 		news()
 		news($minititoloNews)
@@ -23,7 +24,7 @@
 		pagina($minititoloPagina)
 		user()
 		user($nickname)
-		login($nickname, md5($password))
+		login($nickname, $password)
 		logout()
 */
 require_once('core/class.Comments.php');
@@ -43,7 +44,7 @@ if(($action == 'news') && ($titolo !== '')) {
 		echo '{"response":"1"}';
 	else {
 		echo '{';
-			echo '"0": {';
+			echo '"response": {';
 				echo '"id":'.json_encode($comment[0]->id).',';
 				echo '"autore":'.json_encode($comment[0]->autore).',';
 				echo '"titolo":'.json_encode($comment[0]->titolo).',';
@@ -63,10 +64,9 @@ elseif(($action == 'news') && ($titolo == '')) {
 	if(!$comment = $comment->getNews())
 		echo '{"response":"1"}';
 	else {
-		$i = 0;
-		$json = '{';
+		$json = '{"response": [';
 		foreach($comment as $v) {
-			$json .= '"'.$i.'": {';
+			$json .= '{';
 				$json .= '"id":'.json_encode($v->id).',';
 				$json .= '"autore":'.json_encode($v->autore).',';
 				$json .= '"titolo":'.json_encode($v->titolo).',';
@@ -79,9 +79,8 @@ elseif(($action == 'news') && ($titolo == '')) {
 				$json .= '"oraultimamodifica":'.json_encode($v->oraultimamodifica).',';
 				$json .= '"autoreultimamodifica":'.json_encode($v->autoreultimamodifica);
 			$json .= '},';
-			++$i;
 		}
-		echo trim($json, ',').'}';
+	 	echo trim($json, ',').']}';
 	}
 }
 elseif(($action == 'comment') && ($id !== '')) {
@@ -89,7 +88,7 @@ elseif(($action == 'comment') && ($id !== '')) {
 		echo '{"response":"1"}';
 	else {
 		echo '{';
-			echo '"0": {';
+			echo '"response": {';
 				echo '"id":'.json_encode($comment[0]->id).',';
 				echo '"autore":'.json_encode($comment[0]->autore).',';
 				echo '"contenuto":'.json_encode($comment[0]->contenuto).',';
@@ -104,10 +103,9 @@ elseif(($action == 'comment') && ($titolo !== '')) {
 	if(!$comment = $comment->getComment($titolo))
 		echo '{"response":"1"}';
 	else {
-		$i = 0;
-		$json = '{';
+		$json = '{"response": [';
 		foreach($comment as $v) {
-			$json .= '"'.$i.'": {';
+			$json .= '{';
 				$json .= '"id":'.json_encode($v->id).',';
 				$json .= '"autore":'.json_encode($v->autore).',';
 				$json .= '"contenuto":'.json_encode($v->contenuto).',';
@@ -115,23 +113,22 @@ elseif(($action == 'comment') && ($titolo !== '')) {
 				$json .= '"data":'.json_encode($v->data).',';
 				$json .= '"ora":'.json_encode($v->ora);
 			$json .= '},';
-			++$i;
 		}
-		echo trim($json, ',').'}';
+	 	echo trim($json, ',').']}';
 	}
 }
 elseif(($action == 'newscomment') && ($titolo !== '')) {
 	if(!$comment = $comment->countCommentByNews($titolo))
 		echo '{"response":"1"}';
 	else
-		echo '{"0":"'.$comment.'"}';
+		echo '{"response":'.json_encode($comment).'}';
 }
 elseif(($action == 'pagina') && ($titolo !== '')) {
 	if(!$pagina = $pagina->getPage($titolo))
 		echo '{"response":"1"}';
 	else {
 		echo '{';
-			echo '"0": {';
+			echo '"response": {';
 				echo '"id":'.json_encode($pagina[0]->id).',';
 				echo '"autore":'.json_encode($pagina[0]->autore).',';
 				echo '"titolo":'.json_encode($pagina[0]->titolo).',';
@@ -151,10 +148,9 @@ elseif(($action == 'pagina') && ($titolo == '')) {
 	if(!$pagina = $pagina->getPage())
 		echo '{"response":"1"}';
 	else {
-		$i = 0;
-		$json = '{';
+		$json = '{"response": [';
 		foreach($pagina as $v) {
-			$json .= '"'.$i.'": {';
+			$json .= '{';
 				$json .= '"id":'.json_encode($v->id).',';
 				$json .= '"autore":'.json_encode($v->autore).',';
 				$json .= '"titolo":'.json_encode($v->titolo).',';
@@ -167,9 +163,8 @@ elseif(($action == 'pagina') && ($titolo == '')) {
 				$json .= '"oraultimamodifica":'.json_encode($v->oraultimamodifica).',';
 				$json .= '"autoreultimamodifica":'.json_encode($v->autoreultimamodifica);
 			$json .= '},';
-			++$i;
 		}
-		echo trim($json, ',').'}';
+	 	echo trim($json, ',').']}';
 	}
 }
 elseif(($action == 'user') && ($nickname !== '')) {
@@ -177,7 +172,7 @@ elseif(($action == 'user') && ($nickname !== '')) {
 		echo '{"response":"1"}';
 	else {
 		echo '{';
-			echo '"0": {';
+			echo '"response": {';
 				echo '"id":'.json_encode($user[0]->id).',';
 				echo '"nickname":'.json_encode($user[0]->nickname).',';
 				echo '"email":'.json_encode($user[0]->email).',';
@@ -195,10 +190,9 @@ elseif(($action == 'user') && ($nickname == '')) {
 	if(!$user = $user->getUser())
 		echo '{"response":"1"}';
 	else {
-		$i = 0;
-		$json = '{';
+		$json = '{"response": [';
 		foreach($user as $v) {
-			$json .= '"'.$i.'": {';
+			$json .= '{';
 				$json .= '"id":'.json_encode($v->id).',';
 				$json .= '"nickname":'.json_encode($v->nickname).',';
 				$json .= '"email":'.json_encode($v->email).',';
@@ -209,9 +203,8 @@ elseif(($action == 'user') && ($nickname == '')) {
 				$json .= '"avatar":'.json_encode($v->avatar).',';
 				$json .= '"grado":'.json_encode($v->grado);
 			$json .= '},';
-			++$i;
 		}
-		echo trim($json, ',').'}';
+	 	echo trim($json, ',').']}';
 	}
 }
 elseif(($action == 'login') && ($nickname !== '') && ($password !== '')) {
@@ -229,7 +222,11 @@ elseif(($action == 'login') && ($nickname !== '') && ($password !== '')) {
 elseif($action == 'logout') {
 	if($user->isLogged())
 		$user->logout();
-	echo '{"response":"5"}';
+	if($user->isLogged())
+		echo '{"response":"6"}';
+	else
+		echo '{"response":"5"}';
+		
 }
 else
-	echo '{"response":"7"}';
+	echo '{"response":"8"}';
