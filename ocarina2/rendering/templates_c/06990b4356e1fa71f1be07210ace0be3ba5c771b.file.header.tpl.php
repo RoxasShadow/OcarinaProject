@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-08 22:30:32
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-09 18:58:27
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/admin/include/header.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:8074208964e178508da01e7-35407851%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:12761263634e18a4d3067fb0-02706116%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '06990b4356e1fa71f1be07210ace0be3ba5c771b' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/admin/include/header.tpl',
-      1 => 1309940115,
+      1 => 1310237904,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '8074208964e178508da01e7-35407851',
+  'nocache_hash' => '12761263634e18a4d3067fb0-02706116',
   'function' => 
   array (
   ),
@@ -40,6 +40,9 @@ $_smarty_tpl->decodeProperties(array (
 /etc/loadJavascript.js.php"></script>
 </head>
 <body>
+<?php if (((isset($_smarty_tpl->getVariable('grado',null,true,false)->value))&&($_smarty_tpl->getVariable('grado')->value==1)&&($_smarty_tpl->getVariable('lastversion')->value>$_smarty_tpl->getVariable('versione')->value))){?>
+	<div align="center">Stai usando una versione vecchia di Ocarina2: <a href="http://www.giovannicapuano.net/ocarina2/index.php">aggiorna subito!</a></div>
+<?php }?>
 <div id="wrapper">
 <h1><a href="#"><span><?php echo $_smarty_tpl->getVariable('titolo')->value;?>
 </span></a></h1>
@@ -47,7 +50,7 @@ $_smarty_tpl->decodeProperties(array (
 <div id="container">
 <div id="sidebar">
 <ul class="sideNav">
-<?php if ($_smarty_tpl->getVariable('grado')->value==''){?>
+<?php if (((!isset($_smarty_tpl->getVariable('grado',null,true,false)->value))||($_smarty_tpl->getVariable('grado')->value==''))){?>
 <li><a class="active"><?php echo $_smarty_tpl->getVariable('nomesito')->value;?>
 </a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>

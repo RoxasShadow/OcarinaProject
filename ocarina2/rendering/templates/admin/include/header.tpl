@@ -13,13 +13,16 @@
 <script type="text/javascript" src="{$url_index}/etc/loadJavascript.js.php"></script>
 </head>
 <body>
+{if ((isset($grado)) && ($grado == 1) && ($lastversion > $versione))}
+	<div align="center">Stai usando una versione vecchia di Ocarina2: <a href="http://www.giovannicapuano.net/ocarina2/index.php">aggiorna subito!</a></div>
+{/if}
 <div id="wrapper">
 <h1><a href="#"><span>{$titolo}</span></a></h1>
 <div id="containerHolder">
 <div id="container">
 <div id="sidebar">
 <ul class="sideNav">
-{if $grado == ''}
+{if ((!isset($grado)) || ($grado == ''))}
 <li><a class="active">{$nomesito}</a></li>
 <li><a href="{$url_index}/login.php">Login</a></li>
 {elseif $grado > 5}

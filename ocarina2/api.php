@@ -4,28 +4,32 @@
 	(C) Giovanni Capuano 2011
 */
 /*
-	Validator: <http://jsonlint.com/>
 	JSON response:
 		1: Content not found
 		2: Action denied
 		3: Login failed
 		4: Logged in
 		5: Logged out
-		6: Undefinited error
+		6: Undefined error
 		7: Error request
 		8: Action not found
+		9: Yes
+		10: Not
 	JSON request (GET):
 		news()
 		news($minititoloNews)
+		comment()
 		comment($id)
 		comment($minititoloNews)
-		newscomment($minititoloNews)
+		mycomment($nickname)
 		pagina()
 		pagina($minititoloPagina)
 		user()
 		user($nickname)
 		login($nickname, $password)
 		logout()
+		islogged()
+		nickname()
 */
 require_once('core/class.Comments.php');
 require_once('core/class.Page.php');
@@ -83,6 +87,24 @@ elseif(($action == 'news') && ($titolo == '')) {
 	 	echo trim($json, ',').']}';
 	}
 }
+elseif(($action == 'comment') && ($titolo == '') && ($id == '')) {
+	if(!$comment = $comment->getComment())
+		echo '{"response":"1"}';
+	else {
+		$json = '{"response": [';
+		foreach($comment as $v) {
+			$json .= '{';
+				$json .= '"id":'.json_encode($v->id).',';
+				$json .= '"autore":'.json_encode($v->autore).',';
+				$json .= '"contenuto":'.json_encode($v->contenuto).',';
+				$json .= '"news":'.json_encode($v->news).',';
+				$json .= '"data":'.json_encode($v->data).',';
+				$json .= '"ora":'.json_encode($v->ora);
+			$json .= '},';
+		}
+	 	echo trim($json, ',').']}';
+	}
+}
 elseif(($action == 'comment') && ($id !== '')) {
 	if(!$comment = $comment->searchCommentById($id))
 		echo '{"response":"1"}';
@@ -117,11 +139,26 @@ elseif(($action == 'comment') && ($titolo !== '')) {
 	 	echo trim($json, ',').']}';
 	}
 }
-elseif(($action == 'newscomment') && ($titolo !== '')) {
-	if(!$comment = $comment->countCommentByNews($titolo))
+elseif(($action == 'mycomment') && ($nickname !== '')) {
+	if(!$comment = $comment->searchCommentByUser($nickname))
 		echo '{"response":"1"}';
-	else
-		echo '{"response":'.json_encode($comment).'}';
+	else {
+		$json = '{"response": [';
+		foreach($comment as $v) {
+			$json .= '{';
+				$json .= '"id":'.json_encode($v->id).',';
+				$json .= '"autore":'.json_encode($v->autore).',';
+				$json .= '"contenuto":'.json_encode($v->contenuto).',';
+				$json .= '"news":'.json_encode($v->news).',';
+				$json .= '"data":'.json_encode($v->data).',';
+				$json .= '"ora":'.json_encode($v->ora);
+			$json .= '},';
+		}
+	 	echo trim($json, ',').']}';
+	}
+}
+elseif(($action == 'countcomment') && ($titolo !== '')) {
+	echo '{"response":'.json_encode($comment->countCommentByNews($titolo)).'}';
 }
 elseif(($action == 'pagina') && ($titolo !== '')) {
 	if(!$pagina = $pagina->getPage($titolo))
@@ -180,8 +217,7 @@ elseif(($action == 'user') && ($nickname !== '')) {
 				echo '"data":'.json_encode($user[0]->data).',';
 				echo '"ora":'.json_encode($user[0]->ora).',';
 				echo '"bio":'.json_encode($user[0]->bio).',';
-				echo '"avatar":'.json_encode($user[0]->avatar).',';
-				echo '"grado":'.json_encode($user[0]->grado);
+				echo '"avatar":'.json_encode($user[0]->avatar);
 			echo '}';
 		echo '}';
 	}
@@ -200,8 +236,7 @@ elseif(($action == 'user') && ($nickname == '')) {
 				$json .= '"data":'.json_encode($v->data).',';
 				$json .= '"ora":'.json_encode($v->ora).',';
 				$json .= '"bio":'.json_encode($v->bio).',';
-				$json .= '"avatar":'.json_encode($v->avatar).',';
-				$json .= '"grado":'.json_encode($v->grado);
+				$json .= '"avatar":'.json_encode($v->avatar);
 			$json .= '},';
 		}
 	 	echo trim($json, ',').']}';
@@ -227,6 +262,18 @@ elseif($action == 'logout') {
 	else
 		echo '{"response":"5"}';
 		
+}
+elseif($action == 'islogged') {
+	if($user->isLogged())
+		echo '{"response":"9"}';
+	else
+		echo '{"response":"10"}';	
+}
+elseif($action == 'nickname') {
+	if($user->isLogged())
+		echo '{"response":'.json_encode($user->username[0]->nickname).'}';
+	else
+		echo '{"response":"2"}';	
 }
 else
 	echo '{"response":"8"}';
