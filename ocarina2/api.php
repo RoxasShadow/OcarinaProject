@@ -15,12 +15,17 @@
 		8: Action not found
 		9: Yes
 		10: Not
+		11: Comments blocked
+		12: Comment not sended
+		13: Comment sended
+		14: Comment sended and waiting for approvation
 	JSON request (GET):
 		news()
 		news($minititoloNews)
 		comment()
 		comment($id)
 		comment($minititoloNews)
+		createcomment($titolo, $contenuto, $nickname)
 		mycomment($nickname)
 		pagina()
 		pagina($minititoloPagina)
@@ -41,7 +46,20 @@ $action = isset($_GET['action']) ? $comment->purge($_GET['action']) : '';
 $titolo = isset($_GET['titolo']) ? $comment->purge($_GET['titolo']) : '';
 $nickname = isset($_GET['nickname']) ? $comment->purge($_GET['nickname']) : '';
 $password = isset($_GET['password']) ? $comment->purge($_GET['password']) : '';
+$contenuto = isset($_GET['contenuto']) ? $comment->purge($_GET['contenuto']) : '';
 $id = ((isset($_GET['id'])) && is_numeric($_GET['id'])) ? (int)$_GET['id'] : '';
+$actionPermitted = array(
+	'news',
+	'comment',
+	'createcomment',
+	'mycomment',
+	'pagina',
+	'user',
+	'login',
+	'logout',
+	'islogged',
+	'nickname'
+);
 
 if(($action == 'news') && ($titolo !== '')) {
 	if(!$comment = $comment->getNews($titolo))
@@ -138,6 +156,25 @@ elseif(($action == 'comment') && ($titolo !== '')) {
 		}
 	 	echo trim($json, ',').']}';
 	}
+}
+elseif(($action == 'createcomment') && ($titolo !== '') && ($contenuto !== '') && ($nickname !== '')) {
+	if($user->isLogged()) {
+		$array = ($comment->config[0]->approvacommenti == 0) ? array($nickname, $contenuto, $titolo, date('d-m-y'), date('G:m:s'), 1) : array($nickname, $contenuto, $titolo, date('d-m-y'), date('G:m:s'), 0);
+		if($comment->config[0]->commenti == 0)
+			echo '{"response":"11"}';
+		elseif($comment->createComment($array)) {
+			if($comment->config[0]->log == 1)
+				$comment->log($nickname, 'Comment sended.');
+			echo ($comment->config[0]->approvacommenti == 0) ? '{"response":"13"}' : '{"response":"14"}';
+		}
+		else {
+			if($comment->config[0]->log == 1)
+				$comment->log($nickname, 'Comment was not sended.');
+			echo '{"response":"12"}';
+		}
+	}
+	else
+		echo '{"response":"2"}';
 }
 elseif(($action == 'mycomment') && ($nickname !== '')) {
 	if(!$comment = $comment->searchCommentByUser($nickname))
@@ -275,5 +312,13 @@ elseif($action == 'nickname') {
 	else
 		echo '{"response":"2"}';	
 }
-else
-	echo '{"response":"8"}';
+else {
+	$found = 0;
+	for($i=0, $count=count($actionPermitted); $i<$count; ++$i)
+		if($action == $actionPermitted[$i])
+			$found++;
+	if($found == 0)
+		echo '{"response":"8"}';
+	else
+		echo '{"response":"7"}';
+}

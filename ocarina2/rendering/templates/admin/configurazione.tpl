@@ -18,7 +18,7 @@
 		<input type="text" name="validazioneaccount" maxlength="1" {if (isset($validazioneaccount_default))}value="{$validazioneaccount_default}"{/if} /><br /><br />
 		Abilita commenti (0 = No, 1 = Si)<br />
 		<input type="text" name="commenti" maxlength="1" {if (isset($commenti_default))}value="{$commenti_default}"{/if} /><br /><br />
-		Approva commenti automaticamente (0 = No, 1 = Si)<br />
+		Approva commenti automaticamente (0 = Si, 1 = No)<br />
 		<input type="text" name="approvacommenti" maxlength="1" {if (isset($approvacommenti_default))}value="{$approvacommenti_default}"{/if} /><br /><br />
 		Registra log automaticamente (0 = No, 1 = Si)<br />
 		<input type="text" name="log" maxlength="1" {if (isset($log_default))}value="{$log_default}"{/if} /><br /><br />

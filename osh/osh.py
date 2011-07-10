@@ -22,7 +22,11 @@ class osh:
 			7: 'Error request.',
 			8: 'Action not found.',
 			9: 'Yes.',
-			10: 'Not.'
+			10: 'Not.',
+			11: 'Comments blocked.',
+			12: 'Comment not sended.',
+			13: 'Comment sended.',
+			14: 'Comment sended and waiting for approvation.'
 		}
 		self.s = system()
 		if self.s == 'Darwin' or self.s == 'Linux':
@@ -42,6 +46,7 @@ class osh:
 		print 'clear -> clear the terminal'
 		print 'news -> read the news'
 		print 'comment -> read the comments'
+		print 'createcomment -> create a comment'
 		print 'mycomment -> read my comments'
 		print 'page -> read the pages'
 		print 'user -> read the user profiles'
@@ -73,11 +78,11 @@ class osh:
 		s = s.replace(amp, "&")
 		return s
 
-	def getContent(self, action, param1 = '', arg1 = '', param2 = '', arg2 = ''):
+	def getContent(self, action, param1 = '', arg1 = '', param2 = '', arg2 = '', param3 = '', arg3 = ''):
 		cj = cookielib.CookieJar()
 		opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
 		opener.addheaders.append(('Cookie', self.cookieName+'='+self.cookieValue))
-		r = opener.open(self.url+'?action='+action+'&'+param1+'='+arg1+'&'+param2+'='+arg2)
+		r = opener.open(self.url+'?action='+action+'&'+param1+'='+arg1+'&'+param2+'='+arg2+'&'+param3+'='+arg3)
 		for cookie in cj:
 			self.cookieName = cookie.name
 			self.cookieValue = cookie.value
@@ -178,6 +183,12 @@ class osh:
 				print self.bold+'Registrated the '+self.normal+self.htmlentities(json['response']['data'])
 				print self.bold+'Bio: '+self.normal+self.htmlentities(json['response']['bio'])
 
+	def parseCreateComment(self, json):
+		if((int(json['response']) != 13) and (int(json['response']) != 14)):
+			print self.log+'Error: '+self.normal+self.error[int(json['response'])]
+		else:
+			print self.log+self.error[int(json['response'])]
+
 	def parseLogout(self, json):
 		if(int(json['response']) != 5):
 			print self.log+'Error: '+self.normal+self.error[int(json['response'])]
@@ -241,6 +252,11 @@ class osh:
 					self.parseComment(self.getContent('comment', 'id', comment))
 				else:
 					self.parseComment(self.getContent('comment', 'titolo', comment))
+			elif action == 'createcomment':
+				if not self.parseIsLogged(self.getContent('islogged')):
+					print self.bold+'Access denied:'+self.normal+' you must be logged.'
+				else:
+				 	self.parseCreateComment(self.getContent('createcomment', 'titolo', raw_input("Write the minititle of the news to commenting: "), 'contenuto', raw_input("Write your comment: "), 'nickname', self.parseGetNickname(self.getContent('nickname'))))
 			elif action == 'mycomment':
 				if self.parseIsLogged(self.getContent('islogged')):
 					self.parseComment(self.getContent('mycomment', 'nickname', self.parseGetNickname(self.getContent('nickname'))), True)	

@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-08 22:30:28
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-10 13:13:28
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/admin/configurazione.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:7697153654e1785041522f7-55879263%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:17163564064e19a578384b21-48842127%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '9bb3c42039402aa250ca06b33cb48698de28eda6' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/admin/configurazione.tpl',
-      1 => 1310163740,
+      1 => 1310303309,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '7697153654e1785041522f7-55879263',
+  'nocache_hash' => '17163564064e19a578384b21-48842127',
   'function' => 
   array (
   ),
@@ -43,7 +43,7 @@ $_smarty_tpl->decodeProperties(array (
 		Abilita commenti (0 = No, 1 = Si)<br />
 		<input type="text" name="commenti" maxlength="1" <?php if ((isset($_smarty_tpl->getVariable('commenti_default',null,true,false)->value))){?>value="<?php echo $_smarty_tpl->getVariable('commenti_default')->value;?>
 "<?php }?> /><br /><br />
-		Approva commenti automaticamente (0 = No, 1 = Si)<br />
+		Approva commenti automaticamente (0 = Si, 1 = No)<br />
 		<input type="text" name="approvacommenti" maxlength="1" <?php if ((isset($_smarty_tpl->getVariable('approvacommenti_default',null,true,false)->value))){?>value="<?php echo $_smarty_tpl->getVariable('approvacommenti_default')->value;?>
 "<?php }?> /><br /><br />
 		Registra log automaticamente (0 = No, 1 = Si)<br />
