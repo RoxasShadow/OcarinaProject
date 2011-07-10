@@ -45,10 +45,13 @@ class osh:
 		print 'help -> view this help'
 		print 'clear -> clear the terminal'
 		print 'news -> read the news'
+		print 'searchnews -> search the news'
 		print 'comment -> read the comments'
+		print 'searchcomment -> search the comments'
 		print 'createcomment -> create a comment'
 		print 'mycomment -> read my comments'
 		print 'page -> read the pages'
+		print 'searchpage -> search the pages'
 		print 'user -> read the user profiles'
 		print 'login -> login'
 		print 'logout -> logout'
@@ -82,7 +85,8 @@ class osh:
 		cj = cookielib.CookieJar()
 		opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
 		opener.addheaders.append(('Cookie', self.cookieName+'='+self.cookieValue))
-		r = opener.open(self.url+'?action='+action+'&'+param1+'='+arg1+'&'+param2+'='+arg2+'&'+param3+'='+arg3)
+		params = urllib.urlencode({ 'action' : action, param1 : arg1, param2 : arg2, param3 : arg3})
+		r = opener.open(self.url+'?%s' % params)
 		for cookie in cj:
 			self.cookieName = cookie.name
 			self.cookieValue = cookie.value
@@ -246,12 +250,16 @@ class osh:
 				print 'Bye bye'
 			elif action == 'news':
 				self.parseNews(self.getContent('news', 'titolo', raw_input("Write the minititle of the news wich you want to see, otherwise type enter to see all the news: ")))
+			elif action == 'searchnews':
+				self.parseNews(self.getContent('searchnews', 'contenuto', raw_input("Write the keyword for find your news: ")))
 			elif action == 'comment':
 				comment = raw_input("Write the id of the comment or the minititle of the news wich contains it, otherwise type enter to see all the comments: ")
 				if str(comment).isdigit():
 					self.parseComment(self.getContent('comment', 'id', comment))
 				else:
 					self.parseComment(self.getContent('comment', 'titolo', comment))
+			elif action == 'searchcomment':
+				self.parseComment(self.getContent('searchcomment', 'contenuto', raw_input("Write the keyword for find your comment: ")))
 			elif action == 'createcomment':
 				if not self.parseIsLogged(self.getContent('islogged')):
 					print self.bold+'Access denied:'+self.normal+' you must be logged.'
@@ -264,6 +272,8 @@ class osh:
 					print 'You are not logged, do it and try again.'
 			elif action == 'page':
 				self.parseNews(self.getContent('pagina', 'titolo', raw_input("Write the minititle of the page wich you want to see, otherwise type enter to see all the pages: ")), True)
+			elif action == 'searchpage':
+				self.parseNews(self.getContent('searchpage', 'contenuto', raw_input("Write the keyword for find your pages: ")), True)
 			elif action == 'user':
 				self.parseUser(self.getContent('user', 'nickname', raw_input("Write the nickname of the user wich you want to see the profile, otherwise type enter to see all the user profiles: ")))
 			elif action == 'login':

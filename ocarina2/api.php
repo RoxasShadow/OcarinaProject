@@ -22,13 +22,16 @@
 	JSON request (GET):
 		news()
 		news($minititoloNews)
+		searchnews($contenuto)
 		comment()
 		comment($id)
 		comment($minititoloNews)
+		searchcomment($contenuto)
 		createcomment($titolo, $contenuto, $nickname)
 		mycomment($nickname)
 		pagina()
 		pagina($minititoloPagina)
+		searchpage($contenuto)
 		user()
 		user($nickname)
 		login($nickname, $password)
@@ -50,10 +53,13 @@ $contenuto = isset($_GET['contenuto']) ? $comment->purge($_GET['contenuto']) : '
 $id = ((isset($_GET['id'])) && is_numeric($_GET['id'])) ? (int)$_GET['id'] : '';
 $actionPermitted = array(
 	'news',
+	'searchnews',
 	'comment',
+	'searchcomment',
 	'createcomment',
 	'mycomment',
 	'pagina',
+	'searchpage',
 	'user',
 	'login',
 	'logout',
@@ -84,6 +90,29 @@ if(($action == 'news') && ($titolo !== '')) {
 }
 elseif(($action == 'news') && ($titolo == '')) {
 	if(!$comment = $comment->getNews())
+		echo '{"response":"1"}';
+	else {
+		$json = '{"response": [';
+		foreach($comment as $v) {
+			$json .= '{';
+				$json .= '"id":'.json_encode($v->id).',';
+				$json .= '"autore":'.json_encode($v->autore).',';
+				$json .= '"titolo":'.json_encode($v->titolo).',';
+				$json .= '"minititolo":'.json_encode($v->minititolo).',';
+				$json .= '"contenuto":'.json_encode($v->contenuto).',';
+				$json .= '"categoria":'.json_encode($v->categoria).',';
+				$json .= '"data":'.json_encode($v->data).',';
+				$json .= '"ora":'.json_encode($v->ora).',';
+				$json .= '"dataultimamodifica":'.json_encode($v->dataultimamodifica).',';
+				$json .= '"oraultimamodifica":'.json_encode($v->oraultimamodifica).',';
+				$json .= '"autoreultimamodifica":'.json_encode($v->autoreultimamodifica);
+			$json .= '},';
+		}
+	 	echo trim($json, ',').']}';
+	}
+}
+elseif(($action == 'searchnews') && ($contenuto !== '')) {
+	if(!$comment = $comment->searchNews($contenuto))
 		echo '{"response":"1"}';
 	else {
 		$json = '{"response": [';
@@ -141,6 +170,24 @@ elseif(($action == 'comment') && ($id !== '')) {
 }
 elseif(($action == 'comment') && ($titolo !== '')) {
 	if(!$comment = $comment->getComment($titolo))
+		echo '{"response":"1"}';
+	else {
+		$json = '{"response": [';
+		foreach($comment as $v) {
+			$json .= '{';
+				$json .= '"id":'.json_encode($v->id).',';
+				$json .= '"autore":'.json_encode($v->autore).',';
+				$json .= '"contenuto":'.json_encode($v->contenuto).',';
+				$json .= '"news":'.json_encode($v->news).',';
+				$json .= '"data":'.json_encode($v->data).',';
+				$json .= '"ora":'.json_encode($v->ora);
+			$json .= '},';
+		}
+	 	echo trim($json, ',').']}';
+	}
+}
+elseif(($action == 'searchcomment') && ($contenuto !== '')) {
+	if(!$comment = $comment->searchComment($contenuto))
 		echo '{"response":"1"}';
 	else {
 		$json = '{"response": [';
@@ -241,6 +288,29 @@ elseif(($action == 'pagina') && ($titolo == '')) {
 	 	echo trim($json, ',').']}';
 	}
 }
+elseif(($action == 'searchpage') && ($contenuto !== '')) {
+	if(!$pagina = $pagina->searchPage($contenuto))
+		echo '{"response":"1"}';
+	else {
+		$json = '{"response": [';
+		foreach($pagina as $v) {
+			$json .= '{';
+				$json .= '"id":'.json_encode($v->id).',';
+				$json .= '"autore":'.json_encode($v->autore).',';
+				$json .= '"titolo":'.json_encode($v->titolo).',';
+				$json .= '"minititolo":'.json_encode($v->minititolo).',';
+				$json .= '"contenuto":'.json_encode($v->contenuto).',';
+				$json .= '"categoria":'.json_encode($v->categoria).',';
+				$json .= '"data":'.json_encode($v->data).',';
+				$json .= '"ora":'.json_encode($v->ora).',';
+				$json .= '"dataultimamodifica":'.json_encode($v->dataultimamodifica).',';
+				$json .= '"oraultimamodifica":'.json_encode($v->oraultimamodifica).',';
+				$json .= '"autoreultimamodifica":'.json_encode($v->autoreultimamodifica);
+			$json .= '},';
+		}
+	 	echo trim($json, ',').']}';
+	}
+}
 elseif(($action == 'user') && ($nickname !== '')) {
 	if(!$user = $user->getUser($nickname))
 		echo '{"response":"1"}';
@@ -316,7 +386,7 @@ else {
 	$found = 0;
 	for($i=0, $count=count($actionPermitted); $i<$count; ++$i)
 		if($action == $actionPermitted[$i])
-			$found++;
+			++$found;
 	if($found == 0)
 		echo '{"response":"8"}';
 	else
