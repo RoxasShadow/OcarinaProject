@@ -85,26 +85,32 @@ class User extends Configuration {
 	public function isLogged() {
 		$cookie = $this->getCookie();
 		if(!$cookie) {
-			$this->newVisitator();
+			$this->newVisitator(false);
 			return false;
 		}
 		if(!$query = parent::query("SELECT COUNT(*) FROM utenti WHERE secret='$cookie'")) {
-			$this->newVisitator();
+			$this->newVisitator(false);
 			return false;
 		}
-		$logged = mysql_result($query, 0, 0) > 0 ? true : false;
-		if(($logged) && (is_array($this->username)))
-			$this->editUser('lastaction', time(), $this->username[0]->nickname);
-		return $logged;
+		$result = mysql_result($query, 0, 0);
+		if($result > 0) {
+			$this->newVisitator(true);
+			return true;
+		}
+		else {
+			$this->newVisitator(false);
+			return false;
+		}
 	}
 	
 	/* Ritorna la lista di utenti online. */
 	public function getUserOnline() {
 		$data = time();
-		$user = $this->getUser();
+		if(!$user = $this->getVisitator())
+			return false;
 		$userOnline = array();
 		foreach($user as $v)
-			if(($data - $v->lastaction) <= 60 * $this->config[0]->limiteonline)
+			if((($data - $v->lastaction) <= 60 * $this->config[0]->limiteonline) && ($v->nickname !== ''))
 				$userOnline[] = $v->nickname;
 		return $userOnline;
 	}
@@ -116,7 +122,7 @@ class User extends Configuration {
 			return 0;
 		$visitatorOnline = 0;
 		foreach($visitator as $v)
-			if(($data - $v->lastaction) <= 60 * $this->config[0]->limiteonline)
+			if((($data - $v->lastaction) <= 60 * $this->config[0]->limiteonline) && ((!isset($v->nickname)) || ($v->nickname == ''))) 
 				++$visitatorOnline;
 		return $visitatorOnline;
 	}
@@ -168,41 +174,40 @@ class User extends Configuration {
 	}
 	
 	/* Crea un nuovo visitatore. */
-	public function newVisitator() {
+	public function newVisitator($logged) {
+		$this->archiveVisitator();
 		$lastaction = time();
-		$data = date('d-m-y');
-		$ora = date('G:m:i');	
+		$giorno = date('d');
 		$ip = parent::purge($_SERVER['REMOTE_ADDR']);
+		if($logged) {
+			$username = $this->searchUserByField('secret', $this->getCookie());
+			$nickname = $username[0]->nickname;
+		}
+		else
+			$nickname = '';
 		if(!$visitator = $this->getVisitator()) // Mai nessun visitatore
-			return parent::query("INSERT INTO visitatori(ip, lastaction, data, ora) VALUES('$ip', '$lastaction', '$data', '$ora')") ? true : false;
+			return parent::query("INSERT INTO visitatori(ip, lastaction, giorno, nickname) VALUES('$ip', '$lastaction', '$giorno', '$nickname')") ? true : false;
 		else {
 			$found = 0;
 			foreach($visitator as $v)
 				if($v->ip == $ip)
 					++$found;
 			if($found == 0)
-				return parent::query("INSERT INTO visitatori(ip, lastaction, data, ora) VALUES('$ip', '$lastaction', '$data', '$ora')") ? true : false;
+				return parent::query("INSERT INTO visitatori(ip, lastaction, giorno, nickname) VALUES('$ip', '$lastaction', '$giorno', '$nickname')") ? true : false;
 			elseif((($lastaction - $v->lastaction) > 60 * $this->config[0]->limiteonline) && ($found > 0))
-				return parent::query("UPDATE visitatori SET lastaction='$lastaction', data='$data', ora='$ora' WHERE ip='$ip'") ? true : false;
+				return parent::query("UPDATE visitatori SET lastaction='$lastaction', giorno='$giorno', nickname='$nickname' WHERE ip='$ip'") ? true : false;
 		}
 		return false;
 	}
 	
 	/* Archivia i visitatori. */
 	public function archiveVisitator() {
-		if($visitator = $this->getVisitator()) {
-			$totale = 0;
+		if($visitator = $this->getVisitator())
 			foreach($visitator as $v)
-				++$totale;
-			if((isset($this->config[0]->totalevisitatori)) && (parent::editConfig('totalevisitatori', $this->config[0]->totalevisitatori + $totale)) && ($this->deleteVisitator()))
-				return true;
-		}
-		return false;
-	}
-	
-	/* Cancella i visitatori. */
-	public function deleteVisitator() {
-		return parent::query('DELETE FROM visitatori') ? true : false;
+				if(date('d') > $v->giorno)
+					if(parent::editConfig('totalevisitatori', $this->config[0]->totalevisitatori + 1))
+						parent::query("DELETE FROM visitatori WHERE id='{$v->id}'");
+					
 	}
 	
 	/* Elimina un utente. */

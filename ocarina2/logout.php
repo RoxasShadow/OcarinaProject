@@ -7,7 +7,12 @@ require_once('core/class.User.php');
 require_once('core/class.Rendering.php');
 
 $user = new User();
-$redirect = ((isset($_GET['redirect'])) && ($_GET['redirect'] !== '')) ? $user->config[0]->url_index.'/'.$user->purge($_GET['redirect']) : $user->purge($_SERVER['HTTP_REFERER']);
+if((isset($_GET['redirect'])) && ($_GET['redirect'] !== ''))
+	$redirect = $user->config[0]->url_index.'/'.$user->purge($_GET['redirect']);
+elseif((isset($_SERVER['HTTP_REFERER'])) && ($_SERVER['HTTP_REFERER'] !== ''))
+	$redirect = $user->purge($_SERVER['HTTP_REFERER']);
+else
+	$redirect = $user->config[0]->url_index.'/Aindex.php';
 
 if($user->isLogged()) {
 	$user->logout();

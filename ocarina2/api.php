@@ -37,6 +37,7 @@
 		user()
 		user($nickname)
 		countuser()
+		countaccess()
 		login($nickname, $password)
 		logout()
 		islogged()
@@ -68,6 +69,8 @@ $actionPermitted = array(
 	'countpage',
 	'searchpage',
 	'user',
+	'countuser',
+	'countaccess',
 	'login',
 	'logout',
 	'islogged',
@@ -366,6 +369,9 @@ elseif(($action == 'user') && ($nickname == '')) {
 }
 elseif($action == 'countuser') {
 	echo '{"response":'.json_encode($user->countUser()).'}';
+}
+elseif($action == 'countaccess') {
+	echo '{"response":'.json_encode($user->config[0]->totalevisitatori).'}';
 }
 elseif(($action == 'login') && ($nickname !== '') && ($password !== '')) {
 	if($user->login($nickname, $password)) {

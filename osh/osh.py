@@ -56,6 +56,7 @@ class osh:
 		print 'searchpage -> search the pages'
 		print 'user -> read the user profiles'
 		print 'countuser -> count the users'
+		print 'countaccess -> count the total access in the site'
 		print 'useronline -> read the online users'
 		print 'visitatoronline -> read the number of online visitators'
 		print 'login -> login'
@@ -256,6 +257,9 @@ class osh:
 		else:
 			print 'There are '+self.bold+json['response']+self.normal+' users registrated.'
 
+	def parseCountAccess(self, json):
+		print 'Total access in the site: '+self.bold+json['response']+self.normal+'.'
+
 	def parseGetNickname(self, json):
 		if(json['response'] != 2):
 			return json['response']
@@ -330,6 +334,8 @@ class osh:
 				self.parseUser(self.getContent('user', 'nickname', raw_input("Write the nickname of the user wich you want to see the profile, otherwise type enter to see all the user profiles: ")))
 			elif action == 'countuser':
 				self.parseCountUser(self.getContent('countuser'))
+			elif action == 'countaccess':
+				self.parseCountAccess(self.getContent('countaccess'))
 			elif action == 'useronline':
 				self.parseUserOnline(self.getContent('useronline'))
 			elif action == 'visitatoronline':
