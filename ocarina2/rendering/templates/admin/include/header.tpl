@@ -84,6 +84,7 @@
 <li><a class="active">{$nomesito}</a></li>
 <li><a href="{$url_index}/logout.php">Logout</a></li>
 <li><a href="{$url_admin}/log.php">Logs</a></li>
+<li><a href="{$url_admin}/configurazione.php">Configurazione</a></li>
 <li><a class="active">SEO</a></li>
 <li><a href="{$url_admin}/robots.php">Robots</a></li>
 <li><a class="active">Utenti</a></li>

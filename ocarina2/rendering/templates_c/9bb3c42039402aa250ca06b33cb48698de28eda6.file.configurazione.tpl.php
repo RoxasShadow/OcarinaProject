@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-10 13:13:28
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-11 19:34:50
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/admin/configurazione.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:17163564064e19a578384b21-48842127%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:941592754e1b505a2b2068-66236500%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '9bb3c42039402aa250ca06b33cb48698de28eda6' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/admin/configurazione.tpl',
-      1 => 1310303309,
+      1 => 1310412647,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '17163564064e19a578384b21-48842127',
+  'nocache_hash' => '941592754e1b505a2b2068-66236500',
   'function' => 
   array (
   ),
@@ -80,6 +80,9 @@ if ($_smarty_tpl->_count($_from) > 0){
 "<?php }?> /><br /><br />
 		News da mostrare per pagina<br />
 		<input type="text" name="impaginazionenews" maxlength="10" <?php if ((isset($_smarty_tpl->getVariable('impaginazionenews_default',null,true,false)->value))){?>value="<?php echo $_smarty_tpl->getVariable('impaginazionenews_default')->value;?>
+"<?php }?> /><br /><br />
+		Minuti per i quali un utente è considerato online finchè non compie un'azione<br />
+		<input type="text" name="limiteonline" maxlength="10" <?php if ((isset($_smarty_tpl->getVariable('limiteonline_default',null,true,false)->value))){?>value="<?php echo $_smarty_tpl->getVariable('limiteonline_default')->value;?>
 "<?php }?> /><br /><br />
 		URL (ex.: http://www.tuosito.com)<br />
 		<input type="text" name="url" maxlength="100" <?php if ((isset($_smarty_tpl->getVariable('url_default',null,true,false)->value))){?>value="<?php echo $_smarty_tpl->getVariable('url_default')->value;?>

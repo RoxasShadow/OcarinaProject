@@ -21,6 +21,7 @@ $skin = ((isset($_POST['skin'])) && ($_POST['skin'] !== '')) ? $user->purge($_PO
 $description = ((isset($_POST['description'])) && ($_POST['description'] !== '')) ? $user->purge($_POST['description']) : '';
 $limitenews = ((isset($_POST['limitenews'])) && (is_numeric($_POST['limitenews'])) && ($_POST['limitenews'] !== '')) ? $user->purge((int)$_POST['limitenews']) : '';
 $impaginazionenews = ((isset($_POST['impaginazionenews'])) && (is_numeric($_POST['impaginazionenews'])) && ($_POST['impaginazionenews'] !== '')) ? $user->purge((int)$_POST['impaginazionenews']) : '';
+$limiteonline = ((isset($_POST['limiteonline'])) && (is_numeric($_POST['limiteonline'])) && ($_POST['limiteonline'] !== '')) ? $user->purge((int)$_POST['limiteonline']) : '';
 $url = ((isset($_POST['url'])) && ($_POST['url'] !== '')) ? $user->purge($_POST['url']) : '';
 $url_index = ((isset($_POST['url_index'])) && ($_POST['url_index'] !== '')) ? $user->purge($_POST['url_index']) : '';
 $url_admin = ((isset($_POST['url_admin'])) && ($_POST['url_admin'] !== '')) ? $user->purge($_POST['url_admin']) : '';
@@ -53,6 +54,7 @@ if(($user->isLogged()) && ($user->username[0]->grado == 1))
 		$rendering->addValue('description_default', $user->config[0]->description);
 		$rendering->addValue('limitenews_default', $user->config[0]->limitenews);
 		$rendering->addValue('impaginazionenews_default', $user->config[0]->impaginazionenews);
+		$rendering->addValue('limiteonline_default', $user->config[0]->limiteonline);
 		$rendering->addValue('url_default', $user->config[0]->url);
 		$rendering->addValue('url_index_default', $user->config[0]->url_index);
 		$rendering->addValue('url_admin_default', $user->config[0]->url_admin);
@@ -65,7 +67,7 @@ if(($user->isLogged()) && ($user->username[0]->grado == 1))
 		$rendering->addValue('root_immagini_default', $user->config[0]->root_immagini);
 	}
 	else
-		if(($user->editConfig('nomesito', $nomesito)) && ($user->editConfig('email', $email)) && ($user->editConfig('bbcode', $bbcode)) && ($user->editConfig('registrazioni', $registrazioni)) && ($user->editConfig('validazioneaccount', $validazioneaccount)) && ($user->editConfig('commenti', $commenti)) && ($user->editConfig('approvacommenti', $approvacommenti)) && ($user->editConfig('log', $log)) && ($user->editConfig('cookie', $cookie)) && ($user->editConfig('skin', $skin)) && ($user->editConfig('description', $description)) && ($user->editConfig('limitenews', $limitenews)) && ($user->editConfig('impaginazionenews', $impaginazionenews)) && ($user->editConfig('url', $url)) && ($user->editConfig('url_index', $url_index)) && ($user->editConfig('url_admin', $url_admin)) && ($user->editConfig('url_rendering', $url_rendering)) && ($user->editConfig('url_immagini', $url_immagini)) && ($user->editConfig('root', $root)) && ($user->editConfig('root_index', $root_index)) && ($user->editConfig('root_admin', $root_admin)) && ($user->editConfig('root_rendering', $root_rendering)) && ($user->editConfig('root_immagini', $root_immagini)))
+		if(($user->editConfig('nomesito', $nomesito)) && ($user->editConfig('email', $email)) && ($user->editConfig('bbcode', $bbcode)) && ($user->editConfig('registrazioni', $registrazioni)) && ($user->editConfig('validazioneaccount', $validazioneaccount)) && ($user->editConfig('commenti', $commenti)) && ($user->editConfig('approvacommenti', $approvacommenti)) && ($user->editConfig('log', $log)) && ($user->editConfig('cookie', $cookie)) && ($user->editConfig('skin', $skin)) && ($user->editConfig('description', $description)) && ($user->editConfig('limitenews', $limitenews)) && ($user->editConfig('impaginazionenews', $impaginazionenews)) && ($user->editConfig('limiteonline', $limiteonline)) && ($user->editConfig('url', $url)) && ($user->editConfig('url_index', $url_index)) && ($user->editConfig('url_admin', $url_admin)) && ($user->editConfig('url_rendering', $url_rendering)) && ($user->editConfig('url_immagini', $url_immagini)) && ($user->editConfig('root', $root)) && ($user->editConfig('root_index', $root_index)) && ($user->editConfig('root_admin', $root_admin)) && ($user->editConfig('root_rendering', $root_rendering)) && ($user->editConfig('root_immagini', $root_immagini)))
 			$rendering->addValue('result', 'Le modifica alla configurazione sono state apportate con successo.');
 		else
 			$rendering->addValue('result', 'È accaduto un errore durante la modifica alla configurazione.');

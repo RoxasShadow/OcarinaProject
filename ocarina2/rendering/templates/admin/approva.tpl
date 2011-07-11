@@ -3,6 +3,7 @@
 *}
 {include file="$root_rendering/templates/$skin/include/header.tpl"}
 	{if (($grado == '') || ($grado > 2))}
+		Accesso negato
 	{elseif !$submit}
 		<form action="" method="post">
 		<table>

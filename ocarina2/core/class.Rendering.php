@@ -65,7 +65,6 @@ class Rendering extends Configuration {
 	/* Il motore di rendering effettua il rendering del template in input e lo visualizza. */
 	public function renderize($filename) {
 		$this->addValue('versione', $this->config[0]->versione);
-		$this->addValue('lastversion', file_get_contents('http://www.giovannicapuano.net/ocarina2/lastversion.php'));
 		$this->addValue('nomesito', $this->config[0]->nomesito);
 		$this->addValue('url', $this->config[0]->url);
 		$this->addValue('url_index', $this->config[0]->url_index);
@@ -79,8 +78,12 @@ class Rendering extends Configuration {
 		$this->addValue('root_immagini', $this->config[0]->root_immagini);
 		$this->addValue('query', $this->numQuery);
 		$this->addValue('time', $this->microtime_float() - $this->time_start);
-
-		if($this->skinExists($this->skin)) {
+		if($this->skin == 'admin') {
+			$this->addValue('lastversion', file_get_contents('http://www.giovannicapuano.net/ocarina2/lastversion.php'));
+			$this->addValue('skin','admin');
+			$this->smarty->display('admin/'.$filename);
+		}
+		elseif($this->skinExists($this->skin)) {
 			$this->addValue('skin', $this->skin);
 			$this->smarty->display($this->skin.'/'.$filename);
 		}

@@ -95,8 +95,6 @@ class User extends Configuration {
 		$logged = mysql_result($query, 0, 0) > 0 ? true : false;
 		if(($logged) && (is_array($this->username)))
 			$this->editUser('lastaction', time(), $this->username[0]->nickname);
-		else
-			$this->newVisitator();
 		return $logged;
 	}
 	
@@ -106,7 +104,7 @@ class User extends Configuration {
 		$user = $this->getUser();
 		$userOnline = array();
 		foreach($user as $v)
-			if(($data - $v->lastaction) <= 60*5) // 5 minuti
+			if(($data - $v->lastaction) <= 60 * $this->config[0]->limiteonline)
 				$userOnline[] = $v->nickname;
 		return $userOnline;
 	}
@@ -118,7 +116,7 @@ class User extends Configuration {
 			return 0;
 		$visitatorOnline = 0;
 		foreach($visitator as $v)
-			if(($data - $v->lastaction) <= 60*5) // 5 minuti
+			if(($data - $v->lastaction) <= 60 * $this->config[0]->limiteonline)
 				++$visitatorOnline;
 		return $visitatorOnline;
 	}
@@ -177,12 +175,28 @@ class User extends Configuration {
 		$ip = parent::purge($_SERVER['REMOTE_ADDR']);
 		if(!$visitator = $this->getVisitator()) // Mai nessun visitatore
 			return parent::query("INSERT INTO visitatori(ip, lastaction, data, ora) VALUES('$ip', '$lastaction', '$data', '$ora')") ? true : false;
-		else
+		else {
+			$found = 0;
 			foreach($visitator as $v)
-				if((($lastaction - $v->lastaction) > 60*5) && ($ip == $v->ip)) { // 5 minuti
-					parent::query("UPDATE visitatori SET lastaction='$lastaction', data='$data', ora='$ora' WHERE ip='$ip'");
-					return true;
-				}
+				if($v->ip == $ip)
+					++$found;
+			if($found == 0)
+				return parent::query("INSERT INTO visitatori(ip, lastaction, data, ora) VALUES('$ip', '$lastaction', '$data', '$ora')") ? true : false;
+			elseif((($lastaction - $v->lastaction) > 60 * $this->config[0]->limiteonline) && ($found > 0))
+				return parent::query("UPDATE visitatori SET lastaction='$lastaction', data='$data', ora='$ora' WHERE ip='$ip'") ? true : false;
+		}
+		return false;
+	}
+	
+	/* Archivia i visitatori. */
+	public function archiveVisitator() {
+		if($visitator = $this->getVisitator()) {
+			$totale = 0;
+			foreach($visitator as $v)
+				++$totale;
+			if((isset($this->config[0]->totalevisitatori)) && (parent::editConfig('totalevisitatori', $this->config[0]->totalevisitatori + $totale)) && ($this->deleteVisitator()))
+				return true;
+		}
 		return false;
 	}
 	

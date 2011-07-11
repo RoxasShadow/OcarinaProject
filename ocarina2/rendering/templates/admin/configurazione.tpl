@@ -40,6 +40,8 @@
 		<input type="text" name="limitenews" maxlength="10" {if (isset($limitenews_default))}value="{$limitenews_default}"{/if} /><br /><br />
 		News da mostrare per pagina<br />
 		<input type="text" name="impaginazionenews" maxlength="10" {if (isset($impaginazionenews_default))}value="{$impaginazionenews_default}"{/if} /><br /><br />
+		Minuti per i quali un utente è considerato online finchè non compie un'azione<br />
+		<input type="text" name="limiteonline" maxlength="10" {if (isset($limiteonline_default))}value="{$limiteonline_default}"{/if} /><br /><br />
 		URL (ex.: http://www.tuosito.com)<br />
 		<input type="text" name="url" maxlength="100" {if (isset($url_default))}value="{$url_default}"{/if} /><br /><br />
 		URL index (ex.: http://www.tuosito.com/ocarina2)<br />
