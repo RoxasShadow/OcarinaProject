@@ -45,14 +45,17 @@ class osh:
 		print 'help -> view this help'
 		print 'clear -> clear the terminal'
 		print 'news -> read the news'
+		print 'countnews -> count the news'
 		print 'searchnews -> search the news'
 		print 'comment -> read the comments'
 		print 'searchcomment -> search the comments'
 		print 'createcomment -> create a comment'
 		print 'mycomment -> read my comments'
 		print 'page -> read the pages'
+		print 'countpage -> count the pages'
 		print 'searchpage -> search the pages'
 		print 'user -> read the user profiles'
+		print 'countuser -> count the users'
 		print 'useronline -> read the online users'
 		print 'visitatoronline -> read the number of online visitators'
 		print 'login -> login'
@@ -96,10 +99,10 @@ class osh:
 		return json.load(r)
 
 	def lastVersion(self):
-		jsonData = urllib.urlopen(self.urlLastVersion)
-		data = json.load(jsonData)
-		jsonData.close()
-		return data
+		jsondate = urllib.urlopen(self.urlLastVersion)
+		date = json.load(jsondate)
+		jsondate.close()
+		return date
 
 	def parseNews(self, json, page = False):
 		if(str(json['response']).isdigit()):
@@ -113,40 +116,40 @@ class osh:
 		else:
 			try:
 				for n in range(len(json['response'])):
-					print self.normal+'Writed by '+self.bold+self.htmlentities(json['response'][n]['autore'])+self.normal+' the day '+self.bold+self.htmlentities(json['response'][n]['data'])+self.normal+' at the hour '+self.bold+self.htmlentities(json['response'][n]['ora'])+self.normal+' under '+self.bold+self.htmlentities(json['response'][n]['categoria'])+self.normal
+					print self.normal+'Writed by '+self.bold+self.htmlentities(json['response'][n]['author'])+self.normal+' the day '+self.bold+self.htmlentities(json['response'][n]['date'])+self.normal+' at the hour '+self.bold+self.htmlentities(json['response'][n]['hour'])+self.normal+' under '+self.bold+self.htmlentities(json['response'][n]['category'])+self.normal
 					lastmod = ''
-					if json['response'][n]['oraultimamodifica'] == json['response'][n]['ora']:
-						if json['response'][n]['dataultimamodifica'] == json['response'][n]['data']:
+					if json['response'][n]['lastmodhour'] == json['response'][n]['hour']:
+						if json['response'][n]['lastmoddate'] == json['response'][n]['date']:
 							lastmod += 'Last modify '+self.normal+'today'+self.bold
 						else:
-							lastmod +=  'Last modify the day '+self.bold+self.htmlentities(json['response'][n]['dataultimamodifica'])
-						lastmod +=  ' at the hour '+self.bold+self.htmlentities(json['response'][n]['ora'])
-						if json['response'][n]['autoreultimamodifica'] == json['response'][n]['autore']:
+							lastmod +=  'Last modify the day '+self.bold+self.htmlentities(json['response'][n]['lastmoddate'])
+						lastmod +=  ' at the hour '+self.bold+self.htmlentities(json['response'][n]['hour'])
+						if json['response'][n]['lastmodauthor'] == json['response'][n]['author']:
 							lastmod +=  '.'
 						else:
-							lastmod +=  ' by '+self.bold+self.htmlentities(json['response'][n]['autoreultimamodifica'])+'.'
+							lastmod +=  ' by '+self.bold+self.htmlentities(json['response'][n]['lastmodauthor'])+'.'
 					print lastmod
-					print self.htmlentities(json['response'][n]['contenuto'])
+					print self.htmlentities(json['response'][n]['content'])
 					if not page:
-						print 'Number of comments: '+self.bold+self.parseCountComment(self.getContent('countcomment', 'titolo', self.htmlentities(json['response'][n]['minititolo'])))+self.bold
+						print 'Number of comments: '+self.bold+self.parseCountComment(self.getContent('countcomment', 'title', self.htmlentities(json['response'][n]['minititle'])))+self.bold
 					print self.separator+'----------------------------------------------------'+self.normal
 			except KeyError:
-				print self.normal+'Writed by '+self.bold+self.htmlentities(json['response']['autore'])+self.normal+' the day '+self.bold+self.htmlentities(json['response']['data'])+self.normal+' at the hour '+self.bold+self.htmlentities(json['response']['ora'])+self.normal+' under '+self.bold+self.htmlentities(json['response']['categoria'])+self.normal
+				print self.normal+'Writed by '+self.bold+self.htmlentities(json['response']['author'])+self.normal+' the day '+self.bold+self.htmlentities(json['response']['date'])+self.normal+' at the hour '+self.bold+self.htmlentities(json['response']['hour'])+self.normal+' under '+self.bold+self.htmlentities(json['response']['category'])+self.normal
 				lastmod = ''
-				if json['response']['oraultimamodifica'] == json['response']['ora']:
-					if json['response']['dataultimamodifica'] == json['response']['data']:
+				if json['response']['lastmodhour'] == json['response']['hour']:
+					if json['response']['lastmoddate'] == json['response']['date']:
 						lastmod += 'Last modify '+self.normal+'today'+self.bold
 					else:
-						lastmod +=  'Last modify the day '+self.bold+self.htmlentities(json['response']['dataultimamodifica'])
-					lastmod +=  ' at the hour '+self.bold+self.htmlentities(json['response']['ora'])
-					if json['response']['autoreultimamodifica'] == json['response']['autore']:
+						lastmod +=  'Last modify the day '+self.bold+self.htmlentities(json['response']['lastmoddate'])
+					lastmod +=  ' at the hour '+self.bold+self.htmlentities(json['response']['hour'])
+					if json['response']['lastmodauthor'] == json['response']['author']:
 						lastmod +=  '.'
 					else:
-						lastmod +=  ' by '+self.bold+self.htmlentities(json['response']['autoreultimamodifica'])+'.'
+						lastmod +=  ' by '+self.bold+self.htmlentities(json['response']['lastmodauthor'])+'.'
 				print lastmod
-				print self.htmlentities(json['response']['contenuto'])
+				print self.htmlentities(json['response']['content'])
 				if not page:
-					print 'Number of comments: '+self.bold+self.parseCountComment(self.getContent('countcomment', 'titolo', self.htmlentities(json['response']['minititolo'])))+self.normal
+					print 'Number of comments: '+self.bold+self.parseCountComment(self.getContent('countcomment', 'title', self.htmlentities(json['response']['minititle'])))+self.normal
 
 	def parseComment(self, json, mycomment = False):
 		if(str(json['response']).isdigit()):
@@ -160,12 +163,12 @@ class osh:
 		else:
 			try:
 				for n in range(len(json['response'])):
-					print self.normal+'Writed on '+self.bold+self.htmlentities(json['response'][n]['news'])+self.normal+' by '+self.bold+self.htmlentities(json['response'][n]['autore'])+self.normal+' the day '+self.bold+self.htmlentities(json['response'][n]['data'])+self.normal+' at the hour '+self.bold+self.htmlentities(json['response'][n]['ora'])+self.normal
-					print self.htmlentities(json['response'][n]['contenuto'])
+					print self.normal+'Writed on '+self.bold+self.htmlentities(json['response'][n]['news'])+self.normal+' by '+self.bold+self.htmlentities(json['response'][n]['author'])+self.normal+' the day '+self.bold+self.htmlentities(json['response'][n]['date'])+self.normal+' at the hour '+self.bold+self.htmlentities(json['response'][n]['hour'])+self.normal
+					print self.htmlentities(json['response'][n]['content'])
 					print self.separator+'----------------------------------------------------'+self.normal
 			except KeyError:
-					print self.normal+'Writed on '+self.bold+self.htmlentities(json['response'][n]['news'])+self.normal+' by '+self.bold+self.htmlentities(json['response']['autore'])+self.normal+' the day '+self.bold+self.htmlentities(json['response']['data'])+self.normal+' at the hour '+self.bold+self.htmlentities(json['response']['ora'])+self.normal
-					print self.htmlentities(json['response'][n]['contenuto'])
+					print self.normal+'Writed on '+self.bold+self.htmlentities(json['response'][n]['news'])+self.normal+' by '+self.bold+self.htmlentities(json['response']['author'])+self.normal+' the day '+self.bold+self.htmlentities(json['response']['date'])+self.normal+' at the hour '+self.bold+self.htmlentities(json['response']['hour'])+self.normal
+					print self.htmlentities(json['response'][n]['content'])
 
 	def parseUser(self, json):
 		if(str(json['response']).isdigit()):
@@ -178,15 +181,15 @@ class osh:
 				for n in range(len(json['response'])):
 					print self.bold+'Nickname: '+self.normal+self.htmlentities(json['response'][n]['nickname'])
 					print self.bold+'Email: '+self.normal+self.htmlentities(json['response'][n]['email'])
-					print self.bold+'Grade: '+self.normal+self.htmlentities(json['response'][n]['grado'])
-					print self.bold+'Registrated the '+self.normal+self.htmlentities(json['response'][n]['data'])
+					print self.bold+'Grade: '+self.normal+self.htmlentities(json['response'][n]['grade'])
+					print self.bold+'Registrated the '+self.normal+self.htmlentities(json['response'][n]['date'])
 					print self.bold+'Bio: '+self.normal+self.htmlentities(json['response'][n]['bio'])
 					print self.separator+'----------------------------------------------------'+self.normal
 			except KeyError:
 				print self.bold+'Nickname: '+self.normal+self.htmlentities(json['response']['nickname'])
 				print self.bold+'Email: '+self.normal+self.htmlentities(json['response']['email'])
-				print self.bold+'Grade: '+self.normal+self.htmlentities(json['response']['grado'])
-				print self.bold+'Registrated the '+self.normal+self.htmlentities(json['response']['data'])
+				print self.bold+'Grade: '+self.normal+self.htmlentities(json['response']['grade'])
+				print self.bold+'Registrated the '+self.normal+self.htmlentities(json['response']['date'])
 				print self.bold+'Bio: '+self.normal+self.htmlentities(json['response']['bio'])
 
 	def parseUserOnline(self, json):
@@ -202,9 +205,9 @@ class osh:
 
 	def parseVisitatorOnline(self, json):
 		if int(json['response']) == 0:
-			print +self.bold+'Nothing'+self.normal+' visitator is online.'
+			print self.bold+'Nothing'+self.normal+' visitator is online.'
 		elif int(json['response']) == 1:
-			print +self.bold+'Only'+self.normal+' a visitator is online.'
+			print self.bold+'Only'+self.normal+' a visitator is online.'
 		else:
 			print 'There are '+self.bold+json['response']+self.normal+' visitators online.'
 
@@ -228,6 +231,30 @@ class osh:
 
 	def parseCountComment(self, json):
 		return json['response']
+
+	def parseCountNews(self, json):
+		if int(json['response']) == 0:
+			print self.bold+'Nothing'+self.normal+' news created.'
+		elif int(json['response']) == 1:
+			print self.bold+'Only'+self.normal+' a news created.'
+		else:
+			print 'There are '+self.bold+json['response']+self.normal+' news created.'
+
+	def parseCountPage(self, json):
+		if int(json['response']) == 0:
+			print self.bold+'Nothing'+self.normal+' page created.'
+		elif int(json['response']) == 1:
+			print self.bold+'Only'+self.normal+' a page created.'
+		else:
+			print 'There are '+self.bold+json['response']+self.normal+' pages created.'
+
+	def parseCountUser(self, json):
+		if int(json['response']) == 0:
+			print self.bold+'Nothing'+self.normal+' user registrated.'
+		elif int(json['response']) == 1:
+			print self.bold+'Only'+self.normal+' a user registrated.'
+		else:
+			print 'There are '+self.bold+json['response']+self.normal+' users registrated.'
 
 	def parseGetNickname(self, json):
 		if(json['response'] != 2):
@@ -270,33 +297,39 @@ class osh:
 			elif action == 'exit':
 				print 'Bye bye'
 			elif action == 'news':
-				self.parseNews(self.getContent('news', 'titolo', raw_input("Write the minititle of the news wich you want to see, otherwise type enter to see all the news: ")))
+				self.parseNews(self.getContent('news', 'title', raw_input("Write the minititle of the news wich you want to see, otherwise type enter to see all the news: ")))
+			elif action == 'countnews':
+				self.parseCountNews(self.getContent('countnews'))
 			elif action == 'searchnews':
-				self.parseNews(self.getContent('searchnews', 'contenuto', raw_input("Write the keyword for find your news: ")))
+				self.parseNews(self.getContent('searchnews', 'content', raw_input("Write the keyword for find your news: ")))
 			elif action == 'comment':
 				comment = raw_input("Write the id of the comment or the minititle of the news wich contains it, otherwise type enter to see all the comments: ")
 				if str(comment).isdigit():
 					self.parseComment(self.getContent('comment', 'id', comment))
 				else:
-					self.parseComment(self.getContent('comment', 'titolo', comment))
+					self.parseComment(self.getContent('comment', 'title', comment))
 			elif action == 'searchcomment':
-				self.parseComment(self.getContent('searchcomment', 'contenuto', raw_input("Write the keyword for find your comment: ")))
+				self.parseComment(self.getContent('searchcomment', 'content', raw_input("Write the keyword for find your comment: ")))
 			elif action == 'createcomment':
 				if not self.parseIsLogged(self.getContent('islogged')):
 					print self.bold+'Access denied:'+self.normal+' you must be logged.'
 				else:
-				 	self.parseCreateComment(self.getContent('createcomment', 'titolo', raw_input("Write the minititle of the news to commenting: "), 'contenuto', raw_input("Write your comment: "), 'nickname', self.parseGetNickname(self.getContent('nickname'))))
+				 	self.parseCreateComment(self.getContent('createcomment', 'title', raw_input("Write the minititle of the news to commenting: "), 'content', raw_input("Write your comment: "), 'nickname', self.parseGetNickname(self.getContent('nickname'))))
 			elif action == 'mycomment':
 				if self.parseIsLogged(self.getContent('islogged')):
 					self.parseComment(self.getContent('mycomment', 'nickname', self.parseGetNickname(self.getContent('nickname'))), True)	
 				else:
 					print 'You are not logged, do it and try again.'
 			elif action == 'page':
-				self.parseNews(self.getContent('pagina', 'titolo', raw_input("Write the minititle of the page wich you want to see, otherwise type enter to see all the pages: ")), True)
+				self.parseNews(self.getContent('page', 'title', raw_input("Write the minititle of the page wich you want to see, otherwise type enter to see all the pages: ")), True)
+			elif action == 'countpage':
+				self.parseCountPage(self.getContent('countpage'))
 			elif action == 'searchpage':
-				self.parseNews(self.getContent('searchpage', 'contenuto', raw_input("Write the keyword for find your pages: ")), True)
+				self.parseNews(self.getContent('searchpage', 'content', raw_input("Write the keyword for find your pages: ")), True)
 			elif action == 'user':
 				self.parseUser(self.getContent('user', 'nickname', raw_input("Write the nickname of the user wich you want to see the profile, otherwise type enter to see all the user profiles: ")))
+			elif action == 'countuser':
+				self.parseCountUser(self.getContent('countuser'))
 			elif action == 'useronline':
 				self.parseUserOnline(self.getContent('useronline'))
 			elif action == 'visitatoronline':

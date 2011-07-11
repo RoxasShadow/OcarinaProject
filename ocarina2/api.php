@@ -22,6 +22,7 @@
 	JSON request (GET):
 		news()
 		news($minititoloNews)
+		countnews()
 		searchnews($contenuto)
 		comment()
 		comment($id)
@@ -29,11 +30,13 @@
 		searchcomment($contenuto)
 		createcomment($titolo, $contenuto, $nickname)
 		mycomment($nickname)
-		pagina()
-		pagina($minititoloPagina)
+		page()
+		page($minititoloPagina)
+		countpage()
 		searchpage($contenuto)
 		user()
 		user($nickname)
+		countuser()
 		login($nickname, $password)
 		logout()
 		islogged()
@@ -48,19 +51,21 @@ $comment = new Comments();
 $pagina = new Page();
 $user = new User();
 $action = isset($_GET['action']) ? $comment->purge($_GET['action']) : '';
-$titolo = isset($_GET['titolo']) ? $comment->purge($_GET['titolo']) : '';
+$titolo = isset($_GET['title']) ? $comment->purge($_GET['title']) : '';
 $nickname = isset($_GET['nickname']) ? $comment->purge($_GET['nickname']) : '';
 $password = isset($_GET['password']) ? $comment->purge($_GET['password']) : '';
-$contenuto = isset($_GET['contenuto']) ? $comment->purge($_GET['contenuto']) : '';
+$contenuto = isset($_GET['content']) ? $comment->purge($_GET['content']) : '';
 $id = ((isset($_GET['id'])) && is_numeric($_GET['id'])) ? (int)$_GET['id'] : '';
 $actionPermitted = array(
 	'news',
+	'countnews',
 	'searchnews',
 	'comment',
 	'searchcomment',
 	'createcomment',
 	'mycomment',
-	'pagina',
+	'page',
+	'countpage',
 	'searchpage',
 	'user',
 	'login',
@@ -78,16 +83,16 @@ if(($action == 'news') && ($titolo !== '')) {
 		echo '{';
 			echo '"response": {';
 				echo '"id":'.json_encode($comment[0]->id).',';
-				echo '"autore":'.json_encode($comment[0]->autore).',';
-				echo '"titolo":'.json_encode($comment[0]->titolo).',';
-				echo '"minititolo":'.json_encode($comment[0]->minititolo).',';
-				echo '"contenuto":'.json_encode($comment[0]->contenuto).',';
-				echo '"categoria":'.json_encode($comment[0]->categoria).',';
-				echo '"data":'.json_encode($comment[0]->data).',';
-				echo '"ora":'.json_encode($comment[0]->ora).',';
-				echo '"dataultimamodifica":'.json_encode($comment[0]->dataultimamodifica).',';
-				echo '"oraultimamodifica":'.json_encode($comment[0]->oraultimamodifica).',';
-				echo '"autoreultimamodifica":'.json_encode($comment[0]->autoreultimamodifica);
+				echo '"author":'.json_encode($comment[0]->autore).',';
+				echo '"title":'.json_encode($comment[0]->titolo).',';
+				echo '"minititle":'.json_encode($comment[0]->minititolo).',';
+				echo '"content":'.json_encode($comment[0]->contenuto).',';
+				echo '"category":'.json_encode($comment[0]->categoria).',';
+				echo '"date":'.json_encode($comment[0]->data).',';
+				echo '"hour":'.json_encode($comment[0]->ora).',';
+				echo '"lastmoddate":'.json_encode($comment[0]->dataultimamodifica).',';
+				echo '"lastmodhour":'.json_encode($comment[0]->oraultimamodifica).',';
+				echo '"lastmodauthor":'.json_encode($comment[0]->autoreultimamodifica);
 			echo '}';
 		echo '}';
 	}
@@ -100,20 +105,23 @@ elseif(($action == 'news') && ($titolo == '')) {
 		foreach($comment as $v) {
 			$json .= '{';
 				$json .= '"id":'.json_encode($v->id).',';
-				$json .= '"autore":'.json_encode($v->autore).',';
-				$json .= '"titolo":'.json_encode($v->titolo).',';
-				$json .= '"minititolo":'.json_encode($v->minititolo).',';
-				$json .= '"contenuto":'.json_encode($v->contenuto).',';
-				$json .= '"categoria":'.json_encode($v->categoria).',';
-				$json .= '"data":'.json_encode($v->data).',';
-				$json .= '"ora":'.json_encode($v->ora).',';
-				$json .= '"dataultimamodifica":'.json_encode($v->dataultimamodifica).',';
-				$json .= '"oraultimamodifica":'.json_encode($v->oraultimamodifica).',';
-				$json .= '"autoreultimamodifica":'.json_encode($v->autoreultimamodifica);
+				$json .= '"author":'.json_encode($v->autore).',';
+				$json .= '"title":'.json_encode($v->titolo).',';
+				$json .= '"minititle":'.json_encode($v->minititolo).',';
+				$json .= '"content":'.json_encode($v->contenuto).',';
+				$json .= '"category":'.json_encode($v->categoria).',';
+				$json .= '"date":'.json_encode($v->data).',';
+				$json .= '"hour":'.json_encode($v->ora).',';
+				$json .= '"lastmoddate":'.json_encode($v->dataultimamodifica).',';
+				$json .= '"lastmodhour":'.json_encode($v->oraultimamodifica).',';
+				$json .= '"lastmodauthor":'.json_encode($v->autoreultimamodifica);
 			$json .= '},';
 		}
 	 	echo trim($json, ',').']}';
 	}
+}
+elseif($action == 'countnews') {
+	echo '{"response":'.json_encode($comment->countNews()).'}';
 }
 elseif(($action == 'searchnews') && ($contenuto !== '')) {
 	if(!$comment = $comment->searchNews($contenuto))
@@ -123,16 +131,16 @@ elseif(($action == 'searchnews') && ($contenuto !== '')) {
 		foreach($comment as $v) {
 			$json .= '{';
 				$json .= '"id":'.json_encode($v->id).',';
-				$json .= '"autore":'.json_encode($v->autore).',';
-				$json .= '"titolo":'.json_encode($v->titolo).',';
-				$json .= '"minititolo":'.json_encode($v->minititolo).',';
-				$json .= '"contenuto":'.json_encode($v->contenuto).',';
-				$json .= '"categoria":'.json_encode($v->categoria).',';
-				$json .= '"data":'.json_encode($v->data).',';
-				$json .= '"ora":'.json_encode($v->ora).',';
-				$json .= '"dataultimamodifica":'.json_encode($v->dataultimamodifica).',';
-				$json .= '"oraultimamodifica":'.json_encode($v->oraultimamodifica).',';
-				$json .= '"autoreultimamodifica":'.json_encode($v->autoreultimamodifica);
+				$json .= '"author":'.json_encode($v->autore).',';
+				$json .= '"title":'.json_encode($v->titolo).',';
+				$json .= '"minititle":'.json_encode($v->minititolo).',';
+				$json .= '"content":'.json_encode($v->contenuto).',';
+				$json .= '"category":'.json_encode($v->categoria).',';
+				$json .= '"date":'.json_encode($v->data).',';
+				$json .= '"hour":'.json_encode($v->ora).',';
+				$json .= '"lastmoddate":'.json_encode($v->dataultimamodifica).',';
+				$json .= '"lastmodhour":'.json_encode($v->oraultimamodifica).',';
+				$json .= '"lastmodauthor":'.json_encode($v->autoreultimamodifica);
 			$json .= '},';
 		}
 	 	echo trim($json, ',').']}';
@@ -146,11 +154,11 @@ elseif(($action == 'comment') && ($titolo == '') && ($id == '')) {
 		foreach($comment as $v) {
 			$json .= '{';
 				$json .= '"id":'.json_encode($v->id).',';
-				$json .= '"autore":'.json_encode($v->autore).',';
-				$json .= '"contenuto":'.json_encode($v->contenuto).',';
+				$json .= '"author":'.json_encode($v->autore).',';
+				$json .= '"content":'.json_encode($v->contenuto).',';
 				$json .= '"news":'.json_encode($v->news).',';
-				$json .= '"data":'.json_encode($v->data).',';
-				$json .= '"ora":'.json_encode($v->ora);
+				$json .= '"date":'.json_encode($v->data).',';
+				$json .= '"hour":'.json_encode($v->ora);
 			$json .= '},';
 		}
 	 	echo trim($json, ',').']}';
@@ -163,11 +171,11 @@ elseif(($action == 'comment') && ($id !== '')) {
 		echo '{';
 			echo '"response": {';
 				echo '"id":'.json_encode($comment[0]->id).',';
-				echo '"autore":'.json_encode($comment[0]->autore).',';
-				echo '"contenuto":'.json_encode($comment[0]->contenuto).',';
+				echo '"author":'.json_encode($comment[0]->autore).',';
+				echo '"content":'.json_encode($comment[0]->contenuto).',';
 				echo '"news":'.json_encode($comment[0]->news).',';
-				echo '"data":'.json_encode($comment[0]->data).',';
-				echo '"ora":'.json_encode($comment[0]->ora);
+				echo '"date":'.json_encode($comment[0]->data).',';
+				echo '"hour":'.json_encode($comment[0]->ora);
 			echo '}';
 		echo '}';
 	}
@@ -180,11 +188,11 @@ elseif(($action == 'comment') && ($titolo !== '')) {
 		foreach($comment as $v) {
 			$json .= '{';
 				$json .= '"id":'.json_encode($v->id).',';
-				$json .= '"autore":'.json_encode($v->autore).',';
-				$json .= '"contenuto":'.json_encode($v->contenuto).',';
+				$json .= '"author":'.json_encode($v->autore).',';
+				$json .= '"content":'.json_encode($v->contenuto).',';
 				$json .= '"news":'.json_encode($v->news).',';
-				$json .= '"data":'.json_encode($v->data).',';
-				$json .= '"ora":'.json_encode($v->ora);
+				$json .= '"date":'.json_encode($v->data).',';
+				$json .= '"hour":'.json_encode($v->ora);
 			$json .= '},';
 		}
 	 	echo trim($json, ',').']}';
@@ -198,11 +206,11 @@ elseif(($action == 'searchcomment') && ($contenuto !== '')) {
 		foreach($comment as $v) {
 			$json .= '{';
 				$json .= '"id":'.json_encode($v->id).',';
-				$json .= '"autore":'.json_encode($v->autore).',';
-				$json .= '"contenuto":'.json_encode($v->contenuto).',';
+				$json .= '"author":'.json_encode($v->autore).',';
+				$json .= '"content":'.json_encode($v->contenuto).',';
 				$json .= '"news":'.json_encode($v->news).',';
-				$json .= '"data":'.json_encode($v->data).',';
-				$json .= '"ora":'.json_encode($v->ora);
+				$json .= '"date":'.json_encode($v->data).',';
+				$json .= '"hour":'.json_encode($v->ora);
 			$json .= '},';
 		}
 	 	echo trim($json, ',').']}';
@@ -235,11 +243,11 @@ elseif(($action == 'mycomment') && ($nickname !== '')) {
 		foreach($comment as $v) {
 			$json .= '{';
 				$json .= '"id":'.json_encode($v->id).',';
-				$json .= '"autore":'.json_encode($v->autore).',';
-				$json .= '"contenuto":'.json_encode($v->contenuto).',';
+				$json .= '"author":'.json_encode($v->autore).',';
+				$json .= '"content":'.json_encode($v->contenuto).',';
 				$json .= '"news":'.json_encode($v->news).',';
-				$json .= '"data":'.json_encode($v->data).',';
-				$json .= '"ora":'.json_encode($v->ora);
+				$json .= '"date":'.json_encode($v->data).',';
+				$json .= '"hour":'.json_encode($v->ora);
 			$json .= '},';
 		}
 	 	echo trim($json, ',').']}';
@@ -248,28 +256,28 @@ elseif(($action == 'mycomment') && ($nickname !== '')) {
 elseif(($action == 'countcomment') && ($titolo !== '')) {
 	echo '{"response":'.json_encode($comment->countCommentByNews($titolo)).'}';
 }
-elseif(($action == 'pagina') && ($titolo !== '')) {
+elseif(($action == 'page') && ($titolo !== '')) {
 	if(!$pagina = $pagina->getPage($titolo))
 		echo '{"response":"1"}';
 	else {
 		echo '{';
 			echo '"response": {';
 				echo '"id":'.json_encode($pagina[0]->id).',';
-				echo '"autore":'.json_encode($pagina[0]->autore).',';
-				echo '"titolo":'.json_encode($pagina[0]->titolo).',';
-				echo '"minititolo":'.json_encode($pagina[0]->minititolo).',';
-				echo '"contenuto":'.json_encode($pagina[0]->contenuto).',';
-				echo '"categoria":'.json_encode($pagina[0]->categoria).',';
-				echo '"data":'.json_encode($pagina[0]->data).',';
-				echo '"ora":'.json_encode($pagina[0]->ora).',';
-				echo '"dataultimamodifica":'.json_encode($pagina[0]->dataultimamodifica).',';
-				echo '"oraultimamodifica":'.json_encode($pagina[0]->oraultimamodifica).',';
-				echo '"autoreultimamodifica":'.json_encode($pagina[0]->autoreultimamodifica);
+				echo '"author":'.json_encode($pagina[0]->autore).',';
+				echo '"title":'.json_encode($pagina[0]->titolo).',';
+				echo '"minititle":'.json_encode($pagina[0]->minititolo).',';
+				echo '"content":'.json_encode($pagina[0]->contenuto).',';
+				echo '"category":'.json_encode($pagina[0]->categoria).',';
+				echo '"date":'.json_encode($pagina[0]->data).',';
+				echo '"hour":'.json_encode($pagina[0]->ora).',';
+				echo '"lastmoddate":'.json_encode($pagina[0]->dataultimamodifica).',';
+				echo '"lastmodhour":'.json_encode($pagina[0]->oraultimamodifica).',';
+				echo '"lastmodauthor":'.json_encode($pagina[0]->autoreultimamodifica);
 			echo '}';
 		echo '}';
 	}
 }
-elseif(($action == 'pagina') && ($titolo == '')) {
+elseif(($action == 'page') && ($titolo == '')) {
 	if(!$pagina = $pagina->getPage())
 		echo '{"response":"1"}';
 	else {
@@ -277,20 +285,23 @@ elseif(($action == 'pagina') && ($titolo == '')) {
 		foreach($pagina as $v) {
 			$json .= '{';
 				$json .= '"id":'.json_encode($v->id).',';
-				$json .= '"autore":'.json_encode($v->autore).',';
-				$json .= '"titolo":'.json_encode($v->titolo).',';
-				$json .= '"minititolo":'.json_encode($v->minititolo).',';
-				$json .= '"contenuto":'.json_encode($v->contenuto).',';
-				$json .= '"categoria":'.json_encode($v->categoria).',';
-				$json .= '"data":'.json_encode($v->data).',';
-				$json .= '"ora":'.json_encode($v->ora).',';
-				$json .= '"dataultimamodifica":'.json_encode($v->dataultimamodifica).',';
-				$json .= '"oraultimamodifica":'.json_encode($v->oraultimamodifica).',';
-				$json .= '"autoreultimamodifica":'.json_encode($v->autoreultimamodifica);
+				$json .= '"author":'.json_encode($v->autore).',';
+				$json .= '"title":'.json_encode($v->titolo).',';
+				$json .= '"minititle":'.json_encode($v->minititolo).',';
+				$json .= '"content":'.json_encode($v->contenuto).',';
+				$json .= '"category":'.json_encode($v->categoria).',';
+				$json .= '"date":'.json_encode($v->data).',';
+				$json .= '"hour":'.json_encode($v->ora).',';
+				$json .= '"lastmoddate":'.json_encode($v->dataultimamodifica).',';
+				$json .= '"lastmodhour":'.json_encode($v->oraultimamodifica).',';
+				$json .= '"lastmodauthor":'.json_encode($v->autoreultimamodifica);
 			$json .= '},';
 		}
 	 	echo trim($json, ',').']}';
 	}
+}
+elseif($action == 'countpage') {
+	echo '{"response":'.json_encode($pagina->countPage()).'}';
 }
 elseif(($action == 'searchpage') && ($contenuto !== '')) {
 	if(!$pagina = $pagina->searchPage($contenuto))
@@ -300,16 +311,16 @@ elseif(($action == 'searchpage') && ($contenuto !== '')) {
 		foreach($pagina as $v) {
 			$json .= '{';
 				$json .= '"id":'.json_encode($v->id).',';
-				$json .= '"autore":'.json_encode($v->autore).',';
-				$json .= '"titolo":'.json_encode($v->titolo).',';
-				$json .= '"minititolo":'.json_encode($v->minititolo).',';
-				$json .= '"contenuto":'.json_encode($v->contenuto).',';
-				$json .= '"categoria":'.json_encode($v->categoria).',';
-				$json .= '"data":'.json_encode($v->data).',';
-				$json .= '"ora":'.json_encode($v->ora).',';
-				$json .= '"dataultimamodifica":'.json_encode($v->dataultimamodifica).',';
-				$json .= '"oraultimamodifica":'.json_encode($v->oraultimamodifica).',';
-				$json .= '"autoreultimamodifica":'.json_encode($v->autoreultimamodifica);
+				$json .= '"author":'.json_encode($v->autore).',';
+				$json .= '"title":'.json_encode($v->titolo).',';
+				$json .= '"minititle":'.json_encode($v->minititolo).',';
+				$json .= '"content":'.json_encode($v->contenuto).',';
+				$json .= '"category":'.json_encode($v->categoria).',';
+				$json .= '"date":'.json_encode($v->data).',';
+				$json .= '"hour":'.json_encode($v->ora).',';
+				$json .= '"lastmoddate":'.json_encode($v->dataultimamodifica).',';
+				$json .= '"lastmodhour":'.json_encode($v->oraultimamodifica).',';
+				$json .= '"lastmodauthor":'.json_encode($v->autoreultimamodifica);
 			$json .= '},';
 		}
 	 	echo trim($json, ',').']}';
@@ -324,9 +335,9 @@ elseif(($action == 'user') && ($nickname !== '')) {
 				echo '"id":'.json_encode($user[0]->id).',';
 				echo '"nickname":'.json_encode($user[0]->nickname).',';
 				echo '"email":'.json_encode($user[0]->email).',';
-				echo '"grado":'.json_encode($user[0]->grado).',';
-				echo '"data":'.json_encode($user[0]->data).',';
-				echo '"ora":'.json_encode($user[0]->ora).',';
+				echo '"grade":'.json_encode($user[0]->grado).',';
+				echo '"date":'.json_encode($user[0]->data).',';
+				echo '"hour":'.json_encode($user[0]->ora).',';
 				echo '"bio":'.json_encode($user[0]->bio).',';
 				echo '"avatar":'.json_encode($user[0]->avatar);
 			echo '}';
@@ -343,15 +354,18 @@ elseif(($action == 'user') && ($nickname == '')) {
 				$json .= '"id":'.json_encode($v->id).',';
 				$json .= '"nickname":'.json_encode($v->nickname).',';
 				$json .= '"email":'.json_encode($v->email).',';
-				$json .= '"grado":'.json_encode($v->grado).',';
-				$json .= '"data":'.json_encode($v->data).',';
-				$json .= '"ora":'.json_encode($v->ora).',';
+				$json .= '"grade":'.json_encode($v->grado).',';
+				$json .= '"date":'.json_encode($v->data).',';
+				$json .= '"hour":'.json_encode($v->ora).',';
 				$json .= '"bio":'.json_encode($v->bio).',';
 				$json .= '"avatar":'.json_encode($v->avatar);
 			$json .= '},';
 		}
 	 	echo trim($json, ',').']}';
 	}
+}
+elseif($action == 'countuser') {
+	echo '{"response":'.json_encode($user->countUser()).'}';
 }
 elseif(($action == 'login') && ($nickname !== '') && ($password !== '')) {
 	if($user->login($nickname, $password)) {
