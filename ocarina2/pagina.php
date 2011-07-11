@@ -15,6 +15,8 @@ $titolo = ((isset($_GET['titolo'])) && ($_GET['titolo'] !== '')) ? $pagina->purg
 $rendering->addValue('utente', $pagina->isLogged() ? $pagina->username[0]->nickname : '');
 $rendering->skin = $pagina->isLogged() ? $pagina->username[0]->skin : $pagina->config[0]->skin;
 $rendering->addValue('titolo', $titolo !== '' ? $titolo.' &raquo; '.$pagina->config[0]->nomesito : $pagina->config[0]->nomesito);
+$rendering->addValue('useronline', $pagina->getUserOnline());
+$rendering->addValue('visitatoronline', $pagina->getVisitatorOnline());
 
 if($titolo == '')
 	$rendering->addValue('errore', 'Non è stata selezionata nessuna pagina.');

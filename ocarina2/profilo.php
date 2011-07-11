@@ -15,6 +15,8 @@ if($nickname == '')
 $rendering->addValue('utente', $user->isLogged() ? $user->username[0]->nickname : '');
 $rendering->skin = $user->isLogged() ? $user->username[0]->skin : $user->config[0]->skin;
 $rendering->addValue('description', ($nickname !== '') ? $user->getLanguage('description', 6).$nickname.'.' : $user->getLanguage('description', 5));
+$rendering->addValue('useronline', $user->getUserOnline());
+$rendering->addValue('visitatoronline', $user->getVisitatorOnline());
 
 if($nickname == '') {
 	$rendering->addValue('titolo', 'Profili utenti &raquo; '.$user->config[0]->nomesito);

@@ -16,6 +16,8 @@ $rendering->addValue('utente', $news->isLogged() ? $news->username[0]->nickname 
 $rendering->skin = $news->isLogged() ? $news->username[0]->skin : $news->config[0]->skin;
 $rendering->addValue('titolo', $categoria !== '' ? 'Categoria: '.$categoria.' &raquo; '.$news->config[0]->nomesito : $news->config[0]->nomesito);
 $rendering->addValue('description', $news->getLanguage('description', 1));
+$rendering->addValue('useronline', $news->getUserOnline());
+$rendering->addValue('visitatoronline', $news->getVisitatorOnline());
 
 if($categoria == '')
 	$rendering->addValue('errore', 'Non è stata selezionata nessuna categoria.');

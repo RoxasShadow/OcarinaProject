@@ -16,6 +16,8 @@ $commento = isset($_POST['comment']) ? $comment->purge($_POST['comment']) : '';
 $rendering->addValue('utente', $comment->isLogged() ? $comment->username[0]->nickname : '');
 $rendering->skin = $comment->isLogged() ? $comment->username[0]->skin : $comment->config[0]->skin;
 $rendering->addValue('titolo', $titolo !== '' ? $titolo.' &raquo; '.$comment->config[0]->nomesito : $comment->config[0]->nomesito);
+$rendering->addValue('useronline', $comment->getUserOnline());
+$rendering->addValue('visitatoronline', $comment->getVisitatorOnline());
 
 if($titolo == '')
 	$rendering->addValue('errore', 'Non è stata selezionata nessuna news.');

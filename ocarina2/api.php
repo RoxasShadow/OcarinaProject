@@ -38,6 +38,8 @@
 		logout()
 		islogged()
 		nickname()
+		useronline()
+		visitatoronline()
 */
 require_once('core/class.Comments.php');
 require_once('core/class.Page.php');
@@ -64,7 +66,9 @@ $actionPermitted = array(
 	'login',
 	'logout',
 	'islogged',
-	'nickname'
+	'nickname',
+	'useronline',
+	'visitatoronline'
 );
 
 if(($action == 'news') && ($titolo !== '')) {
@@ -381,6 +385,19 @@ elseif($action == 'nickname') {
 		echo '{"response":'.json_encode($user->username[0]->nickname).'}';
 	else
 		echo '{"response":"2"}';	
+}
+elseif($action == 'useronline') {
+	$useronline = $user->getUserOnline();
+	$json = '{"response": [';
+	for($i=0, $count=count($useronline); $i<$count; ++$i) {
+		$json .= '{';
+			$json .= '"nickname":'.json_encode($useronline[$i]);
+		$json .= '},';
+	}
+	echo trim($json, ',').']}';
+}
+elseif($action == 'visitatoronline') {
+	echo '{"response":'.json_encode($user->getVisitatorOnline()).'}';
 }
 else {
 	$found = 0;

@@ -67,7 +67,6 @@ class Rendering extends Configuration {
 		$this->addValue('versione', $this->config[0]->versione);
 		$this->addValue('lastversion', file_get_contents('http://www.giovannicapuano.net/ocarina2/lastversion.php'));
 		$this->addValue('nomesito', $this->config[0]->nomesito);
-		$this->addValue('skin', $this->skin);
 		$this->addValue('url', $this->config[0]->url);
 		$this->addValue('url_index', $this->config[0]->url_index);
 		$this->addValue('url_admin', $this->config[0]->url_admin);
@@ -80,8 +79,15 @@ class Rendering extends Configuration {
 		$this->addValue('root_immagini', $this->config[0]->root_immagini);
 		$this->addValue('query', $this->numQuery);
 		$this->addValue('time', $this->microtime_float() - $this->time_start);
-		
-		$this->smarty->templateExists($this->skin.'/'.$filename) ? $this->smarty->display($this->skin.'/'.$filename) : false;
+
+		if($this->skinExists($this->skin)) {
+			$this->addValue('skin', $this->skin);
+			$this->smarty->display($this->skin.'/'.$filename);
+		}
+		else {
+			$this->addValue('skin', $this->config[0]->skin);
+			$this->smarty->display($this->config[0]->skin.'/'.$filename);
+		}
 	}
 
 	/* Visualizza le skin attualmente presenti. */
@@ -93,5 +99,14 @@ class Rendering extends Configuration {
 			if(($skin !== '.') && ($skin !== '..') && ($skin !== 'admin') && (is_dir($dir.$skin)))
 				$f[] = $skin;
 		return $f;
+	}
+
+	/* Visualizza se la skin selezionata esiste. */
+	public function skinExists($skin) {
+		$skinList = $this->getSkinList();
+		foreach($skinList as $v)
+			if($v == $skin)
+				return true;
+		return false;
 	}
 }

@@ -15,6 +15,8 @@ $rendering->addValue('utente', $news->isLogged() ? $news->username[0]->nickname 
 $rendering->skin = $news->isLogged() ? $news->username[0]->skin : $news->config[0]->skin;
 $rendering->addValue('titolo', 'Archivio &raquo; '.$news->config[0]->nomesito);
 $rendering->addValue('description', $news->getLanguage('description', 0));
+$rendering->addValue('useronline', $news->getUserOnline());
+$rendering->addValue('visitatoronline', $news->getVisitatorOnline());
 
 if(!$getNews = $news->searchNews(''))
 	$rendering->addValue('errore_news', 'È accaduto un errore.');

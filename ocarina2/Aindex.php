@@ -17,6 +17,8 @@ $rendering->addValue('utente', $news->isLogged() ? $news->username[0]->nickname 
 $rendering->skin = $news->isLogged() ? $news->username[0]->skin : $news->config[0]->skin;
 $rendering->addValue('titolo', $news->config[0]->nomesito);
 $rendering->addValue('description', $news->config[0]->description);
+$rendering->addValue('useronline', $news->getUserOnline());
+$rendering->addValue('visitatoronline', $news->getVisitatorOnline());
 
 if(($welcome) && ($news->isLogged()))
 	if(($news->username[0]->lastlogout !== '') && ($news->username[0]->lastlogout !== date('d-m-y')))

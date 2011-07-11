@@ -19,6 +19,8 @@ $rendering->addValue('utente', $user->isLogged() ? $user->username[0]->nickname 
 $rendering->skin = $user->isLogged() ? $user->username[0]->skin : $user->config[0]->skin;
 $rendering->addValue('titolo', 'Registrazione &raquo; '.$user->config[0]->nomesito);
 $rendering->addValue('description', $user->getLanguage('description', 8);
+$rendering->addValue('useronline', $user->getUserOnline());
+$rendering->addValue('visitatoronline', $user->getVisitatorOnline());
 
 if($user->isLogged())
 	$rendering->addValue('result', 'Sei già registrato, non hai bisogno di registrarti nuovamente.');

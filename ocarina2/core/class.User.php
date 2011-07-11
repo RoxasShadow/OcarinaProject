@@ -44,6 +44,21 @@ class User extends Configuration {
 		}
 		return false;
 	}
+
+	/* Ottiene i visitatori. */
+	public function getVisitator() {
+		$visitatori = array();
+		if(!$query = parent::query('SELECT * FROM visitatori ORDER BY id ASC'))
+			return false;
+		if(parent::count($query) > 0) {
+			while($result = parent::get($query))
+				array_push($visitatori, $result);
+			if(!empty($visitatori))
+				return $visitatori;
+			return false;
+		}
+		return false;
+	}
 	
 	/* Controlla se l'utente esiste. */
 	public function isUser($nickname) {
@@ -69,11 +84,43 @@ class User extends Configuration {
 	/* Controlla se l'utente è loggato. */
 	public function isLogged() {
 		$cookie = $this->getCookie();
-		if(!$cookie)
+		if(!$cookie) {
+			$this->newVisitator();
 			return false;
-		if(!$query = parent::query("SELECT COUNT(*) FROM utenti WHERE secret='$cookie'"))
+		}
+		if(!$query = parent::query("SELECT COUNT(*) FROM utenti WHERE secret='$cookie'")) {
+			$this->newVisitator();
 			return false;
-		return mysql_result($query, 0, 0) > 0 ? true : false;
+		}
+		$logged = mysql_result($query, 0, 0) > 0 ? true : false;
+		if(($logged) && (is_array($this->username)))
+			$this->editUser('lastaction', time(), $this->username[0]->nickname);
+		else
+			$this->newVisitator();
+		return $logged;
+	}
+	
+	/* Ritorna la lista di utenti online. */
+	public function getUserOnline() {
+		$data = time();
+		$user = $this->getUser();
+		$userOnline = array();
+		foreach($user as $v)
+			if(($data - $v->lastaction) <= 60*5) // 5 minuti
+				$userOnline[] = $v->nickname;
+		return $userOnline;
+	}
+	
+	/* Ritorna il numero di visitatori online. */
+	public function getVisitatorOnline() {
+		$data = time();
+		if(!$visitator = $this->getVisitator())
+			return 0;
+		$visitatorOnline = 0;
+		foreach($visitator as $v)
+			if(($data - $v->lastaction) <= 60*5) // 5 minuti
+				++$visitatorOnline;
+		return $visitatorOnline;
 	}
 	
 	/* Ricerca gli utenti per un campo specifico. */
@@ -120,6 +167,28 @@ class User extends Configuration {
 	/* Modifica un utente. */
 	public function editUser($campo, $valore, $nickname) {
 		return parent::query("UPDATE utenti SET $campo='$valore' WHERE nickname='$nickname'") ? true : false;
+	}
+	
+	/* Crea un nuovo visitatore. */
+	public function newVisitator() {
+		$lastaction = time();
+		$data = date('d-m-y');
+		$ora = date('G:m:i');	
+		$ip = parent::purge($_SERVER['REMOTE_ADDR']);
+		if(!$visitator = $this->getVisitator()) // Mai nessun visitatore
+			return parent::query("INSERT INTO visitatori(ip, lastaction, data, ora) VALUES('$ip', '$lastaction', '$data', '$ora')") ? true : false;
+		else
+			foreach($visitator as $v)
+				if((($lastaction - $v->lastaction) > 60*5) && ($ip == $v->ip)) { // 5 minuti
+					parent::query("UPDATE visitatori SET lastaction='$lastaction', data='$data', ora='$ora' WHERE ip='$ip'");
+					return true;
+				}
+		return false;
+	}
+	
+	/* Cancella i visitatori. */
+	public function deleteVisitator() {
+		return parent::query('DELETE FROM visitatori') ? true : false;
 	}
 	
 	/* Elimina un utente. */

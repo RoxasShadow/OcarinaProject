@@ -19,6 +19,8 @@ $rendering->addValue('utente', $comment->isLogged() ? $comment->username[0]->nic
 $rendering->skin = $comment->isLogged() ? $comment->username[0]->skin : $comment->config[0]->skin;
 $rendering->addValue('titolo', 'Cerca nel sito &raquo; '.$comment->config[0]->nomesito);
 $rendering->addValue('description', $comment->getLanguage('description', 9));
+$rendering->addValue('useronline', $comment->getUserOnline());
+$rendering->addValue('visitatoronline', $comment->getVisitatorOnline());
 
 if($cercaNews !== '') {
 	if(!$search = $comment->searchNews($cercaNews))

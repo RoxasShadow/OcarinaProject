@@ -16,6 +16,8 @@ $rendering->addValue('utente', $user->isLogged() ? $user->username[0]->nickname 
 $rendering->skin = $user->isLogged() ? $user->username[0]->skin : $user->config[0]->skin;
 $rendering->addValue('titolo', 'Login &raquo; '.$user->config[0]->nomesito);
 $rendering->addValue('description', $user->getLanguage('description', 2));
+$rendering->addValue('useronline', $user->getUserOnline());
+$rendering->addValue('visitatoronline', $user->getVisitatorOnline());
 
 if($user->isLogged())
 	$rendering->addValue('result', 'Hai già effettuato l\'accesso, non hai bisogno di farlo nuovamente.');

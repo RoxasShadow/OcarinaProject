@@ -15,6 +15,8 @@ $id = ((isset($_GET['id'])) && is_numeric($_GET['id'])) ? (int)$_GET['id'] : '';
 $rendering->addValue('utente', $comments->isLogged() ? $comments->username[0]->nickname : '');
 $rendering->skin = $comments->isLogged() ? $comments->username[0]->skin : $comments->config[0]->skin;
 $rendering->addValue('titolo', $id !== '' ? 'Commento numero #'.$id.' &raquo; '.$comments->config[0]->nomesito : $comments->config[0]->nomesito);
+$rendering->addValue('useronline', $comments->getUserOnline());
+$rendering->addValue('visitatoronline', $comments->getVisitatorOnline());
 
 if($id == '')
 	$rendering->addValue('errore', 'Non è stato selezionato nessun commento.');

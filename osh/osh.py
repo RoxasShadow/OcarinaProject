@@ -53,6 +53,8 @@ class osh:
 		print 'page -> read the pages'
 		print 'searchpage -> search the pages'
 		print 'user -> read the user profiles'
+		print 'useronline -> read the online users'
+		print 'visitatoronline -> read the number of online visitators'
 		print 'login -> login'
 		print 'logout -> logout'
 		print 'lastversion -> read the version and checks for new'
@@ -187,6 +189,25 @@ class osh:
 				print self.bold+'Registrated the '+self.normal+self.htmlentities(json['response']['data'])
 				print self.bold+'Bio: '+self.normal+self.htmlentities(json['response']['bio'])
 
+	def parseUserOnline(self, json):
+		if not json['response']:
+			print self.bold+'Nothing'+self.normal+' user is online.'			
+		else:
+			try:
+				print self.bold+'Online users: '+self.normal
+				for n in range(len(json['response'])):
+					print self.htmlentities(json['response'][n]['nickname'])
+			except KeyError:
+				print 'Nothing user is online.'
+
+	def parseVisitatorOnline(self, json):
+		if int(json['response']) == 0:
+			print +self.bold+'Nothing'+self.normal+' visitator is online.'
+		elif int(json['response']) == 1:
+			print +self.bold+'Only'+self.normal+' a visitator is online.'
+		else:
+			print 'There are '+self.bold+json['response']+self.normal+' visitators online.'
+
 	def parseCreateComment(self, json):
 		if((int(json['response']) != 13) and (int(json['response']) != 14)):
 			print self.log+'Error: '+self.normal+self.error[int(json['response'])]
@@ -276,6 +297,10 @@ class osh:
 				self.parseNews(self.getContent('searchpage', 'contenuto', raw_input("Write the keyword for find your pages: ")), True)
 			elif action == 'user':
 				self.parseUser(self.getContent('user', 'nickname', raw_input("Write the nickname of the user wich you want to see the profile, otherwise type enter to see all the user profiles: ")))
+			elif action == 'useronline':
+				self.parseUserOnline(self.getContent('useronline'))
+			elif action == 'visitatoronline':
+				self.parseVisitatorOnline(self.getContent('visitatoronline'))
 			elif action == 'login':
 				if self.parseIsLogged(self.getContent('islogged')):
 					print 'You are alrady logged.'
