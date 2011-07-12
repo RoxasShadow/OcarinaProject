@@ -17,6 +17,22 @@ class News extends Category {
 					return false;
 				array_push($news, parent::get($query));
 				if(!empty($news))
+					if(parent::isLogged()) {
+						$visitatori = explode('|', $news[0]->visitatori);
+						$ip = parent::purge($_SERVER['REMOTE_ADDR']);
+						if(!in_array($ip, $visitatori)) {
+							if((!isset($news[0]->visitatori)) || ($news[0]->visitatori == ''))
+								$visitatori = $ip;
+							else
+								$visitatori = $news[0]->visitatori.'|||'.$ip;
+							if((!isset($news[0]->visite)) || ($news[0]->visite == ''))
+								$visite = 1;
+							else
+								$visite = $news[0]->visite += 1;
+							$this->editNews('visite', $visite, $news[0]->minititolo);
+							$this->editNews('visitatori', $visitatori, $news[0]->minititolo);
+						}
+					}
 					return $news;
 				return false;
 			}
@@ -131,7 +147,7 @@ class News extends Category {
 				return false;
 			$query = 'INSERT INTO news(';
 			foreach($campi as $var)
-				if(($var !== 'id') && ($var !== 'dataultimamodifica') && ($var !== 'oraultimamodifica') && ($var !== 'autoreultimamodifica'))
+				if(($var !== 'id') && ($var !== 'dataultimamodifica') && ($var !== 'oraultimamodifica') && ($var !== 'autoreultimamodifica') && ($var !== 'visite') && ($var !== 'visitatori'))
 				$query .= $var.', ';
 			$query = trim($query, ', ');
 			$query .= ') VALUES(';

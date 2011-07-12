@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-10 13:12:49
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-12 00:35:44
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/archivio.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:1868275684e19a551bbd7e8-19567380%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:17517005334e1b96e0c0fa90-39508859%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '3d663334c66d48e658bcc01e778725dbf98d0885' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/default/archivio.tpl',
-      1 => 1309800500,
+      1 => 1310430932,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '1868275684e19a551bbd7e8-19567380',
+  'nocache_hash' => '17517005334e1b96e0c0fa90-39508859',
   'function' => 
   array (
   ),
@@ -43,7 +43,8 @@ if ($_smarty_tpl->_count($_from) > 0){
 					&raquo; <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /news.php?titolo=<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->minititolo;?>
 "><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->titolo;?>
-</a><br />
+</a> (<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->visite;?>
+ visite)<br />
 				<?php }?>
 			<?php }} ?>
 		<?php }?>
@@ -67,7 +68,8 @@ if ($_smarty_tpl->_count($_from) > 0){
 					&raquo; <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /pagina.php?titolo=<?php echo $_smarty_tpl->getVariable('pagine')->value[$_smarty_tpl->tpl_vars['key']->value]->minititolo;?>
 "><?php echo $_smarty_tpl->getVariable('pagine')->value[$_smarty_tpl->tpl_vars['key']->value]->titolo;?>
-</a><br />
+</a> (<?php echo $_smarty_tpl->getVariable('pagine')->value[$_smarty_tpl->tpl_vars['key']->value]->visite;?>
+ visite)<br />
 				<?php }?>
 			<?php }} ?>
 		<?php }?>

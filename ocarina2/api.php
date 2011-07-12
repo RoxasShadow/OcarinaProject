@@ -95,7 +95,8 @@ if(($action == 'news') && ($titolo !== '')) {
 				echo '"hour":'.json_encode($comment[0]->ora).',';
 				echo '"lastmoddate":'.json_encode($comment[0]->dataultimamodifica).',';
 				echo '"lastmodhour":'.json_encode($comment[0]->oraultimamodifica).',';
-				echo '"lastmodauthor":'.json_encode($comment[0]->autoreultimamodifica);
+				echo '"lastmodauthor":'.json_encode($comment[0]->autoreultimamodifica).',';
+				echo '"visits":'.json_encode($comment[0]->visite);
 			echo '}';
 		echo '}';
 	}
@@ -117,7 +118,8 @@ elseif(($action == 'news') && ($titolo == '')) {
 				$json .= '"hour":'.json_encode($v->ora).',';
 				$json .= '"lastmoddate":'.json_encode($v->dataultimamodifica).',';
 				$json .= '"lastmodhour":'.json_encode($v->oraultimamodifica).',';
-				$json .= '"lastmodauthor":'.json_encode($v->autoreultimamodifica);
+				$json .= '"lastmodauthor":'.json_encode($v->autoreultimamodifica).',';
+				$json .= '"visits":'.json_encode($v->visite);
 			$json .= '},';
 		}
 	 	echo trim($json, ',').']}';
@@ -143,7 +145,8 @@ elseif(($action == 'searchnews') && ($contenuto !== '')) {
 				$json .= '"hour":'.json_encode($v->ora).',';
 				$json .= '"lastmoddate":'.json_encode($v->dataultimamodifica).',';
 				$json .= '"lastmodhour":'.json_encode($v->oraultimamodifica).',';
-				$json .= '"lastmodauthor":'.json_encode($v->autoreultimamodifica);
+				$json .= '"lastmodauthor":'.json_encode($v->autoreultimamodifica).',';
+				$json .= '"visits":'.json_encode($v->visite);
 			$json .= '},';
 		}
 	 	echo trim($json, ',').']}';
@@ -275,7 +278,8 @@ elseif(($action == 'page') && ($titolo !== '')) {
 				echo '"hour":'.json_encode($pagina[0]->ora).',';
 				echo '"lastmoddate":'.json_encode($pagina[0]->dataultimamodifica).',';
 				echo '"lastmodhour":'.json_encode($pagina[0]->oraultimamodifica).',';
-				echo '"lastmodauthor":'.json_encode($pagina[0]->autoreultimamodifica);
+				echo '"lastmodauthor":'.json_encode($pagina[0]->autoreultimamodifica).',';
+				echo '"visits":'.json_encode($pagina[0]->visite);
 			echo '}';
 		echo '}';
 	}
@@ -297,7 +301,8 @@ elseif(($action == 'page') && ($titolo == '')) {
 				$json .= '"hour":'.json_encode($v->ora).',';
 				$json .= '"lastmoddate":'.json_encode($v->dataultimamodifica).',';
 				$json .= '"lastmodhour":'.json_encode($v->oraultimamodifica).',';
-				$json .= '"lastmodauthor":'.json_encode($v->autoreultimamodifica);
+				$json .= '"lastmodauthor":'.json_encode($v->autoreultimamodifica).',';
+				$json .= '"visits":'.json_encode($v->visite);
 			$json .= '},';
 		}
 	 	echo trim($json, ',').']}';
@@ -323,7 +328,8 @@ elseif(($action == 'searchpage') && ($contenuto !== '')) {
 				$json .= '"hour":'.json_encode($v->ora).',';
 				$json .= '"lastmoddate":'.json_encode($v->dataultimamodifica).',';
 				$json .= '"lastmodhour":'.json_encode($v->oraultimamodifica).',';
-				$json .= '"lastmodauthor":'.json_encode($v->autoreultimamodifica);
+				$json .= '"lastmodauthor":'.json_encode($v->autoreultimamodifica).',';
+				$json .= '"visits":'.json_encode($v->visite);
 			$json .= '},';
 		}
 	 	echo trim($json, ',').']}';

@@ -131,6 +131,7 @@ class osh:
 							lastmod +=  ' by '+self.bold+self.htmlentities(json['response'][n]['lastmodauthor'])+'.'
 					print lastmod
 					print self.htmlentities(json['response'][n]['content'])
+					print 'Visits: '+self.bold+self.htmlentities(json['response'][n]['visits'])+self.normal
 					if not page:
 						print 'Number of comments: '+self.bold+self.parseCountComment(self.getContent('countcomment', 'title', self.htmlentities(json['response'][n]['minititle'])))+self.bold
 					print self.separator+'----------------------------------------------------'+self.normal
@@ -149,6 +150,7 @@ class osh:
 						lastmod +=  ' by '+self.bold+self.htmlentities(json['response']['lastmodauthor'])+'.'
 				print lastmod
 				print self.htmlentities(json['response']['content'])
+				print 'Visits: '+self.bold+self.htmlentities(json['response']['visits'])+self.normal
 				if not page:
 					print 'Number of comments: '+self.bold+self.parseCountComment(self.getContent('countcomment', 'title', self.htmlentities(json['response']['minititle'])))+self.normal
 

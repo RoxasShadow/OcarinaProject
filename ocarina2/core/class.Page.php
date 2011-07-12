@@ -17,6 +17,22 @@ class Page extends Category {
 					return false;
 				array_push($pagine, parent::get($query));
 				if(!empty($pagine))
+					if(parent::isLogged()) {
+						$visitatori = explode('|', $pagine[0]->visitatori);
+						$ip = parent::purge($_SERVER['REMOTE_ADDR']);
+						if(!in_array($ip, $visitatori)) {
+							if((!isset($pagine[0]->visitatori)) || ($pagine[0]->visitatori == ''))
+								$visitatori = $ip;
+							else
+								$visitatori = $pagine[0]->visitatori.'|||'.$ip;
+							if((!isset($pagine[0]->visite)) || ($pagine[0]->visite == ''))
+								$visite = 1;
+							else
+								$visite = $pagine[0]->visite += 1;
+							$this->editPage('visite', $visite, $pagine[0]->minititolo);
+							$this->editPage('visitatori', $visitatori, $pagine[0]->minititolo);
+						}
+					}
 					return $pagine;
 				return false;
 			}
@@ -135,7 +151,7 @@ class Page extends Category {
 				return false;
 			$query = 'INSERT INTO pagine(';
 			foreach($campi as $var)
-				if(($var !== 'id') && ($var !== 'dataultimamodifica') && ($var !== 'oraultimamodifica') && ($var !== 'autoreultimamodifica'))
+				if(($var !== 'id') && ($var !== 'dataultimamodifica') && ($var !== 'oraultimamodifica') && ($var !== 'autoreultimamodifica') && ($var !== 'visite') && ($var !== 'visitatori'))
 				$query .= $var.', ';
 			$query = trim($query, ', ');
 			$query .= ') VALUES(';

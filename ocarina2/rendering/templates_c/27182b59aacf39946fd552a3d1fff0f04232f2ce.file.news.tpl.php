@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-08 22:32:10
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-12 00:22:21
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/news.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:415449084e17856a2781e9-85214587%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:13543384094e1b93bde5a191-49982142%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '27182b59aacf39946fd552a3d1fff0f04232f2ce' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/default/news.tpl',
-      1 => 1309938293,
+      1 => 1310429967,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '415449084e17856a2781e9-85214587',
+  'nocache_hash' => '13543384094e1b93bde5a191-49982142',
   'function' => 
   array (
   ),

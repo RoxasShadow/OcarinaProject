@@ -11,7 +11,7 @@
 			&bull; <b>News</b> <a href="{$url_index}/feed.php?content=news"><img src="{$url_rendering}/templates/{$skin}/resources/images/rss.png" alt="Feed RSS News" height="12" width="18" /></a><br />
 			{foreach from=$news key=key item=item}
 				{if $news[$key]->approvato == 1}
-					&raquo; <a href="{$url_index}/news.php?titolo={$news[$key]->minititolo}">{$news[$key]->titolo}</a><br />
+					&raquo; <a href="{$url_index}/news.php?titolo={$news[$key]->minititolo}">{$news[$key]->titolo}</a> ({$news[$key]->visite} visite)<br />
 				{/if}
 			{/foreach}
 		{/if}
@@ -22,7 +22,7 @@
 			&bull; <b>Pagine <a href="{$url_index}/feed.php?content=page"><img src="{$url_rendering}/templates/{$skin}/resources/images/rss.png" alt="Feed RSS News" height="12" width="18" /></a></b><br />
 			{foreach from=$pagine key=key item=item}
 				{if $pagine[$key]->approvato == 1}
-					&raquo; <a href="{$url_index}/pagina.php?titolo={$pagine[$key]->minititolo}">{$pagine[$key]->titolo}</a><br />
+					&raquo; <a href="{$url_index}/pagina.php?titolo={$pagine[$key]->minititolo}">{$pagine[$key]->titolo}</a> ({$pagine[$key]->visite} visite)<br />
 				{/if}
 			{/foreach}
 		{/if}
