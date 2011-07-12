@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-08 22:31:33
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-12 22:12:47
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/index.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:11850720894e17854596eb85-50097571%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:11874253854e1cc6df761189-22813835%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '47e3a249c9ca2bb78ea883342068b5a2a23952df' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/default/index.tpl',
-      1 => 1309938293,
+      1 => 1310508745,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '11850720894e17854596eb85-50097571',
+  'nocache_hash' => '11874253854e1cc6df761189-22813835',
   'function' => 
   array (
   ),
@@ -27,8 +27,8 @@ $_smarty_tpl->decodeProperties(array (
  dal <?php echo $_smarty_tpl->getVariable('lastlogout')->value;?>
 , siamo felici di rivederti!</div>
 	<?php }?>
-	<?php if (isset($_smarty_tpl->getVariable('errore',null,true,false)->value)){?>
-		<div class="titolo"><?php echo $_smarty_tpl->getVariable('errore')->value;?>
+	<?php if (isset($_smarty_tpl->getVariable('error',null,true,false)->value)){?>
+		<div class="titolo"><?php echo $_smarty_tpl->getVariable('error')->value;?>
 </div>
 	<?php }else{ ?>
 		<?php if (is_array($_smarty_tpl->getVariable('news')->value)){?>

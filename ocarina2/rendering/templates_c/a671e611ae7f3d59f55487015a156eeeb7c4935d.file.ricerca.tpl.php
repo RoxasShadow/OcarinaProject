@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-11 20:07:04
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-12 23:20:58
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/ricerca.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:13094867664e1b57e8af9179-13210442%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:19922024814e1cd6da348a06-78902266%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'a671e611ae7f3d59f55487015a156eeeb7c4935d' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/default/ricerca.tpl',
-      1 => 1309526080,
+      1 => 1310512855,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '13094867664e1b57e8af9179-13210442',
+  'nocache_hash' => '19922024814e1cd6da348a06-78902266',
   'function' => 
   array (
   ),

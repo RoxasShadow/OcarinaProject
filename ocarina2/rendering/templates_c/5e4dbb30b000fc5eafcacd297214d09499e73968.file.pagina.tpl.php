@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-12 16:00:43
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-12 22:55:04
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/pagina.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:6056135154e1c6fabed8cb4-48873102%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:5748034684e1cd0c8052c58-39830208%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '5e4dbb30b000fc5eafcacd297214d09499e73968' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/default/pagina.tpl',
-      1 => 1310486430,
+      1 => 1310486761,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '6056135154e1c6fabed8cb4-48873102',
+  'nocache_hash' => '5748034684e1cd0c8052c58-39830208',
   'function' => 
   array (
   ),
@@ -50,7 +50,7 @@ if ($_smarty_tpl->_count($_from) > 0){
 					<div class="news"><p><?php echo $_smarty_tpl->getVariable('pagina')->value[$_smarty_tpl->tpl_vars['key']->value]->contenuto;?>
 </p></div><br />
 					<a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
-/vote.php?titolo=<?php echo $_smarty_tpl->getVariable('pagina')->value[$_smarty_tpl->tpl_vars['key']->value]->minititolo;?>
+/vote.php?action=page&titolo=<?php echo $_smarty_tpl->getVariable('pagina')->value[$_smarty_tpl->tpl_vars['key']->value]->minititolo;?>
 ">Vota questa pagina</a> (<?php echo $_smarty_tpl->getVariable('pagina')->value[$_smarty_tpl->tpl_vars['key']->value]->voti;?>
  voti)
 				<?php }else{ ?>

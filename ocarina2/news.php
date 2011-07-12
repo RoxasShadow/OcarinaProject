@@ -15,15 +15,15 @@ $commento = isset($_POST['comment']) ? $comment->purge($_POST['comment']) : '';
 
 $rendering->addValue('utente', $comment->isLogged() ? $comment->username[0]->nickname : '');
 $rendering->skin = $comment->isLogged() ? $comment->username[0]->skin : $comment->config[0]->skin;
-$rendering->addValue('titolo', $titolo !== '' ? $titolo.' &raquo; '.$comment->config[0]->nomesito : $comment->config[0]->nomesito);
+$rendering->addValue('titolo', $titolo !== '' ? $titolo.$comment->getLanguage('title', 2).$comment->config[0]->nomesito : $comment->config[0]->nomesito);
 $rendering->addValue('useronline', $comment->getUserOnline());
 $rendering->addValue('visitatoronline', $comment->getVisitatorOnline());
 
 if($titolo == '')
-	$rendering->addValue('errore', 'Non è stata selezionata nessuna news.');
+	$rendering->addValue('errore', $comment->getLanguage('news', 1));
 else {
 	if(!$news = $comment->getNews($titolo))
-		$rendering->addValue('errore', 'La news selezionata non è stata trovata.');
+		$rendering->addValue('errore', $comment->getLanguage('news', 2));
 	else {
 		if($comment->config[0]->bbcode == 1) {
 			for($i=0, $count=count($news); $i<$count; ++$i)
@@ -34,7 +34,7 @@ else {
 		$rendering->addValue('news', $news);
 		
 		if(!$getComment = $comment->getComment($news[0]->minititolo))
-			$rendering->addValue('commenti', 'Nessun commento ancora presente.');
+			$rendering->addValue('commenti', $comment->getLanguage('news', 3));
 		else {
 			if($comment->config[0]->bbcode == 1)
 				for($i=0, $count=count($getComment); $i<$count; ++$i)
@@ -44,20 +44,20 @@ else {
 		if(($commento !== '') && ($comment->isLogged())) {
 			$array = ($comment->config[0]->approvacommenti == 0) ? array($comment->username[0]->nickname, $commento, $news[0]->minititolo, date('d-m-y'), date('G:m:s'), 1) : array($comment->username[0]->nickname, $commento, $news[0]->minititolo, date('d-m-y'), date('G:m:s'), 0);
 			if($comment->config[0]->commenti == 0)
-				$rendering->addValue('commentSended', 'I commenti sono attualmente bloccati, attendi per il redirect...'.header('Refresh: 2; URL='.$comment->config[0]->url_index.'/news.php?titolo='.$titolo));
+				$rendering->addValue('commentSended', $comment->getLanguage('news', 4).header('Refresh: 2; URL='.$comment->config[0]->url_index.'/news.php?titolo='.$titolo));
 			elseif($comment->createComment($array)) {
 				if($comment->config[0]->log == 1)
 					$comment->log($comment->username[0]->nickname, 'Comment sended.');
-				($comment->config[0]->approvacommenti == 0) ? $rendering->addValue('commentSended', 'Il commento è stato inviato, attendi per il redirect...'.header('Refresh: 2; URL='.$comment->config[0]->url_index.'/news.php?titolo='.$titolo)) : $rendering->addValue('commentSended', 'Il commento è stato inviato ed è in attesa per essere approvato, attendi per il redirect...'.header('Refresh: 2; URL='.$comment->config[0]->url_index.'/news.php?titolo='.$titolo));
+				($comment->config[0]->approvacommenti == 0) ? $rendering->addValue('commentSended', $comment->getLanguage('news', 5).header('Refresh: 2; URL='.$comment->config[0]->url_index.'/news.php?titolo='.$titolo)) : $rendering->addValue('commentSended', $comment->getLanguage('news', 6).header('Refresh: 2; URL='.$comment->config[0]->url_index.'/news.php?titolo='.$titolo));
 			}
 			else {
 				if($comment->config[0]->log == 1)
 					$comment->log($comment->username[0]->nickname, 'Comment was not sended.');
-				$rendering->addValue('commentSended', 'È accaduto un errore nell\'invio del commento, attendi per il redirect...'.header('Refresh: 2; URL='.$comment->config[0]->url_index.'/news.php?titolo='.$titolo));
+				$rendering->addValue('commentSended', $comment->getLanguage('news', 7).header('Refresh: 2; URL='.$comment->config[0]->url_index.'/news.php?titolo='.$titolo));
 			}
 		}
 		elseif(($commento !== '') && (!$comment->isLogged()))
-			$rendering->addValue('commentSended', 'Solo gli utenti registrati possono commentare le news, attendi per il redirect...'.header('Refresh: 2; URL='.$comment->config[0]->url_index.'/login.php'));
+			$rendering->addValue('commentSended', $comment->getLanguage('news', 8).header('Refresh: 2; URL='.$comment->config[0]->url_index.'/login.php'));
 	}
 }
 $rendering->addValue('logged', $comment->isLogged());

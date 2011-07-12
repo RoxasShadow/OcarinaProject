@@ -19,11 +19,11 @@ $rendering->addValue('useronline', $news->getUserOnline());
 $rendering->addValue('visitatoronline', $news->getVisitatorOnline());
 
 if(!$getNews = $news->searchNews(''))
-	$rendering->addValue('errore_news', 'È accaduto un errore.');
+	$rendering->addValue('error_news', $news->getLanguage('error', 0));
 else
 	$rendering->addValue('news', $getNews);
 if(!$getPage = $pagine->searchPage('', 'wildcard'))
-	$rendering->addValue('errore_pagine', 'È accaduto un errore.');
+	$rendering->addValue('error_page', $news->getLanguage('error', 0));
 else
 	$rendering->addValue('pagine', $getPage);
 

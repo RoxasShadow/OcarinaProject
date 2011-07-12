@@ -14,15 +14,15 @@ $titolo = ((isset($_GET['titolo'])) && ($_GET['titolo'] !== '')) ? $pagina->purg
 
 $rendering->addValue('utente', $pagina->isLogged() ? $pagina->username[0]->nickname : '');
 $rendering->skin = $pagina->isLogged() ? $pagina->username[0]->skin : $pagina->config[0]->skin;
-$rendering->addValue('titolo', $titolo !== '' ? $titolo.' &raquo; '.$pagina->config[0]->nomesito : $pagina->config[0]->nomesito);
+$rendering->addValue('titolo', $titolo !== '' ? $titolo.$pagina->getLanguage('title', 2).$pagina->config[0]->nomesito : $pagina->config[0]->nomesito);
 $rendering->addValue('useronline', $pagina->getUserOnline());
 $rendering->addValue('visitatoronline', $pagina->getVisitatorOnline());
 
 if($titolo == '')
-	$rendering->addValue('errore', 'Non è stata selezionata nessuna pagina.');
+	$rendering->addValue('errore', $pagina->getLanguage('page', 0));
 else {
 	if(!$getPage = $pagina->getPage($titolo))
-		$rendering->addValue('errore', 'La pagina selezionata non è stata trovata.');
+		$rendering->addValue('errore', $pagina->getLanguage('page', 1));
 	else {
 		if($pagina->config[0]->bbcode == 1)
 			for($i=0, $count=count($getPage); $i<$count; ++$i)

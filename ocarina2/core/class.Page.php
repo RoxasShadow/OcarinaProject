@@ -21,7 +21,7 @@ class Page extends Category {
 						$visitatori = explode('|||', $pagine[0]->visitatori);
 						if(!in_array($_SERVER['REMOTE_ADDR'], $visitatori)) {
 							if((!isset($pagine[0]->visitatori)) || ($pagine[0]->visitatori == ''))
-								$visitatori = $ip;
+								$visitatori = $_SERVER['REMOTE_ADDR'];
 							else
 								$visitatori = $pagine[0]->visitatori.'|||'.$_SERVER['REMOTE_ADDR'];
 							if((!isset($pagine[0]->visite)) || ($pagine[0]->visite == ''))

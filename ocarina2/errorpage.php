@@ -12,7 +12,7 @@ $id = ((isset($_GET['id'])) && is_numeric($_GET['id'])) ? (int)$_GET['id'] : '';
 
 $rendering->addValue('utente', $news->isLogged() ? $news->username[0]->nickname : '');
 $rendering->skin = $news->isLogged() ? $news->username[0]->skin : $news->config[0]->skin;
-$rendering->addValue('titolo', 'Errore '.$id.' &raquo; '.$news->config[0]->nomesito);
+$rendering->addValue('titolo', $news->getLanguage('title', 3).$id.$news->getLanguage('title', 2).$news->config[0]->nomesito);
 $rendering->addValue('useronline', $news->getUserOnline());
 $rendering->addValue('visitatoronline', $news->getVisitatorOnline());
 

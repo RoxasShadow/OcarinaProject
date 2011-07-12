@@ -19,12 +19,12 @@ $rendering->addValue('useronline', $user->getUserOnline());
 $rendering->addValue('visitatoronline', $user->getVisitatorOnline());
 
 if($nickname == '') {
-	$rendering->addValue('titolo', 'Profili utenti &raquo; '.$user->config[0]->nomesito);
+	$rendering->addValue('titolo', $user->getLanguage('profile', 0).$user->getLanguage('title', 2).$user->config[0]->nomesito);
 	$rendering->addValue('listautenti', $user->getUser());
 }
 else {
-	$rendering->addValue('titolo', (($user->isLogged()) && ($nickname == $user->username[0]->nickname)) ? 'Il tuo profilo' : 'Profilo di '.$nickname.' &raquo; '.$user->config[0]->nomesito);
+	$rendering->addValue('titolo', (($user->isLogged()) && ($nickname == $user->username[0]->nickname)) ? $user->getLanguage('profile', 1) : $user->getLanguage('profile', 2).$nickname.$user->getLanguage('title', 2).$user->config[0]->nomesito);
 	$getUser = $user->getUser($nickname);
-	$rendering->addValue('result', $getUser ? $getUser : 'L\'utente da te cercato non è attualmente registrato.');		
+	$rendering->addValue('result', $getUser ? $getUser : $user->getLanguage('profile', 3));		
 }
 (($user->isLogged()) && ($user->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('profilo.tpl');

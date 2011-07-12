@@ -14,7 +14,7 @@ $submit = isset($_POST['submit']) ? true : false;
 
 $rendering->addValue('utente', $user->isLogged() ? $user->username[0]->nickname : '');
 $rendering->skin = $user->isLogged() ? $user->username[0]->skin : $user->config[0]->skin;
-$rendering->addValue('titolo', 'Login &raquo; '.$user->config[0]->nomesito);
+$rendering->addValue('titolo', $user->getLanguage('title', 4).$user->getLanguage('title', 2).$user->config[0]->nomesito);
 $rendering->addValue('description', $user->getLanguage('description', 2));
 $rendering->addValue('useronline', $user->getUserOnline());
 $rendering->addValue('visitatoronline', $user->getVisitatorOnline());
@@ -26,18 +26,18 @@ elseif($submit)
 		if($user->login($nickname, $password)) {
 			if($user->config[0]->log == 1)
 				$user->log($nickname, 'Logged in.');
-			$rendering->addValue('result', 'Login effettuato. Attendi per il redirect...'.header('Refresh: 2; URL='.$user->config[0]->url_index.'/Aindex.php?welcome=true'));
+			$rendering->addValue('result', $user->getLanguage('login', 0).header('Refresh: 2; URL='.$user->config[0]->url_index.'/Aindex.php?welcome=true'));
 		}
 		else {
 			if($user->config[0]->log == 1)
 				$user->log($nickname, 'Login failed.');
-			$rendering->addValue('result', 'È accaduto un problema durante l\'accesso. Controlla di aver inserito i dati correttamente e che il tuo account sia attivo.');
+			$rendering->addValue('result', $user->getLanguage('login', 1));
 		}
 	}
 	else {
 		if($user->config[0]->log == 1)
 			$user->log($nickname, 'Login failed.');
-		$rendering->addValue('result', 'È accaduto un problema durante l\'accesso. Controlla di aver inserito i dati correttamente e di non aver lasciato alcun campo vuoto.');
+		$rendering->addValue('result', $user->getLanguage('login', 2));
 	}
 $rendering->addValue('logged', $user->isLogged());
 $rendering->addValue('submit', $submit);

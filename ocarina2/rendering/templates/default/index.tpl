@@ -5,8 +5,8 @@
 	{if isset($lastlogout)}
 		<div align="center">Ciao {$utente}, non ti connettevi a {$nomesito} dal {$lastlogout}, siamo felici di rivederti!</div>
 	{/if}
-	{if isset($errore)}
-		<div class="titolo">{$errore}</div>
+	{if isset($error)}
+		<div class="titolo">{$error}</div>
 	{else}
 		{if is_array($news)}
 			{foreach from=$news key=key item=item}

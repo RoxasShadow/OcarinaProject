@@ -15,7 +15,7 @@ $submit = isset($_POST['submit']) ? true : false;
 
 $rendering->addValue('utente', $user->isLogged() ? $user->username[0]->nickname : '');
 $rendering->skin = $user->isLogged() ? $user->username[0]->skin : $user->config[0]->skin;
-$rendering->addValue('titolo', 'Recupera password &raquo; '.$user->config[0]->nomesito);
+$rendering->addValue('titolo', $user->getLanguage('title', 7).$user->getLanguage('title', 2).$user->config[0]->nomesito);
 $rendering->addValue('description', $user->getLanguage('description', 7));
 $rendering->addValue('useronline', $user->getUserOnline());
 $rendering->addValue('visitatoronline', $user->getVisitatorOnline());
@@ -24,7 +24,7 @@ if(!$user->isLogged())
 	if(($email == '') && ($recupero) && ($codiceRecupero !== '')) {
 		$username = $user->searchUserByField('codicerecupero', $codiceRecupero);
 		if(!$username) {
-			$rendering->addValue('result', 'Il codice per il recupero da te inserito non è valido.');
+			$rendering->addValue('result', $user->getLanguage('recoverpassword', 0));
 			if($user->config[0]->log == 1)
 				$user->log('~', 'Invalid recover code.');
 			$rendering->addValue('recupera', '');
@@ -35,16 +35,16 @@ if(!$user->isLogged())
 			if(($user->editUser('codicerecupero', '', $username[0]->nickname)) && ($user->editUser('password', md5($password), $username[0]->nickname))) {
 				if($user->config[0]->log == 1)
 					$user->log($username[0]->nickname, 'Password recovered.');
-				$rendering->addValue('result', 'La tua nuova password è '.$password.'. Se vuoi, puoi modificarla dopo aver effettuato l\accesso.');
+				$rendering->addValue('result', str_replace('{$password}', $password, $user->getLanguage('recoverpassword', 1)));
 				$rendering->addValue('recupera', '');
 			}
 			else {
-				$rendering->addValue('result', 'È accaduto un problema durante la reimpostazione della password.');
+				$rendering->addValue('result', $user->getLanguage('recoverpassword', 2));
 				$rendering->addValue('recupera', '');
 			}
 		}
 		else
-			$rendering->addValue('result', 'Il codice per il recupero da te inserito non è valido.');
+			$rendering->addValue('result', $user->getLanguage('recoverpassword', 3));
 	}
 	elseif(($email !== '') && (!$recupero)) {
 		$username = $user->searchUserByField('email', $email);
@@ -61,40 +61,40 @@ Per attivarla, ti basta cliccare il seguente link: '.$user->config[0]->url_index
 Se non sei tu '.$nickname.' oppure semplicemente non hai richiesto una nuova password, ignora questa email.
 
 Il webmaster di '.$user->config[0]->nomesito.'.');
-						$rendering->addValue('result', 'È stata inviata una email all\'indirizzo da te dato per aiutarti a recuperare la password.');
+						$rendering->addValue('result', $user->getLanguage('recoverpassword', 4));
 						if($user->config[0]->log == 1)
 							$user->log($nickname, 'Recover mail sended.');
 					}
 					else {
-						$rendering->addValue('result', 'È accaduto un problema durante il recupero della password.');
+						$rendering->addValue('result', $user->getLanguage('recoverpassword', 5));
 						if($user->config[0]->log == 1)
 							$user->log('~', 'Password recovery failed.');
 					}
 				else {
-					$rendering->addValue('result', 'È accaduto un problema durante il recupero della password.');
+					$rendering->addValue('result', $user->getLanguage('recoverpassword', 5));
 					if($user->config[0]->log == 1)
 						$user->log('~', 'Password recovery failed.');
 				}					
 			}
 			else {
-				$rendering->addValue('result', 'L\'email da immessa non corrisponde a nessun utente attualmente registrato.');
+				$rendering->addValue('result', $user->getLanguage('recoverpassword', 6));
 				if($user->config[0]->log == 1)
 					$user->log('~', 'Recover mail was not sended.');
 			}
 		}
 		else {
-			$rendering->addValue('result', 'L\'email da immessa non corrisponde a nessun utente attualmente registrato.');
+			$rendering->addValue('result', $user->getLanguage('recoverpassword', 6));
 			if($user->config[0]->log == 1)
 				$user->log('~', 'Recover mail was not sended.');
 		}
 	}
 	else {
-		$rendering->addValue('result', 'È accaduto un problema durante la modifica della password. Controlla di aver inserito correttamente l\'indirizzo email.');
+		$rendering->addValue('result', $user->getLanguage('recoverpassword', 7));
 		if($user->config[0]->log == 1)
 			$user->log('~', 'Recover mail was not sended.');
 	}
 else
-	$rendering->addValue('result', 'Se hai già effettuato l\'accesso non hai bisogno di recuperare la tua password.');
+	$rendering->addValue('result', $user->getLanguage('recoverpassword', 8));
 $rendering->addValue('logged', $user->isLogged());
 $rendering->addValue('submit', $submit);
 (($user->isLogged()) && ($user->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('recuperapassword.tpl');

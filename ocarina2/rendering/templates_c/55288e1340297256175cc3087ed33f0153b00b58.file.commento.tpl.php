@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-12 00:28:02
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-12 22:33:13
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/commento.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:676147024e1b9512768f51-72475540%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:14180694334e1ccba9837ba0-68793898%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '55288e1340297256175cc3087ed33f0153b00b58' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/default/commento.tpl',
-      1 => 1309526080,
+      1 => 1310509992,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '676147024e1b9512768f51-72475540',
+  'nocache_hash' => '14180694334e1ccba9837ba0-68793898',
   'function' => 
   array (
   ),
@@ -20,8 +20,8 @@ $_smarty_tpl->decodeProperties(array (
 
 <?php $_template = new Smarty_Internal_Template(($_smarty_tpl->getVariable('root_rendering')->value)."/templates/".($_smarty_tpl->getVariable('skin')->value)."/include/header.tpl", $_smarty_tpl->smarty, $_smarty_tpl, $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null);
  echo $_template->getRenderedTemplate(); $_template->rendered_content = null;?><?php unset($_template);?>
-	<?php if (isset($_smarty_tpl->getVariable('errore',null,true,false)->value)){?>
-		<div class="titolo"><?php echo $_smarty_tpl->getVariable('errore')->value;?>
+	<?php if (isset($_smarty_tpl->getVariable('error',null,true,false)->value)){?>
+		<div class="titolo"><?php echo $_smarty_tpl->getVariable('error')->value;?>
 </div>
 	<?php }else{ ?>
 		<?php if (isset($_smarty_tpl->getVariable('commento',null,true,false)->value)){?>

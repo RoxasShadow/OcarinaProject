@@ -3,9 +3,10 @@
 	core/class.Utilities.php
 	(C) Giovanni Capuano 2011
 */
+require_once('class.Languages.php');
 
 /* Questa classe include di tutto: dai metodi per la sicurezza alle convalide degli url, fino alla gestione delle stringhe. */
-class Utilities {
+class Utilities extends Languages {
 	
 	/* Filtra una stringa o un array multidimensionale.
 	   ATTENZIONE: Non usare per la creazione di news e le pagine, altrimenti l'HTML non sarà parsato! */
@@ -283,27 +284,6 @@ class Utilities {
 			'version'   => $version,
 			'platform'  => $platform
 	    	);
-	}
-	
-	/* Ritorna la lingua usata dall'utente. */
-	public function getLanguage($category, $val) {
-		$language = substr($this->purge($_SERVER['HTTP_ACCEPT_LANGUAGE']), 0, 2);
-		if($language == 'it')
-			$language = array(
-				'description' => array(
-					'In questa pagina troverai raccolte tutte le pagine e le news che sono state create.',
-					'In questa pagina troverai raccolte tutte le pagine e le news raccolte in una determinata categoria.',
-					'In questa pagina potrai accedere al sito e usufruire di tutti i suoi servizi.',
-					'In questa pagina potrai modificare la tua password.',
-					'In questa pagina potrai modificare il tuo profilo.',
-					'In questa pagina potrai visualizzare i profili degli utenti registrati.',
-					'Il profilo di ',
-					'In questa pagina potrai recuperare la tua password.',
-					'In questa pagina potrai registrarti al sito e usufruire di tutti i suoi servizi.',
-					'In questa pagina potrai cercare tutti i contenuti che desideri.'
-				)
-			);
-		return ((!isset($language[$category])) || (!is_array($language[$category])) || (empty($language[$category])) || ((count($language[$category])) < $val)) ? 'Description not found.' : $language[$category][$val];
 	}
 	
 	/* Taglia una stringa. */

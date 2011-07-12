@@ -14,15 +14,15 @@ $id = ((isset($_GET['id'])) && is_numeric($_GET['id'])) ? (int)$_GET['id'] : '';
 
 $rendering->addValue('utente', $comments->isLogged() ? $comments->username[0]->nickname : '');
 $rendering->skin = $comments->isLogged() ? $comments->username[0]->skin : $comments->config[0]->skin;
-$rendering->addValue('titolo', $id !== '' ? 'Commento numero #'.$id.' &raquo; '.$comments->config[0]->nomesito : $comments->config[0]->nomesito);
+$rendering->addValue('titolo', $id !== '' ? str_replace('{$num}', $id, $comments->getLanguage('title', 1)).$comments->getLanguage('title', 2).$comments->config[0]->nomesito : $comments->config[0]->nomesito);
 $rendering->addValue('useronline', $comments->getUserOnline());
 $rendering->addValue('visitatoronline', $comments->getVisitatorOnline());
 
 if($id == '')
-	$rendering->addValue('errore', 'Non è stato selezionato nessun commento.');
+	$rendering->addValue('error', $comments->getLanguage('comment', 0));
 else {
 	if(!$getComment = $comments->searchCommentById($id))
-		$rendering->addValue('errore', 'Il commento selezionato non è stato trovato.');
+		$rendering->addValue('errore', $comments->getLanguage('comment', 1));
 	else {
 		if($comments->config[0]->bbcode == 1)
 			for($i=0, $count=count($getComment); $i<$count; ++$i)

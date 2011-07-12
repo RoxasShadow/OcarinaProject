@@ -17,37 +17,37 @@ $codiceRegistrazione = ((isset($_GET['codice'])) && ($_GET['codice'] !== '')) ? 
 
 $rendering->addValue('utente', $user->isLogged() ? $user->username[0]->nickname : '');
 $rendering->skin = $user->isLogged() ? $user->username[0]->skin : $user->config[0]->skin;
-$rendering->addValue('titolo', 'Registrazione &raquo; '.$user->config[0]->nomesito);
+$rendering->addValue('titolo', $user->getLanguage('title', 8).$user->getLanguage('title', 2).$user->config[0]->nomesito);
 $rendering->addValue('description', $user->getLanguage('description', 8));
 $rendering->addValue('useronline', $user->getUserOnline());
 $rendering->addValue('visitatoronline', $user->getVisitatorOnline());
 
 if($user->isLogged())
-	$rendering->addValue('result', 'Sei già registrato, non hai bisogno di registrarti nuovamente.');
+	$rendering->addValue('result', $user->getLanguage('registration', 0));
 elseif($codiceRegistrazione !== '') {
 	if($user->config[0]->validazioneaccount == 0)
-		$rendering->addValue('result', 'Non hai bisogno di validare il tuo account, puoi accedere senza problemi già da ora.');
+		$rendering->addValue('result', $user->getLanguage('registration', 1));
 	else {
 		$user->username = $user->searchUserByField('codiceregistrazione', $codiceRegistrazione);
 		if(!$user->username) {
 			if($user->config[0]->log == 1)
 				$user->log('~', 'Invalid validation code.');
-			$rendering->addValue('result', 'Il codice per la validazione dell\'account da te inserito non è valido.');
+			$rendering->addValue('result', $user->getLanguage('registration', 2));
 		}
 		elseif($user->username[0]->codiceregistrazione == $codiceRegistrazione) {
 			if($user->editUser('codiceregistrazione', '', $user->username[0]->nickname)) {
 				if($user->config[0]->log == 1)
 					$user->log('~', 'Validation account complete.');
-				$rendering->addValue('result', 'Account validato. Ora è possibile accedere.'.header('Refresh: 2; URL='.$user->config[0]->url_index.'/login.php'));
+				$rendering->addValue('result', $user->getLanguage('registration', 3).header('Refresh: 2; URL='.$user->config[0]->url_index.'/login.php'));
 			}
 			else {
 				if($user->config[0]->log == 1)
 					$user->log('~', 'Validation account failed.');
-				$rendering->addValue('result', 'È accaduto un errore nella validazione dell\'account.');
+				$rendering->addValue('result', $user->getLanguage('registration', 4));
 			}		
 		}
 		else {
-			$rendering->addValue('result', 'Il codice per la validazione dell\'account da te inserito non è valido.');
+			$rendering->addValue('result', $user->getLanguage('registration', 2));
 			if($user->config[0]->log == 1)
 				$user->log('~', 'Invalid validation code.');
 		}
@@ -55,7 +55,7 @@ elseif($codiceRegistrazione !== '') {
 }
 elseif($submit) {
 	if($user->config[0]->registrazioni == 0)
-		$rendering->addValue('result', 'Le registrazioni sono chiuse.');
+		$rendering->addValue('result', $user->getLanguage('registration', 5));
 	elseif(($nickname !== '') && ($password !== '') && ($confPassword !== '') && ($email !== '')) {
 		if((($password == $confPassword) && (strlen($password) > 4)) || (strlen($nickname) > 4)) {
 			unset($confPassword);
@@ -70,12 +70,12 @@ elseif($submit) {
 					Se non sei tu '.$nickname.', ignora questa email.
 
 					Il webmaster di '.$user->config[0]->nomesito.'.');
-					$rendering->addValue('result', 'Registrazione completata. A breve riceverai l\'email per attivare il tuo account. Attendi per il redirect...'.header('Refresh: 2; URL='.$user->config[0]->url_index.'/login.php'));
+					$rendering->addValue('result', $user->getLanguage('registration', 6).header('Refresh: 2; URL='.$user->config[0]->url_index.'/login.php'));
 					if($user->config[0]->log == 1)
 						$user->log($nickname, 'Registrated.');
 				}
 				else {
-					$rendering->addValue('result', 'È accaduto un problema durante la registrazione. Controlla di non usare un nickname o un\'email già usata da un altro utente, e che quest\'ultima sia valida.');
+					$rendering->addValue('result', $user->getLanguage('registration', 7));
 					if($user->config[0]->log == 1)
 						$user->log($nickname, 'Registration failed.');
 				}
@@ -83,22 +83,22 @@ elseif($submit) {
 			else {
 				$array = array($nickname, $password, $email, 6, date('d-m-y'), date('G:m:s'), '', $user->config[0]->skin);
 				if($user->createUser($array)) {
-					$rendering->addValue('result', 'Registrazione completata. Attendi per il redirect...'.header('Refresh: 2; URL='.$user->config[0]->url_index.'/login.php'));
+					$rendering->addValue('result', $user->getLanguage('registration', 8).header('Refresh: 2; URL='.$user->config[0]->url_index.'/login.php'));
 					if($user->config[0]->log == 1)
 						$user->log($nickname, 'Registrated.');
 				}
 				else {
-					$rendering->addValue('result', 'È accaduto un problema durante la registrazione. Controlla di non usare un nickname o un\'email già usata da un altro utente, e che quest\'ultima sia valida.');
+					$rendering->addValue('result', $user->getLanguage('registration', 9));
 					if($user->config[0]->log == 1)
 						$user->log($nickname, 'Registration failed.');
 				}
 			}
 		}
 		else
-			$rendering->addValue('result', 'È accaduto un problema durante la registrazione: le due password non corrispondono oppure la password o il nickname da te immessi hanno meno di 4 caratteri. Attendi per il redirect...');
+			$rendering->addValue('result', $user->getLanguage('registration', 10));
 	}
 	else
-		$rendering->addValue('result', 'È accaduto un problema durante la registrazione. Controlla di aver inserito i dati correttamente e di non aver lasciato alcun campo vuoto.');
+		$rendering->addValue('result', $user->getLanguage('registration', 11));
 }
 $rendering->addValue('codiceRegistrazione', $codiceRegistrazione);
 $rendering->addValue('logged', $user->isLogged());
