@@ -19,12 +19,11 @@ class Page extends Category {
 				if(!empty($pagine))
 					if(parent::isLogged()) {
 						$visitatori = explode('|||', $pagine[0]->visitatori);
-						$ip = parent::purge($_SERVER['REMOTE_ADDR']);
-						if(!in_array($ip, $visitatori)) {
+						if(!in_array($_SERVER['REMOTE_ADDR'], $visitatori)) {
 							if((!isset($pagine[0]->visitatori)) || ($pagine[0]->visitatori == ''))
 								$visitatori = $ip;
 							else
-								$visitatori = $pagine[0]->visitatori.'|||'.$ip;
+								$visitatori = $pagine[0]->visitatori.'|||'.$_SERVER['REMOTE_ADDR'];
 							if((!isset($pagine[0]->visite)) || ($pagine[0]->visite == ''))
 								$visite = 1;
 							else

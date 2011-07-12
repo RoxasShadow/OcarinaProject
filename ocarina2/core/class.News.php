@@ -19,12 +19,11 @@ class News extends Category {
 				if(!empty($news))
 					if(parent::isLogged()) {
 						$visitatori = explode('|||', $news[0]->visitatori);
-						$ip = parent::purge($_SERVER['REMOTE_ADDR']);
-						if(!in_array($ip, $visitatori)) {
+						if(!in_array($_SERVER['REMOTE_ADDR'], $visitatori)) {
 							if((!isset($news[0]->visitatori)) || ($news[0]->visitatori == ''))
 								$visitatori = $ip;
 							else
-								$visitatori = $news[0]->visitatori.'|||'.$ip;
+								$visitatori = $news[0]->visitatori.'|||'.$_SERVER['REMOTE_ADDR'];
 							if((!isset($news[0]->visite)) || ($news[0]->visite == ''))
 								$visite = 1;
 							else

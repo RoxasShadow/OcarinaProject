@@ -178,7 +178,6 @@ class User extends Configuration {
 		$this->archiveVisitator();
 		$lastaction = time();
 		$giorno = date('d');
-		$ip = parent::purge($_SERVER['REMOTE_ADDR']);
 		if($logged) {
 			$username = $this->searchUserByField('secret', $this->getCookie());
 			$nickname = $username[0]->nickname;
@@ -186,16 +185,16 @@ class User extends Configuration {
 		else
 			$nickname = '';
 		if(!$visitator = $this->getVisitator()) // Mai nessun visitatore
-			return parent::query("INSERT INTO visitatori(ip, lastaction, giorno, nickname) VALUES('$ip', '$lastaction', '$giorno', '$nickname')") ? true : false;
+			return parent::query("INSERT INTO visitatori(ip, lastaction, giorno, nickname) VALUES('{$_SERVER['REMOTE_ADDR']}', '$lastaction', '$giorno', '$nickname')") ? true : false;
 		else {
 			$found = 0;
 			foreach($visitator as $v)
-				if($v->ip == $ip)
+				if($v->ip == $_SERVER['REMOTE_ADDR'])
 					++$found;
 			if($found == 0)
-				return parent::query("INSERT INTO visitatori(ip, lastaction, giorno, nickname) VALUES('$ip', '$lastaction', '$giorno', '$nickname')") ? true : false;
+				return parent::query("INSERT INTO visitatori(ip, lastaction, giorno, nickname) VALUES('{$_SERVER['REMOTE_ADDR']}', '$lastaction', '$giorno', '$nickname')") ? true : false;
 			elseif((($lastaction - $v->lastaction) > 60 * $this->config[0]->limiteonline) && ($found > 0))
-				return parent::query("UPDATE visitatori SET lastaction='$lastaction', giorno='$giorno', nickname='$nickname' WHERE ip='$ip'") ? true : false;
+				return parent::query("UPDATE visitatori SET lastaction='$lastaction', giorno='$giorno', nickname='$nickname' WHERE ip='{$_SERVER['REMOTE_ADDR']}'") ? true : false;
 		}
 		return false;
 	}
@@ -252,8 +251,7 @@ class User extends Configuration {
 		if(mysql_result($query, 0, 0) > 0) {
 			$code = $this->getCode();
 			$client = parent::getClient();
-			$ip = parent::purge($_SERVER['REMOTE_ADDR']);
-			parent::query("UPDATE utenti SET secret='$code', ip='$ip', browsername='{$client['browser']}', browserversion='{$client['version']}', platform='{$client['platform']}' WHERE nickname='$nickname'");
+			parent::query("UPDATE utenti SET secret='$code', ip='{$_SERVER['REMOTE_ADDR']}', browsername='{$client['browser']}', browserversion='{$client['version']}', platform='{$client['platform']}' WHERE nickname='$nickname'");
 			$this->setCookie($code);
 			return true;
 		}
@@ -277,14 +275,13 @@ class User extends Configuration {
 		$data = date('d-m-y');
 		$ora = date('G:m:i');
 		$useragent = parent::purge($_SERVER['HTTP_USER_AGENT']);
-		$ip = parent::purge($_SERVER['REMOTE_ADDR']);
 		$referer = $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'].'?';
 		foreach($_GET as $key => $value)
 		    $referer .= "$key=$value&";
 		$referer = trim($referer, '?');
 		$referer = trim($referer, '&');
 		$referer = parent::purge($referer);
-		return parent::query("INSERT INTO log(nickname, azione, ip, data, ora, useragent, referer) VALUES('$nickname', '$azione', '$ip', '$data', '$ora', '{$useragent}', '$referer')") ? true : false;
+		return parent::query("INSERT INTO log(nickname, azione, ip, data, ora, useragent, referer) VALUES('$nickname', '$azione', '{$_SERVER['REMOTE_ADDR']}', '$data', '$ora', '{$useragent}', '$referer')") ? true : false;
 	}
 
 	/* Visualizza i log. */
