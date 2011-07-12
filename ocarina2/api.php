@@ -19,6 +19,8 @@
 		12: Comment not sended
 		13: Comment sended
 		14: Comment sended and waiting for approvation
+		15: The registration require the validation via email
+		16: String too long/short
 	JSON request (GET):
 		news()
 		news($minititoloNews)
@@ -38,6 +40,7 @@
 		user($nickname)
 		countuser()
 		countaccess()
+		registration($nickname, $password, $email)
 		login($nickname, $password)
 		logout()
 		islogged()
@@ -55,6 +58,7 @@ $action = isset($_GET['action']) ? $comment->purge($_GET['action']) : '';
 $titolo = isset($_GET['title']) ? $comment->purge($_GET['title']) : '';
 $nickname = isset($_GET['nickname']) ? $comment->purge($_GET['nickname']) : '';
 $password = isset($_GET['password']) ? $comment->purge($_GET['password']) : '';
+$email = isset($_GET['email']) ? $comment->purge($_GET['email']) : '';
 $contenuto = isset($_GET['content']) ? $comment->purge($_GET['content']) : '';
 $id = ((isset($_GET['id'])) && is_numeric($_GET['id'])) ? (int)$_GET['id'] : '';
 $actionPermitted = array(
@@ -96,7 +100,8 @@ if(($action == 'news') && ($titolo !== '')) {
 				echo '"lastmoddate":'.json_encode($comment[0]->dataultimamodifica).',';
 				echo '"lastmodhour":'.json_encode($comment[0]->oraultimamodifica).',';
 				echo '"lastmodauthor":'.json_encode($comment[0]->autoreultimamodifica).',';
-				echo '"visits":'.json_encode($comment[0]->visite);
+				echo '"visits":'.json_encode($comment[0]->visite).',';
+				echo '"votes":'.json_encode($comment[0]->voti);
 			echo '}';
 		echo '}';
 	}
@@ -119,7 +124,8 @@ elseif(($action == 'news') && ($titolo == '')) {
 				$json .= '"lastmoddate":'.json_encode($v->dataultimamodifica).',';
 				$json .= '"lastmodhour":'.json_encode($v->oraultimamodifica).',';
 				$json .= '"lastmodauthor":'.json_encode($v->autoreultimamodifica).',';
-				$json .= '"visits":'.json_encode($v->visite);
+				$json .= '"visits":'.json_encode($v->visite).',';
+				$json .= '"votes":'.json_encode($v->voti);
 			$json .= '},';
 		}
 	 	echo trim($json, ',').']}';
@@ -146,11 +152,20 @@ elseif(($action == 'searchnews') && ($contenuto !== '')) {
 				$json .= '"lastmoddate":'.json_encode($v->dataultimamodifica).',';
 				$json .= '"lastmodhour":'.json_encode($v->oraultimamodifica).',';
 				$json .= '"lastmodauthor":'.json_encode($v->autoreultimamodifica).',';
-				$json .= '"visits":'.json_encode($v->visite);
+				$json .= '"visits":'.json_encode($v->visite).',';
+				$json .= '"votes":'.json_encode($v->voti);
 			$json .= '},';
 		}
 	 	echo trim($json, ',').']}';
 	}
+}
+elseif(($action == 'votenews') && ($titolo !== '')) {
+	if(!$comment->isLogged())
+		echo '{"response":"2"}';
+	elseif(!$comment->voteNews($titolo))
+		echo '{"response":"1"}';
+	else
+		echo '{"response":"9"}';
 }
 elseif(($action == 'comment') && ($titolo == '') && ($id == '')) {
 	if(!$comment = $comment->getComment())
@@ -279,7 +294,8 @@ elseif(($action == 'page') && ($titolo !== '')) {
 				echo '"lastmoddate":'.json_encode($pagina[0]->dataultimamodifica).',';
 				echo '"lastmodhour":'.json_encode($pagina[0]->oraultimamodifica).',';
 				echo '"lastmodauthor":'.json_encode($pagina[0]->autoreultimamodifica).',';
-				echo '"visits":'.json_encode($pagina[0]->visite);
+				echo '"visits":'.json_encode($pagina[0]->visite).',';
+				echo '"votes":'.json_encode($pagina[0]->voti);				
 			echo '}';
 		echo '}';
 	}
@@ -302,7 +318,8 @@ elseif(($action == 'page') && ($titolo == '')) {
 				$json .= '"lastmoddate":'.json_encode($v->dataultimamodifica).',';
 				$json .= '"lastmodhour":'.json_encode($v->oraultimamodifica).',';
 				$json .= '"lastmodauthor":'.json_encode($v->autoreultimamodifica).',';
-				$json .= '"visits":'.json_encode($v->visite);
+				$json .= '"visits":'.json_encode($v->visite).',';
+				$json .= '"votes":'.json_encode($v->voti);
 			$json .= '},';
 		}
 	 	echo trim($json, ',').']}';
@@ -329,11 +346,20 @@ elseif(($action == 'searchpage') && ($contenuto !== '')) {
 				$json .= '"lastmoddate":'.json_encode($v->dataultimamodifica).',';
 				$json .= '"lastmodhour":'.json_encode($v->oraultimamodifica).',';
 				$json .= '"lastmodauthor":'.json_encode($v->autoreultimamodifica).',';
-				$json .= '"visits":'.json_encode($v->visite);
+				$json .= '"visits":'.json_encode($v->visite).',';
+				$json .= '"votes":'.json_encode($v->voti);
 			$json .= '},';
 		}
 	 	echo trim($json, ',').']}';
 	}
+}
+elseif(($action == 'votepage') && ($titolo !== '')) {
+	if(!$pagina->isLogged())
+		echo '{"response":"2"}';
+	elseif(!$pagina->votePage($titolo))
+		echo '{"response":"1"}';
+	else
+		echo '{"response":"9"}';
 }
 elseif(($action == 'user') && ($nickname !== '')) {
 	if(!$user = $user->getUser($nickname))
@@ -378,6 +404,48 @@ elseif($action == 'countuser') {
 }
 elseif($action == 'countaccess') {
 	echo '{"response":'.json_encode($user->config[0]->totalevisitatori).'}';
+}
+elseif(($action == 'registration') && ($nickname !== '') && ($password !== '') && ($email !== '')) {
+	if($user->isLogged())
+		echo '{"response":"2"}';
+	if(((strlen($password) > 4)) || (strlen($nickname) > 4)) {
+		if($user->config[0]->validazioneaccount == 1) {
+			$codice = $user->getCode(); // Validazione account
+			$array = array($nickname, $password, $email, 6, date('d-m-y'), date('G:m:s'), $codice, $user->config[0]->skin);
+			if($user->createUser($array)) {
+				$user->sendMail($email, $user->config[0]->nomesito.' @ Validazione account per '.$nickname.'.', 'Ciao '.$nickname.',
+									dal momento che ti sei registrato, il sistema ha bisogno di essere sicuro che la tua email sia valida.
+									Per validarla ti basta cliccare il seguente link: '.$user->config[0]->url_index.'/registrazione.php?codice='.$codice.'
+
+									Se non sei tu '.$nickname.', ignora questa email.
+
+									Il webmaster di '.$user->config[0]->nomesito.'.');
+				echo '{"response":"15"}';
+				if($user->config[0]->log == 1)
+					$user->log($nickname, 'Registrated via API.');	
+			}
+			else {
+				echo '{"response":"6"}';
+				if($user->config[0]->log == 1)
+					$user->log($nickname, 'Registrated via API failed.');	
+			}
+		}
+		else {
+			$array = array($nickname, $password, $email, 6, date('d-m-y'), date('G:m:s'), '', $user->config[0]->skin);
+			if($user->createUser($array)) {
+				echo '{"response":"9"}';
+				if($user->config[0]->log == 1)
+					$user->log($nickname, 'Registrated via API.');
+			}
+			else {
+				echo '{"response":"6"}';
+				if($user->config[0]->log == 1)
+					$user->log($nickname, 'Registration via API failed.');
+			}
+		}
+	}
+	else
+		echo '{"response":"16"}';
 }
 elseif(($action == 'login') && ($nickname !== '') && ($password !== '')) {
 	if($user->login($nickname, $password)) {

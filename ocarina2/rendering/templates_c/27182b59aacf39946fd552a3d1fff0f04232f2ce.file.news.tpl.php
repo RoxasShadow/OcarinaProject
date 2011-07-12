@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-12 00:22:21
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-12 16:08:35
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/news.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:13543384094e1b93bde5a191-49982142%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:4881876404e1c71839470a1-96374250%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '27182b59aacf39946fd552a3d1fff0f04232f2ce' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/default/news.tpl',
-      1 => 1310429967,
+      1 => 1310486838,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '13543384094e1b93bde5a191-49982142',
+  'nocache_hash' => '4881876404e1c71839470a1-96374250',
   'function' => 
   array (
   ),
@@ -52,7 +52,11 @@ if ($_smarty_tpl->_count($_from) > 0){
  <?php if ($_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->autoreultimamodifica!==$_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->autore){?>da parte di <?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->autoreultimamodifica;?>
 .<?php }?><?php }?></div><br />
 				<div class="news"><p><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->contenuto;?>
-</p></div>
+</p></div><br />
+				<a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/vote.php?action=news&titolo=<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->minititolo;?>
+">Vota questa news</a> (<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->voti;?>
+ voti)
 			<?php }else{ ?>
 				La news non è stata approvata, e quindi non è visibile.
 			<?php }?>

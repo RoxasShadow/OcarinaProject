@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-11 23:53:43
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-12 16:00:43
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/pagina.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:2198947164e1b8d07296fb2-88870090%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:6056135154e1c6fabed8cb4-48873102%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '5e4dbb30b000fc5eafcacd297214d09499e73968' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/default/pagina.tpl',
-      1 => 1309938293,
+      1 => 1310486430,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '2198947164e1b8d07296fb2-88870090',
+  'nocache_hash' => '6056135154e1c6fabed8cb4-48873102',
   'function' => 
   array (
   ),
@@ -48,7 +48,11 @@ if ($_smarty_tpl->_count($_from) > 0){
  <?php if ($_smarty_tpl->getVariable('pagina')->value[$_smarty_tpl->tpl_vars['key']->value]->autoreultimamodifica!==$_smarty_tpl->getVariable('pagina')->value[$_smarty_tpl->tpl_vars['key']->value]->autore){?>da parte di <?php echo $_smarty_tpl->getVariable('pagina')->value[$_smarty_tpl->tpl_vars['key']->value]->autoreultimamodifica;?>
 .<?php }?><?php }?></div><br />
 					<div class="news"><p><?php echo $_smarty_tpl->getVariable('pagina')->value[$_smarty_tpl->tpl_vars['key']->value]->contenuto;?>
-</p></div>
+</p></div><br />
+					<a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/vote.php?titolo=<?php echo $_smarty_tpl->getVariable('pagina')->value[$_smarty_tpl->tpl_vars['key']->value]->minititolo;?>
+">Vota questa pagina</a> (<?php echo $_smarty_tpl->getVariable('pagina')->value[$_smarty_tpl->tpl_vars['key']->value]->voti;?>
+ voti)
 				<?php }else{ ?>
 					La pagina non è stata approvata, e quindi non è visibile.
 				<?php }?>

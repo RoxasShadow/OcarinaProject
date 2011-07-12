@@ -26,7 +26,9 @@ class osh:
 			11: 'Comments blocked.',
 			12: 'Comment not sended.',
 			13: 'Comment sended.',
-			14: 'Comment sended and waiting for approvation.'
+			14: 'Comment sended and waiting for approvation.',
+			15: 'Registrated. Confirm the account via email.',
+			16: 'Nickname or password too long/short.'
 		}
 		self.s = system()
 		if self.s == 'Darwin' or self.s == 'Linux':
@@ -47,6 +49,7 @@ class osh:
 		print 'news -> read the news'
 		print 'countnews -> count the news'
 		print 'searchnews -> search the news'
+		print 'votenews -> vote the news'
 		print 'comment -> read the comments'
 		print 'searchcomment -> search the comments'
 		print 'createcomment -> create a comment'
@@ -54,11 +57,13 @@ class osh:
 		print 'page -> read the pages'
 		print 'countpage -> count the pages'
 		print 'searchpage -> search the pages'
+		print 'votepage -> vote the page'
 		print 'user -> read the user profiles'
 		print 'countuser -> count the users'
 		print 'countaccess -> count the total access in the site'
 		print 'useronline -> read the online users'
 		print 'visitatoronline -> read the number of online visitators'
+		print 'registration -> registrate new user'
 		print 'login -> login'
 		print 'logout -> logout'
 		print 'lastversion -> read the version and checks for new'
@@ -132,6 +137,7 @@ class osh:
 					print lastmod
 					print self.htmlentities(json['response'][n]['content'])
 					print 'Visits: '+self.bold+self.htmlentities(json['response'][n]['visits'])+self.normal
+					print 'Votes: '+self.bold+self.htmlentities(json['response'][n]['votes'])+self.normal
 					if not page:
 						print 'Number of comments: '+self.bold+self.parseCountComment(self.getContent('countcomment', 'title', self.htmlentities(json['response'][n]['minititle'])))+self.bold
 					print self.separator+'----------------------------------------------------'+self.normal
@@ -151,6 +157,7 @@ class osh:
 				print lastmod
 				print self.htmlentities(json['response']['content'])
 				print 'Visits: '+self.bold+self.htmlentities(json['response']['visits'])+self.normal
+				print 'Votes: '+self.bold+self.htmlentities(json['response']['votes'])+self.normal
 				if not page:
 					print 'Number of comments: '+self.bold+self.parseCountComment(self.getContent('countcomment', 'title', self.htmlentities(json['response']['minititle'])))+self.normal
 
@@ -220,6 +227,9 @@ class osh:
 		else:
 			print self.log+self.error[int(json['response'])]
 
+	def parseRegistration(self, json):
+		print self.log+'Error: '+self.normal+self.error[int(json['response'])]
+
 	def parseLogout(self, json):
 		if(int(json['response']) != 5):
 			print self.log+'Error: '+self.normal+self.error[int(json['response'])]
@@ -268,6 +278,14 @@ class osh:
 		else:
 			return ''
 
+	def parseVote(self, json):
+		if(int(json['response']) == 2):
+			print 'Access denied.'
+		elif(int(json['response']) == 1):
+			print 'Error during the vote.'
+		else:
+			print 'Voted.'
+
 	def parseLastVersion(self, json):
 		if(float(json['response']) > self.version):
 			print 'Last version: '+json['response']
@@ -308,6 +326,8 @@ class osh:
 				self.parseCountNews(self.getContent('countnews'))
 			elif action == 'searchnews':
 				self.parseNews(self.getContent('searchnews', 'content', raw_input("Write the keyword for find your news: ")))
+			elif action == 'votenews':
+				self.parseVote(self.getContent('votenews', 'title', raw_input("Write the minititle for vote your news: ")))
 			elif action == 'comment':
 				comment = raw_input("Write the id of the comment or the minititle of the news wich contains it, otherwise type enter to see all the comments: ")
 				if str(comment).isdigit():
@@ -332,6 +352,8 @@ class osh:
 				self.parseCountPage(self.getContent('countpage'))
 			elif action == 'searchpage':
 				self.parseNews(self.getContent('searchpage', 'content', raw_input("Write the keyword for find your pages: ")), True)
+			elif action == 'votepage':
+				self.parseVote(self.getContent('votepage', 'title', raw_input("Write the minititle for vote your page: ")))
 			elif action == 'user':
 				self.parseUser(self.getContent('user', 'nickname', raw_input("Write the nickname of the user wich you want to see the profile, otherwise type enter to see all the user profiles: ")))
 			elif action == 'countuser':
@@ -342,6 +364,15 @@ class osh:
 				self.parseUserOnline(self.getContent('useronline'))
 			elif action == 'visitatoronline':
 				self.parseVisitatorOnline(self.getContent('visitatoronline'))
+			elif action == 'registration':
+				nickname = raw_input("Nickname: ")
+				password = raw_input("Password: ")
+				confpassword = raw_input("Retype password: ")
+				email = raw_input("Email: ")
+				if(password != confpassword):
+					print 'The password are not equals.'
+				else:
+					self.parseRegistration(self.getContent('registration', 'nickname', nickname, 'password', password, 'email', email))
 			elif action == 'login':
 				if self.parseIsLogged(self.getContent('islogged')):
 					print 'You are alrady logged.'

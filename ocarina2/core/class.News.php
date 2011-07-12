@@ -18,7 +18,7 @@ class News extends Category {
 				array_push($news, parent::get($query));
 				if(!empty($news))
 					if(parent::isLogged()) {
-						$visitatori = explode('|', $news[0]->visitatori);
+						$visitatori = explode('|||', $news[0]->visitatori);
 						$ip = parent::purge($_SERVER['REMOTE_ADDR']);
 						if(!in_array($ip, $visitatori)) {
 							if((!isset($news[0]->visitatori)) || ($news[0]->visitatori == ''))
@@ -57,6 +57,28 @@ class News extends Category {
 			return false;
 		}
 		return false;
+	}
+	
+	/* Permette di votare una news. */
+	public function voteNews($minititolo) {
+		if(parent::isLogged()) {
+			if(!$news = $this->getNews($minititolo))
+				return false;
+			$votanti = explode('|||', $news[0]->votanti);
+			if(!in_array($this->username[0]->nickname, $votanti)) {
+				if((!isset($news[0]->votanti)) || ($news[0]->votanti == ''))
+					$votanti = $this->username[0]->nickname;
+				else
+					$votanti = $news[0]->votanti.'|||'.$this->username[0]->nickname;
+				if((!isset($news[0]->voti)) || ($news[0]->voti == ''))
+					$voti = 1;
+				else
+					$voti = $news[0]->voti += 1;
+				if(($this->editNews('voti', $voti, $minititolo)) && ($this->editNews('votanti', $votanti, $minititolo)))
+					return true;
+				return false;
+			}
+		}
 	}
 	
 	/* Controlla se la news esiste. */

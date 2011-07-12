@@ -18,7 +18,7 @@ class Page extends Category {
 				array_push($pagine, parent::get($query));
 				if(!empty($pagine))
 					if(parent::isLogged()) {
-						$visitatori = explode('|', $pagine[0]->visitatori);
+						$visitatori = explode('|||', $pagine[0]->visitatori);
 						$ip = parent::purge($_SERVER['REMOTE_ADDR']);
 						if(!in_array($ip, $visitatori)) {
 							if((!isset($pagine[0]->visitatori)) || ($pagine[0]->visitatori == ''))
@@ -55,6 +55,27 @@ class Page extends Category {
 				return false;
 			}
 			return false;
+		}
+		return false;
+	}
+	
+	/* Permette di votare una pagina. */
+	public function votePage($minititolo) {
+		if(parent::isLogged()) {
+			$pagine = $this->getPage($minititolo);
+			$votanti = explode('|||', $pagine[0]->votanti);
+			if(!in_array($this->username[0]->nickname, $votanti)) {
+				if((!isset($pagine[0]->votanti)) || ($pagine[0]->votanti == ''))
+					$votanti = $this->username[0]->nickname;
+				else
+					$votanti = $pagine[0]->votanti.'|||'.$this->username[0]->nickname;
+				if((!isset($pagine[0]->voti)) || ($pagine[0]->voti == ''))
+					$voti = 1;
+				else
+					$voti = $pagine[0]->voti += 1;
+				if(($this->editPage('voti', $voti, $minititolo)) && ($this->editPage('votanti', $votanti, $minititolo)))
+					return true;
+			}
 		}
 		return false;
 	}
