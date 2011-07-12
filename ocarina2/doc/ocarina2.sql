@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generato il: 11 lug, 2011 at 12:42 PM
+-- Generato il: 12 lug, 2011 at 12:39 AM
 -- Versione MySQL: 5.1.49
 -- Versione PHP: 5.3.3-7+squeeze3
 
@@ -72,6 +72,7 @@ CREATE TABLE IF NOT EXISTS `configurazione` (
   `description` text NOT NULL,
   `limitenews` int(10) NOT NULL,
   `impaginazionenews` int(10) NOT NULL,
+  `limiteonline` int(10) NOT NULL,
   `url` varchar(100) NOT NULL,
   `url_index` varchar(100) NOT NULL,
   `url_admin` varchar(100) NOT NULL,
@@ -82,7 +83,8 @@ CREATE TABLE IF NOT EXISTS `configurazione` (
   `root_admin` varchar(100) NOT NULL,
   `root_rendering` varchar(100) NOT NULL,
   `root_immagini` varchar(100) NOT NULL,
-  `versione` varchar(5) NOT NULL
+  `versione` varchar(5) NOT NULL,
+  `totalevisitatori` int(10) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -122,6 +124,8 @@ CREATE TABLE IF NOT EXISTS `news` (
   `oraultimamodifica` varchar(10) NOT NULL,
   `autoreultimamodifica` varchar(100) NOT NULL,
   `approvato` tinyint(1) NOT NULL,
+  `visite` int(10) NOT NULL,
+  `visitatori` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
@@ -144,6 +148,8 @@ CREATE TABLE IF NOT EXISTS `pagine` (
   `oraultimamodifica` varchar(10) NOT NULL,
   `autoreultimamodifica` varchar(100) NOT NULL,
   `approvato` tinyint(1) NOT NULL,
+  `visite` int(10) NOT NULL,
+  `visitatori` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
@@ -172,7 +178,6 @@ CREATE TABLE IF NOT EXISTS `utenti` (
   `browsername` varchar(100) NOT NULL,
   `browserversion` varchar(100) NOT NULL,
   `platform` varchar(100) NOT NULL,
-  `lastaction` varchar(15) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
@@ -186,7 +191,7 @@ CREATE TABLE IF NOT EXISTS `visitatori` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `ip` varchar(20) NOT NULL,
   `lastaction` varchar(15) NOT NULL,
-  `data` varchar(10) NOT NULL,
-  `ora` varchar(10) NOT NULL,
+  `giorno` varchar(10) NOT NULL,
+  `nickname` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
