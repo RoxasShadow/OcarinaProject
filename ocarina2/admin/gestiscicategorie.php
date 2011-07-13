@@ -16,7 +16,7 @@ $submit = ((isset($_POST['creaCategoriaNews'])) || (isset($_POST['creaCategoriaP
 
 $rendering->addValue('grado', $categoria->isLogged() ? $categoria->username[0]->grado : '');
 $rendering->skin = 'admin';
-$rendering->addValue('titolo', 'Gestisci categorie &raquo; Amministrazione &raquo; '.$categoria->config[0]->nomesito);
+$rendering->addValue('titolo', $categoria->getLanguage('title', 17).$categoria->getLanguage('title', 2).$categoria->getLanguage('title', 10).$categoria->getLanguage('title', 2).$categoria->config[0]->nomesito);
 
 if(($categoria->isLogged()) && ($categoria->username[0]->grado <= 3))
 	if(!$submit) {
@@ -26,54 +26,54 @@ if(($categoria->isLogged()) && ($categoria->username[0]->grado <= 3))
 	else
 		if($categoria_news !== '')
 			if($categoria->createCategory('news', $categoria_news)) {
-				$rendering->addValue('result', 'La categoria è stata creata con successo.');
+				$rendering->addValue('result', $categoria->getLanguage('managecategory', 0));
 				if($categoria->config[0]->log == 1)
 					$categoria->log($categoria->username[0]->nickname, 'Category '.$categoria_news.' created.');
 			}
 			else {
-				$rendering->addValue('result', 'È accaduto un errore durante la creazione della categoria.');
+				$rendering->addValue('result', $categoria->getLanguage('managecategory', 1));
 				if($categoria->config[0]->log == 1)
 					$categoria->log($categoria->username[0]->nickname, 'Category '.$categoria_news.' creation failed.');
 			}
 		elseif($categoria_pagina !== '')
 			if($categoria->createCategory('pagine', $categoria_pagina)) {
-				$rendering->addValue('result', 'La categoria è stata creata con successo.');
+				$rendering->addValue('result', $categoria->getLanguage('managecategory', 2));
 				if($categoria->config[0]->log == 1)
 					$categoria->log($categoria->username[0]->nickname, 'Category '.$categoria_pagina.' created.');
 			}
 			else {
-				$rendering->addValue('result', 'È accaduto un errore durante la creazione della categoria.');
+				$rendering->addValue('result', $categoria->getLanguage('managecategory', 3));
 				if($categoria->config[0]->log == 1)
 					$categoria->log($categoria->username[0]->nickname, 'Category '.$categoria_pagina.' creation failed.');
 			}
 		elseif($categoria_news_rimuovi !== '')
 			if($categoria->deleteCategory('news', $categoria_news_rimuovi)) {
-				$rendering->addValue('result', 'La categoria è stata rimossa con successo.');
+				$rendering->addValue('result', $categoria->getLanguage('managecategory', 4));
 				if($categoria->config[0]->log == 1)
 					$categoria->log($categoria->username[0]->nickname, 'Category '.$categoria_news_rimuovi.' deleted.');
 			}
 			else {
-				$rendering->addValue('result', 'È accaduto un errore durante la rimozione della categoria.');
+				$rendering->addValue('result', $categoria->getLanguage('managecategory', 5));
 				if($categoria->config[0]->log == 1)
 					$categoria->log($categoria->username[0]->nickname, 'Category '.$categoria_news_rimuovi.' deletion failed.');
 			}
 		elseif($categoria_pagina_rimuovi !== '')
 			if($categoria->deleteCategory('pagine', $categoria_pagina_rimuovi)) {
-				$rendering->addValue('result', 'La categoria è stata rimossa con successo.');
+				$rendering->addValue('result', $categoria->getLanguage('managecategory', 6));
 				if($categoria->config[0]->log == 1)
 					$categoria->log($categoria->username[0]->nickname, 'Category '.$categoria_pagina_rimuovi.' deletion failed.');
 			}
 			else {
-				$rendering->addValue('result', 'È accaduto un errore durante la rimozione della categoria.');
+				$rendering->addValue('result', $categoria->getLanguage('managecategory', 7));
 				if($categoria->config[0]->log == 1)
 					$categoria->log($categoria->username[0]->nickname, 'Category '.$categoria_pagina_rimuovi.' deletion failed.');
 			}
 		else {
-			$rendering->addValue('result', 'È accaduto un errore.');
+			$rendering->addValue('result', $categoria->getLanguage('error', 0));
 			if($categoria->config[0]->log == 1)
 				$categoria->log($categoria->username[0]->nickname, 'Error in category management.');
 		}
 else
-	$rendering->addValue('result', 'Accesso negato.');
+	$rendering->addValue('result', $categoria->getLanguage('error', 4));
 $rendering->addValue('submit', $submit);
 (($categoria->isLogged()) && ($categoria->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('gestiscicategorie.tpl');

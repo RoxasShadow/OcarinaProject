@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-11 19:47:08
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-13 15:28:33
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/admin/include/header.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:6669634274e1b533ce1d535-20977425%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:3202193334e1db9a1047737-90368288%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '06990b4356e1fa71f1be07210ace0be3ba5c771b' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/admin/include/header.tpl',
-      1 => 1310413626,
+      1 => 1310570911,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '6669634274e1b533ce1d535-20977425',
+  'nocache_hash' => '3202193334e1db9a1047737-90368288',
   'function' => 
   array (
   ),
@@ -40,7 +40,7 @@ $_smarty_tpl->decodeProperties(array (
 /etc/loadJavascript.js.php"></script>
 </head>
 <body>
-<?php if (((isset($_smarty_tpl->getVariable('grado',null,true,false)->value))&&($_smarty_tpl->getVariable('grado')->value==1)&&($_smarty_tpl->getVariable('lastversion')->value>$_smarty_tpl->getVariable('versione')->value))){?>
+<?php if (((isset($_smarty_tpl->getVariable('grado',null,true,false)->value))&&($_smarty_tpl->getVariable('grado')->value==1)&&isset($_smarty_tpl->getVariable('lastversion',null,true,false)->value)&&isset($_smarty_tpl->getVariable('versione',null,true,false)->value)&&($_smarty_tpl->getVariable('lastversion')->value>$_smarty_tpl->getVariable('versione')->value))){?>
 	<div align="center">Stai usando una versione vecchia di Ocarina2: <a href="http://www.giovannicapuano.net/ocarina2/index.php">aggiorna subito!</a></div>
 <?php }?>
 <div id="wrapper">

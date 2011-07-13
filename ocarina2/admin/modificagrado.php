@@ -14,7 +14,7 @@ $submit = isset($_POST['submit']) ? true : false;
 
 $rendering->addValue('grado', $user->isLogged() ? $user->username[0]->grado : '');
 $rendering->skin = 'admin';
-$rendering->addValue('titolo', 'Modifica grado &raquo; Amministrazione &raquo; '.$user->config[0]->nomesito);
+$rendering->addValue('titolo', $user->getLanguage('title', 20).$user->getLanguage('title', 2).$user->getLanguage('title', 10).$user->getLanguage('title', 2).$user->config[0]->nomesito);
 
 if(($user->isLogged()) && ($user->username[0]->grado == 1))
 	if(!$submit)
@@ -23,14 +23,14 @@ if(($user->isLogged()) && ($user->username[0]->grado == 1))
 		if($user->editUser('grado', $grado, $nickname)) {
 			if($user->config[0]->log == 1)
 				$user->log($user->username[0]->nickname, $nickname.' now is in the grade '.$grado.'.');
-			$rendering->addValue('result', 'Grado modificato.');
+			$rendering->addValue('result', $user->getLanguage('editgrade', 0));
 		}
 		else {
 			if($user->config[0]->log == 1)
 				$user->log($user->username[0]->nickname, $nickname->username[0]->nickname.' has failed to change the grade of '.$nickname.' in '.$grado.'.');
-			$rendering->addValue('result', 'È accaduto un errore durante la modifica del grado di '.$nickname.'.');
+			$rendering->addValue('result', str_replace('{$$nickname}', $nickname, $user->getLanguage('editgrade', 1$user->getLanguage('editgrade', 0)));
 		}
 else
-	$rendering->addValue('result', 'Accesso negato.');
+	$rendering->addValue('result', $user->getLanguage('error', 4));
 $rendering->addValue('submit', $submit);
 (($user->isLogged()) && ($user->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('modificagrado.tpl');

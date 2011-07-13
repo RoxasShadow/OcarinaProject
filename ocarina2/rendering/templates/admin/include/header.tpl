@@ -13,7 +13,7 @@
 <script type="text/javascript" src="{$url_index}/etc/loadJavascript.js.php"></script>
 </head>
 <body>
-{if ((isset($grado)) && ($grado == 1) && ($lastversion > $versione))}
+{if ((isset($grado)) && ($grado == 1) && isset($lastversion) && isset($versione) && ($lastversion > $versione))}
 	<div align="center">Stai usando una versione vecchia di Ocarina2: <a href="http://www.giovannicapuano.net/ocarina2/index.php">aggiorna subito!</a></div>
 {/if}
 <div id="wrapper">

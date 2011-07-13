@@ -16,11 +16,11 @@ $submit = isset($_POST['submit']) ? true : false;
 
 $rendering->addValue('grado', $news->isLogged() ? $news->username[0]->grado : '');
 $rendering->skin = 'admin';
-$rendering->addValue('titolo', 'Modifica news &raquo; Amministrazione &raquo; '.$news->config[0]->nomesito);
+$rendering->addValue('titolo', $news->getLanguage('title', 20).$news->getLanguage('title', 2).$news->getLanguage('title', 10).$news->getLanguage('title', 2).$news->config[0]->nomesito);
 
 if(($news->isLogged()) && ($news->username[0]->grado < 4))
 	if((!$submit) && ($selected == '')) {
-		$result = '<form action="" method="post">Scegli la news da modificare <select name="selected">';
+		$result = '<form action="" method="post">'.$news->getLanguage('editnews', 0).'<select name="selected">';
 		if($news->username[0]->grado == 3) {
 			$newsByUser = $news->searchNewsByUser($news->username[0]->nickname);
 			if($newsByUser !== false)
@@ -33,7 +33,7 @@ if(($news->isLogged()) && ($news->username[0]->grado < 4))
 				foreach($allNews as $v)
 					$result .= '<option value="'.$v->minititolo.'">'.$v->titolo.'</option>';
 		}
-		$result .= '</select><input type="submit" name="sel_submit" value="Modifica news">';
+		$result .= '</select><input type="submit" name="sel_submit" value="'.$news->getLanguage('title', 20).'">';
 		$rendering->addValue('result', $result);
 	}	
 	elseif((!$submit) && ($selected !== '')) {
@@ -45,22 +45,22 @@ if(($news->isLogged()) && ($news->username[0]->grado < 4))
 			$rendering->addValue('testo', $this_news[0]->contenuto);
 		}
 		else
-			$rendering->addValue('result', 'È accaduto un errore, la news selezionata non esiste.');
+			$rendering->addValue('result', $news->getLanguage('editnews', 1));
 	}
 	elseif(($submit) && ($selected !== '')) {
 		if(($titolo_news !== '') && ($categoria_news !== '') && ($testo_news !== '') && ($news->username[0]->grado < 4)) {
 			$this_news = $news->getNews($selected);
 			if(($news->username[0]->grado == 3) && ($this_news[0]->nickname !== $news->username[0]->nickname))
-				$rendering->addValue('result', 'Non sei abilitato a modificare questa news.');
+				$rendering->addValue('result', $news->getLanguage('editnews', 2));
 			elseif((($news->username[0]->grado == 3) && ($this_news[0]->nickname == $news->username[0]->nickname)) || ($news->username[0]->grado < 3)) 
 				if(($news->editNews('titolo', $titolo_news, $this_news[0]->minititolo)) && ($news->editNews('categoria', $categoria_news, $this_news[0]->minititolo)) && ($news->editNews('contenuto', $testo_news, $this_news[0]->minititolo)) && ($news->editNews('dataultimamodifica', date('d-m-y'), $this_news[0]->minititolo)) && ($news->editNews('oraultimamodifica', date('G:m:i'), $this_news[0]->minititolo)) && ($news->editNews('autoreultimamodifica', $news->username[0]->nickname, $this_news[0]->minititolo)))
-					$rendering->addValue('result', 'La news è stata modificata.');
+					$rendering->addValue('result', $news->getLanguage('editnews', 3));
 		}
 		else
-			$rendering->addValue('result', 'È accaduto un errore durante la modifica della news. Controlla di non aver lasciato alcun campo vuoto.');
+			$rendering->addValue('result', $news->getLanguage('editnews', 4));
 	}
 else
-	$rendering->addValue('result', 'Accesso negato.');
+	$rendering->addValue('result', $news->getLanguage('error', 4));
 $rendering->addValue('submit', $submit);
 $rendering->addValue('sel', $selected);
 (($news->isLogged()) && ($news->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('formcontents.tpl');

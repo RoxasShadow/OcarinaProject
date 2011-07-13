@@ -18,7 +18,7 @@ $submit = isset($_POST['submit']) ? true : false;
 
 $rendering->addValue('grado', $user->isLogged() ? $user->username[0]->grado : '');
 $rendering->skin = 'admin';
-$rendering->addValue('titolo', 'Cancella utente &raquo; Amministrazione &raquo; '.$user->config[0]->nomesito);
+$rendering->addValue('titolo', $user->getLanguage('title', 13).$user->getLanguage('title', 2).$user->getLanguage('title', 10).$user->getLanguage('title', 2).$user->config[0]->nomesito);
 
 if(($user->isLogged()) && ($user->username[0]->grado == 1))
 	if(!$submit)
@@ -28,18 +28,18 @@ if(($user->isLogged()) && ($user->username[0]->grado == 1))
 			if($user->deleteUser($nickname)) {
 				if($user->config[0]->log == 1)
 					$user->log($user->username[0]->nickname, 'Has deleted '.$nickname.'.');
-				$rendering->addValue('result', 'L\'utente è stato cancellato.');
+				$rendering->addValue('result', $user->getLanguage('deleteuser', 0));
 			}
 			else {
 				if($user->config[0]->log == 1)
 					$user->log($user->username[0]->nickname, 'Has failed the deletion of '.$nickname.' and all his contents.');
-				$rendering->addValue('result', 'È accaduto un errore durante la cancellazione di '.$nickname.'.');
+				$rendering->addValue('result', str_replace('{$nickname}', $nickname, $user->getLanguage('deleteuser', 1)));
 			}
 		else
 			if(!$user->deleteUser($nickname)) {
 				if($user->config[0]->log == 1)
 					$user->log($user->username[0]->nickname, 'Has failed the deletion of '.$nickname.' and all his contents.');
-				$rendering->addValue('result', 'È accaduto un errore più o meno grave durante la cancellazione di '.$nickname.' insieme a tutti i suoi contenuti.');
+				$rendering->addValue('result', str_replace('{$nickname}', $nickname, $user->getLanguage('deleteuser', 2)));
 			}
 			else {
 				$comment->deleteCommentByUser($nickname);
@@ -47,9 +47,9 @@ if(($user->isLogged()) && ($user->username[0]->grado == 1))
 				$page->deletePageByUser($nickname);
 				if($user->config[0]->log == 1)
 					$user->log($user->username[0]->nickname, 'Has deleted '.$nickname.' and all his contents.');
-				$rendering->addValue('result', 'L\'utente è stato cancellato insieme a tutti i suoi contenuti.');
+				$rendering->addValue('result', $user->getLanguage('deleteuser', 3));
 			}	
 else
-	$rendering->addValue('result', 'Accesso negato.');
+	$rendering->addValue('result', $user->getLanguage('error', 4));
 $rendering->addValue('submit', $submit);
 (($user->isLogged()) && ($user->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('cancellautente.tpl');

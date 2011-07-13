@@ -41,14 +41,31 @@ class Languages {
 				'Modifica profilo',
 				'Recupera password',
 				'Registrazione',
-				'Cerca nel sito'
+				'Cerca nel sito',
 				/* Back-end*/
+				'Amministrazione',
+				'Approva',
+				'Cancella news',
+				'Cancella pagina',
+				'Cancella utente',
+				'Configurazione',
+				'Crea news',
+				'Crea pagina',
+				'Gestisci categorie',
+				'Immagini',
+				'Log',
+				'Modifica grado',
+				'Modifica news',
+				'Modifica pagina',
+				'Robots',
+				'Upload'
 			),
 			'error' => array(
 				'È accaduto un errore',
 				'Non è stata selezionata nessuna categoria.',
 				'Nessuna news è associata alla categoria `{$cat}`.',
 				'Nessuna pagina è associata alla categoria `{$cat}`.',
+				'Accesso negato'
 			),
 			'news' => array(
 				'Leggi altro...',
@@ -123,8 +140,91 @@ class Languages {
 				'Non è stata trovata nessuna news corrispondente alla tua keyword.',
 				'Non è stata trovata nessuna pagina corrispondente alla tua keyword.',
 				'Non è stato trovato nessun commento corrispondente alla tua keyword.'
-			)
+			),
 			/* Back-end*/
+			'approve' => array(
+				'La news è stata approvata ed è ora visibile.',
+				'È accaduto un errore durante l\'approvazione della news.',
+				'Il commento è stato approvato ed è ora visibile.',
+				'È accaduto un errore durante l\'approvazione del commento.',
+				'La pagina è stata approvata ed è ora visibile.',
+				'È accaduto un errore durante l\'approvazione della pagina.',
+				'Non hai selezionato nulla da approvare.'
+			),
+			'deletenews' => array(
+				'La news è stata cancellata.',
+				'È accaduto un errore durante la cancellazione della news.',
+				'Non sei abilitato a cancellare questa news.'
+			),
+			'deletepage' => array(
+				'La pagina è stata cancellata.',
+				'È accaduto un errore durante la cancellazione della pagina.',
+				'Non sei abilitato a cancellare questa pagina.'
+			),
+			'deleteuser' => array(
+				'L\'utente è stato cancellato.',
+				'È accaduto un errore durante la cancellazione di {$nickname}.',
+				'È accaduto un errore più o meno grave durante la cancellazione di {$nickname} insieme a tutti i suoi contenuti.',
+				'L\'utente è stato cancellato insieme a tutti i suoi contenuti.'
+			),
+			'configuration' => array(
+				'Le modifica alla configurazione sono state apportate con successo.',
+				'È accaduto un errore durante la modifica alla configurazione.'
+			),
+			'createnews' => array(
+				'È accaduto un errore durante la creazione della news. Esiste già una news con lo stesso titolo, prova a sceglierne un altro.',
+				'La news è stata creata con successo ed è in attesa di approvazione.',
+				'La news è stata creata con successo.',
+				'È accaduto un errore durante la creazione della news.',
+				'È accaduto un errore durante la creazione della news. Controlla di non aver lasciato alcun campo vuoto.'
+			),
+			'createpage' => array(
+				'È accaduto un errore durante la creazione della pagina. Esiste già una pagina con lo stesso titolo, prova a sceglierne un altro.',
+				'La pagina è stata creata con successo ed è in attesa di approvazione.',
+				'La pagina è stata creata con successo.',
+				'È accaduto un errore durante la creazione della pagina.',
+				'È accaduto un errore durante la creazione della pagina. Controlla di non aver lasciato alcun campo vuoto.'
+			),
+			'managecategory' => array(
+				'La categoria è stata creata con successo.',
+				'È accaduto un errore durante la creazione della categoria.',
+				'La categoria è stata creata con successo.',
+				'È accaduto un errore durante la creazione della categoria.',
+				'La categoria è stata rimossa con successo.',
+				'È accaduto un errore durante la rimozione della categoria.',
+				'La categoria è stata rimossa con successo.',
+				'È accaduto un errore durante la rimozione della categoria.'
+			),
+			'log' => array(
+				'I log sono stati cancellati',
+				'È accaduto un errore durante la cancellazione dei log.',
+				'Non sei abilitato a cancellare i log.'
+			),
+			'editgrade' => array(
+				'Grado modificato.',
+				'È accaduto un errore durante la modifica del grado di {$nickname}.'
+			),
+			'editnews' => array(
+				'Scegli la news da modificare',
+				'È accaduto un errore, la news selezionata non esiste.',
+				'Non sei abilitato a modificare questa news.',
+				'La news è stata modificata.',
+				'È accaduto un errore durante la modifica della news. Controlla di non aver lasciato alcun campo vuoto.'
+			),
+			'editpage' => array(
+				'Scegli la pagina da modificare',
+				'È accaduto un errore, la pagina selezionata non esiste.',
+				'Non sei abilitato a modificare questa pagina.',
+				'La pagina è stata modificata.',
+				'È accaduto un errore durante la modifica della pagina. Controlla di non aver lasciato alcun campo vuoto.'
+			),
+			'robots' => array(
+				'# Robots generato il {$date} tramite Ocarina CMS.'
+			),
+			'upload' => array(
+				'È accaduto un errore durante il caricamento del file nel server.',
+				'È accaduto un errore durante il caricamento dei file nel server.'
+			)
 		);
 	}
 }

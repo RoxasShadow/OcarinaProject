@@ -16,11 +16,11 @@ $submit = isset($_POST['submit']) ? true : false;
 
 $rendering->addValue('grado', $pagina->isLogged() ? $pagina->username[0]->grado : '');
 $rendering->skin = 'admin';
-$rendering->addValue('titolo', 'Modifica pagina &raquo; Amministrazione &raquo; '.$pagina->config[0]->nomesito);
+$rendering->addValue('titolo', $pagina->getLanguage('title', 21).$pagina->getLanguage('title', 2).$pagina->getLanguage('title', 10).$pagina->getLanguage('title', 2).$pagina->config[0]->nomesito);
 
 if(($pagina->isLogged()) && ($pagina->username[0]->grado < 4))
 	if((!$submit) && ($selected == '')) {
-		$result = '<form action="" method="post">Scegli la news da modificare <select name="selected">';
+		$result = '<form action="" method="post">'.$pagina->getLanguage('editpage', 0).'<select name="selected">';
 		if($pagina->username[0]->grado == 3) {
 			$pageByUser = $pagina->searchPageByUser($pagina->username[0]->nickname);
 			if($pageByUser !== false)
@@ -33,7 +33,7 @@ if(($pagina->isLogged()) && ($pagina->username[0]->grado < 4))
 			foreach(allPage as $v)
 				$result .= '<option value="'.$v->minititolo.'">'.$v->titolo.'</option>';
 		}
-		$result .= '</select><input type="submit" name="sel_submit" value="Modifica news">';
+		$result .= '</select><input type="submit" name="sel_submit" value="'.$pagina->getLanguage('title', 21).'">';
 		$rendering->addValue('result', $result);
 	}	
 	elseif((!$submit) && ($selected !== '')) {
@@ -45,22 +45,22 @@ if(($pagina->isLogged()) && ($pagina->username[0]->grado < 4))
 			$rendering->addValue('testo', $this_pagina[0]->contenuto);
 		}
 		else
-			$rendering->addValue('result', 'È accaduto un errore, la pagina selezionata non esiste.');
+			$rendering->addValue('result', $pagina->getLanguage('editpage', 1));
 	}
 	elseif(($submit) && ($selected !== '')) {
 		if(($titolo_pagina !== '') && ($categoria_pagina !== '') && ($testo_pagina !== '') && ($pagina->username[0]->grado < 4)) {
 			$this_pagina = $pagina->getPage($selected);
 			if(($pagina->username[0]->grado == 3) && ($this_pagina[0]->nickname !== $pagina->username[0]->nickname))
-				$rendering->addValue('result', 'Non sei abilitato a modificare questa news.');
+				$rendering->addValue('result', $pagina->getLanguage('editpage', 2));
 			elseif((($pagina->username[0]->grado == 3) && ($this_pagina[0]->nickname == $pagina->username[0]->nickname)) || ($pagina->username[0]->grado < 3)) 
 				if(($pagina->editPage('titolo', $titolo_pagina, $this_pagina[0]->minititolo)) && ($pagina->editPage('categoria', $categoria_pagina, $this_pagina[0]->minititolo)) && ($pagina->editPage('contenuto', $testo_pagina, $this_pagina[0]->minititolo)) && ($pagina->editPage('dataultimamodifica', date('d-m-y'), $this_pagina[0]->minititolo)) && ($pagina->editPage('oraultimamodifica', date('G:m:i'), $this_pagina[0]->minititolo)) && ($pagina->editPage('autoreultimamodifica', $pagina->username[0]->nickname, $this_pagina[0]->minititolo)))
-					$rendering->addValue('result', 'La pagina è stata modificata.');
+					$rendering->addValue('result', $pagina->getLanguage('editpage', 3));
 		}
 		else
-			$rendering->addValue('result', 'È accaduto un errore durante la modifica della pagina. Controlla di non aver lasciato alcun campo vuoto.');
+			$rendering->addValue('result', $pagina->getLanguage('editpage', 4));
 	}
 else
-	$rendering->addValue('result', 'Accesso negato.');
+	$rendering->addValue('result', $pagina->getLanguage('error', 4));
 $rendering->addValue('submit', $submit);
 $rendering->addValue('sel', $selected);
 (($pagina->isLogged()) && ($pagina->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('formcontents.tpl');

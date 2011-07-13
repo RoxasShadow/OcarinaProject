@@ -12,7 +12,7 @@ $submit = isset($_POST['submit']) ? true : false;
 
 $rendering->addValue('grado', $user->isLogged() ? $user->username[0]->grado : '');
 $rendering->skin = 'admin';
-$rendering->addValue('titolo', 'Log &raquo; Amministrazione &raquo; '.$user->config[0]->nomesito);
+$rendering->addValue('titolo', $user->getLanguage('title', 19).$user->getLanguage('title', 2).$user->getLanguage('title', 10).$user->getLanguage('title', 2).$user->config[0]->nomesito);
 
 if(($user->isLogged()) && ($user->username[0]->grado < 6))
 	if(!$submit) {
@@ -25,19 +25,19 @@ if(($user->isLogged()) && ($user->username[0]->grado < 6))
 			if($user->deleteLog()) {
 				if($user->config[0]->log == 1)
 					$user->log($user->username[0]->nickname, 'Logs deleted.');
-				$rendering->addValue('result', 'I log sono stati cancellati');
+				$rendering->addValue('result', $user->getLanguage('log', 0));
 			}
 			else {
 				if($user->config[0]->log == 1)
 					$user->log($user->username[0]->nickname, 'Logs deletion failed.');
-				$rendering->addValue('result', 'È accaduto un errore durante la cancellazione dei log.');
+				$rendering->addValue('result', $user->getLanguage('log', 1));
 			}
 		else {
 			if($user->config[0]->log == 1)
 				$user->log($user->username[0]->nickname, 'Logs deletion failed.');
-			$rendering->addValue('result', 'Non sei abilitato a cancellare i log.');
+			$rendering->addValue('result', $user->getLanguage('log', 2));
 		}
 else
-	$rendering->addValue('result', 'Accesso negato.');
+	$rendering->addValue('result', $user->getLanguage('error', 4));
 $rendering->addValue('submit', $submit);
 (($user->isLogged()) && ($user->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('log.tpl');

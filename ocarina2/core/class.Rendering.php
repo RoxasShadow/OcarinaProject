@@ -79,7 +79,8 @@ class Rendering extends Configuration {
 		$this->addValue('query', $this->numQuery);
 		$this->addValue('time', $this->microtime_float() - $this->time_start);
 		if($this->skin == 'admin') {
-			$this->addValue('lastversion', file_get_contents('http://www.giovannicapuano.net/ocarina2/lastversion.php'));
+			if($filename == 'index.tpl')
+				$this->addValue('lastversion', file_get_contents('http://www.giovannicapuano.net/ocarina2/lastversion.php'));
 			$this->addValue('skin','admin');
 			$this->smarty->display('admin/'.$filename);
 		}

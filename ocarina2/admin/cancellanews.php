@@ -13,7 +13,7 @@ $submit = isset($_POST['submit']) ? true : false;
 
 $rendering->addValue('grado', $news->isLogged() ? $news->username[0]->grado : '');
 $rendering->skin = 'admin';
-$rendering->addValue('titolo', 'Cancella news &raquo; Amministrazione &raquo; '.$news->config[0]->nomesito);
+$rendering->addValue('titolo', $news->getLanguage('title', 12).$news->getLanguage('title', 2).$news->getLanguage('title', 10).$news->getLanguage('title', 2).$news->config[0]->nomesito);
 
 if(($news->isLogged()) && ($news->username[0]->grado < 3))
 	if(!$submit)
@@ -21,22 +21,22 @@ if(($news->isLogged()) && ($news->username[0]->grado < 3))
 	else
 		if($minititolo_news !== '')
 			if($news->deleteNews($minititolo_news)) {
-				$rendering->addValue('result', 'La news è stata cancellata.');
+				$rendering->addValue('result', $news->getLanguage('deletenews', 0));
 				if($news->config[0]->log == 1)
 					$news->log($news->username[0]->nickname, 'News \''.$minititolo_news.'\' deleted.');
 			}
 			else {
-				$rendering->addValue('result', 'È accaduto un errore durante la cancellazione della news.');
+				$rendering->addValue('result', $news->getLanguage('deletenews', 1));
 				if($news->config[0]->log == 1)
 					$news->log($news->username[0]->nickname, 'News \''.$minititolo_news.'\' deletion failed.');
 			}
 		else {
-			$rendering->addValue('result', 'Non sei abilitato a cancellare questa news.');
+			$rendering->addValue('result', $news->getLanguage('deletenews', 2));
 			if($news->config[0]->log == 1)
 				$news->log($news->username[0]->nickname, 'News \''.$minititolo_news.'\' deletion failed.');
 		}
 else
-	$rendering->addValue('result', 'Accesso negato.');
+	$rendering->addValue('result', $news->getLanguage('error', 4));
 $rendering->addValue('submit', $submit);
 $rendering->addValue('whatis', 'news');
 (($news->isLogged()) && ($news->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('deletecontent.tpl');

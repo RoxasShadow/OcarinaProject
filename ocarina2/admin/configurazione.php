@@ -37,7 +37,7 @@ $submit = isset($_POST['submit']) ? true : false;
 
 $rendering->addValue('grado', $user->isLogged() ? $user->username[0]->grado : '');
 $rendering->skin = 'admin';
-$rendering->addValue('titolo', 'Configurazione &raquo; Amministrazione &raquo; '.$user->config[0]->nomesito);
+$rendering->addValue('titolo', $user->getLanguage('title', 14).$user->getLanguage('title', 2).$user->getLanguage('title', 10).$user->getLanguage('title', 2).$user->config[0]->nomesito);
 
 if(($user->isLogged()) && ($user->username[0]->grado == 1))
 	if(!$submit) {
@@ -70,10 +70,10 @@ if(($user->isLogged()) && ($user->username[0]->grado == 1))
 	}
 	else
 		if(($user->editConfig('nomesito', $nomesito)) && ($user->editConfig('email', $email)) && ($user->editConfig('bbcode', $bbcode)) && ($user->editConfig('registrazioni', $registrazioni)) && ($user->editConfig('validazioneaccount', $validazioneaccount)) && ($user->editConfig('commenti', $commenti)) && ($user->editConfig('approvacommenti', $approvacommenti)) && ($user->editConfig('log', $log)) && ($user->editConfig('cookie', $cookie)) && ($user->editConfig('skin', $skin)) && ($user->editConfig('description', $description)) && ($user->editConfig('limitenews', $limitenews)) && ($user->editConfig('impaginazionenews', $impaginazionenews)) && ($user->editConfig('permettivoto', $permettivoto)) && ($user->editConfig('limiteonline', $limiteonline)) && ($user->editConfig('url', $url)) && ($user->editConfig('url_index', $url_index)) && ($user->editConfig('url_admin', $url_admin)) && ($user->editConfig('url_rendering', $url_rendering)) && ($user->editConfig('url_immagini', $url_immagini)) && ($user->editConfig('root', $root)) && ($user->editConfig('root_index', $root_index)) && ($user->editConfig('root_admin', $root_admin)) && ($user->editConfig('root_rendering', $root_rendering)) && ($user->editConfig('root_immagini', $root_immagini)))
-			$rendering->addValue('result', 'Le modifica alla configurazione sono state apportate con successo.');
+			$rendering->addValue('result', $user->getLanguage('configuration', 0));
 		else
-			$rendering->addValue('result', 'È accaduto un errore durante la modifica alla configurazione.');
+			$rendering->addValue('result', $user->getLanguage('configuration', 0));
 else
-	$rendering->addValue('result', 'Accesso negato.');
+	$rendering->addValue('result', $user->getLanguage('error', 4));
 $rendering->addValue('submit', $submit);
 (($user->isLogged()) && ($user->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('configurazione.tpl');

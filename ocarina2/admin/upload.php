@@ -14,24 +14,24 @@ $rendering = new Rendering();
 
 $rendering->addValue('grado', $user->isLogged() ? $user->username[0]->grado : '');
 $rendering->skin = 'admin';
-$rendering->addValue('titolo', 'Upload &raquo; Amministrazione &raquo; '.$user->config[0]->nomesito);
+$rendering->addValue('titolo', $user->getLanguage('title', 23).$user->getLanguage('title', 2).$user->getLanguage('title', 10).$user->getLanguage('title', 2).$user->config[0]->nomesito);
 
 if(($user->isLogged()) && ($user->username[0]->grado < 4)) {
 	if($image !== '')
 		if(count($image)-1 < 2)
 			if(!$upload = $user->uploadImage($user->config[0]->root_immagini.'/', $image))
-				$rendering->addValue('result', 'È accaduto un errore durante il caricamento del file nel server.');
+				$rendering->addValue('result', $user->getLanguage('upload', 0));
 			else
 				$rendering->addValue('image', $_FILES['image']['name']);
 		else
 			if(!$upload = $user->uploadMultipleImage($user->config[0]->root_immagini.'/', $image))
-				$rendering->addValue('result', 'È accaduto un errore durante il caricamento dei file nel server.');
+				$rendering->addValue('result', $user->getLanguage('upload', 1));
 			else {
 				$rendering->addValue('image', $_FILES['image']['name']);
 			}
 }
 else
-	$rendering->addValue('result', 'Accesso negato.');
+	$rendering->addValue('result', $user->getLanguage('error', 4));
 $rendering->addValue('multiple', $multiple);
 $rendering->addValue('submit', $submit);
 (($user->isLogged()) && ($user->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('upload.tpl');

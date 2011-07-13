@@ -12,7 +12,7 @@ $delete = ((isset($_GET['delete'])) && ($_GET['delete'])) ? $user->purge($_GET['
 
 $rendering->addValue('grado', $user->isLogged() ? $user->username[0]->grado : '');
 $rendering->skin = 'admin';
-$rendering->addValue('titolo', 'Immagini &raquo; Amministrazione &raquo; '.$user->config[0]->nomesito);
+$rendering->addValue('titolo', $user->getLanguage('title', 18).$user->getLanguage('title', 2).$user->getLanguage('title', 10).$user->getLanguage('title', 2).$user->config[0]->nomesito);
 
 if(($user->isLogged()) && ($user->username[0]->grado < 4) && ($delete == ''))
 	$rendering->addValue('immagini', $user->getImage());
@@ -23,5 +23,5 @@ elseif(($user->isLogged()) && ($user->username[0]->grado < 4) && ($delete !== ''
 		else
 			header('Location: '.$config[0]->url_admin.'/immagini.php');
 else
-	$rendering->addValue('result', 'Accesso negato.');
+	$rendering->addValue('result', $user->getLanguage('error', 4));
 (($user->isLogged()) && ($user->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('index.tpl');

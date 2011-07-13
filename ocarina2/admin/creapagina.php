@@ -15,7 +15,7 @@ $submit = isset($_POST['submit']) ? true : false;
 
 $rendering->addValue('grado', $pagina->isLogged() ? $pagina->username[0]->grado : '');
 $rendering->skin = 'admin';
-$rendering->addValue('titolo', 'Crea pagina &raquo; Amministrazione &raquo; '.$pagina->config[0]->nomesito);
+$rendering->addValue('titolo', $pagina->getLanguage('title', 16).$pagina->getLanguage('title', 2).$pagina->getLanguage('title', 10).$pagina->getLanguage('title', 2).$pagina->config[0]->nomesito);
 
 if(($pagina->isLogged()) && ($pagina->username[0]->grado <= 3))
 	if(!$submit) {
@@ -30,20 +30,20 @@ if(($pagina->isLogged()) && ($pagina->username[0]->grado <= 3))
 				$approva_pagina = 1; // approvato
 			$array = array($pagina->username[0]->nickname, $titolo_pagina, $pagina->permalink($titolo_pagina), $testo_pagina, $categoria_pagina, date('d-m-y'), date('G:m:i'), $approva_pagina);
 			if($pagina->isPage($pagina->permalink($titolo_pagina)))
-				$rendering->addValue('result', 'È accaduto un errore durante la creazione della pagina. Esiste già una pagina con lo stesso titolo, prova a sceglierne un altro.');
+				$rendering->addValue('result', $pagina->getLanguage('createpage', 0));
 			elseif($pagina->createPage($array)) {
 				if($approva_pagina == 0)
-					$rendering->addValue('result', 'La pagina è stata creata con successo ed è in attesa di approvazione.');
+					$rendering->addValue('result', $pagina->getLanguage('createpage', 1));
 				elseif($approva_pagina == 1)
-					$rendering->addValue('result', 'La pagina è stata creata con successo.');
+					$rendering->addValue('result', $pagina->getLanguage('createpage', 2));
 			}
 			else
-				$rendering->addValue('result', 'È accaduto un errore durante la creazione della pagina.');
+				$rendering->addValue('result', $pagina->getLanguage('createpage', 3));
 		}
 		else
-			$rendering->addValue('result', 'È accaduto un errore durante la creazione della pagina. Controlla di non aver lasciato alcun campo vuoto.');
+			$rendering->addValue('result', $pagina->getLanguage('createpage', 4));
 	}
 else
-	$rendering->addValue('result', 'Accesso negato.');
+	$rendering->addValue('result', $pagina->getLanguage('error', 4));
 $rendering->addValue('submit', $submit);
 (($pagina->isLogged()) && ($pagina->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('formcontents.tpl');

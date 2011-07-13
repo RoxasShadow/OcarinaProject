@@ -17,7 +17,7 @@ $submit = isset($_POST['submit']) ? true : false;
 
 $rendering->addValue('grado', $page->isLogged() ? $page->username[0]->grado : '');
 $rendering->skin = 'admin';
-$rendering->addValue('titolo', 'Approva &raquo; Amministrazione &raquo; '.$comments->config[0]->nomesito);
+$rendering->addValue('titolo', $page->getLanguage('title', 11).$page->getLanguage('title', 2).$page->getLanguage('title', 10).$page->getLanguage('title', 2).$comments->config[0]->nomesito);
 
 if(($page->isLogged()) && ($page->username[0]->grado < 3))
 	if(!$submit) {
@@ -30,38 +30,38 @@ if(($page->isLogged()) && ($page->username[0]->grado < 3))
 			if($comments->editNews('approvato', '1', $minititolo_news)) {
 				if($comments->config[0]->log == 1)
 					$comments->log($page->username[0]->nickname, 'News '.$minititolo_news.' approved.');
-				$rendering->addValue('result', 'La news è stata approvata ed è ora visibile.');
+				$rendering->addValue('result', $page->getLanguage('approve', 0));
 			}
 			else {
 				if($comments->config[0]->log == 1)
 					$comments->log($page->username[0]->nickname, 'News '.$minititolo_news.' approvation failed.');
-				$rendering->addValue('result', 'È accaduto un errore durante l\'approvazione della news.');
+				$rendering->addValue('result', $page->getLanguage('approve', 1));
 			}
 		elseif($id_commento !== '')
 			if($comments->editComment('approvato', '1', $id_commento)) {
 				if($comments->config[0]->log == 1)
 					$comments->log($page->username[0]->nickname, 'Comment #'.$id_commento.' approved.');
-				$rendering->addValue('result', 'Il commento è stato approvato ed è ora visibile.');
+				$rendering->addValue('result', $page->getLanguage('approve', 2));
 			}
 			else {
 				if($comments->config[0]->log == 1)
 					$comments->log($page->username[0]->nickname, 'Comment #'.$id_commento.' approvation failed.');
-				$rendering->addValue('result', 'È accaduto un errore durante l\'approvazione del commento.');
+				$rendering->addValue('result', $page->getLanguage('approve', 3));
 			}
 		elseif($minititolo_pagina !== '')
 			if($page->editPage('approvato', '1', $minititolo_pagina)) {
 				if($comments->config[0]->log == 1)
 					$comments->log($page->username[0]->nickname, 'Page '.$minititolo_pagina.' approved.');
-				$rendering->addValue('result', 'La pagina è stata approvata ed è ora visibile.');
+				$rendering->addValue('result', $page->getLanguage('approve', 4));
 			}
 			else {
 				if($comment->config[0]->log == 1)
 					$comment->log($page->username[0]->nickname, 'Page '.$minititolo_pagina.' approvation failed.');
-				$rendering->addValue('result', 'È accaduto un errore durante l\'approvazione della pagina.');
+				$rendering->addValue('result', $page->getLanguage('approve', 5));
 			}
 		else
-			$rendering->addValue('result', 'Non hai selezionato nulla da approvare.');
+			$rendering->addValue('result', $page->getLanguage('approve', 6));
 else
-	$rendering->addValue('result', 'Accesso negato.');
+	$rendering->addValue('result', $page->getLanguage('error', 4));
 $rendering->addValue('submit', $submit);
 (($page->isLogged()) && ($page->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('approva.tpl');

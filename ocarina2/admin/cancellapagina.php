@@ -13,7 +13,7 @@ $submit = isset($_POST['submit']) ? true : false;
 
 $rendering->addValue('grado', $pagina->isLogged() ? $pagina->username[0]->grado : '');
 $rendering->skin = 'admin';
-$rendering->addValue('titolo', 'Cancella pagina &raquo; Amministrazione &raquo; '.$pagina->config[0]->nomesito);
+$rendering->addValue('titolo', $pagina->getLanguage('title', 12).$pagina->getLanguage('title', 2).$pagina->getLanguage('title', 10).$pagina->getLanguage('title', 2).$pagina->config[0]->nomesito);
 
 if(($pagina->isLogged()) && ($pagina->username[0]->grado < 3))
 	if(!$submit)
@@ -21,22 +21,22 @@ if(($pagina->isLogged()) && ($pagina->username[0]->grado < 3))
 	else
 		if($minititolo_pagina !== '')
 			if($pagina->deletePage($minititolo_pagina)) {
-				$rendering->addValue('result', 'La pagina è stata cancellata.');
+				$rendering->addValue('result', $pagina->getLanguage('deletepage', 0));
 				if($pagina->config[0]->log == 1)
 					$pagina->log($pagina->username[0]->nickname, 'Page \''.$minititolo_pagina.'\' deleted.');
 			}
 			else {
-				$rendering->addValue('result', 'È accaduto un errore durante la cancellazione della pagina.');
+				$rendering->addValue('result', $pagina->getLanguage('deletepage', 1));
 				if($pagina->config[0]->log == 1)
 					$pagina->log($pagina->username[0]->nickname, 'Page \''.$minititolo_pagina.'\' deletion failed.');
 			}
 		else {
-			$rendering->addValue('result', 'Non sei abilitato a cancellare questa pagina.');
+			$rendering->addValue('result', $pagina->getLanguage('deletepage', 2));
 			if($pagina->config[0]->log == 1)
 				$pagina->log($pagina->username[0]->nickname, 'Page \''.$minititolo_pagina.'\' deletion failed.');
 		}
 else
-	$rendering->addValue('result', 'Accesso negato.');
+	$rendering->addValue('result', $pagina->getLanguage('error', 4));
 $rendering->addValue('submit', $submit);
 $rendering->addValue('whatis', 'pagina');
 (($pagina->isLogged()) && ($pagina->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('deletecontent.tpl');
