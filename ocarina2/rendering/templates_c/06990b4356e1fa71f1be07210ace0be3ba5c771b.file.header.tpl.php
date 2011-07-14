@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-13 15:28:33
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-14 22:45:44
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/admin/include/header.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:3202193334e1db9a1047737-90368288%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:352779214e1f719847ac46-08391953%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '06990b4356e1fa71f1be07210ace0be3ba5c771b' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/admin/include/header.tpl',
-      1 => 1310570911,
+      1 => 1310683541,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '3202193334e1db9a1047737-90368288',
+  'nocache_hash' => '352779214e1f719847ac46-08391953',
   'function' => 
   array (
   ),
@@ -67,6 +67,8 @@ $_smarty_tpl->decodeProperties(array (
 /logout.php">Logout</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /log.php">Logs</a></li>
+<li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
+/annunci.php">Annunci</a></li>
 <li><a class="active">SEO</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /robots.php">Robots</a></li>
@@ -77,6 +79,8 @@ $_smarty_tpl->decodeProperties(array (
 /logout.php">Logout</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /log.php">Logs</a></li>
+<li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
+/annunci.php">Annunci</a></li>
 <li><a class="active">Webdesign</a></li>
 <li><a href="#">Filler ~</a></li>
 <?php }elseif($_smarty_tpl->getVariable('grado')->value==3){?>
@@ -86,6 +90,8 @@ $_smarty_tpl->decodeProperties(array (
 /logout.php">Logout</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /log.php">Logs</a></li>
+<li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
+/annunci.php">Annunci</a></li>
 <li><a class="active">News</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /creanews.php">Crea news</a></li>
@@ -122,6 +128,13 @@ $_smarty_tpl->decodeProperties(array (
 <li><a class="active">SEO</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /robots.php">Robots</a></li>
+<li><a class="active">Annunci</a></li>
+<li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
+/annunci.php">Annunci</a></li>
+<li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
+/modificaannuncio.php">Modifica annunci</a></li>
+<li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
+/cancellaannuncio.php">Cancella annunci</a></li>
 <li><a class="active">News</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /creanews.php">Crea news</a></li>
@@ -160,6 +173,13 @@ $_smarty_tpl->decodeProperties(array (
 <li><a class="active">SEO</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /robots.php">Robots</a></li>
+<li><a class="active">Annunci</a></li>
+<li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
+/annunci.php">Annunci</a></li>
+<li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
+/modificaannuncio.php">Modifica annunci</a></li>
+<li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
+/cancellaannuncio.php">Cancella annunci</a></li>
 <li><a class="active">Utenti</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /modificagrado.php">Modifica grado</a></li>

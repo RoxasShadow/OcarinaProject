@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-14 14:17:23
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-14 22:36:40
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/admin/formcontents.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:5223306824e1efa73645469-03826681%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:8419531024e1f6f78a1ee50-13934960%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'b32bc29ea7bc6ae8fd7ea4877b533022756e886f' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/admin/formcontents.tpl',
-      1 => 1310653035,
+      1 => 1310682996,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '5223306824e1efa73645469-03826681',
+  'nocache_hash' => '8419531024e1f6f78a1ee50-13934960',
   'function' => 
   array (
   ),
@@ -27,26 +27,28 @@ $_smarty_tpl->decodeProperties(array (
 		Titolo<br />
 		<input type="text" name="titolo" <?php if ((isset($_smarty_tpl->getVariable('titolo_default',null,true,false)->value))){?>value="<?php echo $_smarty_tpl->getVariable('titolo_default')->value;?>
 "<?php }?> /><br /><br />
-		Categoria<br />
-		<select name="categoria">
-		<?php  $_smarty_tpl->tpl_vars['item'] = new Smarty_Variable;
+		<?php if (((!isset($_smarty_tpl->getVariable('nocategory',null,true,false)->value))||($_smarty_tpl->getVariable('nocategory')->value!==1))){?>
+			Categoria<br />
+			<select name="categoria">
+			<?php  $_smarty_tpl->tpl_vars['item'] = new Smarty_Variable;
  $_smarty_tpl->tpl_vars['key'] = new Smarty_Variable;
  $_from = $_smarty_tpl->getVariable('categorie')->value; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
 if ($_smarty_tpl->_count($_from) > 0){
     foreach ($_from as $_smarty_tpl->tpl_vars['item']->key => $_smarty_tpl->tpl_vars['item']->value){
  $_smarty_tpl->tpl_vars['key']->value = $_smarty_tpl->tpl_vars['item']->key;
 ?>
-			 <?php if (((isset($_smarty_tpl->getVariable('categoria',null,true,false)->value))&&($_smarty_tpl->getVariable('categorie')->value[$_smarty_tpl->tpl_vars['key']->value]==$_smarty_tpl->getVariable('categoria')->value))){?>
-			 	<option value="<?php echo $_smarty_tpl->getVariable('categorie')->value[$_smarty_tpl->tpl_vars['key']->value];?>
+				 <?php if (((isset($_smarty_tpl->getVariable('categoria',null,true,false)->value))&&($_smarty_tpl->getVariable('categorie')->value[$_smarty_tpl->tpl_vars['key']->value]==$_smarty_tpl->getVariable('categoria')->value))){?>
+				 	<option value="<?php echo $_smarty_tpl->getVariable('categorie')->value[$_smarty_tpl->tpl_vars['key']->value];?>
 " selected><?php echo $_smarty_tpl->getVariable('categorie')->value[$_smarty_tpl->tpl_vars['key']->value];?>
 </option>
-			 <?php }else{ ?>
-				<option value="<?php echo $_smarty_tpl->getVariable('categorie')->value[$_smarty_tpl->tpl_vars['key']->value];?>
+				 <?php }else{ ?>
+					<option value="<?php echo $_smarty_tpl->getVariable('categorie')->value[$_smarty_tpl->tpl_vars['key']->value];?>
 "><?php echo $_smarty_tpl->getVariable('categorie')->value[$_smarty_tpl->tpl_vars['key']->value];?>
 </option>
-			<?php }?>
-		<?php }} ?>
-		</select><br /><br />
+				<?php }?>
+			<?php }} ?>
+			</select><br /><br />
+		<?php }?>
 		<?php if ($_smarty_tpl->getVariable('bbcode')->value==1){?>
 			<a onclick="request('b');"><b>Grassetto</b></a>
 			<a onclick="request('i');"><b>Corsivo</b></a>
@@ -65,7 +67,9 @@ if ($_smarty_tpl->_count($_from) > 0){
 			<a onclick="request('code');"><b>Codice</b></a>
 			<a onclick="request('quote');"><b>Citazione</b></a>
 			<a onclick="requestuser();"><b>Utente</b></a>
-			<a onclick="requestyoutube();"><b>Youtube</b></a>
+			<a onclick="requestyoutube();"><b>Youtube</b></a><br />
+		<?php }else{ ?>
+			Tag HTML permessi.<br />
 		<?php }?>
 		<textarea name="testo" cols="59" rows="10" id="targetForm"><?php if ((isset($_smarty_tpl->getVariable('testo',null,true,false)->value))){?><?php echo $_smarty_tpl->getVariable('testo')->value;?>
 <?php }?></textarea><br />

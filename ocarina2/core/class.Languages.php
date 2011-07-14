@@ -58,7 +58,11 @@ class Languages {
 				'Modifica news',
 				'Modifica pagina',
 				'Robots',
-				'Upload'
+				'Upload',
+				'Crea annuncio',
+				'Cancella annuncio',
+				'Modifica annuncio',
+				'Annunci'	
 			),
 			'error' => array(
 				'È accaduto un errore',
@@ -225,6 +229,24 @@ class Languages {
 			'upload' => array(
 				'È accaduto un errore durante il caricamento del file nel server.',
 				'È accaduto un errore durante il caricamento dei file nel server.'
+			),
+			'createad' => array(
+				'È accaduto un errore durante la creazione dell\'annuncio. Esiste già un annuncio con lo stesso titolo, prova a sceglierne un altro.',
+				'L\'annuncio è stato creato con successo.',
+				'È accaduto un errore durante la creazione dell\'annuncio.',
+				'È accaduto un errore durante la creazione dell\'annuncio. Controlla di non aver lasciato alcun campo vuoto.'
+			),
+			'deletead' => array(
+				'L\'annuncio è stato cancellato.',
+				'È accaduto un errore durante la cancellazione dell\'annuncio.',
+				'Non sei abilitato a cancellare quest\'annuncio.'
+			),
+			'editad' => array(
+				'Scegli l\'annuncio da modificare',
+				'È accaduto un errore, l\'annuncio selezionato non esiste.',
+				'Non sei abilitato a modificare quest\'annuncio.',
+				'L\'annuncio è stata modificata.',
+				'È accaduto un errore durante la modifica dell\'annuncio. Controlla di non aver lasciato alcun campo vuoto.'
 			)
 		);
 	}

@@ -3,10 +3,10 @@
 	core/class.Category.php
 	(C) Giovanni Capuano 2011
 */
-require_once('class.User.php');
+require_once('class.Ad.php');
 
 /* Questa classe mette a disposizione dei metodi per gestire le categorie. */
-class Category extends User {
+class Category extends Ad {
 
 	/* Ottengo le categorie. */
 	public function getCategory($campo) {

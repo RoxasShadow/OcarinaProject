@@ -50,7 +50,8 @@ o layout), in modo che l'utente possa visualizzare il sito con quella che prefer
 Il grafico potrà quindi usufruire dei tag dinamici messi a disposizione per creare qualsiasi skin voglia,
 senza alcun tipo di restrizione.
 Dispone, infine, di un controllore degli aggiornamenti, così che l'amministratore possa effettuare
-gli aggiornamenti tempestivamente.
+gli aggiornamenti tempestivamente e gli annunci, ovvero dei testi, simili alle news leggibili solo dallo
+staff.
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
@@ -129,8 +130,8 @@ Dispone di una variabile globale che viene popolata all'istanziazione della clas
 contenente i record della omonima tabella.
 Contiene inoltre metodi per la gestione della configurazione.
 
--class.Category.php | class.News.php | class.Comments.php | class.Page.php
-La prima classe gestisce le categorie come campi enum, mentre le restanti tre dispongono di metodi
+-class.Category.php | class.News.php | class.Comments.php | class.Page.php | class.Ad.php
+La prima classe gestisce le categorie come campi enum, mentre le restanti quattro dispongono di metodi
 per la visualizzazione, rimozione, inserimento e modifica degli elementi ominimi.
 
 -class.User.php

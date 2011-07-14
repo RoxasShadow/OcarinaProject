@@ -37,15 +37,15 @@ class BBCode extends Configuration {
 			'/\(R\)/is'
 		);
 		$sostituisci_codice = array(
-			'<b>$1</b>',
-			'<i>$1</i>',
+			'<strong>$1</strong>',
+			'<em>$1</em>',
 			'<u>$1</u>',
 			'<s>$1</s>',
 			'<font color="$1">$2</font>',
 			'<a href="$1">$2</a>',
-			'<div align="center"><input type="submit" class="buttonSpoiler" value="Mostra/Nascondi" /></div><div class="spoiler">$1</div>',
-			'<img src="$1">',
-			'<a href="$3"><img src="$3" width="$1" height="$2"></a>',
+			'<input type="submit" class="buttonSpoiler" value="Mostra/Nascondi" /><div class="spoiler">$1</div>',
+			'<img src="$1" alt="$1" />',
+			'<img src="$3" width="$1" height="$2" alt="$3" />',
 			'<div align="center">$1</div>',
 			'<div align="right">$1</div>',
 			'<div align="left">$1</div>',
@@ -85,13 +85,13 @@ class BBCode extends Configuration {
 			'/\(R\)/is'
 		);
 		$sostituisci_codice = array(
-			'<b>$1</b>',
-			'<i>$1</i>',
+			'<strong>$1</strong>',
+			'<em>$1</>$>',
 			'<u>$1</u>',
 			'<s>$1</s>',
 			'<font color="$1">$2</font>',
 			'<a href="$1">$2</a>',
-			'<a onclick="spoiler();">Mostra/Nascondi</a><div class="spoiler">$1</div>',
+			'<input type="submit" class="buttonSpoiler" value="Mostra/Nascondi" /><div class="spoiler">$1</div>',
 			'<div align="center">$1</div>',
 			'<div align="right">$1</div>',
 			'<div align="left">$1</div>',

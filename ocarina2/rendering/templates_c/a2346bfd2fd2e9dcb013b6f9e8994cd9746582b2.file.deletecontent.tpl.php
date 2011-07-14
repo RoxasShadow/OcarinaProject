@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-13 15:19:59
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-14 22:45:23
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/admin/deletecontent.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:19397631184e1db79f73fc44-14091011%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:6852622744e1f7183894431-03600339%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'a2346bfd2fd2e9dcb013b6f9e8994cd9746582b2' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/admin/deletecontent.tpl',
-      1 => 1310412647,
+      1 => 1310682056,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '19397631184e1db79f73fc44-14091011',
+  'nocache_hash' => '6852622744e1f7183894431-03600339',
   'function' => 
   array (
   ),
@@ -23,23 +23,27 @@ $_smarty_tpl->decodeProperties(array (
 	<?php if ((($_smarty_tpl->getVariable('grado')->value=='')||($_smarty_tpl->getVariable('grado')->value>3))){?>
 		Accesso negato.
 	<?php }elseif(!$_smarty_tpl->getVariable('submit')->value){?>
-		<form action="" method="post">
-		<?php if ((isset($_smarty_tpl->getVariable('whatis',null,true,false)->value)&&($_smarty_tpl->getVariable('whatis')->value=='pagina'))){?>Pagina<?php }elseif((isset($_smarty_tpl->getVariable('whatis',null,true,false)->value)&&($_smarty_tpl->getVariable('whatis')->value=='news'))){?>News<?php }?> da cancellare<br />
-		<select name="content">
-		<?php  $_smarty_tpl->tpl_vars['item'] = new Smarty_Variable;
+		<?php if (((!isset($_smarty_tpl->getVariable('content',null,true,false)->value))||($_smarty_tpl->getVariable('content')->value==''))){?>
+			<?php if ((isset($_smarty_tpl->getVariable('whatis',null,true,false)->value)&&($_smarty_tpl->getVariable('whatis')->value=='pagina'))){?>Nessuna pagina<?php }elseif((isset($_smarty_tpl->getVariable('whatis',null,true,false)->value)&&($_smarty_tpl->getVariable('whatis')->value=='news'))){?>Nessuna news<?php }elseif((isset($_smarty_tpl->getVariable('whatis',null,true,false)->value)&&($_smarty_tpl->getVariable('whatis')->value=='annuncio'))){?>Nessun annuncio<?php }?> presente da cancellare.
+		<?php }else{ ?>
+			<?php if ((isset($_smarty_tpl->getVariable('whatis',null,true,false)->value)&&($_smarty_tpl->getVariable('whatis')->value=='pagina'))){?>Pagina<?php }elseif((isset($_smarty_tpl->getVariable('whatis',null,true,false)->value)&&($_smarty_tpl->getVariable('whatis')->value=='news'))){?>News<?php }elseif((isset($_smarty_tpl->getVariable('whatis',null,true,false)->value)&&($_smarty_tpl->getVariable('whatis')->value=='annuncio'))){?>Annuncio<?php }?> da cancellare<br />
+			<form action="" method="post">
+			<select name="content">
+			<?php  $_smarty_tpl->tpl_vars['item'] = new Smarty_Variable;
  $_smarty_tpl->tpl_vars['key'] = new Smarty_Variable;
  $_from = $_smarty_tpl->getVariable('content')->value; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
 if ($_smarty_tpl->_count($_from) > 0){
     foreach ($_from as $_smarty_tpl->tpl_vars['item']->key => $_smarty_tpl->tpl_vars['item']->value){
  $_smarty_tpl->tpl_vars['key']->value = $_smarty_tpl->tpl_vars['item']->key;
 ?>
-			<option value="<?php echo $_smarty_tpl->getVariable('content')->value[$_smarty_tpl->tpl_vars['key']->value]->minititolo;?>
+				<option value="<?php echo $_smarty_tpl->getVariable('content')->value[$_smarty_tpl->tpl_vars['key']->value]->minititolo;?>
 "><?php echo $_smarty_tpl->getVariable('content')->value[$_smarty_tpl->tpl_vars['key']->value]->titolo;?>
 </option>
-		<?php }} ?>
-		</select>
-		<input type="submit" name="submit" value="Cancella <?php if ((isset($_smarty_tpl->getVariable('whatis',null,true,false)->value)&&($_smarty_tpl->getVariable('whatis')->value=='pagina'))){?>pagina<?php }elseif((isset($_smarty_tpl->getVariable('whatis',null,true,false)->value)&&($_smarty_tpl->getVariable('whatis')->value=='pagina'))){?>news<?php }?>" />
-		</form>
+			<?php }} ?>
+			</select>
+			<input type="submit" name="submit" value="Cancella <?php if ((isset($_smarty_tpl->getVariable('whatis',null,true,false)->value)&&($_smarty_tpl->getVariable('whatis')->value=='pagina'))){?>pagina<?php }elseif((isset($_smarty_tpl->getVariable('whatis',null,true,false)->value)&&($_smarty_tpl->getVariable('whatis')->value=='pagina'))){?>news<?php }?>" />
+			</form>
+		<?php }?>
 	<?php }elseif($_smarty_tpl->getVariable('submit')->value){?>
 		<?php echo $_smarty_tpl->getVariable('result')->value;?>
 

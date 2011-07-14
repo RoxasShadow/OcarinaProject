@@ -32,18 +32,21 @@
 <li><a class="active">{$nomesito}</a></li>
 <li><a href="{$url_index}/logout.php">Logout</a></li>
 <li><a href="{$url_admin}/log.php">Logs</a></li>
+<li><a href="{$url_admin}/annunci.php">Annunci</a></li>
 <li><a class="active">SEO</a></li>
 <li><a href="{$url_admin}/robots.php">Robots</a></li>
 {elseif $grado == 4}
 <li><a class="active">{$nomesito}</a></li>
 <li><a href="{$url_index}/logout.php">Logout</a></li>
 <li><a href="{$url_admin}/log.php">Logs</a></li>
+<li><a href="{$url_admin}/annunci.php">Annunci</a></li>
 <li><a class="active">Webdesign</a></li>
 <li><a href="#">Filler ~</a></li>
 {elseif $grado == 3}
 <li><a class="active">{$nomesito}</a></li>
 <li><a href="{$url_index}/logout.php">Logout</a></li>
 <li><a href="{$url_admin}/log.php">Logs</a></li>
+<li><a href="{$url_admin}/annunci.php">Annunci</a></li>
 <li><a class="active">News</a></li>
 <li><a href="{$url_admin}/creanews.php">Crea news</a></li>
 <li><a href="{$url_admin}/modificanews.php">Modifica news</a></li>
@@ -65,6 +68,10 @@
 <li><a href="{$url_admin}/log.php">Logs</a></li>
 <li><a class="active">SEO</a></li>
 <li><a href="{$url_admin}/robots.php">Robots</a></li>
+<li><a class="active">Annunci</a></li>
+<li><a href="{$url_admin}/annunci.php">Annunci</a></li>
+<li><a href="{$url_admin}/modificaannuncio.php">Modifica annunci</a></li>
+<li><a href="{$url_admin}/cancellaannuncio.php">Cancella annunci</a></li>
 <li><a class="active">News</a></li>
 <li><a href="{$url_admin}/creanews.php">Crea news</a></li>
 <li><a href="{$url_admin}/modificanews.php">Modifica news</a></li>
@@ -87,6 +94,10 @@
 <li><a href="{$url_admin}/configurazione.php">Configurazione</a></li>
 <li><a class="active">SEO</a></li>
 <li><a href="{$url_admin}/robots.php">Robots</a></li>
+<li><a class="active">Annunci</a></li>
+<li><a href="{$url_admin}/annunci.php">Annunci</a></li>
+<li><a href="{$url_admin}/modificaannuncio.php">Modifica annunci</a></li>
+<li><a href="{$url_admin}/cancellaannuncio.php">Cancella annunci</a></li>
 <li><a class="active">Utenti</a></li>
 <li><a href="{$url_admin}/modificagrado.php">Modifica grado</a></li>
 <li><a href="{$url_admin}/cancellautente.php">Cancella utente</a></li>

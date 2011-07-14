@@ -30,7 +30,7 @@ if(($pagina->isLogged()) && ($pagina->username[0]->grado < 4))
 		elseif($pagina->username[0]->grado < 3) {
 			$allPage = $pagina->searchPage('', 'wildcard');
 			if($allPage !== false)
-			foreach(allPage as $v)
+			foreach($allPage as $v)
 				$result .= '<option value="'.$v->minititolo.'">'.$v->titolo.'</option>';
 		}
 		$result .= '</select><input type="submit" name="sel_submit" value="'.$pagina->getLanguage('title', 21).'">';

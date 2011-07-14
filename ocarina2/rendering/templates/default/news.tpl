@@ -16,7 +16,7 @@
 				{if $news[$key]->voti == 1}
 					(1 voto)
 				{else}
-					({$news[$key]->voti == 1} voti)
+					({$news[$key]->voti} voti)
 				{/if}
 			{else}
 				La news non è stata approvata, e quindi non è visibile.
@@ -51,7 +51,7 @@
 				<a onclick="add('[br]');"><b>Accapo</b></a>
 				<a onclick="request('code');"><b>Codice</b></a>
 				<a onclick="request('quote');"><b>Citazione</b></a>
-				<a onclick="requestuser();"><b>Utente</b></a>
+				<a onclick="requestuser();"><b>Utente</b></a><br />
 			{/if}
 			<form action="" method="post">
 			<textarea name="comment" cols="59" rows="10" id="targetForm"></textarea><br />

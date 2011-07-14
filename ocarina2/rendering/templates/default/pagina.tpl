@@ -15,7 +15,7 @@
 					{if $pagina[$key]->voti == 1}
 						(1 voto)
 					{else}
-						({$pagina[$key]->voti == 1} voti)
+						({$pagina[$key]->voti} voti)
 					{/if}
 				{else}
 					La pagina non è stata approvata, e quindi non è visibile.
