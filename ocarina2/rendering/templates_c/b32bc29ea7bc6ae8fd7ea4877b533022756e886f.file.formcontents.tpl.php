@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-09 18:56:06
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-14 14:17:23
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/admin/formcontents.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:19789876384e18a3b58ba0d4-78193577%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:5223306824e1efa73645469-03826681%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'b32bc29ea7bc6ae8fd7ea4877b533022756e886f' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/admin/formcontents.tpl',
-      1 => 1309810435,
+      1 => 1310653035,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '19789876384e18a3b58ba0d4-78193577',
+  'nocache_hash' => '5223306824e1efa73645469-03826681',
   'function' => 
   array (
   ),
@@ -48,22 +48,24 @@ if ($_smarty_tpl->_count($_from) > 0){
 		<?php }} ?>
 		</select><br /><br />
 		<?php if ($_smarty_tpl->getVariable('bbcode')->value==1){?>
-			<a onclick="add('[b][/b]');"><b>Grassetto</b></a>
-			<a onclick="add('[i][/i]');"><b>Corsivo</b></a>
-
-			<a onclick="add('[u][/u]');"><b>Sottolineato</b></a>
-			<a onclick="add('[s][/s]');"><b>Barrato</b></a>
+			<a onclick="request('b');"><b>Grassetto</b></a>
+			<a onclick="request('i');"><b>Corsivo</b></a>
+			<a onclick="request('u');"><b>Sottolineato</b></a>
+			<a onclick="request('s');"><b>Barrato</b></a>
 			<a onclick="requestcolor();"><b>Colore</b></a>
-			<a onclick="add('[url=http://][/url]');"><b>URL</b></a>
-			<a onclick="add('[spoiler][/spoiler]');"><b>Spoiler</b></a>
-			<a onclick="add('[left][/left]');"><b>Allineato a sinistra</b></a>
-			<a onclick="add('[center][/center]');"><b>Allineato a centro</b></a>
-			<a onclick="add('[right][/right]');"><b>Allineato a destra</b></a>
+			<a onclick="requesturl();"><b>URL</b></a>
+			<a onclick="request('spoiler');"><b>Spoiler</b></a>
+			<a onclick="requestimg();"><b>Immagine</b></a>
+			<a onclick="requestimgdim();"><b>Immagine con dimensioni</b></a>
+			<a onclick="request('summary');"><b>Paragrafo</b></a>
+			<a onclick="request('left');"><b>Allineato a sinistra</b></a>
+			<a onclick="request('center');"><b>Allineato a centro</b></a>
+			<a onclick="request('right');"><b>Allineato a destra</b></a>
 			<a onclick="add('[br]');"><b>Accapo</b></a>
-
-			<a onclick="add('[code][/code]');"><b>Codice</b></a>
-			<a onclick="add('[quote][/quote]');"><b>Citazione</b></a>
-			<a onclick="add('[youtube][/youtube]');"><b>Youtube</b></a>
+			<a onclick="request('code');"><b>Codice</b></a>
+			<a onclick="request('quote');"><b>Citazione</b></a>
+			<a onclick="requestuser();"><b>Utente</b></a>
+			<a onclick="requestyoutube();"><b>Youtube</b></a>
 		<?php }?>
 		<textarea name="testo" cols="59" rows="10" id="targetForm"><?php if ((isset($_smarty_tpl->getVariable('testo',null,true,false)->value))){?><?php echo $_smarty_tpl->getVariable('testo')->value;?>
 <?php }?></textarea><br />

@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-10 13:12:50
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-14 14:13:40
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/include/header.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:7252777534e19a552a78bb7-67921614%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:4758443664e1ef9944476a2-27619919%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'ff19f579de2a4f1ee418c8728e9c2f8b8ccdd1c6' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/default/include/header.tpl',
-      1 => 1310303551,
+      1 => 1310652809,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '7252777534e19a552a78bb7-67921614',
+  'nocache_hash' => '4758443664e1ef9944476a2-27619919',
   'function' => 
   array (
   ),
@@ -33,9 +33,9 @@ $_smarty_tpl->decodeProperties(array (
 <script type="text/javascript" src="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /etc/loadJavascript.js.php"></script>
 <link rel="alternate" type="application/rss+xml" title="Feed RSS News" href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
-/feed.php?content=news" />
+/feed/news.html" />
 <link rel="alternate" type="application/rss+xml" title="Feed RSS Pagine" href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
-/feed.php?content=page" />
+/feed/page.html" />
 <meta name="robots" content="index,follow" />
 </head>
 <body>
@@ -57,8 +57,8 @@ Benvenuto su <?php echo $_smarty_tpl->getVariable('nomesito')->value;?>
 Bentornato <?php echo $_smarty_tpl->getVariable('utente')->value;?>
  (<a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /logout.php">Logout</a> | <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
-/profilo.php?nickname=<?php echo $_smarty_tpl->getVariable('utente')->value;?>
-">Profilo</a> | <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/profile/<?php echo $_smarty_tpl->getVariable('utente')->value;?>
+.html">Profilo</a> | <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /modificaprofilo.php">Modifica profilo</a> | <a href="modificapassword.php">Modifica password</a>)
 <?php }?>
 </div>

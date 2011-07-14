@@ -171,7 +171,7 @@ class Page extends Category {
 				return false;
 			$query = 'INSERT INTO pagine(';
 			foreach($campi as $var)
-				if(($var !== 'id') && ($var !== 'dataultimamodifica') && ($var !== 'oraultimamodifica') && ($var !== 'autoreultimamodifica') && ($var !== 'visite') && ($var !== 'visitatori'))
+				if(($var !== 'id') && ($var !== 'dataultimamodifica') && ($var !== 'oraultimamodifica') && ($var !== 'autoreultimamodifica') && ($var !== 'visite') && ($var !== 'visitatori') && ($var !== 'voti') && ($var !== 'votanti'))
 				$query .= $var.', ';
 			$query = trim($query, ', ');
 			$query .= ') VALUES(';

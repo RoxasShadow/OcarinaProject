@@ -5,9 +5,11 @@
 */
 require_once('core/class.User.php');
 require_once('core/class.Rendering.php');
+require_once('etc/class.ReCaptcha.php');
 
 $user = new User();
 $rendering = new Rendering();
+$captcha = new ReCaptcha();
 $nickname = ((isset($_POST['nickname'])) && ($_POST['nickname'] !== '')) ? $user->purge($_POST['nickname']) : '';
 $password = ((isset($_POST['password'])) && ($_POST['password'] !== '')) ? $user->purge($_POST['password']) : '';
 $confPassword = ((isset($_POST['confPassword'])) && ($_POST['confPassword'] !== '')) ? $user->purge($_POST['confPassword']) : '';
@@ -41,7 +43,7 @@ elseif($codiceRegistrazione !== '') {
 				$rendering->addValue('result', $user->getLanguage('registration', 3).header('Refresh: 2; URL='.$user->config[0]->url_index.'/login.php'));
 			}
 			else {
-				if($user->config[0]->log == 1)
+				if($user->config[0]->$rendering->addValue('result', $user->getLanguage('registration', 11)) == 1)
 					$user->log('~', 'Validation account failed.');
 				$rendering->addValue('result', $user->getLanguage('registration', 4));
 			}		
@@ -57,7 +59,10 @@ elseif($submit) {
 	if($user->config[0]->registrazioni == 0)
 		$rendering->addValue('result', $user->getLanguage('registration', 5));
 	elseif(($nickname !== '') && ($password !== '') && ($confPassword !== '') && ($email !== '')) {
-		if((($password == $confPassword) && (strlen($password) > 4)) || (strlen($nickname) > 4)) {
+		  $captcha->checkCaptcha();
+		  if($captcha->getError() !== false)
+		  	$rendering->addValue('result', $user->getLanguage('registration', 12));
+		elseif((($password == $confPassword) && (strlen($password) > 4)) || (strlen($nickname) > 4)) {
 			unset($confPassword);
 			if($user->config[0]->validazioneaccount == 1) {
 				$codice = $user->getCode(); // Validazione account
@@ -100,6 +105,8 @@ elseif($submit) {
 	else
 		$rendering->addValue('result', $user->getLanguage('registration', 11));
 }
+elseif(!$submit)
+	$rendering->addValue('captcha', $captcha->getCaptcha());
 $rendering->addValue('codiceRegistrazione', $codiceRegistrazione);
 $rendering->addValue('logged', $user->isLogged());
 $rendering->addValue('submit', $submit);

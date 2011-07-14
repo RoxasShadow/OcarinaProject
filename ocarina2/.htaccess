@@ -19,7 +19,7 @@ SetEnv TZ Europe/Rome
 <IfModule mod_expires.c>
 <IfModule mod_headers.c>
 <FilesMatch "\.(jpg|jpeg|png|gif|swf|js|css|js.php)$"> # Estensioni che verranno messe in cache per 15 giorni (1296000 secondi)
-Header set Cache-Control "max-age=1296000, public"
+#Header set Cache-Control "max-age=1296000, public"
 </FilesMatch>
 </IfModule>
 </IfModule>
@@ -36,14 +36,13 @@ RewriteCond %{QUERY_STRING} GLOBALS(=|[|\%[0-9A-Z]{0,2}) [OR]
 RewriteCond %{QUERY_STRING} _REQUEST(=|[|\%[0-9A-Z]{0,2})
 RewriteRule ^(.*)$ errorpage.php?id=403 [F,L]
 
-#RewriteRule ^p/([0-9]+).html$ Aindex.php?p=$1 [L] # Da /Aindex.php?p=1 a /pagina/1.html # ([0-9]+) -> Numeri # ([^/]+) -> tutto
-#RewriteRule ^welcome/([^/]+).html$ Aindex.php?welcome=$1 [L]
-#RewriteRule ^categoria/([^/]+).html$ categoria.php?cat=$1 [L]
-#RewriteRule ^commento/([0-9]+).html$ commento.php?id=$1 [L]
-#RewriteRule ^errorpage/([0-9]+).html$ errorpage.php?id=$1 [L]
-#RewriteRule ^logout/([^/]+).html$ logout.php?redirect=$1 [L]
-#RewriteRule ^news/([^/]+).html$ news.php?titolo=$1 [L]
-#RewriteRule ^pagina/([^/]+).html$ pagina.php?titolo=$1 [L]
-#RewriteRule ^profilo/([^/]+).html$ profilo.php?nickname=$1 [L]
-#RewriteRule ^recuperapassword/([^/]+).html$ recuperapassword.php?codice=$1 [L]
+#Rewrite
+RewriteRule ^p/([0-9]+).html$ Aindex.php?p=$1 [L]
+RewriteRule ^category/([^/]+).html$ categoria.php?cat=$1 [L]
+RewriteRule ^comment/([0-9]+).html$ commento.php?id=$1 [L]
+RewriteRule ^error/([0-9]+).html$ errorpage.php?id=$1 [L]
+RewriteRule ^news/([^/]+).html$ news.php?titolo=$1 [L]
+RewriteRule ^page/([^/]+).html$ pagina.php?titolo=$1 [L]
+RewriteRule ^profile/([^/]+).html$ profilo.php?nickname=$1 [L]
+RewriteRule ^feed/([^/]+).html$ feed.php?content=$1 [L]
 </IfModule>

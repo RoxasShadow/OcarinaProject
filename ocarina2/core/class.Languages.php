@@ -134,7 +134,8 @@ class Languages {
 				'Registrazione completata. Attendi per il redirect...',
 				'È accaduto un problema durante la registrazione. Controlla di non usare un nickname o un\'email già usata da un altro utente, e che quest\'ultima sia valida.',
 				'È accaduto un problema durante la registrazione: le due password non corrispondono oppure la password o il nickname da te immessi hanno meno di 4 caratteri. Attendi per il redirect...',
-				'È accaduto un problema durante la registrazione. Controlla di aver inserito i dati correttamente e di non aver lasciato alcun campo vuoto.'
+				'È accaduto un problema durante la registrazione. Controlla di aver inserito i dati correttamente e di non aver lasciato alcun campo vuoto.',
+				'Captcha non corrispondente.'
 			),
 			'search' => array(
 				'Non è stata trovata nessuna news corrispondente alla tua keyword.',

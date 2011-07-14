@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-12 16:08:35
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-14 15:54:33
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/news.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:4881876404e1c71839470a1-96374250%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:7293087214e1f1139a5d0c1-17391949%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '27182b59aacf39946fd552a3d1fff0f04232f2ce' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/default/news.tpl',
-      1 => 1310486838,
+      1 => 1310658836,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '4881876404e1c71839470a1-96374250',
+  'nocache_hash' => '7293087214e1f1139a5d0c1-17391949',
   'function' => 
   array (
   ),
@@ -40,13 +40,13 @@ if ($_smarty_tpl->_count($_from) > 0){
 				<div class="titolo"><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->titolo;?>
 </div>
 				<div class="newsheader" align="center">Scritto da <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
-/profilo.php?nickname=<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->autore;?>
-"><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->autore;?>
+/profile/<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->autore;?>
+.html"><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->autore;?>
 </a> il giorno <?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->data;?>
  alle ore <?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->ora;?>
  nella categoria <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
-/categoria.php?cat=<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->categoria;?>
-"><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->categoria;?>
+/category/<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->categoria;?>
+.html"><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->categoria;?>
 </a>. <?php if ($_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->oraultimamodifica==$_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->ora){?>Ultima modifica <?php if ($_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->dataultimamodifica==$_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->data){?>oggi<?php }else{ ?> il giorno <?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->dataultimamodifica;?>
 <?php }?> alle ore <?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->ora;?>
  <?php if ($_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->autoreultimamodifica!==$_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->autore){?>da parte di <?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->autoreultimamodifica;?>
@@ -55,8 +55,13 @@ if ($_smarty_tpl->_count($_from) > 0){
 </p></div><br />
 				<a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /vote.php?action=news&titolo=<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->minititolo;?>
-">Vota questa news</a> (<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->voti;?>
+">Vota questa news</a>
+				<?php if ($_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->voti==1){?>
+					(1 voto)
+				<?php }else{ ?>
+					(<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->voti==1;?>
  voti)
+				<?php }?>
 			<?php }else{ ?>
 				La news non è stata approvata, e quindi non è visibile.
 			<?php }?>
@@ -78,16 +83,18 @@ if ($_smarty_tpl->_count($_from) > 0){
 ?>
 				<?php if ($_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->approvato==1){?>
 					<fieldset><legend><a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
-/commento.php?id=<?php echo $_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->id;?>
-">#<?php echo $_smarty_tpl->tpl_vars['item']->iteration;?>
+/comment/<?php echo $_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->id;?>
+.html">#<?php echo $_smarty_tpl->tpl_vars['item']->iteration;?>
 </a> Commento inviato il giorno <?php echo $_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->data;?>
  alle ore <?php echo $_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->ora;?>
  da <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
-/profilo.php?nickname=<?php echo $_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->autore;?>
-"><?php echo $_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->autore;?>
+/profile/<?php echo $_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->autore;?>
+.html"><?php echo $_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->autore;?>
 </a>. <?php if (((isset($_smarty_tpl->getVariable('grado',null,true,false)->value))&&(is_numeric($_smarty_tpl->getVariable('grado')->value))&&($_smarty_tpl->getVariable('grado')->value<3))){?><a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /admin/cancellacommento.php?id=<?php echo $_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->id;?>
-">(X)</a><?php }?></legend><div onclick="quota(this);"><?php echo $_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->contenuto;?>
+">(X)</a><?php }?> <a onclick="quota('<?php echo $_smarty_tpl->tpl_vars['item']->iteration;?>
+');">Quota</a></legend><div id="<?php echo $_smarty_tpl->tpl_vars['item']->iteration;?>
+"><?php echo $_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->contenuto;?>
 </div></fieldset><br />
 				<?php }?>
 			<?php }} ?>
@@ -99,22 +106,20 @@ if ($_smarty_tpl->_count($_from) > 0){
 /login.php">accedi</a> per commentare questa news.
 		<?php }else{ ?>
 			<?php if ($_smarty_tpl->getVariable('bbcode')->value==1){?>
-				<a onclick="add('[b][/b]');"><b>Grassetto</b></a>
-				<a onclick="add('[i][/i]');"><b>Corsivo</b></a>
-
-				<a onclick="add('[u][/u]');"><b>Sottolineato</b></a>
-				<a onclick="add('[s][/s]');"><b>Barrato</b></a>
+				<a onclick="request('b');"><b>Grassetto</b></a>
+				<a onclick="request('i');"><b>Corsivo</b></a>
+				<a onclick="request('u');"><b>Sottolineato</b></a>
+				<a onclick="request('s');"><b>Barrato</b></a>
 				<a onclick="requestcolor();"><b>Colore</b></a>
-				<a onclick="add('[url=http://][/url]');"><b>URL</b></a>
-				<a onclick="add('[spoiler][/spoiler]');"><b>Spoiler</b></a>
-				<a onclick="add('[left][/left]');"><b>Allineato a sinistra</b></a>
-				<a onclick="add('[center][/center]');"><b>Allineato a centro</b></a>
-				<a onclick="add('[right][/right]');"><b>Allineato a destra</b></a>
+				<a onclick="requesturl();"><b>URL</b></a>
+				<a onclick="request('spoiler');"><b>Spoiler</b></a>
+				<a onclick="request('left');"><b>Allineato a sinistra</b></a>
+				<a onclick="request('center');"><b>Allineato a centro</b></a>
+				<a onclick="request('right');"><b>Allineato a destra</b></a>
 				<a onclick="add('[br]');"><b>Accapo</b></a>
-
-				<a onclick="add('[code][/code]');"><b>Codice</b></a>
-				<a onclick="add('[quote][/quote]');"><b>Citazione</b></a>
-				<a onclick="add('[user][/user]');"><b>Utente</b></a>
+				<a onclick="request('code');"><b>Codice</b></a>
+				<a onclick="request('quote');"><b>Citazione</b></a>
+				<a onclick="requestuser();"><b>Utente</b></a>
 			<?php }?>
 			<form action="" method="post">
 			<textarea name="comment" cols="59" rows="10" id="targetForm"></textarea><br />

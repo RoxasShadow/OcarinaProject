@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-12 19:06:41
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-14 15:40:18
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/registrazione.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:15717778634e1c9b411a2840-27895726%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:5253767414e1f0de2e3b9b0-73323801%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '8d9539509b1568e57e3a14c8eddfaeb07224fea0' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/default/registrazione.tpl',
-      1 => 1309705668,
+      1 => 1310658014,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '15717778634e1c9b411a2840-27895726',
+  'nocache_hash' => '5253767414e1f0de2e3b9b0-73323801',
   'function' => 
   array (
   ),
@@ -46,12 +46,12 @@ $_smarty_tpl->decodeProperties(array (
 		Email<br />
 		<input type="text" name="email" /><br />
 		</td>
-		<td>
+		</table>
+		<br />
+		<?php echo $_smarty_tpl->getVariable('captcha')->value;?>
+
 		<br />
 		<input type="submit" value="Registrati" name="submit" />
-		</td>
-		</tr>
-		</table>
 		</form>
 	<?php }else{ ?>
 		<div class="titolo"><?php echo $_smarty_tpl->getVariable('result')->value;?>

@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-12 23:26:02
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-13 21:47:51
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/archivio.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:10097942374e1cd80a684298-40869395%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:4763413054e1e1287a28416-13860158%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '3d663334c66d48e658bcc01e778725dbf98d0885' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/default/archivio.tpl',
-      1 => 1310513149,
+      1 => 1310592707,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '10097942374e1cd80a684298-40869395',
+  'nocache_hash' => '4763413054e1e1287a28416-13860158',
   'function' => 
   array (
   ),
@@ -29,7 +29,7 @@ $_smarty_tpl->decodeProperties(array (
 </div>
 		<?php }elseif(isset($_smarty_tpl->getVariable('news',null,true,false)->value)){?>
 			&bull; <b>News</b> <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
-/feed.php?content=news"><img src="<?php echo $_smarty_tpl->getVariable('url_rendering')->value;?>
+/feed/news.html"><img src="<?php echo $_smarty_tpl->getVariable('url_rendering')->value;?>
 /templates/<?php echo $_smarty_tpl->getVariable('skin')->value;?>
 /resources/images/rss.png" alt="Feed RSS News" height="12" width="18" /></a><br />
 			<?php  $_smarty_tpl->tpl_vars['item'] = new Smarty_Variable;
@@ -41,8 +41,8 @@ if ($_smarty_tpl->_count($_from) > 0){
 ?>
 				<?php if ($_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->approvato==1){?>
 					&raquo; <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
-/news.php?titolo=<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->minititolo;?>
-"><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->titolo;?>
+/news/<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->minititolo;?>
+.html"><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->titolo;?>
 </a> (<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->visite;?>
  visite)<br />
 				<?php }?>
@@ -54,7 +54,7 @@ if ($_smarty_tpl->_count($_from) > 0){
 </div>
 		<?php }elseif(isset($_smarty_tpl->getVariable('news',null,true,false)->value)){?>
 			&bull; <b>Pagine <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
-/feed.php?content=page"><img src="<?php echo $_smarty_tpl->getVariable('url_rendering')->value;?>
+/feed/page.html"><img src="<?php echo $_smarty_tpl->getVariable('url_rendering')->value;?>
 /templates/<?php echo $_smarty_tpl->getVariable('skin')->value;?>
 /resources/images/rss.png" alt="Feed RSS News" height="12" width="18" /></a></b><br />
 			<?php  $_smarty_tpl->tpl_vars['item'] = new Smarty_Variable;
@@ -66,8 +66,8 @@ if ($_smarty_tpl->_count($_from) > 0){
 ?>
 				<?php if ($_smarty_tpl->getVariable('pagine')->value[$_smarty_tpl->tpl_vars['key']->value]->approvato==1){?>
 					&raquo; <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
-/pagina.php?titolo=<?php echo $_smarty_tpl->getVariable('pagine')->value[$_smarty_tpl->tpl_vars['key']->value]->minititolo;?>
-"><?php echo $_smarty_tpl->getVariable('pagine')->value[$_smarty_tpl->tpl_vars['key']->value]->titolo;?>
+/page/<?php echo $_smarty_tpl->getVariable('pagine')->value[$_smarty_tpl->tpl_vars['key']->value]->minititolo;?>
+.html"><?php echo $_smarty_tpl->getVariable('pagine')->value[$_smarty_tpl->tpl_vars['key']->value]->titolo;?>
 </a> (<?php echo $_smarty_tpl->getVariable('pagine')->value[$_smarty_tpl->tpl_vars['key']->value]->visite;?>
  visite)<br />
 				<?php }?>

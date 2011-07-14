@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-12 23:20:58
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-14 14:12:04
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/ricerca.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:19922024814e1cd6da348a06-78902266%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:12610862194e1ef9348fa484-19217784%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'a671e611ae7f3d59f55487015a156eeeb7c4935d' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/default/ricerca.tpl',
-      1 => 1310512855,
+      1 => 1310592707,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '19922024814e1cd6da348a06-78902266',
+  'nocache_hash' => '12610862194e1ef9348fa484-19217784',
   'function' => 
   array (
   ),
@@ -51,8 +51,8 @@ if ($_smarty_tpl->_count($_from) > 0){
 ?>
 			<?php if ($_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->approvato==1){?>
 				&raquo; <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
-/news.php?titolo=<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->minititolo;?>
-"><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->titolo;?>
+/news/<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->minititolo;?>
+.html"><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->titolo;?>
 </a><br />
 			<?php }?>
 		<?php }} ?>
@@ -72,8 +72,8 @@ if ($_smarty_tpl->_count($_from) > 0){
 ?>
 			<?php if ($_smarty_tpl->getVariable('pagina')->value[$_smarty_tpl->tpl_vars['key']->value]->approvato==1){?>
 				&raquo; <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
-/pagina.php?titolo=<?php echo $_smarty_tpl->getVariable('pagina')->value[$_smarty_tpl->tpl_vars['key']->value]->minititolo;?>
-"><?php echo $_smarty_tpl->getVariable('pagina')->value[$_smarty_tpl->tpl_vars['key']->value]->titolo;?>
+/page/<?php echo $_smarty_tpl->getVariable('pagina')->value[$_smarty_tpl->tpl_vars['key']->value]->minititolo;?>
+.html"><?php echo $_smarty_tpl->getVariable('pagina')->value[$_smarty_tpl->tpl_vars['key']->value]->titolo;?>
 </a><br />
 			<?php }?>
 		<?php }} ?>
@@ -93,8 +93,8 @@ if ($_smarty_tpl->_count($_from) > 0){
 ?>
 			<?php if ($_smarty_tpl->getVariable('commento')->value[$_smarty_tpl->tpl_vars['key']->value]->approvato==1){?>
 				&raquo; <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
-/commento.php?id=<?php echo $_smarty_tpl->getVariable('commento')->value[$_smarty_tpl->tpl_vars['key']->value]->id;?>
-">#<?php echo $_smarty_tpl->getVariable('commento')->value[$_smarty_tpl->tpl_vars['key']->value]->id;?>
+/comment/<?php echo $_smarty_tpl->getVariable('commento')->value[$_smarty_tpl->tpl_vars['key']->value]->id;?>
+.html">#<?php echo $_smarty_tpl->getVariable('commento')->value[$_smarty_tpl->tpl_vars['key']->value]->id;?>
  - <?php echo $_smarty_tpl->getVariable('commento')->value[$_smarty_tpl->tpl_vars['key']->value]->autore;?>
 </a><br />
 			<?php }?>
