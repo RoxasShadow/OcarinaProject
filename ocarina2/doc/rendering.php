@@ -15,7 +15,7 @@ $c->addValue('users', array(
 	array('name' => 'fred', 'phone' => '555-3235')
 	));
 $c->addValue($array1, $array2);
-$c->renderize('index.tpl');
+$c->renderize('example.tpl');
 echo '<br /><hr /><p align="center">Debug (permetti i popup e ricarica la pagina)</p>';
 $c->debug();
 ?>

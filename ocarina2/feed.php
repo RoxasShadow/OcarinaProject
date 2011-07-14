@@ -11,8 +11,6 @@ $news = new News();
 $content = ((isset($_GET['content'])) && ($_GET['content'] !== '')) ? $page->purge($_GET['content']) : '';
 
 if($content == 'page')
-	echo $page->feedPage($page->config[0]->url_index.'/feed.php?content=page', 0, 10);
+	echo $page->feedPage($page->config[0]->url_index.'/feed/page.html', 0, 10);
 elseif($content == 'news')
-	echo $news->feedNews($page->config[0]->url_index.'/feed.php?content=news', 0, 10);
-elseif($content == '')
-	echo $news->feedNews($page->config[0]->url_index.'/feed.php', 0, 10);
+	echo $news->feedNews($page->config[0]->url_index.'/feeed/news.html', 0, 10);
