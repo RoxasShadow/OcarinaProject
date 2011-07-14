@@ -17,7 +17,8 @@ interezza, di votarla, di commentarla, di leggere gli altri commenti e di raggiu
 tramite una pagina dedicata.
 Per le pagine valgono le stesse nozioni su descritte, ma al contrario non permettono
 di essere commentate e non sono visualizzate nella index.
-Ogni pagina o news, come già detto, appartiene ad una determinata categoria.
+Ogni pagina o news è indicata nell'URL con un minititolo (o permalink), ovvero una conversione
+del titolo ottimizzato per i motori di ricerca e, come già detto, appartiene ad una determinata categoria.
 Accedendoci sarà possibile visualizzare tutti i contenuti ad essa legati.
 L'archivio, al contrario, raggruppa tutte le pagine e le news che sono state create,
 indistintamente, e mostra, inoltre, anche le visite di ciascuna.
@@ -48,6 +49,8 @@ Il CMS dispone di un motore di rendering che permette la creazione anche di più
 o layout), in modo che l'utente possa visualizzare il sito con quella che preferisce.
 Il grafico potrà quindi usufruire dei tag dinamici messi a disposizione per creare qualsiasi skin voglia,
 senza alcun tipo di restrizione.
+Dispone, infine, di un controllore degli aggiornamenti, così che l'amministratore possa effettuare
+gli aggiornamenti tempestivamente.
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
@@ -109,9 +112,10 @@ La lingua scelta è quella del browser.
 È una classe generica.
 Contiene metodi come isURL() che tramite regex controllano la giusta formattazione delle stringhe,
 isImage() che effettua una chiamata HTTP per verificare se l'indirizzo a cui punta l'argomento è 
-un'immagine, purge() che sana le stringhe in entrata per SQL e XSS injection, unPurge() che rimuove
-gli slashes provenienti dal database, getClient() che ritorna un array con le informazioni sul browser
-del visitatore, metodi che gestiscono le immagini, eccetera.
+un'immagine (utilizzato per l'avatar dell'utente), purge() che sana le stringhe in entrata per
+SQL e XSS injection, unPurge() che rimuove gli slashes provenienti dal database, getClient() che
+ritorna un array con le informazioni sul browser del visitatore, metodi che gestiscono le
+immagini, eccetera.
 
 -class.MySQL.php
 È l'unica classe che comunica direttamente con il database facendo da tramite.
@@ -136,6 +140,10 @@ isLogged() controlla se un utente è loggato e intanto aggiorna la lista degli u
 online.
 In particolare vengono considerati offline quando dall'ultima azione compiuta (come una visualizzazione
 di una pagina) all'istante in cui viene attivato il metodo passa un certo numero di minuti.
+Per concludere, il login consiste nella creazione di una sequenza alfanumerica pseudocasuale che viene
+hashata in MD5 ed inserita nel database e nel cookie.
+Un utente è loggato quando il suo cookie corrisponde a quello presente nel database.
+Al momento del login accade che il cookie viene distrutto insieme alla sequenza alfanumerica del database.
 
 -class.Rendering.php
 La classe gestisce il motore di rendering Smarty.
@@ -147,6 +155,12 @@ Per entrare in modalità debug, basta caricare il template omonimo nella cartell
 In /doc/ è possibile trovare un template ed uno script che possono dare degli esempi per la creazione di nuovi
 template.
 Ricordate che potete modificare la classe per essere compatibile anche con altri motori di rendering.
+
+-class.BBCode.php
+Questa classe facente parte di /etc/ traduce i BBCode in HTML tramite le regex.
+
+-class.Pager.php
+È la classe che si occupa dell'impaginazione delle news nella index.
 
 Andiamo sviluppatori, create le vostre classi, modificate quelle esistenti, portate le prestazioni al limite,
 aumentate la compatibilità, la stabilità e la velocità e date sfogo alla vostra creatività e genialità! :D

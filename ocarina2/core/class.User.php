@@ -228,12 +228,12 @@ class User extends Configuration {
 	
 	/* Crea un cookie. */
 	protected function setCookie($value) {
-		setcookie($this->config[0]->cookie, $value, time()+3600);  /* expire in 1 hour */
+		setcookie($this->config[0]->cookie, $value, time()+$this->config[0]->loginexpire);
 	}
 	
 	/* Distrugge un cookie. */
 	protected function unSetCookie() {
-		setcookie($this->config[0]->cookie, '', -3600);
+		setcookie($this->config[0]->cookie, '', -$this->config[0]->loginexpire);
 	}
 	
 	/* Ottiene un cookie. */

@@ -24,6 +24,8 @@
 		<input type="text" name="log" maxlength="1" {if (isset($log_default))}value="{$log_default}"{/if} /><br /><br />
 		Nome del cookie<br />
 		<input type="text" name="cookie" maxlength="20" {if (isset($cookie_default))}value="{$cookie_default}"{/if} /><br /><br />
+		Durata login in secondi (ex.: 3600 = 1 ora, 1296000 = 15 giorni)<br />
+		<input type="text" name="loginexpire" maxlength="20" {if (isset($loginexpire_default))}value="{$loginexpire_default}"{/if} /><br /><br />
 		Skin di default<br />
 		<select name="skin">
 		{foreach from=$listaskin key=key item=item}

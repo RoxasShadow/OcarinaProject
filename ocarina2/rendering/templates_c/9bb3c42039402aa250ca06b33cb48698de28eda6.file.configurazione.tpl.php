@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-11 19:34:50
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-14 19:28:44
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/admin/configurazione.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:941592754e1b505a2b2068-66236500%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:4240425374e1f436ce79021-60381522%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '9bb3c42039402aa250ca06b33cb48698de28eda6' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/admin/configurazione.tpl',
-      1 => 1310412647,
+      1 => 1310671663,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '941592754e1b505a2b2068-66236500',
+  'nocache_hash' => '4240425374e1f436ce79021-60381522',
   'function' => 
   array (
   ),
@@ -52,6 +52,9 @@ $_smarty_tpl->decodeProperties(array (
 		Nome del cookie<br />
 		<input type="text" name="cookie" maxlength="20" <?php if ((isset($_smarty_tpl->getVariable('cookie_default',null,true,false)->value))){?>value="<?php echo $_smarty_tpl->getVariable('cookie_default')->value;?>
 "<?php }?> /><br /><br />
+		Durata login in ms (ex.: 3600 = 1 ora, 1296000 = 15 giorni)<br />
+		<input type="text" name="loginexpire" maxlength="20" <?php if ((isset($_smarty_tpl->getVariable('loginexpire_default',null,true,false)->value))){?>value="<?php echo $_smarty_tpl->getVariable('loginexpire_default')->value;?>
+"<?php }?> /><br /><br />
 		Skin di default<br />
 		<select name="skin">
 		<?php  $_smarty_tpl->tpl_vars['item'] = new Smarty_Variable;
@@ -83,6 +86,9 @@ if ($_smarty_tpl->_count($_from) > 0){
 "<?php }?> /><br /><br />
 		Minuti per i quali un utente è considerato online finchè non compie un'azione<br />
 		<input type="text" name="limiteonline" maxlength="10" <?php if ((isset($_smarty_tpl->getVariable('limiteonline_default',null,true,false)->value))){?>value="<?php echo $_smarty_tpl->getVariable('limiteonline_default')->value;?>
+"<?php }?> /><br /><br />
+		Permetti i voti alle news<br />
+		<input type="text" name="permettivoto" maxlength="10" <?php if ((isset($_smarty_tpl->getVariable('permettivoto_default',null,true,false)->value))){?>value="<?php echo $_smarty_tpl->getVariable('permettivoto_default')->value;?>
 "<?php }?> /><br /><br />
 		URL (ex.: http://www.tuosito.com)<br />
 		<input type="text" name="url" maxlength="100" <?php if ((isset($_smarty_tpl->getVariable('url_default',null,true,false)->value))){?>value="<?php echo $_smarty_tpl->getVariable('url_default')->value;?>
