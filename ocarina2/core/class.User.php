@@ -201,12 +201,15 @@ class User extends Configuration {
 	
 	/* Archivia i visitatori. */
 	public function archiveVisitator() {
-		if($visitator = $this->getVisitator())
-			foreach($visitator as $v)
-				if(date('d') > $v->giorno)
-					if(parent::editConfig('totalevisitatori', $this->config[0]->totalevisitatori + 1))
-						parent::query("DELETE FROM visitatori WHERE id='{$v->id}'");
-					
+		if(!$visitator = $this->getVisitator())
+			return false;
+		foreach($visitator as $v)
+			if(date('d') > $v->giorno) {
+				$config = parent::getConfig();
+				if(parent::editConfig('totalevisitatori', $config[0]->totalevisitatori + 1))
+					parent::query("DELETE FROM visitatori WHERE id='{$v->id}'");
+			}
+		return true;					
 	}
 	
 	/* Elimina un utente. */

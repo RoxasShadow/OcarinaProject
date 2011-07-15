@@ -12,7 +12,7 @@ $submit = isset($_POST['submit']) ? true : false;
 
 $rendering->addValue('grado', $user->isLogged() ? $user->username[0]->grado : '');
 $rendering->skin = 'admin';
-$rendering->addValue('titolo', $user->getLanguage('title', 19).$user->getLanguage('title', 2).$user->getLanguage('title', 10).$user->getLanguage('title', 2).$user->config[0]->nomesito);
+$rendering->addValue('titolo', $user->getLanguage('title', 20).$user->getLanguage('title', 2).$user->getLanguage('title', 10).$user->getLanguage('title', 2).$user->config[0]->nomesito);
 
 if(($user->isLogged()) && ($user->username[0]->grado < 6))
 	if(!$submit) {

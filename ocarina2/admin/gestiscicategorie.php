@@ -16,7 +16,7 @@ $submit = ((isset($_POST['creaCategoriaNews'])) || (isset($_POST['creaCategoriaP
 
 $rendering->addValue('grado', $categoria->isLogged() ? $categoria->username[0]->grado : '');
 $rendering->skin = 'admin';
-$rendering->addValue('titolo', $categoria->getLanguage('title', 17).$categoria->getLanguage('title', 2).$categoria->getLanguage('title', 10).$categoria->getLanguage('title', 2).$categoria->config[0]->nomesito);
+$rendering->addValue('titolo', $categoria->getLanguage('title', 18).$categoria->getLanguage('title', 2).$categoria->getLanguage('title', 10).$categoria->getLanguage('title', 2).$categoria->config[0]->nomesito);
 
 if(($categoria->isLogged()) && ($categoria->username[0]->grado <= 3))
 	if(!$submit) {

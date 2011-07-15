@@ -296,7 +296,7 @@ class Utilities extends Languages {
 	
 	/* Crea un metatag description partendo da un testo. */
 	public function getDescription($text) {
-		return $this->reduceLen(strip_tags($text), 151);
+		return htmlentities($this->reduceLen(strip_tags($text), 151));
 	}
 	
 	/* Ritorna il timestamp in millisecondi. */

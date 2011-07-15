@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-14 21:49:56
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-15 15:49:47
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/news.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:4168502634e1f64845a9757-71030096%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:153322004e20619bede9a3-59287184%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '27182b59aacf39946fd552a3d1fff0f04232f2ce' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/default/news.tpl',
-      1 => 1310680193,
+      1 => 1310744332,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '4168502634e1f64845a9757-71030096',
+  'nocache_hash' => '153322004e20619bede9a3-59287184',
   'function' => 
   array (
   ),
@@ -119,7 +119,7 @@ if ($_smarty_tpl->_count($_from) > 0){
 				<a onclick="add('[br]');"><b>Accapo</b></a>
 				<a onclick="request('code');"><b>Codice</b></a>
 				<a onclick="request('quote');"><b>Citazione</b></a>
-				<a onclick="requestuser();"><b>Utente</b></a>
+				<a onclick="requestuser();"><b>Utente</b></a><br />
 			<?php }?>
 			<form action="" method="post">
 			<textarea name="comment" cols="59" rows="10" id="targetForm"></textarea><br />

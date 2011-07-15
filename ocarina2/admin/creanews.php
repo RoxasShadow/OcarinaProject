@@ -15,7 +15,7 @@ $submit = isset($_POST['submit']) ? true : false;
 
 $rendering->addValue('grado', $news->isLogged() ? $news->username[0]->grado : '');
 $rendering->skin = 'admin';
-$rendering->addValue('titolo', $news->getLanguage('title', 15).$news->getLanguage('title', 2).$news->getLanguage('title', 10).$news->getLanguage('title', 2).$news->config[0]->nomesito);
+$rendering->addValue('titolo', $news->getLanguage('title', 16).$news->getLanguage('title', 2).$news->getLanguage('title', 10).$news->getLanguage('title', 2).$news->config[0]->nomesito);
 
 if(($news->isLogged()) && ($news->username[0]->grado <= 3))
 	if(!$submit) {

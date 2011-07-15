@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-14 22:36:40
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-15 15:11:32
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/admin/formcontents.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:8419531024e1f6f78a1ee50-13934960%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:21104896814e2058a4594bc5-80898800%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'b32bc29ea7bc6ae8fd7ea4877b533022756e886f' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/admin/formcontents.tpl',
-      1 => 1310682996,
+      1 => 1310742646,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '8419531024e1f6f78a1ee50-13934960',
+  'nocache_hash' => '21104896814e2058a4594bc5-80898800',
   'function' => 
   array (
   ),
@@ -75,7 +75,10 @@ if ($_smarty_tpl->_count($_from) > 0){
 <?php }?></textarea><br />
 		<?php if (isset($_smarty_tpl->getVariable('sel',null,true,false)->value)){?><input type="hidden" name="selected" value="<?php echo $_smarty_tpl->getVariable('sel')->value;?>
 " /><?php }?>
-		<input type="submit" name="submit" value="Conferma" />
+		<input type="submit" name="submit" value="Conferma" /><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
+/preview.php?text=<?php echo $_smarty_tpl->getVariable('testo')->value;?>
+" onclick="return inviaGet(this, 'previewBox');">Anteprima</a><br />
+		<div id="previewBox" border="1"></div>
 		</form>
 	<?php }elseif($_smarty_tpl->getVariable('submit')->value&&isset($_smarty_tpl->getVariable('result',null,true,false)->value)||(!$_smarty_tpl->getVariable('submit')->value&&isset($_smarty_tpl->getVariable('result',null,true,false)->value))){?>
 		<?php echo $_smarty_tpl->getVariable('result')->value;?>

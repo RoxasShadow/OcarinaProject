@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-14 19:28:44
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-15 15:53:00
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/admin/configurazione.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:4240425374e1f436ce79021-60381522%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:21162062234e20625c781ba6-05608452%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '9bb3c42039402aa250ca06b33cb48698de28eda6' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/admin/configurazione.tpl',
-      1 => 1310671663,
+      1 => 1310671766,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '4240425374e1f436ce79021-60381522',
+  'nocache_hash' => '21162062234e20625c781ba6-05608452',
   'function' => 
   array (
   ),
@@ -52,7 +52,7 @@ $_smarty_tpl->decodeProperties(array (
 		Nome del cookie<br />
 		<input type="text" name="cookie" maxlength="20" <?php if ((isset($_smarty_tpl->getVariable('cookie_default',null,true,false)->value))){?>value="<?php echo $_smarty_tpl->getVariable('cookie_default')->value;?>
 "<?php }?> /><br /><br />
-		Durata login in ms (ex.: 3600 = 1 ora, 1296000 = 15 giorni)<br />
+		Durata login in secondi (ex.: 3600 = 1 ora, 1296000 = 15 giorni)<br />
 		<input type="text" name="loginexpire" maxlength="20" <?php if ((isset($_smarty_tpl->getVariable('loginexpire_default',null,true,false)->value))){?>value="<?php echo $_smarty_tpl->getVariable('loginexpire_default')->value;?>
 "<?php }?> /><br /><br />
 		Skin di default<br />

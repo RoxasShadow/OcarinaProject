@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-11 01:02:53
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-15 14:12:41
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/include/footer.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:16826379334e1a4bbd0fc2b9-56972752%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:1461181024e204ad9e469f0-17555058%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '0911fbf39850b2695021150d73b77bd07645458a' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/default/include/footer.tpl',
-      1 => 1310346111,
+      1 => 1310739150,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '16826379334e1a4bbd0fc2b9-56972752',
+  'nocache_hash' => '1461181024e204ad9e469f0-17555058',
   'function' => 
   array (
   ),
@@ -50,12 +50,15 @@ if ($_smarty_tpl->tpl_vars['user']->total > 0){
 <?php }else{ ?>
 	Nessun utente online.
 <?php }?>
-<br />
 <?php if (((isset($_smarty_tpl->getVariable('visitatoronline',null,true,false)->value))&&(is_numeric($_smarty_tpl->getVariable('visitatoronline')->value))&&($_smarty_tpl->getVariable('visitatoronline')->value>0))){?>
-	Visitatori online: <?php echo $_smarty_tpl->getVariable('visitatoronline')->value;?>
+	<br />Visitatori online: <?php echo $_smarty_tpl->getVariable('visitatoronline')->value;?>
 
 <?php }else{ ?>
-	Nessun visitatore online.
+	<br />Nessun visitatore online.
+<?php }?>
+<?php if (((isset($_smarty_tpl->getVariable('totaleaccessi',null,true,false)->value))&&(is_numeric($_smarty_tpl->getVariable('totaleaccessi')->value)))){?>
+	<br />Totale accessi: <?php echo $_smarty_tpl->getVariable('totaleaccessi')->value;?>
+
 <?php }?>
 </font></p>
 <a href="http://validator.w3.org/check?uri=referer"><img src="<?php echo $_smarty_tpl->getVariable('url_rendering')->value;?>

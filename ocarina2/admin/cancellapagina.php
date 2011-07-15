@@ -13,7 +13,7 @@ $submit = isset($_POST['submit']) ? true : false;
 
 $rendering->addValue('grado', $pagina->isLogged() ? $pagina->username[0]->grado : '');
 $rendering->skin = 'admin';
-$rendering->addValue('titolo', $pagina->getLanguage('title', 12).$pagina->getLanguage('title', 2).$pagina->getLanguage('title', 10).$pagina->getLanguage('title', 2).$pagina->config[0]->nomesito);
+$rendering->addValue('titolo', $pagina->getLanguage('title', 13).$pagina->getLanguage('title', 2).$pagina->getLanguage('title', 10).$pagina->getLanguage('title', 2).$pagina->config[0]->nomesito);
 
 if(($pagina->isLogged()) && ($pagina->username[0]->grado < 3))
 	if(!$submit)

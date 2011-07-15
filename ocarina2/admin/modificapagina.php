@@ -16,7 +16,7 @@ $submit = isset($_POST['submit']) ? true : false;
 
 $rendering->addValue('grado', $pagina->isLogged() ? $pagina->username[0]->grado : '');
 $rendering->skin = 'admin';
-$rendering->addValue('titolo', $pagina->getLanguage('title', 21).$pagina->getLanguage('title', 2).$pagina->getLanguage('title', 10).$pagina->getLanguage('title', 2).$pagina->config[0]->nomesito);
+$rendering->addValue('titolo', $pagina->getLanguage('title', 23).$pagina->getLanguage('title', 2).$pagina->getLanguage('title', 10).$pagina->getLanguage('title', 2).$pagina->config[0]->nomesito);
 
 if(($pagina->isLogged()) && ($pagina->username[0]->grado < 4))
 	if((!$submit) && ($selected == '')) {
@@ -33,7 +33,7 @@ if(($pagina->isLogged()) && ($pagina->username[0]->grado < 4))
 			foreach($allPage as $v)
 				$result .= '<option value="'.$v->minititolo.'">'.$v->titolo.'</option>';
 		}
-		$result .= '</select><input type="submit" name="sel_submit" value="'.$pagina->getLanguage('title', 21).'">';
+		$result .= '</select><input type="submit" name="sel_submit" value="'.$pagina->getLanguage('title', 23).'">';
 		$rendering->addValue('result', $result);
 	}	
 	elseif((!$submit) && ($selected !== '')) {

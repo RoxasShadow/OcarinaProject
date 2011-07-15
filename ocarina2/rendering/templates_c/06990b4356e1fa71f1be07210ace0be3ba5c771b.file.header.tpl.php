@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-14 22:45:44
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-15 16:01:02
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/admin/include/header.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:352779214e1f719847ac46-08391953%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:10023900374e20643e8659e5-34655467%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '06990b4356e1fa71f1be07210ace0be3ba5c771b' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/admin/include/header.tpl',
-      1 => 1310683541,
+      1 => 1310745661,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '352779214e1f719847ac46-08391953',
+  'nocache_hash' => '10023900374e20643e8659e5-34655467',
   'function' => 
   array (
   ),
@@ -132,6 +132,8 @@ $_smarty_tpl->decodeProperties(array (
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /annunci.php">Annunci</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
+/creaannuncio.php">Crea annuncio</a></li>
+<li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /modificaannuncio.php">Modifica annunci</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /cancellaannuncio.php">Cancella annunci</a></li>
@@ -176,6 +178,8 @@ $_smarty_tpl->decodeProperties(array (
 <li><a class="active">Annunci</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /annunci.php">Annunci</a></li>
+<li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
+/creaannuncio.php">Crea annuncio</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /modificaannuncio.php">Modifica annunci</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>

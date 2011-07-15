@@ -16,7 +16,7 @@ $submit = isset($_POST['submit']) ? true : false;
 
 $rendering->addValue('grado', $news->isLogged() ? $news->username[0]->grado : '');
 $rendering->skin = 'admin';
-$rendering->addValue('titolo', $news->getLanguage('title', 20).$news->getLanguage('title', 2).$news->getLanguage('title', 10).$news->getLanguage('title', 2).$news->config[0]->nomesito);
+$rendering->addValue('titolo', $news->getLanguage('title', 22).$news->getLanguage('title', 2).$news->getLanguage('title', 10).$news->getLanguage('title', 2).$news->config[0]->nomesito);
 
 if(($news->isLogged()) && ($news->username[0]->grado < 4))
 	if((!$submit) && ($selected == '')) {
@@ -33,7 +33,7 @@ if(($news->isLogged()) && ($news->username[0]->grado < 4))
 				foreach($allNews as $v)
 					$result .= '<option value="'.$v->minititolo.'">'.$v->titolo.'</option>';
 		}
-		$result .= '</select><input type="submit" name="sel_submit" value="'.$news->getLanguage('title', 20).'">';
+		$result .= '</select><input type="submit" name="sel_submit" value="'.$news->getLanguage('title', 22).'">';
 		$rendering->addValue('result', $result);
 	}	
 	elseif((!$submit) && ($selected !== '')) {

@@ -70,6 +70,7 @@
 <li><a href="{$url_admin}/robots.php">Robots</a></li>
 <li><a class="active">Annunci</a></li>
 <li><a href="{$url_admin}/annunci.php">Annunci</a></li>
+<li><a href="{$url_admin}/creaannuncio.php">Crea annuncio</a></li>
 <li><a href="{$url_admin}/modificaannuncio.php">Modifica annunci</a></li>
 <li><a href="{$url_admin}/cancellaannuncio.php">Cancella annunci</a></li>
 <li><a class="active">News</a></li>
@@ -96,6 +97,7 @@
 <li><a href="{$url_admin}/robots.php">Robots</a></li>
 <li><a class="active">Annunci</a></li>
 <li><a href="{$url_admin}/annunci.php">Annunci</a></li>
+<li><a href="{$url_admin}/creaannuncio.php">Crea annuncio</a></li>
 <li><a href="{$url_admin}/modificaannuncio.php">Modifica annunci</a></li>
 <li><a href="{$url_admin}/cancellaannuncio.php">Cancella annunci</a></li>
 <li><a class="active">Utenti</a></li>

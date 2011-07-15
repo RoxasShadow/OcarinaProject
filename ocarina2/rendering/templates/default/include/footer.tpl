@@ -21,11 +21,13 @@
 {else}
 	Nessun utente online.
 {/if}
-<br />
 {if ((isset($visitatoronline)) && (is_numeric($visitatoronline)) && ($visitatoronline > 0))}
-	Visitatori online: {$visitatoronline}
+	<br />Visitatori online: {$visitatoronline}
 {else}
-	Nessun visitatore online.
+	<br />Nessun visitatore online.
+{/if}
+{if ((isset($totaleaccessi)) && (is_numeric($totaleaccessi)))}
+	<br />Totale accessi: {$totaleaccessi}
 {/if}
 </font></p>
 <a href="http://validator.w3.org/check?uri=referer"><img src="{$url_rendering}/templates/{$skin}/resources/images/valid-xhtml10-blue.png" alt="Valid XHTML 1.0 Transitional" height="31" width="88" /></a>

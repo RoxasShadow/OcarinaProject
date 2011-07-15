@@ -14,7 +14,7 @@ $submit = isset($_POST['submit']) ? true : false;
 
 $rendering->addValue('grado', $user->isLogged() ? $user->username[0]->grado : '');
 $rendering->skin = 'admin';
-$rendering->addValue('titolo', $user->getLanguage('title', 20).$user->getLanguage('title', 2).$user->getLanguage('title', 10).$user->getLanguage('title', 2).$user->config[0]->nomesito);
+$rendering->addValue('titolo', $user->getLanguage('title', 21).$user->getLanguage('title', 2).$user->getLanguage('title', 10).$user->getLanguage('title', 2).$user->config[0]->nomesito);
 
 if(($user->isLogged()) && ($user->username[0]->grado == 1))
 	if(!$submit)
@@ -28,7 +28,7 @@ if(($user->isLogged()) && ($user->username[0]->grado == 1))
 		else {
 			if($user->config[0]->log == 1)
 				$user->log($user->username[0]->nickname, $nickname->username[0]->nickname.' has failed to change the grade of '.$nickname.' in '.$grado.'.');
-			$rendering->addValue('result', str_replace('{$$nickname}', $nickname, $user->getLanguage('editgrade', 1$user->getLanguage('editgrade', 0)));
+			$rendering->addValue('result', str_replace('{$nickname}', $nickname, $user->getLanguage('editgrade', 1), $user->getLanguage('editgrade', 0)));
 		}
 else
 	$rendering->addValue('result', $user->getLanguage('error', 4));
