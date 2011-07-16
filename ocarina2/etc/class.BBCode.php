@@ -26,7 +26,6 @@ class BBCode extends Configuration {
 			'/\[right](.*?)\[\/right\]/is',
 			'/\[left](.*?)\[\/left\]/is',
 			'/\[summary](.*?)\[\/summary\]/is',
-			'/\[br]/is',
 			'/\[code\](.*?)\[\/code\]/is',
 			'/\[quote](.*?)\[\/quote\]/is',
 			'/\[youtube\](.*)youtube.com\/watch\?v=(.*)\[\/youtube\]/is',
@@ -50,7 +49,6 @@ class BBCode extends Configuration {
 			'<div align="right">$1</div>',
 			'<div align="left">$1</div>',
 			'<h2>$1</h2>',
-			'<br />',
 			'<textarea style="border: 0px; overflow: auto; width:100%;" rows="8">$1</textarea>',
 			'<blockquote><span>$1</span></blockquote>',
 			'<iframe width="560" height="349" src="http://www.youtube.com/embed/\\2" frameborder="0"></iframe>',
@@ -60,7 +58,7 @@ class BBCode extends Configuration {
 			'&copy;',
 			'&reg;'
 		);
-		return preg_replace($pattern, $replace, $text);
+		return nl2br(preg_replace($pattern, $replace, $text));
 	}
 	
 	public function bbcodecommenti($text) {
@@ -75,7 +73,6 @@ class BBCode extends Configuration {
 			'/\[center](.*?)\[\/center\]/is',
 			'/\[right](.*?)\[\/right\]/is',
 			'/\[left](.*?)\[\/left\]/is',
-			'/\[br]/is',
 			'/\[code\](.*?)\[\/code\]/is',
 			'/\[quote](.*?)\[\/quote\]/is',
 			'/\[user\](.*?)\[\/user\]/is',
@@ -95,7 +92,6 @@ class BBCode extends Configuration {
 			'<div align="center">$1</div>',
 			'<div align="right">$1</div>',
 			'<div align="left">$1</div>',
-			'<br />',
 			'<textarea style="border: 0px; overflow: auto; width:100%;" rows="8">$1</textarea>',
 			'<blockquote><span>$1</span></blockquote>',
 			'<a href="'.$this->config[0]->url_index.'/profile/$1.html">$1</a>',
@@ -104,6 +100,6 @@ class BBCode extends Configuration {
 			'&copy;',
 			'&reg;'
 		);
-		return preg_replace($pattern, $replace, $text);
+		return nl2br(preg_replace($pattern, $replace, $text));
 	}
 }

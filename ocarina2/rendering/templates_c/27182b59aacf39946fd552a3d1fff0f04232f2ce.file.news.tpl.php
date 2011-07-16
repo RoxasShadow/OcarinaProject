@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-16 00:50:49
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-16 18:56:58
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/news.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:3315349624e20e0698f2d35-75066212%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:4378796214e21defa93a2f0-78126869%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '27182b59aacf39946fd552a3d1fff0f04232f2ce' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/default/news.tpl',
-      1 => 1310777443,
+      1 => 1310842616,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '3315349624e20e0698f2d35-75066212',
+  'nocache_hash' => '4378796214e21defa93a2f0-78126869',
   'function' => 
   array (
   ),
@@ -53,14 +53,20 @@ if ($_smarty_tpl->_count($_from) > 0){
 .<?php }?><?php }?></div><br />
 				<div class="news"><p><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->contenuto;?>
 </p></div><br />
-				<a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+				<?php if ($_smarty_tpl->getVariable('utente')->value!==''){?>
+					<a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /vote.php?action=news&titolo=<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->minititolo;?>
 ">Vota questa news</a>
-				<?php if ($_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->voti==1){?>
-					(1 voto)
-				<?php }else{ ?>
-					(<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->voti;?>
+					<?php if ($_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->voti==1){?>
+						(1 voto)
+					<?php }else{ ?>
+						(<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->voti;?>
  voti)
+					<?php }?>
+				<?php }else{ ?>
+					<a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/registrazione.php">Registrati</a> o <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/login.php">accedi</a> per votare questa news.
 				<?php }?>
 			<?php }else{ ?>
 				La news non è stata approvata, e quindi non è visibile.
@@ -116,15 +122,14 @@ if ($_smarty_tpl->_count($_from) > 0){
 				<a onclick="request('left');"><b>Allineato a sinistra</b></a>
 				<a onclick="request('center');"><b>Allineato a centro</b></a>
 				<a onclick="request('right');"><b>Allineato a destra</b></a>
-				<a onclick="add('[br]');"><b>Accapo</b></a>
 				<a onclick="request('code');"><b>Codice</b></a>
 				<a onclick="request('quote');"><b>Citazione</b></a>
 				<a onclick="requestuser();"><b>Utente</b></a><br />
 			<?php }?>
 			<form action="" method="post">
 			<textarea name="comment" cols="59" rows="10" id="targetForm"></textarea><br />
-			<input type="submit" value="Invia commento" /><input type="button" onclick="return sendGet('<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
-/preview.php?type=comment&text=', 'previewBox', 'targetForm');" value="Anteprima" /><br />
+			<input type="submit" value="Invia commento" /><input type="button" onclick="return sendSinglePost('<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
+/preview.php?type=comment', 'previewBox', 'text', 'targetForm');" value="Anteprima" /><br />
 			<div id="previewBox"></div>
 			</form>
 		<?php }?>

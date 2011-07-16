@@ -12,11 +12,15 @@
 				<div class="titolo">{$news[$key]->titolo}</div>
 				<div class="newsheader" align="center">Scritto da <a href="{$url_index}/profile/{$news[$key]->autore}.html">{$news[$key]->autore}</a> il giorno {$news[$key]->data} alle ore {$news[$key]->ora} nella categoria <a href="{$url_index}/category/{$news[$key]->categoria}.html">{$news[$key]->categoria}</a>. {if $news[$key]->oraultimamodifica == $news[$key]->ora}Ultima modifica {if $news[$key]->dataultimamodifica == $news[$key]->data}oggi{else} il giorno {$news[$key]->dataultimamodifica}{/if} alle ore {$news[$key]->ora} {if $news[$key]->autoreultimamodifica !== $news[$key]->autore}da parte di {$news[$key]->autoreultimamodifica}.{/if}{/if}</div><br />
 				<div class="news"><p>{$news[$key]->contenuto}</p></div><br />
-				<a href="{$url_index}/vote.php?action=news&titolo={$news[$key]->minititolo}">Vota questa news</a>
-				{if $news[$key]->voti == 1}
-					(1 voto)
+				{if $utente !== ''}
+					<a href="{$url_index}/vote.php?action=news&titolo={$news[$key]->minititolo}">Vota questa news</a>
+					{if $news[$key]->voti == 1}
+						(1 voto)
+					{else}
+						({$news[$key]->voti} voti)
+					{/if}
 				{else}
-					({$news[$key]->voti} voti)
+					<a href="{$url_index}/registrazione.php">Registrati</a> o <a href="{$url_index}/login.php">accedi</a> per votare questa news.
 				{/if}
 			{else}
 				La news non è stata approvata, e quindi non è visibile.
@@ -48,14 +52,13 @@
 				<a onclick="request('left');"><b>Allineato a sinistra</b></a>
 				<a onclick="request('center');"><b>Allineato a centro</b></a>
 				<a onclick="request('right');"><b>Allineato a destra</b></a>
-				<a onclick="add('[br]');"><b>Accapo</b></a>
 				<a onclick="request('code');"><b>Codice</b></a>
 				<a onclick="request('quote');"><b>Citazione</b></a>
 				<a onclick="requestuser();"><b>Utente</b></a><br />
 			{/if}
 			<form action="" method="post">
 			<textarea name="comment" cols="59" rows="10" id="targetForm"></textarea><br />
-			<input type="submit" value="Invia commento" /><input type="button" onclick="return sendGet('{$url_admin}/preview.php?type=comment&text=', 'previewBox', 'targetForm');" value="Anteprima" /><br />
+			<input type="submit" value="Invia commento" /><input type="button" onclick="return sendSinglePost('{$url_admin}/preview.php?type=comment', 'previewBox', 'text', 'targetForm');" value="Anteprima" /><br />
 			<div id="previewBox"></div>
 			</form>
 		{/if}

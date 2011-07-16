@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generato il: 12 lug, 2011 at 12:39 AM
+-- Generato il: 16 lug, 2011 at 07:05 PM
 -- Versione MySQL: 5.1.49
 -- Versione PHP: 5.3.3-7+squeeze3
 
@@ -18,6 +18,8 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Database: `ocarina2`
 --
+CREATE DATABASE `ocarina2` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `ocarina2`;
 
 -- --------------------------------------------------------
 
@@ -29,11 +31,12 @@ CREATE TABLE IF NOT EXISTS `annunci` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `autore` varchar(100) NOT NULL,
   `titolo` varchar(100) NOT NULL,
+  `minititolo` varchar(100) NOT NULL,
   `contenuto` text NOT NULL,
   `data` varchar(10) NOT NULL,
   `ora` varchar(10) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -68,11 +71,13 @@ CREATE TABLE IF NOT EXISTS `configurazione` (
   `approvacommenti` tinyint(1) NOT NULL,
   `log` tinyint(1) NOT NULL,
   `cookie` varchar(20) NOT NULL,
+  `loginexpire` int(10) NOT NULL,
   `skin` varchar(50) NOT NULL,
   `description` text NOT NULL,
   `limitenews` int(10) NOT NULL,
   `impaginazionenews` int(10) NOT NULL,
   `limiteonline` int(10) NOT NULL,
+  `permettivoto` tinyint(1) NOT NULL,
   `url` varchar(100) NOT NULL,
   `url_index` varchar(100) NOT NULL,
   `url_admin` varchar(100) NOT NULL,
@@ -124,8 +129,8 @@ CREATE TABLE IF NOT EXISTS `news` (
   `oraultimamodifica` varchar(10) NOT NULL,
   `autoreultimamodifica` varchar(100) NOT NULL,
   `approvato` tinyint(1) NOT NULL,
-  `visite` int(10) NOT NULL,
-  `visitatori` text NOT NULL,
+  `voti` int(100) NOT NULL,
+  `visite` int(100) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
@@ -148,8 +153,8 @@ CREATE TABLE IF NOT EXISTS `pagine` (
   `oraultimamodifica` varchar(10) NOT NULL,
   `autoreultimamodifica` varchar(100) NOT NULL,
   `approvato` tinyint(1) NOT NULL,
-  `visite` int(10) NOT NULL,
-  `visitatori` text NOT NULL,
+  `voti` int(100) NOT NULL,
+  `visite` int(100) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
@@ -193,5 +198,33 @@ CREATE TABLE IF NOT EXISTS `visitatori` (
   `lastaction` varchar(15) NOT NULL,
   `giorno` varchar(10) NOT NULL,
   `nickname` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `visite`
+--
+
+CREATE TABLE IF NOT EXISTS `visite` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `minititolo` varchar(100) NOT NULL,
+  `nickname` varchar(100) NOT NULL,
+  `tipo` enum('pagine','news') NOT NULL DEFAULT 'pagine',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `voti`
+--
+
+CREATE TABLE IF NOT EXISTS `voti` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `minititolo` varchar(100) NOT NULL,
+  `nickname` varchar(100) NOT NULL,
+  `tipo` enum('pagine','news') NOT NULL DEFAULT 'pagine',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;

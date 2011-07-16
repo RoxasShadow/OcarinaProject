@@ -26,6 +26,7 @@
 		news($minititoloNews)
 		countnews()
 		searchnews($contenuto)
+		votenews($minititoloNews)
 		comment()
 		comment($id)
 		comment($minititoloNews)
@@ -35,6 +36,7 @@
 		page()
 		page($minititoloPagina)
 		countpage()
+		votepage($minititoloPagina)
 		searchpage($contenuto)
 		user()
 		user($nickname)
@@ -65,12 +67,14 @@ $actionPermitted = array(
 	'news',
 	'countnews',
 	'searchnews',
+	'votenews'
 	'comment',
 	'searchcomment',
 	'createcomment',
 	'mycomment',
 	'page',
 	'countpage',
+	'votepage'
 	'searchpage',
 	'user',
 	'countuser',

@@ -34,7 +34,6 @@
 			<a onclick="request('left');"><b>Allineato a sinistra</b></a>
 			<a onclick="request('center');"><b>Allineato a centro</b></a>
 			<a onclick="request('right');"><b>Allineato a destra</b></a>
-			<a onclick="add('[br]');"><b>Accapo</b></a>
 			<a onclick="request('code');"><b>Codice</b></a>
 			<a onclick="request('quote');"><b>Citazione</b></a>
 			<a onclick="requestuser();"><b>Utente</b></a>
@@ -44,7 +43,7 @@
 		{/if}
 		<textarea name="testo" cols="59" rows="10" id="targetForm">{if (isset($testo))}{$testo}{/if}</textarea><br />
 		{if isset($sel)}<input type="hidden" name="selected" value="{$sel}" />{/if}
-		<input type="submit" name="submit" value="Conferma" /><input type="button" onclick="return sendGet('{$url_admin}/preview.php?text=', 'previewBox', 'targetForm');" value="Anteprima" /><br />
+		<input type="submit" name="submit" value="Conferma" /><input type="button" onclick="return sendSinglePost('{$url_admin}/preview.php', 'previewBox', 'text', 'targetForm');" value="Anteprima" /><br />
 		<div id="previewBox"></div>
 		</form>
 	{elseif $submit && isset($result) || (!$submit && isset($result))}

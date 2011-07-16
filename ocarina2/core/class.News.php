@@ -13,26 +13,13 @@ class News extends Category {
 		$news = array();
 		if($minititolo !== '') {
 			if($this->isNews($minititolo)) {
-				if(!$query = parent::query("SELECT * FROM news WHERE minititolo='$minititolo' ORDER BY titolo ASC"))
+				if(!$query = parent::query("SELECT * FROM news WHERE minititolo = '$minititolo' ORDER BY titolo ASC"))
 					return false;
 				array_push($news, parent::get($query));
-				if(!empty($news))
-					if(parent::isLogged()) {
-						$visitatori = explode('|||', $news[0]->visitatori);
-						if(!in_array($_SERVER['REMOTE_ADDR'], $visitatori)) {
-							if((!isset($news[0]->visitatori)) || ($news[0]->visitatori == ''))
-								$visitatori = $_SERVER['REMOTE_ADDR'];
-							else
-								$visitatori = $news[0]->visitatori.'|||'.$_SERVER['REMOTE_ADDR'];
-							if((!isset($news[0]->visite)) || ($news[0]->visite == ''))
-								$visite = 1;
-							else
-								$visite = $news[0]->visite += 1;
-							$this->editNews('visite', $visite, $news[0]->minititolo);
-							$this->editNews('visitatori', $visitatori, $news[0]->minititolo);
-						}
-					}
+				if(!empty($news)) {
+					$this->addVisitNews($minititolo);
 					return $news;
+				}
 				return false;
 			}
 			return false;
@@ -61,23 +48,33 @@ class News extends Category {
 	/* Permette di votare una news. */
 	public function voteNews($minititolo) {
 		if(parent::isLogged()) {
-			if(!$news = $this->getNews($minititolo))
+			$nickname = $this->username[0]->nickname;
+			$votanti = parent::query("SELECT COUNT(*) FROM voti WHERE minititolo='$minititolo' AND nickname='$nickname' AND tipo='news'");
+			if(mysql_result($votanti, 0, 0) > 0)
 				return false;
-			$votanti = explode('|||', $news[0]->votanti);
-			if(!in_array($this->username[0]->nickname, $votanti)) {
-				if((!isset($news[0]->votanti)) || ($news[0]->votanti == ''))
-					$votanti = $this->username[0]->nickname;
-				else
-					$votanti = $news[0]->votanti.'|||'.$this->username[0]->nickname;
-				if((!isset($news[0]->voti)) || ($news[0]->voti == ''))
-					$voti = 1;
-				else
-					$voti = $news[0]->voti += 1;
-				if(($this->editNews('voti', $voti, $minititolo)) && ($this->editNews('votanti', $votanti, $minititolo)))
-					return true;
-				return false;
-			}
+			if(!$votanti = parent::query("SELECT COUNT(*) FROM voti WHERE minititolo='$minititolo' AND tipo='news'"))
+				$voti = 1;
+			else
+				$voti = mysql_result($votanti, 0, 0) + 1;
+			if((parent::query("INSERT INTO voti(minititolo, nickname, tipo) VALUES('$minititolo', '$nickname', 'news')")) && (parent::query("UPDATE news SET voti='$voti' WHERE minititolo='$minititolo'")))
+				return true;
 		}
+		return false;
+	}
+	
+	/* Registra una visita in una news */
+	public function addVisitNews($minititolo) {
+		$visitatore = (parent::isLogged()) ? $this->username[0]->nickname : $_SERVER['REMOTE_ADDR'];
+		$visitatori = parent::query("SELECT COUNT(*) FROM visite WHERE minititolo='$minititolo' AND nickname='$visitatore' AND tipo='news'");
+		if(mysql_result($visitatori, 0, 0) > 0)
+			return false;
+		if(!$visitatori = parent::query("SELECT COUNT(*) FROM visite WHERE minititolo='$minititolo' AND tipo='news'"))
+			$visite = 1;
+		else
+			$visite = mysql_result($visitatori, 0, 0) + 1;
+		if((parent::query("INSERT INTO visite(minititolo, nickname, tipo) VALUES('$minititolo', '$visitatore', 'news')")) && (parent::query("UPDATE news SET visite='$visite' WHERE minititolo='$minititolo'")))
+				return true;
+		return true;
 	}
 	
 	/* Controlla se la news esiste. */

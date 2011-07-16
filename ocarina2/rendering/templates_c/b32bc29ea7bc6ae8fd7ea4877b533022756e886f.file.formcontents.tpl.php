@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-16 00:23:38
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-16 14:30:08
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/admin/formcontents.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:18177304124e20da0ad6aad4-00415821%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:2752530414e21a070bd4154-57179002%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'b32bc29ea7bc6ae8fd7ea4877b533022756e886f' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/admin/formcontents.tpl',
-      1 => 1310775814,
+      1 => 1310826495,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '18177304124e20da0ad6aad4-00415821',
+  'nocache_hash' => '2752530414e21a070bd4154-57179002',
   'function' => 
   array (
   ),
@@ -63,7 +63,6 @@ if ($_smarty_tpl->_count($_from) > 0){
 			<a onclick="request('left');"><b>Allineato a sinistra</b></a>
 			<a onclick="request('center');"><b>Allineato a centro</b></a>
 			<a onclick="request('right');"><b>Allineato a destra</b></a>
-			<a onclick="add('[br]');"><b>Accapo</b></a>
 			<a onclick="request('code');"><b>Codice</b></a>
 			<a onclick="request('quote');"><b>Citazione</b></a>
 			<a onclick="requestuser();"><b>Utente</b></a>
@@ -75,8 +74,8 @@ if ($_smarty_tpl->_count($_from) > 0){
 <?php }?></textarea><br />
 		<?php if (isset($_smarty_tpl->getVariable('sel',null,true,false)->value)){?><input type="hidden" name="selected" value="<?php echo $_smarty_tpl->getVariable('sel')->value;?>
 " /><?php }?>
-		<input type="submit" name="submit" value="Conferma" /><input type="button" onclick="return sendGet('<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
-/preview.php?text=', 'previewBox', 'targetForm');" value="Anteprima" /><br />
+		<input type="submit" name="submit" value="Conferma" /><input type="button" onclick="return sendSinglePost('<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
+/preview.php', 'previewBox', 'text', 'targetForm');" value="Anteprima" /><br />
 		<div id="previewBox"></div>
 		</form>
 	<?php }elseif($_smarty_tpl->getVariable('submit')->value&&isset($_smarty_tpl->getVariable('result',null,true,false)->value)||(!$_smarty_tpl->getVariable('submit')->value&&isset($_smarty_tpl->getVariable('result',null,true,false)->value))){?>
