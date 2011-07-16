@@ -11,8 +11,8 @@ class BBCode extends Configuration {
 		parent::__construct();
 	}
 	
-	public function bbcode($txt) {
-		$cerca_codice = array(
+	public function bbcode($text) {
+		$pattern = array(
 			'/\[b\](.*?)\[\/b\]/is',
 			'/\[i\](.*?)\[\/i\]/is',
 			'/\[u\](.*?)\[\/u\]/is',
@@ -36,7 +36,7 @@ class BBCode extends Configuration {
 			'/\(C\)/is',
 			'/\(R\)/is'
 		);
-		$sostituisci_codice = array(
+		$replace = array(
 			'<strong>$1</strong>',
 			'<em>$1</em>',
 			'<u>$1</u>',
@@ -60,11 +60,11 @@ class BBCode extends Configuration {
 			'&copy;',
 			'&reg;'
 		);
-		return preg_replace($cerca_codice, $sostituisci_codice, $txt);
+		return preg_replace($pattern, $replace, $text);
 	}
-
-	public function bbcodecommenti($testo) {
-		$cerca_codice = array(
+	
+	public function bbcodecommenti($text) {
+		$pattern = array(
 			'/\[b\](.*?)\[\/b\]/is',
 			'/\[i\](.*?)\[\/i\]/is',
 			'/\[u\](.*?)\[\/u\]/is',
@@ -84,7 +84,7 @@ class BBCode extends Configuration {
 			'/\(C\)/is',
 			'/\(R\)/is'
 		);
-		$sostituisci_codice = array(
+		$replace = array(
 			'<strong>$1</strong>',
 			'<em>$1</>$>',
 			'<u>$1</u>',
@@ -104,6 +104,6 @@ class BBCode extends Configuration {
 			'&copy;',
 			'&reg;'
 		);
-		return preg_replace($cerca_codice, $sostituisci_codice, $testo);
+		return preg_replace($pattern, $replace, $text);
 	}
 }

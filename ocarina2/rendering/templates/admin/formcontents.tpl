@@ -44,8 +44,8 @@
 		{/if}
 		<textarea name="testo" cols="59" rows="10" id="targetForm">{if (isset($testo))}{$testo}{/if}</textarea><br />
 		{if isset($sel)}<input type="hidden" name="selected" value="{$sel}" />{/if}
-		<input type="submit" name="submit" value="Conferma" /><a href="{$url_admin}/preview.php?text={$testo}" onclick="return inviaGet(this, 'previewBox');">Anteprima</a><br />
-		<div id="previewBox" border="1"></div>
+		<input type="submit" name="submit" value="Conferma" /><input type="button" onclick="return sendGet('{$url_admin}/preview.php?text=', 'previewBox', 'targetForm');" value="Anteprima" /><br />
+		<div id="previewBox"></div>
 		</form>
 	{elseif $submit && isset($result) || (!$submit && isset($result))}
 		{$result}

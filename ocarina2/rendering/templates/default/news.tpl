@@ -55,7 +55,8 @@
 			{/if}
 			<form action="" method="post">
 			<textarea name="comment" cols="59" rows="10" id="targetForm"></textarea><br />
-			<input type="submit" value="Invia commento" />
+			<input type="submit" value="Invia commento" /><input type="button" onclick="return sendGet('{$url_admin}/preview.php?type=comment&text=', 'previewBox', 'targetForm');" value="Anteprima" /><br />
+			<div id="previewBox"></div>
 			</form>
 		{/if}
 	{/if}

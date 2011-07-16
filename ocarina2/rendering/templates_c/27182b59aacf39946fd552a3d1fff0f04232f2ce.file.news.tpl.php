@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-15 15:49:47
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-16 00:50:49
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/news.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:153322004e20619bede9a3-59287184%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:3315349624e20e0698f2d35-75066212%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '27182b59aacf39946fd552a3d1fff0f04232f2ce' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/default/news.tpl',
-      1 => 1310744332,
+      1 => 1310777443,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '153322004e20619bede9a3-59287184',
+  'nocache_hash' => '3315349624e20e0698f2d35-75066212',
   'function' => 
   array (
   ),
@@ -123,7 +123,9 @@ if ($_smarty_tpl->_count($_from) > 0){
 			<?php }?>
 			<form action="" method="post">
 			<textarea name="comment" cols="59" rows="10" id="targetForm"></textarea><br />
-			<input type="submit" value="Invia commento" />
+			<input type="submit" value="Invia commento" /><input type="button" onclick="return sendGet('<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
+/preview.php?type=comment&text=', 'previewBox', 'targetForm');" value="Anteprima" /><br />
+			<div id="previewBox"></div>
 			</form>
 		<?php }?>
 	<?php }?>
