@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-12 22:33:13
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-16 23:10:10
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/commento.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:14180694334e1ccba9837ba0-68793898%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:9179749104e221a5217a126-70937650%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '55288e1340297256175cc3087ed33f0153b00b58' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/default/commento.tpl',
-      1 => 1310509992,
+      1 => 1310856884,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '14180694334e1ccba9837ba0-68793898',
+  'nocache_hash' => '9179749104e221a5217a126-70937650',
   'function' => 
   array (
   ),
@@ -36,13 +36,13 @@ if ($_smarty_tpl->_count($_from) > 0){
 					<div class="titolo">Commento #<?php echo $_smarty_tpl->getVariable('commento')->value[$_smarty_tpl->tpl_vars['key']->value]->id;?>
 </div>
 					<div class="newsheader" align="center">Scritto da <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
-/profilo.php?nickname=<?php echo $_smarty_tpl->getVariable('commento')->value[$_smarty_tpl->tpl_vars['key']->value]->autore;?>
-"><?php echo $_smarty_tpl->getVariable('commento')->value[$_smarty_tpl->tpl_vars['key']->value]->autore;?>
+/profile/<?php echo $_smarty_tpl->getVariable('commento')->value[$_smarty_tpl->tpl_vars['key']->value]->autore;?>
+.html"><?php echo $_smarty_tpl->getVariable('commento')->value[$_smarty_tpl->tpl_vars['key']->value]->autore;?>
 </a> il giorno <?php echo $_smarty_tpl->getVariable('commento')->value[$_smarty_tpl->tpl_vars['key']->value]->data;?>
  alle ore <?php echo $_smarty_tpl->getVariable('commento')->value[$_smarty_tpl->tpl_vars['key']->value]->ora;?>
 .(<a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
-/news.php?titolo=<?php echo $_smarty_tpl->getVariable('commento')->value[$_smarty_tpl->tpl_vars['key']->value]->news;?>
-">News originale</a>)</div><br />
+/news/<?php echo $_smarty_tpl->getVariable('commento')->value[$_smarty_tpl->tpl_vars['key']->value]->news;?>
+.html">News originale</a>)</div><br />
 					<div class="news"><?php echo $_smarty_tpl->getVariable('commento')->value[$_smarty_tpl->tpl_vars['key']->value]->contenuto;?>
 </div>
 				<?php }else{ ?>

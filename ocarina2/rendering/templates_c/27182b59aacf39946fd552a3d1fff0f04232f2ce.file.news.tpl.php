@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-16 18:56:58
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-16 23:02:54
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/news.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:4378796214e21defa93a2f0-78126869%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:10667059784e22189ee02da3-68218695%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '27182b59aacf39946fd552a3d1fff0f04232f2ce' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/default/news.tpl',
-      1 => 1310842616,
+      1 => 1310856884,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '4378796214e21defa93a2f0-78126869',
+  'nocache_hash' => '10667059784e22189ee02da3-68218695',
   'function' => 
   array (
   ),
@@ -20,8 +20,8 @@ $_smarty_tpl->decodeProperties(array (
 
 <?php $_template = new Smarty_Internal_Template(($_smarty_tpl->getVariable('root_rendering')->value)."/templates/".($_smarty_tpl->getVariable('skin')->value)."/include/header.tpl", $_smarty_tpl->smarty, $_smarty_tpl, $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null);
  echo $_template->getRenderedTemplate(); $_template->rendered_content = null;?><?php unset($_template);?>
-	<?php if (isset($_smarty_tpl->getVariable('errore',null,true,false)->value)){?>
-		<div class="titolo"><?php echo $_smarty_tpl->getVariable('errore')->value;?>
+	<?php if (isset($_smarty_tpl->getVariable('error',null,true,false)->value)){?>
+		<div class="titolo"><?php echo $_smarty_tpl->getVariable('error')->value;?>
 </div>
 	<?php }elseif(isset($_smarty_tpl->getVariable('commentSended',null,true,false)->value)){?>
 		<div class="titolo"><?php echo $_smarty_tpl->getVariable('commentSended')->value;?>

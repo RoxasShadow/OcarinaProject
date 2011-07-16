@@ -19,10 +19,10 @@ $rendering->addValue('useronline', $pagina->getUserOnline());
 $rendering->addValue('visitatoronline', $pagina->getVisitatorOnline());
 
 if($titolo == '')
-	$rendering->addValue('errore', $pagina->getLanguage('page', 0));
+	$rendering->addValue('error', $pagina->getLanguage('page', 0));
 else {
 	if(!$getPage = $pagina->getPage($titolo))
-		$rendering->addValue('errore', $pagina->getLanguage('page', 1));
+		$rendering->addValue('error', $pagina->getLanguage('page', 1));
 	else {
 		if($pagina->config[0]->bbcode == 1)
 			for($i=0, $count=count($getPage); $i<$count; ++$i)

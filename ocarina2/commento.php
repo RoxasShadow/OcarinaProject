@@ -22,7 +22,7 @@ if($id == '')
 	$rendering->addValue('error', $comments->getLanguage('comment', 0));
 else {
 	if(!$getComment = $comments->searchCommentById($id))
-		$rendering->addValue('errore', $comments->getLanguage('comment', 1));
+		$rendering->addValue('error', $comments->getLanguage('comment', 1));
 	else {
 		if($comments->config[0]->bbcode == 1)
 			for($i=0, $count=count($getComment); $i<$count; ++$i)

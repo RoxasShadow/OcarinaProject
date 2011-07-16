@@ -20,10 +20,10 @@ $rendering->addValue('useronline', $comment->getUserOnline());
 $rendering->addValue('visitatoronline', $comment->getVisitatorOnline());
 
 if($titolo == '')
-	$rendering->addValue('errore', $comment->getLanguage('news', 1));
+	$rendering->addValue('error', $comment->getLanguage('news', 1));
 else {
 	if(!$news = $comment->getNews($titolo))
-		$rendering->addValue('errore', $comment->getLanguage('news', 2));
+		$rendering->addValue('error', $comment->getLanguage('news', 2));
 	else {
 		if($comment->config[0]->bbcode == 1) {
 			for($i=0, $count=count($news); $i<$count; ++$i)

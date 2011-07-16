@@ -2,8 +2,8 @@
 	(C) Giovanni Capuano 2011
 *}
 {include file="$root_rendering/templates/$skin/include/header.tpl"}
-	{if isset($errore)}
-		<div class="titolo">{$errore}</div>
+	{if isset($error)}
+		<div class="titolo">{$error}</div>
 	{else}
 		{if is_array($pagina)}
 			{foreach from=$pagina key=key item=item}
