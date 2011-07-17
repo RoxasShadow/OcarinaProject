@@ -8,9 +8,9 @@ require_once('../core/class.Rendering.php');
 
 $ad = new Ad();
 $rendering = new Rendering();
-$titolo_annuncio = ((isset($_POST['titolo'])) && ($_POST['titolo'] !== '')) ? htmlentities(addslashes($ad->purgeByXSS($_POST['titolo']))) : '';
-$testo_annuncio = ((isset($_POST['testo'])) && ($_POST['testo'] !== '')) ? addslashes($ad->purgeByXSS($_POST['testo'])) : '';
-$selected = ((isset($_POST['selected'])) && ($_POST['selected'] !== '')) ? htmlentities(addslashes($ad->purgeByXSS($_POST['selected']))) : '';
+$titolo_annuncio = ((isset($_POST['titolo'])) && ($_POST['titolo'] !== '')) ? $ad->purge($_POST['titolo']) : '';
+$testo_annuncio = ((isset($_POST['testo'])) && ($_POST['testo'] !== '')) ? $news->purgeSlashes($news->purgeByXSS($_POST['testo'])) : '';
+$selected = ((isset($_POST['selected'])) && ($_POST['selected'] !== '')) ? $ad->purge($_POST['selected']) : '';
 $submit = isset($_POST['submit']) ? true : false;
 
 $rendering->addValue('grado', $ad->isLogged() ? $ad->username[0]->grado : '');

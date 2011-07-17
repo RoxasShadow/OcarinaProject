@@ -8,9 +8,9 @@ require_once('../core/class.Rendering.php');
 
 $news = new News();
 $rendering = new Rendering();
-$titolo_news = ((isset($_POST['titolo'])) && ($_POST['titolo'] !== '')) ? htmlentities(addslashes($news->purgeByXSS($_POST['titolo']))) : '';
-$categoria_news = ((isset($_POST['categoria'])) && ($_POST['categoria'] !== '')) ? htmlentities(addslashes($news->purgeByXSS($_POST['categoria']))) : '';
-$testo_news = ((isset($_POST['testo'])) && ($_POST['testo'] !== '')) ? addslashes($news->purgeByXSS($_POST['testo'])) : '';
+$titolo_news = ((isset($_POST['titolo'])) && ($_POST['titolo'] !== '')) ? $news->purge($_POST['titolo']) : '';
+$categoria_news = ((isset($_POST['categoria'])) && ($_POST['categoria'] !== '')) ? $news->purge($_POST['categoria']) : '';
+$testo_news = ((isset($_POST['testo'])) && ($_POST['testo'] !== '')) ? $news->purgeSlashes($news->purgeByXSS($_POST['testo'])) : '';
 $submit = isset($_POST['submit']) ? true : false;
 
 $rendering->addValue('grado', $news->isLogged() ? $news->username[0]->grado : '');

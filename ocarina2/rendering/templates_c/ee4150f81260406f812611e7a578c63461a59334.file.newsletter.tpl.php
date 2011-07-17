@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-17 00:00:54
-         compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/errorpage.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:9446407554e222636879db9-85658434%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-17 15:43:50
+         compiled from "/var/www/htdocs/ocarina2/rendering//templates/admin/newsletter.tpl" */ ?>
+<?php /*%%SmartyHeaderCode:4462060694e2303368fa762-14958233%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
-    '0562c8c8b74fd9418e4ee22a92dbb9c16914c9e8' => 
+    'ee4150f81260406f812611e7a578c63461a59334' => 
     array (
-      0 => '/var/www/htdocs/ocarina2/rendering//templates/default/errorpage.tpl',
-      1 => 1310856884,
+      0 => '/var/www/htdocs/ocarina2/rendering//templates/admin/newsletter.tpl',
+      1 => 1310917428,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '9446407554e222636879db9-85658434',
+  'nocache_hash' => '4462060694e2303368fa762-14958233',
   'function' => 
   array (
   ),
@@ -20,11 +20,21 @@ $_smarty_tpl->decodeProperties(array (
 
 <?php $_template = new Smarty_Internal_Template(($_smarty_tpl->getVariable('root_rendering')->value)."/templates/".($_smarty_tpl->getVariable('skin')->value)."/include/header.tpl", $_smarty_tpl->smarty, $_smarty_tpl, $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null);
  echo $_template->getRenderedTemplate(); $_template->rendered_content = null;?><?php unset($_template);?>
-	<?php if (isset($_smarty_tpl->getVariable('id',null,true,false)->value)){?>
-		<div class="titolo">Errore <?php echo $_smarty_tpl->getVariable('id')->value;?>
-</div>
+	<?php if (($_smarty_tpl->getVariable('grado')->value<=2)){?>
+		<?php if (!$_smarty_tpl->getVariable('submit')->value){?>
+			<form action="" method="post">
+			Oggetto<br />
+			<input type="text" name="oggetto" /><br />
+			Testo<br />
+			<textarea name="testo" cols="59" rows="10"></textarea><br />
+			<input type="submit" name="submit" value="Invia" />
+			</form>
+		<?php }else{ ?>
+			<?php echo $_smarty_tpl->getVariable('result')->value;?>
+
+		<?php }?>
 	<?php }else{ ?>
-		<div class="titolo">Errore indefinito</div>
+		Accesso negato.
 	<?php }?>
 <?php $_template = new Smarty_Internal_Template(($_smarty_tpl->getVariable('root_rendering')->value)."/templates/".($_smarty_tpl->getVariable('skin')->value)."/include/footer.tpl", $_smarty_tpl->smarty, $_smarty_tpl, $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null);
  echo $_template->getRenderedTemplate(); $_template->rendered_content = null;?><?php unset($_template);?>

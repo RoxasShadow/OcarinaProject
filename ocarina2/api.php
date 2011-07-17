@@ -67,14 +67,14 @@ $actionPermitted = array(
 	'news',
 	'countnews',
 	'searchnews',
-	'votenews'
+	'votenews',
 	'comment',
 	'searchcomment',
 	'createcomment',
 	'mycomment',
 	'page',
 	'countpage',
-	'votepage'
+	'votepage',
 	'searchpage',
 	'user',
 	'countuser',

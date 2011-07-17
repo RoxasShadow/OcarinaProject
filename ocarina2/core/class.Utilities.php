@@ -29,6 +29,26 @@ class Utilities extends Languages {
 		return $var;
 	}
 	
+	/* Inserisce gli slahes o meno a seconda dei magic_quotes_gpc. */
+	public function purgeSlashes($var) {
+		if(is_array($var))
+			foreach($var as $key => $value) {
+				if(is_array($var[$key]))
+					$var[$key] = $this->purgeSlashes($var[$key]);
+				if((is_string($var[$key])) && (!is_numeric($var[$key]))) {
+					if(get_magic_quotes_gpc())
+						$var[$key] = stripslashes($var[$key]);
+					$var[$key] = mysql_real_escape_string($var[$key]);
+				}
+			}
+		if((is_string($var)) && (!is_numeric($var))) {
+			if(get_magic_quotes_gpc())
+				$var = stripslashes($var);
+			$var = mysql_real_escape_string($var);
+		}
+		return $var;
+	}
+	
 	/* Elimina gli slashes per le SQL Injection. */
 	public function unPurge($var) {
 		if(is_array($var))

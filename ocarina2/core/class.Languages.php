@@ -62,7 +62,8 @@ class Languages {
 				'Crea annuncio',
 				'Cancella annuncio',
 				'Modifica annuncio',
-				'Annunci'	
+				'Annunci', // 29
+				'Newsletter'
 			),
 			'error' => array(
 				'È accaduto un errore',
@@ -247,6 +248,11 @@ class Languages {
 				'Non sei abilitato a modificare quest\'annuncio.',
 				'L\'annuncio è stata modificata.',
 				'È accaduto un errore durante la modifica dell\'annuncio. Controlla di non aver lasciato alcun campo vuoto.'
+			),
+			'newsletter' => array(
+				'Tutte le newsletter sono state inviate.',
+				' newsletter non sono state inviate.',
+				'È accaduto un errore durante l\'invio delle newsletter. Controlla di non aver lasciato alcun campo vuoto.'
 			)
 		);
 	}
