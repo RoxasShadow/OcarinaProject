@@ -20,14 +20,17 @@ if(($user->isLogged()) && ($user->username[0]->grado <= 2))
 	if($submit)
 		if(($testo_email !== '') && ($oggetto_email !== '')) {
 			$users = $user->getUser();
-			$notsend = 0;
+			$notsended = 0;
+			$sended = 0;
 			foreach($users as $v)
 				if(!$user->sendMail($v->email, $oggetto_email, $testo_email))
-					++$notsend;
-			if($notsend == 0)
-				$rendering->addValue('result', $user->getLanguage('newsletter', 0));
+					++$notsended;
+				else
+					++$sended;
+			if($notsended == 0)
+				$rendering->addValue('result', str_replace('{$sended}', $sended, $user->getLanguage('newsletter', 0)));
 			else
-				$rendering->addValue('result', $notsend.$user->getLanguage('newsletter', 1));
+				$rendering->addValue('result', str_replace('{$notsended}', $notsended, str_replace('{$sended}', $sended, $user->getLanguage('newsletter', 1))));
 		}
 		else
 			$rendering->addValue('result', $user->getLanguage('newsletter', 2));

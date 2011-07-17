@@ -250,8 +250,8 @@ class Languages {
 				'È accaduto un errore durante la modifica dell\'annuncio. Controlla di non aver lasciato alcun campo vuoto.'
 			),
 			'newsletter' => array(
-				'Tutte le newsletter sono state inviate.',
-				' newsletter non sono state inviate.',
+				'Tutte le {$sended} newsletter sono state inviate.',
+				'{$notsended} newsletter su {$sended} non sono state inviate.',
 				'È accaduto un errore durante l\'invio delle newsletter. Controlla di non aver lasciato alcun campo vuoto.'
 			)
 		);
