@@ -455,4 +455,19 @@ class Utilities extends Languages {
 	public function sendMail($destinatario, $titolo, $contenuto) {
 		return mail($destinatario, $titolo, $contenuto) ? true : false;			
 	}
+	
+	/* Cancella una cartella con tutto il suo contenuto. */
+	public function deleteDir($dir) { 
+		$handle = opendir($dir); 
+		while (false !== ($FolderOrFile = readdir($handle)))
+			if(($FolderOrFile !== '.') && ($FolderOrFile !== '..')) 
+				if(is_dir($dir.'/'.$FolderOrFile)) 
+		       			$this->deleteDir($dir.'/'.$FolderOrFile);
+				else 
+					unlink($dir.'/'.$FolderOrFile);
+		closedir($handle); 
+		if(rmdir($dir)) 
+	  		$success = true;
+		return $success; 
+	}
 }

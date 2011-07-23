@@ -13,7 +13,7 @@ class News extends Category {
 		$news = array();
 		if($minititolo !== '') {
 			if($this->isNews($minititolo)) {
-				if(!$query = parent::query("SELECT * FROM news WHERE minititolo = '$minititolo' ORDER BY titolo ASC"))
+				if(!$query = parent::query("SELECT * FROM news WHERE minititolo='$minititolo' ORDER BY titolo ASC"))
 					return false;
 				array_push($news, parent::get($query));
 				if(!empty($news)) {

@@ -8,9 +8,9 @@ require_once('../core/class.Rendering.php');
 
 $pagina = new Page();
 $rendering = new Rendering();
-$titolo_pagina = ((isset($_POST['titolo'])) && ($_POST['titolo'] !== '')) ? $pagina->purge($_POST['titolo']) : '';
+$titolo_pagina = ((isset($_POST['titolo'])) && ($_POST['titolo'] !== '')) ? $pagina->purgeSlashes($pagina->purgeByXSS($_POST['titolo'])) : '';
 $categoria_pagina = ((isset($_POST['categoria'])) && ($_POST['categoria'] !== '')) ? $pagina->purge($_POST['categoria']) : '';
-$testo_pagina = ((isset($_POST['testo'])) && ($_POST['testo'] !== '')) ? $news->purgeSlashes($pagina->purgeByXSS($_POST['testo'])) : '';
+$testo_pagina = ((isset($_POST['testo'])) && ($_POST['testo'] !== '')) ? $pagina->purgeSlashes($pagina->purgeByXSS($_POST['testo'])) : '';
 $submit = isset($_POST['submit']) ? true : false;
 
 $rendering->addValue('grado', $pagina->isLogged() ? $pagina->username[0]->grado : '');

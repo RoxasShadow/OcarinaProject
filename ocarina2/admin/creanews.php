@@ -8,7 +8,7 @@ require_once('../core/class.Rendering.php');
 
 $news = new News();
 $rendering = new Rendering();
-$titolo_news = ((isset($_POST['titolo'])) && ($_POST['titolo'] !== '')) ? $news->purge($_POST['titolo']) : '';
+$titolo_news = ((isset($_POST['titolo'])) && ($_POST['titolo'] !== '')) ? $news->purgeSlashes($news->purgeByXSS($_POST['titolo'])) : '';
 $categoria_news = ((isset($_POST['categoria'])) && ($_POST['categoria'] !== '')) ? $news->purge($_POST['categoria']) : '';
 $testo_news = ((isset($_POST['testo'])) && ($_POST['testo'] !== '')) ? $news->purgeSlashes($news->purgeByXSS($_POST['testo'])) : '';
 $submit = isset($_POST['submit']) ? true : false;

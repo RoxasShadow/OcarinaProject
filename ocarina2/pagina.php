@@ -14,7 +14,6 @@ $titolo = ((isset($_GET['titolo'])) && ($_GET['titolo'] !== '')) ? $pagina->purg
 
 $rendering->addValue('utente', $pagina->isLogged() ? $pagina->username[0]->nickname : '');
 $rendering->skin = $pagina->isLogged() ? $pagina->username[0]->skin : $pagina->config[0]->skin;
-$rendering->addValue('titolo', $titolo !== '' ? $titolo.$pagina->getLanguage('title', 2).$pagina->config[0]->nomesito : $pagina->config[0]->nomesito);
 $rendering->addValue('useronline', $pagina->getUserOnline());
 $rendering->addValue('visitatoronline', $pagina->getVisitatorOnline());
 
@@ -29,6 +28,7 @@ else {
 				$getPage[$i]->contenuto = $bbcode->bbcode($getPage[$i]->contenuto);
 		$rendering->addValue('description', $pagina->getDescription($getPage[0]->contenuto));
 		$rendering->addValue('pagina', $getPage);
+		$rendering->addValue('titolo', $getPage[0]->titolo !== '' ? $getPage[0]->titolo.$pagina->getLanguage('title', 2).$pagina->config[0]->nomesito : $pagina->config[0]->nomesito);
 	}
 }
 (($pagina->isLogged()) && ($pagina->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('pagina.tpl');

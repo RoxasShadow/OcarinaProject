@@ -63,7 +63,9 @@ class Languages {
 				'Cancella annuncio',
 				'Modifica annuncio',
 				'Annunci', // 29
-				'Newsletter'
+				'Newsletter',
+				'Disinstalla skin',
+				'Installa skin'
 			),
 			'error' => array(
 				'È accaduto un errore',
@@ -253,6 +255,14 @@ class Languages {
 				'Tutte le {$sended} newsletter sono state inviate.',
 				'{$notsended} newsletter su {$sended} non sono state inviate.',
 				'È accaduto un errore durante l\'invio delle newsletter. Controlla di non aver lasciato alcun campo vuoto.'
+			),
+			'removeskin' => array(
+				'La skin è stata disinstallata.',
+				'È accaduto un errore durante la disinstallazione della skin. Controlla che la skin selezionata esiste.'
+			),
+			'installskin' => array(
+				'La skin è stata installata.',
+				'È accaduto un errore durante l\'installazione della skin.'
 			)
 		);
 	}

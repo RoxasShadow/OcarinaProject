@@ -8,8 +8,8 @@ require_once('../core/class.Rendering.php');
 
 $ad = new Ad();
 $rendering = new Rendering();
-$titolo_annuncio = ((isset($_POST['titolo'])) && ($_POST['titolo'] !== '')) ? $ad->purge($_POST['titolo']) : '';
-$testo_annuncio = ((isset($_POST['testo'])) && ($_POST['testo'] !== '')) ? $ad->purge($_POST['testo']) : '';
+$titolo_annuncio = ((isset($_POST['titolo'])) && ($_POST['titolo'] !== '')) ? $ad->purgeSlashes($ad->purgeByXSS($_POST['titolo'])) : ''; : '';
+$testo_annuncio = ((isset($_POST['testo'])) && ($_POST['testo'] !== '')) ? $ad->purgeSlashes($ad->purgeByXSS($_POST['testo'])) : ''; : '';
 $submit = isset($_POST['submit']) ? true : false;
 
 $rendering->addValue('grado', $ad->isLogged() ? $ad->username[0]->grado : '');

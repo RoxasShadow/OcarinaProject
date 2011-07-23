@@ -15,7 +15,6 @@ $commento = isset($_POST['comment']) ? $comment->purge($_POST['comment']) : '';
 
 $rendering->addValue('utente', $comment->isLogged() ? $comment->username[0]->nickname : '');
 $rendering->skin = $comment->isLogged() ? $comment->username[0]->skin : $comment->config[0]->skin;
-$rendering->addValue('titolo', $titolo !== '' ? $titolo.$comment->getLanguage('title', 2).$comment->config[0]->nomesito : $comment->config[0]->nomesito);
 $rendering->addValue('useronline', $comment->getUserOnline());
 $rendering->addValue('visitatoronline', $comment->getVisitatorOnline());
 
@@ -32,6 +31,7 @@ else {
 		}
 		$rendering->addValue('description', $comment->getDescription($news[0]->contenuto));
 		$rendering->addValue('news', $news);
+		$rendering->addValue('titolo', $news[0]->titolo !== '' ? $news[0]->titolo.$comment->getLanguage('title', 2).$comment->config[0]->nomesito : $comment->config[0]->nomesito);
 		
 		if(!$getComment = $comment->getComment($news[0]->minititolo))
 			$rendering->addValue('commenti', $comment->getLanguage('news', 3));

@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-16 00:20:57
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-23 12:39:13
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/admin/include/header.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:12826581194e20d969547055-66274384%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:10761730554e2ac0f12b1cf0-47887631%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '06990b4356e1fa71f1be07210ace0be3ba5c771b' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/admin/include/header.tpl',
-      1 => 1310775638,
+      1 => 1311424749,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '12826581194e20d969547055-66274384',
+  'nocache_hash' => '10761730554e2ac0f12b1cf0-47887631',
   'function' => 
   array (
   ),
@@ -82,7 +82,10 @@ $_smarty_tpl->decodeProperties(array (
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /annunci.php">Annunci</a></li>
 <li><a class="active">Webdesign</a></li>
-<li><a href="#">Filler ~</a></li>
+<li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
+/installaskin.php">Installa skin</a></li>
+<li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
+/disinstallaskin.php">Disinstalla skin</a></li>
 <?php }elseif($_smarty_tpl->getVariable('grado')->value==3){?>
 <li><a class="active"><?php echo $_smarty_tpl->getVariable('nomesito')->value;?>
 </a></li>
@@ -216,7 +219,10 @@ $_smarty_tpl->decodeProperties(array (
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /immagini.php">Immagini</a></li>
 <li><a class="active">Webdesign</a></li>
-<li><a href="#">Filler ~</a></li>
+<li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
+/installaskin.php">Installa skin</a></li>
+<li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
+/disinstallaskin.php">Disinstalla skin</a></li>
 <?php }?>
 </ul>
 </div>

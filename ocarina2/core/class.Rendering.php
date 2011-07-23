@@ -114,4 +114,35 @@ class Rendering extends Configuration {
 				return true;
 		return false;
 	}
+	
+	/* Installa una skin. */
+	function installSkin($path, $FILES) {
+		require_once($this->config[0]->root_index.'/etc/pclzip.lib.php');
+		if((empty($FILES)) || (!is_array($FILES)))
+			return false;
+		do {
+			/* Upload */
+			if($_FILES['skin']['error'] == 0) {
+				if($_FILES['skin']['type'] !== 'application/zip')
+					return false;
+				if(!copy($_FILES['skin']['tmp_name'], $path.$_FILES['skin']['name']))
+					return false;
+			}
+			/* Unzip */
+			$unzip = new PclZip($path.$_FILES['skin']['name']);
+			if($unzip->extract(PCLZIP_OPT_PATH, $path) == 0)
+				return false;
+			/* Elimino l'archivio */
+			if(file_exists($path.$_FILES['skin']['name']))
+				unlink($path.$_FILES['skin']['name']);
+		} while(false);
+		return true;
+	}
+	
+	/* Elimina una skin. */
+	function deleteSkin($skin) {
+		if(!is_dir($this->config[0]->root_rendering.'/templates/'.$skin.'/'))
+			return false;
+		return (parent::deleteDir($this->config[0]->root_rendering.'/templates/'.$skin.'/')) ? true : false;
+	}
 }

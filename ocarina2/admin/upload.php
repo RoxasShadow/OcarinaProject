@@ -29,6 +29,8 @@ if(($user->isLogged()) && ($user->username[0]->grado < 4)) {
 			else {
 				$rendering->addValue('image', $_FILES['image']['name']);
 			}
+	else
+		$rendering->addValue('result', $user->getLanguage('upload', 1));
 }
 else
 	$rendering->addValue('result', $user->getLanguage('error', 4));

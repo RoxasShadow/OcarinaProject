@@ -41,7 +41,8 @@
 <li><a href="{$url_admin}/log.php">Logs</a></li>
 <li><a href="{$url_admin}/annunci.php">Annunci</a></li>
 <li><a class="active">Webdesign</a></li>
-<li><a href="#">Filler ~</a></li>
+<li><a href="{$url_admin}/installaskin.php">Installa skin</a></li>
+<li><a href="{$url_admin}/disinstallaskin.php">Disinstalla skin</a></li>
 {elseif $grado == 3}
 <li><a class="active">{$nomesito}</a></li>
 <li><a href="{$url_index}/logout.php">Logout</a></li>
@@ -119,7 +120,8 @@
 <li><a href="{$url_admin}/upload.php">Upload</a></li>
 <li><a href="{$url_admin}/immagini.php">Immagini</a></li>
 <li><a class="active">Webdesign</a></li>
-<li><a href="#">Filler ~</a></li>
+<li><a href="{$url_admin}/installaskin.php">Installa skin</a></li>
+<li><a href="{$url_admin}/disinstallaskin.php">Disinstalla skin</a></li>
 {/if}
 </ul>
 </div>
