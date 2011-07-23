@@ -13,7 +13,7 @@ class News extends Category {
 		$news = array();
 		if($minititolo !== '') {
 			if($this->isNews($minititolo)) {
-				if(!$query = parent::query("SELECT * FROM news WHERE minititolo='$minititolo' ORDER BY titolo ASC"))
+				if(!$query = parent::query("SELECT * FROM {$this->prefix}news WHERE minititolo='$minititolo' ORDER BY titolo ASC"))
 					return false;
 				array_push($news, parent::get($query));
 				if(!empty($news)) {
@@ -26,11 +26,11 @@ class News extends Category {
 		}
 		else {
 			if(($min == '') && ($max == '')) {
-				if(!$query = parent::query('SELECT * FROM news ORDER BY titolo ASC'))
+				if(!$query = parent::query('SELECT * FROM '.$this->prefix.'news ORDER BY titolo ASC'))
 					return false;
 			}
 			else {
-				if(!$query = parent::query("SELECT * FROM news ORDER BY id DESC LIMIT $min, $max"))
+				if(!$query = parent::query("SELECT * FROM {$this->prefix}news ORDER BY id DESC LIMIT $min, $max"))
 					return false;
 			}
 			if(parent::count($query) > 0) {
@@ -49,14 +49,14 @@ class News extends Category {
 	public function voteNews($minititolo) {
 		if(parent::isLogged()) {
 			$nickname = $this->username[0]->nickname;
-			$votanti = parent::query("SELECT COUNT(*) FROM voti WHERE minititolo='$minititolo' AND nickname='$nickname' AND tipo='news'");
+			$votanti = parent::query("SELECT COUNT(*) FROM {$this->prefix}voti WHERE minititolo='$minititolo' AND nickname='$nickname' AND tipo='news'");
 			if(mysql_result($votanti, 0, 0) > 0)
 				return false;
-			if(!$votanti = parent::query("SELECT COUNT(*) FROM voti WHERE minititolo='$minititolo' AND tipo='news'"))
+			if(!$votanti = parent::query("SELECT COUNT(*) FROM {$this->prefix}voti WHERE minititolo='$minititolo' AND tipo='news'"))
 				$voti = 1;
 			else
 				$voti = mysql_result($votanti, 0, 0) + 1;
-			if((parent::query("INSERT INTO voti(minititolo, nickname, tipo) VALUES('$minititolo', '$nickname', 'news')")) && (parent::query("UPDATE news SET voti='$voti' WHERE minititolo='$minititolo'")))
+			if((parent::query("INSERT INTO {$this->prefix}voti(minititolo, nickname, tipo) VALUES('$minititolo', '$nickname', 'news')")) && (parent::query("UPDATE news SET voti='$voti' WHERE minititolo='$minititolo'")))
 				return true;
 		}
 		return false;
@@ -65,35 +65,35 @@ class News extends Category {
 	/* Registra una visita in una news */
 	public function addVisitNews($minititolo) {
 		$visitatore = (parent::isLogged()) ? $this->username[0]->nickname : $_SERVER['REMOTE_ADDR'];
-		$visitatori = parent::query("SELECT COUNT(*) FROM visite WHERE minititolo='$minititolo' AND nickname='$visitatore' AND tipo='news'");
+		$visitatori = parent::query("SELECT COUNT(*) FROM {$this->prefix}visite WHERE minititolo='$minititolo' AND nickname='$visitatore' AND tipo='news'");
 		if(mysql_result($visitatori, 0, 0) > 0)
 			return false;
-		if(!$visitatori = parent::query("SELECT COUNT(*) FROM visite WHERE minititolo='$minititolo' AND tipo='news'"))
+		if(!$visitatori = parent::query("SELECT COUNT(*) FROM {$this->prefix}visite WHERE minititolo='$minititolo' AND tipo='news'"))
 			$visite = 1;
 		else
 			$visite = mysql_result($visitatori, 0, 0) + 1;
-		if((parent::query("INSERT INTO visite(minititolo, nickname, tipo) VALUES('$minititolo', '$visitatore', 'news')")) && (parent::query("UPDATE news SET visite='$visite' WHERE minititolo='$minititolo'")))
+		if((parent::query("INSERT INTO {$this->prefix}visite(minititolo, nickname, tipo) VALUES('$minititolo', '$visitatore', 'news')")) && (parent::query("UPDATE news SET visite='$visite' WHERE minititolo='$minititolo'")))
 				return true;
 		return true;
 	}
 	
 	/* Controlla se la news esiste. */
 	public function isNews($minititolo) {
-		if(!$query = parent::query("SELECT COUNT(*) FROM news WHERE minititolo='$minititolo' LIMIT 1"))
+		if(!$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}news WHERE minititolo='$minititolo' LIMIT 1"))
 			return false;
 		return mysql_result($query, 0, 0) > 0 ? true : false;
 	}
 	
 	/* Conta quante news sono presenti nel database. */
 	public function countNews() {
-		if(!$query = parent::query('SELECT COUNT(*) FROM news'))
+		if(!$query = parent::query('SELECT COUNT(*) FROM '.$this->prefix.'news'))
 			return false;
 		return mysql_result($query, 0, 0);
 	}
 	
 	/* Ricerca le news da una keyword. */
 	public function searchNews($keyword) {
-		if(!$query = parent::query("SELECT * FROM news WHERE (titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%') ORDER BY id DESC"))
+		if(!$query = parent::query("SELECT * FROM {$this->prefix}news WHERE (titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%') ORDER BY id DESC"))
 			return false;
 		if(parent::count($query) > 0) {
 			$news = array();
@@ -109,7 +109,7 @@ class News extends Category {
 	
 	/* Ricerca le news per categoria. */
 	public function searchNewsByCategory($keyword) {
-		if(!$query = parent::query("SELECT * FROM news WHERE categoria='$keyword' ORDER BY id DESC"))
+		if(!$query = parent::query("SELECT * FROM {$this->prefix}news WHERE categoria='$keyword' ORDER BY id DESC"))
 			return false;
 		if(parent::count($query) > 0) {
 			$news = array();
@@ -125,7 +125,7 @@ class News extends Category {
 	
 	/* Ricerca le news per utente. */
 	public function searchNewsByUser($nickname) {
-		if(!$query = parent::query("SELECT * FROM news WHERE autore='$nickname' ORDER BY id DESC"))
+		if(!$query = parent::query("SELECT * FROM {$this->prefix}news WHERE autore='$nickname' ORDER BY id DESC"))
 			return false;
 		if(parent::count($query) > 0) {
 			$news = array();
@@ -141,7 +141,7 @@ class News extends Category {
 	
 	/* Ricerca le news per approvazione. */
 	public function searchNewsByApprovation() {
-		if(!$query = parent::query("SELECT * FROM news WHERE approvato='0' ORDER BY id DESC"))
+		if(!$query = parent::query("SELECT * FROM {$this->prefix}news WHERE approvato='0' ORDER BY id DESC"))
 			return false;
 		if(parent::count($query) > 0) {
 			$news = array();
@@ -160,7 +160,7 @@ class News extends Category {
 		if(empty($array))
 			return false;
 		if((!$this->isNews($array[2])) && (parent::isCategory('news', $array[4])) && (parent::isUser($array[0]))) {
-			$query = parent::query('SELECT * FROM news ORDER BY id DESC LIMIT 1');
+			$query = parent::query('SELECT * FROM '.$this->prefix.'news ORDER BY id DESC LIMIT 1');
 			if(!$campi = parent::getColumns($query))
 				return false;
 			$query = 'INSERT INTO news(';
@@ -180,12 +180,12 @@ class News extends Category {
 	
 	/* Modifica una news. */
 	public function editNews($campo, $valore, $minititolo) {
-		return parent::query("UPDATE news SET $campo='$valore' WHERE minititolo='$minititolo'") ? true : false;
+		return parent::query("UPDATE {$this->prefix}news SET $campo='$valore' WHERE minititolo='$minititolo'") ? true : false;
 	}
 	
 	/* Elimina una news. */
 	public function deleteNews($minititolo) {
-		return parent::query("DELETE FROM news WHERE minititolo='$minititolo'") ? true : false;
+		return parent::query("DELETE FROM {$this->prefix}news WHERE minititolo='$minititolo'") ? true : false;
 	}
 	
 	/* Elimina le news di un utente. */
@@ -208,7 +208,7 @@ class News extends Category {
 			list($d, $m, $y) = ((isset($v->dataultimamodifica)) && ($v->dataultimamodifica !== '')) ? explode('-', $v->dataultimamodifica) : explode('-', $v->data);
 			$sitemap .= "
 	<url>
-		<loc>{$this->config[0]->url_index}/news.php?titolo={$v->minititolo}</loc>
+		<loc>{$this->config[0]->url_index}/news/{$v->minititolo}.html</loc>
 		<lastmod>20$y-$m-$d</lastmod>
 		<changefreq>weekly</changefreq>
 		<priority>0.8</priority>
@@ -241,9 +241,9 @@ class News extends Category {
 		<author>".parent::xmlentities(htmlentities($nickname[0]->email)).'('.parent::xmlentities(htmlentities($v->autore)).")</author>
 		<category>".parent::xmlentities(htmlentities($v->categoria))."</category>
 		<pubDate>".str_replace('+0000', '+0200', date('r', mktime($h,$mn,$s,$m,$d,$y)))."</pubDate>
-		<link>{$this->config[0]->url_index}/news.php?titolo={$v->minititolo}</link>
-		<comments>{$this->config[0]->url_index}/news.php?titolo={$v->minititolo}</comments>
-		<guid>{$this->config[0]->url_index}/news.php?titolo={$v->minititolo}</guid>
+		<link>{$this->config[0]->url_index}/news/{$v->minititolo}.html</link>
+		<comments>{$this->config[0]->url_index}/news/{$v->minititolo}.html</comments>
+		<guid>{$this->config[0]->url_index}/news/{$v->minititolo}.html</guid>
 	</item>";
 		}
 		$feed .= '

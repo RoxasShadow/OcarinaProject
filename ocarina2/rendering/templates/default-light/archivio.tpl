@@ -3,26 +3,26 @@
 *}
 {include file="$root_rendering/templates/$skin/include/header.tpl"}
 	{if isset($errore)}
-		<div class="titolo">{$errore}</div>
+		<div class="titolo">{$error}</div>
 	{else}
-		{if !isset($news) AND isset($errore_news)}
-			<div class="titolo">{$errore_news}</div>
+		{if !isset($news) AND isset($error_news)}
+			<div class="titolo">{$error_news}</div>
 		{elseif isset($news)}
-			&bull; <b>News</b><br />
+			&bull; <b>News</b> <a href="{$url_index}/feed/news.html"><img src="{$url_rendering}/templates/{$skin}/resources/images/rss.png" alt="Feed RSS News" height="12" width="18" /></a><br />
 			{foreach from=$news key=key item=item}
 				{if $news[$key]->approvato == 1}
-					&raquo; <a href="{$url_index}/news.php?titolo={$news[$key]->minititolo}">{$news[$key]->titolo}</a><br />
+					&raquo; <a href="{$url_index}/news/{$news[$key]->minititolo}.html">{$news[$key]->titolo}</a> ({$news[$key]->visite} visite)<br />
 				{/if}
 			{/foreach}
 		{/if}
 		<hr />
-		{if !isset($pagine) AND isset($errore_pagine)}
-			<div class="titolo">{$errore_pagine}</div>
+		{if !isset($pagine) AND isset($error_page)}
+			<div class="titolo">{$error_page}</div>
 		{elseif isset($news)}
-			&bull; <b>Pagine</b><br />
+			&bull; <b>Pagine <a href="{$url_index}/feed/page.html"><img src="{$url_rendering}/templates/{$skin}/resources/images/rss.png" alt="Feed RSS News" height="12" width="18" /></a></b><br />
 			{foreach from=$pagine key=key item=item}
 				{if $pagine[$key]->approvato == 1}
-					&raquo; <a href="{$url_index}/pagina.php?titolo={$pagine[$key]->minititolo}">{$pagine[$key]->titolo}</a><br />
+					&raquo; <a href="{$url_index}/page/{$pagine[$key]->minititolo}.html">{$pagine[$key]->titolo}</a> ({$pagine[$key]->visite} visite)<br />
 				{/if}
 			{/foreach}
 		{/if}

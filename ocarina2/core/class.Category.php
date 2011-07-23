@@ -10,7 +10,7 @@ class Category extends Ad {
 
 	/* Ottengo le categorie. */
 	public function getCategory($campo) {
-		if(!$query = parent::query("SHOW COLUMNS FROM $campo LIKE 'categoria'"))
+		if(!$query = parent::query("SHOW COLUMNS FROM {$this->prefix}$campo LIKE 'categoria'"))
 			return false;
 		if(!$array = parent::getEnum($query))
 			return false;
@@ -19,7 +19,7 @@ class Category extends Ad {
 	
 	/* Controlla se una categoria esiste. */
 	public function isCategory($campo, $categoria) {
-		if(!$query = parent::query("SHOW COLUMNS FROM $campo LIKE 'categoria'"))
+		if(!$query = parent::query("SHOW COLUMNS FROM {$this->prefix}$campo LIKE 'categoria'"))
 			return false;
 		if(!$array = parent::getEnum($query))
 			return false;
@@ -35,7 +35,7 @@ class Category extends Ad {
 			if(!$result = $this->getCategory($campo))
 				return false;
 			$result[count($result)+1] = $categoria;
-			$query = "ALTER TABLE $campo CHANGE categoria categoria ENUM(";
+			$query = "ALTER TABLE {$this->prefix}$campo CHANGE categoria categoria ENUM(";
 			foreach($result as $var) {
 				$query .= "'$var', ";
 			}
@@ -54,7 +54,7 @@ class Category extends Ad {
 			if(!$result = $this->getCategory($campo))
 				return false;
 			$result[count($result)+1] = $categoria;
-			$query = "ALTER TABLE $campo CHANGE categoria categoria ENUM(";
+			$query = "ALTER TABLE {$this->prefix}$campo CHANGE categoria categoria ENUM(";
 			foreach($result as $var) {
 				if($var !== $categoria)
 					$query .= "'$var', ";

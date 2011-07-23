@@ -21,7 +21,7 @@ class User extends Configuration {
 		$utenti = array();
 		if($nickname !== '') {
 			if($this->isUser($nickname)) {
-				if(!$query = parent::query("SELECT * FROM utenti WHERE nickname='$nickname' LIMIT 1"))
+				if(!$query = parent::query("SELECT * FROM {$this->prefix}utenti WHERE nickname='$nickname' LIMIT 1"))
 					return false;
 				array_push($utenti, parent::get($query));
 				if(!empty($utenti))
@@ -31,7 +31,7 @@ class User extends Configuration {
 			return false;
 		}
 		else {
-			if(!$query = parent::query('SELECT * FROM utenti ORDER BY nickname ASC'))
+			if(!$query = parent::query('SELECT * FROM '.$this->prefix.'utenti ORDER BY nickname ASC'))
 				return false;
 			if(parent::count($query) > 0) {
 				while($result = parent::get($query))
@@ -48,7 +48,7 @@ class User extends Configuration {
 	/* Ottiene i visitatori. */
 	public function getVisitator() {
 		$visitatori = array();
-		if(!$query = parent::query('SELECT * FROM visitatori ORDER BY id ASC'))
+		if(!$query = parent::query('SELECT * FROM '.$this->prefix.'visitatori ORDER BY id ASC'))
 			return false;
 		if(parent::count($query) > 0) {
 			while($result = parent::get($query))
@@ -62,21 +62,21 @@ class User extends Configuration {
 	
 	/* Controlla se l'utente esiste. */
 	public function isUser($nickname) {
-		if(!$query = parent::query("SELECT COUNT(*) FROM utenti WHERE nickname='$nickname'"))
+		if(!$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}utenti WHERE nickname='$nickname'"))
 			return false;
 		return mysql_result($query, 0, 0) > 0 ? true : false;
 	}
 	
 	/* Controlla se l'email è già usata da un altro utente. */
 	public function isEmailUsed($nickname, $email) {
-		if(!$query = parent::query("SELECT COUNT(*) FROM utenti WHERE email='$email' AND nickname<>'$nickname'"))
+		if(!$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}utenti WHERE email='$email' AND nickname<>'$nickname'"))
 			return false;
 		return mysql_result($query, 0, 0) > 0 ? true : false;
 	}
 	
 	/* Conta quanti utenti sono presenti nel database. */
 	public function countUser() {
-		if(!$query = parent::query('SELECT COUNT(*) FROM utenti'))
+		if(!$query = parent::query('SELECT COUNT(*) FROM '.$this->prefix.'utenti'))
 			return false;
 		return mysql_result($query, 0, 0);
 	}
@@ -88,7 +88,7 @@ class User extends Configuration {
 			$this->newVisitator(false);
 			return false;
 		}
-		if(!$query = parent::query("SELECT COUNT(*) FROM utenti WHERE secret='$cookie'")) {
+		if(!$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}utenti WHERE secret='$cookie'")) {
 			$this->newVisitator(false);
 			return false;
 		}
@@ -129,7 +129,7 @@ class User extends Configuration {
 	
 	/* Ricerca gli utenti per un campo specifico. */
 	public function searchUserByField($campo, $valore) {
-		if(!$query = parent::query("SELECT * FROM utenti WHERE $campo='$valore' ORDER BY nickname ASC"))
+		if(!$query = parent::query("SELECT * FROM {$this->prefix}utenti WHERE $campo='$valore' ORDER BY nickname ASC"))
 			return false;
 		if(parent::count($query) > 0) {
 			$utenti = array();
@@ -149,7 +149,7 @@ class User extends Configuration {
 		if(empty($array))
 			return false;
 		if((!$this->isUser($array[0])) && (parent::isEmail($array[2]))) {
-			$query = parent::query('SELECT * FROM utenti LIMIT 1');
+			$query = parent::query('SELECT * FROM '.$this->prefix.'utenti LIMIT 1');
 			if(!$campi = parent::getColumns($query))
 				return false;
 			$array[1] = md5($array[1]);
@@ -170,7 +170,7 @@ class User extends Configuration {
 	
 	/* Modifica un utente. */
 	public function editUser($campo, $valore, $nickname) {
-		return parent::query("UPDATE utenti SET $campo='$valore' WHERE nickname='$nickname'") ? true : false;
+		return parent::query("UPDATE {$this->prefix}utenti SET $campo='$valore' WHERE nickname='$nickname'") ? true : false;
 	}
 	
 	/* Crea un nuovo visitatore. */
@@ -185,16 +185,16 @@ class User extends Configuration {
 		else
 			$nickname = '';
 		if(!$visitator = $this->getVisitator()) // Mai nessun visitatore
-			return parent::query("INSERT INTO visitatori(ip, lastaction, giorno, nickname) VALUES('{$_SERVER['REMOTE_ADDR']}', '$lastaction', '$giorno', '$nickname')") ? true : false;
+			return parent::query("INSERT INTO {$this->prefix}visitatori(ip, lastaction, giorno, nickname) VALUES('{$_SERVER['REMOTE_ADDR']}', '$lastaction', '$giorno', '$nickname')") ? true : false;
 		else {
 			$found = 0;
 			foreach($visitator as $v)
 				if($v->ip == $_SERVER['REMOTE_ADDR'])
 					++$found;
 			if($found == 0)
-				return parent::query("INSERT INTO visitatori(ip, lastaction, giorno, nickname) VALUES('{$_SERVER['REMOTE_ADDR']}', '$lastaction', '$giorno', '$nickname')") ? true : false;
+				return parent::query("INSERT INTO {$this->prefix}visitatori(ip, lastaction, giorno, nickname) VALUES('{$_SERVER['REMOTE_ADDR']}', '$lastaction', '$giorno', '$nickname')") ? true : false;
 			elseif((($lastaction - $v->lastaction) > 60 * $this->config[0]->limiteonline) && ($found > 0))
-				return parent::query("UPDATE visitatori SET lastaction='$lastaction', giorno='$giorno', nickname='$nickname' WHERE ip='{$_SERVER['REMOTE_ADDR']}'") ? true : false;
+				return parent::query("UPDATE {$this->prefix}visitatori SET lastaction='$lastaction', giorno='$giorno', nickname='$nickname' WHERE ip='{$_SERVER['REMOTE_ADDR']}'") ? true : false;
 		}
 		return false;
 	}
@@ -207,24 +207,24 @@ class User extends Configuration {
 			if(date('d') > $v->giorno) {
 				$config = parent::getConfig();
 				if(parent::editConfig('totalevisitatori', $config[0]->totalevisitatori + 1))
-					parent::query("DELETE FROM visitatori WHERE id='{$v->id}'");
+					parent::query("DELETE FROM {$this->prefix}visitatori WHERE id='{$v->id}'");
 			}
 		return true;					
 	}
 	
 	/* Elimina un utente. */
 	public function deleteUser($nickname) {
-		return parent::query("DELETE FROM utenti WHERE nickname='$nickname'") ? true : false;
+		return parent::query("DELETE FROM {$this->prefix}utenti WHERE nickname='$nickname'") ? true : false;
 	}
 	
 	/* Crea e ritorna un secret code. */
 	public function getCode() {
 		$code = parent::rng(12);
-		$query = parent::query("SELECT COUNT(*) FROM utenti WHERE secret='$code'");
+		$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}utenti WHERE secret='$code'");
 		if(mysql_result($query, 0, 0) > 0)
 			while(mysql_result($query, 0, 0) > 0) {
 				$code = parent::rng(12);
-				$query = parent::query("SELECT COUNT(*) FROM utenti WHERE secret='$code'");
+				$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}utenti WHERE secret='$code'");
 			}
 		return $code;
 	}
@@ -249,12 +249,12 @@ class User extends Configuration {
 		if(!$this->isUser($nickname))
 			return false;
 		$password = md5($password);
-		if(!$query = parent::query("SELECT COUNT(*) FROM utenti WHERE nickname='$nickname' AND password='$password' AND codiceregistrazione=''"))
+		if(!$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}utenti WHERE nickname='$nickname' AND password='$password' AND codiceregistrazione=''"))
 			return false;
 		if(mysql_result($query, 0, 0) > 0) {
 			$code = $this->getCode();
 			$client = parent::getClient();
-			parent::query("UPDATE utenti SET secret='$code', ip='{$_SERVER['REMOTE_ADDR']}', browsername='{$client['browser']}', browserversion='{$client['version']}', platform='{$client['platform']}' WHERE nickname='$nickname'");
+			parent::query("UPDATE {$this->prefix}utenti SET secret='$code', ip='{$_SERVER['REMOTE_ADDR']}', browsername='{$client['browser']}', browserversion='{$client['version']}', platform='{$client['platform']}' WHERE nickname='$nickname'");
 			$this->setCookie($code);
 			return true;
 		}
@@ -264,9 +264,9 @@ class User extends Configuration {
 	
 	/* Effettua il logout dell'utente. */
 	public function logout() {
-		$query = parent::query("SELECT COUNT(*) FROM utenti WHERE secret='{$this->getCookie()}'");
+		$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}utenti WHERE secret='{$this->getCookie()}'");
 		if(mysql_result($query, 0, 0) > 0) {
-			parent::query("UPDATE utenti SET secret='', lastlogout='".date('d-m-y')."' WHERE secret='{$this->getCookie()}'");
+			parent::query("UPDATE {$this->prefix}utenti SET secret='', lastlogout='".date('d-m-y')."' WHERE secret='{$this->getCookie()}'");
 			$this->unSetCookie();
 		}
 		else
@@ -284,7 +284,7 @@ class User extends Configuration {
 		$referer = trim($referer, '?');
 		$referer = trim($referer, '&');
 		$referer = parent::purge($referer);
-		return parent::query("INSERT INTO log(nickname, azione, ip, data, ora, useragent, referer) VALUES('$nickname', '$azione', '{$_SERVER['REMOTE_ADDR']}', '$data', '$ora', '{$useragent}', '$referer')") ? true : false;
+		return parent::query("INSERT INTO {$this->prefix}log(nickname, azione, ip, data, ora, useragent, referer) VALUES('$nickname', '$azione', '{$_SERVER['REMOTE_ADDR']}', '$data', '$ora', '{$useragent}', '$referer')") ? true : false;
 	}
 
 	/* Visualizza i log. */
@@ -292,7 +292,7 @@ class User extends Configuration {
 		$log = array();
 		if($nickname !== '') {
 			if($this->isUser($nickname)) {
-				if(!$query = parent::query("SELECT * FROM log WHERE nickname='$nickname' ORDER BY id DESC"))
+				if(!$query = parent::query("SELECT * FROM {$this->prefix}log WHERE nickname='$nickname' ORDER BY id DESC"))
 					return false;
 				array_push($log, parent::get($query));
 				if(!empty($log))
@@ -302,7 +302,7 @@ class User extends Configuration {
 			return false;
 		}
 		else {
-			if(!$query = parent::query('SELECT * FROM log ORDER BY id DESC'))
+			if(!$query = parent::query('SELECT * FROM '.$this->prefix.'log ORDER BY id DESC'))
 				return false;
 			if(parent::count($query) > 0) {
 				while($result = parent::get($query))
@@ -318,7 +318,7 @@ class User extends Configuration {
 	
 	/* Elimina i log. */
 	public function deleteLog() {
-		return parent::query('DELETE FROM log') ? true : false;
+		return parent::query('DELETE FROM '.$this->prefix.'log') ? true : false;
 	}
 	
 	/* Crea una sitemap di tutti gli utenti registrati */
@@ -331,7 +331,7 @@ class User extends Configuration {
 			list($d, $m, $y) = explode('-', $v->data);
 			$sitemap .= "
 	<url>
-		<loc>{$this->config[0]->url_index}/profilo.php?nickname={$v->nickname}</loc>
+		<loc>{$this->config[0]->url_index}/profilo/{$v->nickname}.html</loc>
 		<lastmod>20$y-$m-$d</lastmod>
 		<changefreq>weekly</changefreq>
 		<priority>0.8</priority>

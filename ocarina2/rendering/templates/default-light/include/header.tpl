@@ -6,19 +6,22 @@
 <head>
 <title>{$titolo}</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<meta name="description" content="{$description}" />
-<meta name="keywords" content="{$keywords}" />
+{if ((isset($description)) && ($description !== ''))}<meta name="description" content="{$description}" />{/if}
+
 <link rel="stylesheet" type="text/css" href="{$url_rendering}/templates/{$skin}/resources/style.css" />
+<script type="text/javascript" src="{$url_index}/etc/loadJavascript.js.php"></script>
+<link rel="alternate" type="application/rss+xml" title="Feed RSS News" href="{$url_index}/feed/news.html" />
+<link rel="alternate" type="application/rss+xml" title="Feed RSS Pagine" href="{$url_index}/feed/page.html" />
 <meta name="robots" content="index,follow" />
 </head>
 <body>
 <div id="header">{$titolo}</div>
 <div id="menu" align="center">
-<a href="{$url_index}/Aindex.php">News</a> | <a href="{$url_index}/archivio.php">Archivio</a> | <a href="{$url_index}/ricerca.php">Cerca nel sito</a> | <a href="{$url_index}/profilo.php">Profili</a> | <a href="#">Filler</a><br />
+<a href="{$url_index}/index.php">News</a> | <a href="{$url_index}/archivio.php">Archivio</a> | <a href="{$url_index}/ricerca.php">Cerca nel sito</a> | <a href="{$url_index}/profilo.php">Profili</a> | <a href="#">Filler</a><br />
 {if $utente == ''}
 Benvenuto su {$nomesito}! Per usufruire di tutte le funzionalità che ti offriamo <a href="{$url_index}/login.php">accedi</a> oppure <a href="{$url_index}/registrazione.php">registrati</a>. (<a href="{$url_index}/recuperapassword.php">Password persa?</a>)
 {else}
-Bentornato {$utente} (<a href="{$url_index}/logout.php">Logout</a> | <a href="{$url_index}/profilo.php?nickname={$utente}">Profilo</a> | <a href="{$url_index}/modificaprofilo.php">Modifica profilo</a> | <a href="modificapassword.php">Modifica password</a>)
+Bentornato {$utente} (<a href="{$url_index}/logout.php">Logout</a> | <a href="{$url_index}/profile/{$utente}.html">Profilo</a> | <a href="{$url_index}/modificaprofilo.php">Modifica profilo</a> | <a href="modificapassword.php">Modifica password</a>)
 {/if}
 </div>
 <br />

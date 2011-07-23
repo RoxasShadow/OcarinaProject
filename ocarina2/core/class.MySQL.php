@@ -13,6 +13,7 @@ class MySQL extends Utilities {
 	private $database = 'ocarina2';
 	private $connected;
 	public $numQuery = 0;
+	public $prefix = '';
 	
 	/* Quando la classe viene istanziata, il costruttore provvede a connettersi al database. */
 	public function __construct() {

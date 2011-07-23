@@ -18,7 +18,7 @@ class Configuration extends MySQL {
 	public function getConfig($campo = '') {
 		$config = array();
 		if($campo !== '') {
-			if(!$query = parent::query("SELECT $campo FROM configurazione LIMIT 1"))
+			if(!$query = parent::query("SELECT {$this->prefix}$campo FROM configurazione LIMIT 1"))
 				return false;
 			if(parent::count($query) > 0) {
 				array_push($config, parent::get($query));
@@ -28,7 +28,7 @@ class Configuration extends MySQL {
 			return false;
 		}
 		else {
-			if(!$query = parent::query('SELECT * FROM configurazione LIMIT 1'))
+			if(!$query = parent::query('SELECT * FROM '.$this->prefix.'configurazione LIMIT 1'))
 				return false;
 			if(parent::count($query) > 0) {
 				array_push($config, parent::get($query));
@@ -43,11 +43,11 @@ class Configuration extends MySQL {
 	public function createConfig($config) {
 		if(empty($config))
 			return false;
-		if(!$query = parent::query('SELECT * FROM configurazione LIMIT 1'))
+		if(!$query = parent::query('SELECT * FROM '.$this->prefix.'configurazione LIMIT 1'))
 			return false;
 		if(!$campi = parent::getColumns($query))
 			return false;
-		$query = 'INSERT INTO configurazione(';
+		$query = 'INSERT INTO '.$this->prefix.'configurazione(';
 		foreach($campi as $var)
 			if($var !== 'id')
 				$query .= $var.', ';
@@ -62,6 +62,6 @@ class Configuration extends MySQL {
 	
 	/* Modifica una configurazione. */
 	public function editConfig($campo, $valore) {
-		return parent::query("UPDATE configurazione SET $campo='$valore'") ? true : false;
+		return parent::query("UPDATE {$this->prefix}configurazione SET $campo='$valore'") ? true : false;
 	}
 }

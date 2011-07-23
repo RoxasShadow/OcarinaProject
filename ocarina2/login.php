@@ -26,7 +26,7 @@ elseif($submit)
 		if($user->login($nickname, $password)) {
 			if($user->config[0]->log == 1)
 				$user->log($nickname, 'Logged in.');
-			$rendering->addValue('result', $user->getLanguage('login', 0).header('Refresh: 2; URL='.$user->config[0]->url_index.'/Aindex.php?welcome=true'));
+			$rendering->addValue('result', $user->getLanguage('login', 0).header('Refresh: 2; URL='.$user->config[0]->url_index.'/index.php?welcome=true'));
 		}
 		else {
 			if($user->config[0]->log == 1)

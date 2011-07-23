@@ -4,7 +4,7 @@
 order allow,deny
 deny from all
 </Files>
-Options All +Indexes
+Options All -Indexes
 
 ErrorDocument 301 /ocarina2/error/401.html
 ErrorDocument 403 /ocarina2/error/403.html
@@ -37,7 +37,7 @@ RewriteCond %{QUERY_STRING} _REQUEST(=|[|\%[0-9A-Z]{0,2})
 RewriteRule ^(.*)$ errorpage.php?id=403 [F,L]
 
 #Permalinks
-RewriteRule ^p/([0-9]+).html$ Aindex.php?p=$1 [L]
+RewriteRule ^p/([0-9]+).html$ index.php?p=$1 [L]
 RewriteRule ^category/([^/]+).html$ categoria.php?cat=$1 [L]
 RewriteRule ^comment/([0-9]+).html$ commento.php?id=$1 [L]
 RewriteRule ^error/([0-9]+).html$ errorpage.php?id=$1 [L]

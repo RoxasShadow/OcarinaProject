@@ -13,7 +13,7 @@ class Ad extends User {
 		$Ad = array();
 		if($minititolo !== '') {
 			if($this->isAd($minititolo)) {
-				if(!$query = parent::query("SELECT * FROM annunci WHERE minititolo='$minititolo' ORDER BY id DESC"))
+				if(!$query = parent::query("SELECT * FROM {$this->prefix}annunci WHERE minititolo='$minititolo' ORDER BY id DESC"))
 					return false;
 				array_push($Ad, parent::get($query));
 				if(!empty($Ad))
@@ -23,7 +23,7 @@ class Ad extends User {
 			return false;
 		}
 		else {
-			if(!$query = parent::query('SELECT * FROM annunci ORDER BY id DESC'))
+			if(!$query = parent::query('SELECT * FROM '.$this->prefix.'annunci ORDER BY id DESC'))
 				return false;
 			if(parent::count($query) > 0) {
 				while($result = parent::get($query))
@@ -39,7 +39,7 @@ class Ad extends User {
 	
 	/* Controlla se l'annuncio esiste. */
 	public function isAd($minititolo) {
-		if(!$query = parent::query("SELECT COUNT(*) FROM annunci WHERE minititolo='$minititolo'"))
+		if(!$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}annunci WHERE minititolo='$minititolo'"))
 			return false;
 		return mysql_result($query, 0, 0) > 0 ? true : false;
 	}
@@ -49,10 +49,10 @@ class Ad extends User {
 		if(empty($array))
 			return false;
 		if((!$this->isAd($array[2])) && (parent::isUser($array[0]))) {
-			$query = parent::query('SELECT * FROM annunci LIMIT 1');
+			$query = parent::query('SELECT * FROM '.$this->prefix.'annunci LIMIT 1');
 			if(!$campi = parent::getColumns($query))
 				return false;
-			$query = 'INSERT INTO annunci(';
+			$query = 'INSERT INTO '.$this->prefix.'annunci(';
 			foreach($campi as $var)
 				if($var !== 'id')
 					$query .= $var.', ';
@@ -69,11 +69,11 @@ class Ad extends User {
 	
 	/* Modifica un annuncio. */
 	public function editAd($campo, $valore, $minititolo) {
-		return parent::query("UPDATE annunci SET $campo='$valore' WHERE minititolo='$minititolo'") ? true : false;
+		return parent::query("UPDATE {$this->prefix}annunci SET $campo='$valore' WHERE minititolo='$minititolo'") ? true : false;
 	}
 	
 	/* Elimina una pagina. */
 	public function deleteAd($minititolo) {
-		return parent::query("DELETE FROM annunci WHERE minititolo='$minititolo'") ? true : false;
+		return parent::query("DELETE FROM {$this->prefix}annunci WHERE minititolo='$minititolo'") ? true : false;
 	}
 }

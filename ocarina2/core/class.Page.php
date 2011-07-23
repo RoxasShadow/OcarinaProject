@@ -13,7 +13,7 @@ class Page extends Category {
 		$pagine = array();
 		if($minititolo !== '') {
 			if($this->isPage($minititolo)) {
-				if(!$query = parent::query("SELECT * FROM pagine WHERE minititolo='$minititolo' ORDER BY titolo ASC"))
+				if(!$query = parent::query("SELECT * FROM {$this->prefix}pagine WHERE minititolo='$minititolo' ORDER BY titolo ASC"))
 					return false;
 				array_push($pagine, parent::get($query));
 				if(!empty($pagine))  {
@@ -26,11 +26,11 @@ class Page extends Category {
 		}
 		else {
 			if(($min == '') && ($max == '')) {
-				if(!$query = parent::query('SELECT * FROM pagine ORDER BY titolo ASC'))
+				if(!$query = parent::query('SELECT * FROM '.$this->prefix.'pagine ORDER BY titolo ASC'))
 					return false;
 			}
 			else {
-				if(!$query = parent::query("SELECT * FROM pagine ORDER BY titolo ASC LIMIT $min, $max"))
+				if(!$query = parent::query("SELECT * FROM {$this->prefix}pagine ORDER BY titolo ASC LIMIT $min, $max"))
 					return false;
 			}
 			if(parent::count($query) > 0) {
@@ -49,14 +49,14 @@ class Page extends Category {
 	public function votePage($minititolo) {
 		if(parent::isLogged()) {
 			$nickname = $this->username[0]->nickname;
-			$votanti = parent::query("SELECT COUNT(*) FROM voti WHERE minititolo='$minititolo' AND nickname='$nickname' AND tipo='pagine'");
+			$votanti = parent::query("SELECT COUNT(*) FROM {$this->prefix}voti WHERE minititolo='$minititolo' AND nickname='$nickname' AND tipo='pagine'");
 			if(mysql_result($votanti, 0, 0) > 0)
 				return false;
-			if(!$votanti = parent::query("SELECT COUNT(*) FROM voti WHERE minititolo='$minititolo' AND tipo='pagine'"))
+			if(!$votanti = parent::query("SELECT COUNT(*) FROM {$this->prefix}voti WHERE minititolo='$minititolo' AND tipo='pagine'"))
 				$voti = 1;
 			else
 				$voti = mysql_result($votanti, 0, 0) + 1;
-			if((parent::query("INSERT INTO voti(minititolo, nickname, tipo) VALUES('$minititolo', '$nickname', 'pagine')")) && (parent::query("UPDATE pagine SET voti='$voti' WHERE minititolo='$minititolo'")))
+			if((parent::query("INSERT INTO {$this->prefix}voti(minititolo, nickname, tipo) VALUES('$minititolo', '$nickname', 'pagine')")) && (parent::query("UPDATE pagine SET voti='$voti' WHERE minititolo='$minititolo'")))
 				return true;
 		}
 		return false;
@@ -65,28 +65,28 @@ class Page extends Category {
 	/* Registra una visita in una pagina */
 	public function addVisitPage($minititolo) {
 		$visitatore = (parent::isLogged()) ? $this->username[0]->nickname : $_SERVER['REMOTE_ADDR'];
-		$visitatori = parent::query("SELECT COUNT(*) FROM visite WHERE minititolo='$minititolo' AND nickname='$visitatore' AND tipo='pagine'");
+		$visitatori = parent::query("SELECT COUNT(*) FROM {$this->prefix}visite WHERE minititolo='$minititolo' AND nickname='$visitatore' AND tipo='pagine'");
 		if(mysql_result($visitatori, 0, 0) > 0)
 			return false;
 		if(!$visitatori = parent::query("SELECT COUNT(*) FROM visite WHERE minititolo='$minititolo' AND tipo='pagine'"))
 			$visite = 1;
 		else
 			$visite = mysql_result($visitatori, 0, 0) + 1;
-		if((parent::query("INSERT INTO visite(minititolo, nickname, tipo) VALUES('$minititolo', '$visitatore', 'pagine')")) && (parent::query("UPDATE pagine SET visite='$visite' WHERE minititolo='$minititolo'")))
+		if((parent::query("INSERT INTO {$this->prefix}visite(minititolo, nickname, tipo) VALUES('$minititolo', '$visitatore', 'pagine')")) && (parent::query("UPDATE pagine SET visite='$visite' WHERE minititolo='$minititolo'")))
 				return true;
 		return true;
 	}
 	
 	/* Controlla se la pagina esiste. */
 	public function isPage($minititolo) {
-		if(!$query = parent::query("SELECT COUNT(*) FROM pagine WHERE minititolo='$minititolo'"))
+		if(!$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}pagine WHERE minititolo='$minititolo'"))
 			return false;
 		return mysql_result($query, 0, 0) > 0 ? true : false;
 	}
 	
 	/* Conta quante pagine sono presenti nel database. */
 	public function countPage() {
-		if(!$query = parent::query('SELECT COUNT(*) FROM pagine'))
+		if(!$query = parent::query('SELECT COUNT(*) FROM '.$this->prefix.'pagine'))
 			return false;
 		return mysql_result($query, 0, 0);
 	}
@@ -94,9 +94,9 @@ class Page extends Category {
 	/* Ricerca le pagine da una keyword. */
 	public function searchPage($keyword, $orderById = '') {
 		if($orderById !== '')
-			$query = parent::query("SELECT * FROM pagine WHERE (titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%') ORDER BY id DESC");
+			$query = parent::query("SELECT * FROM {$this->prefix}pagine WHERE (titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%') ORDER BY id DESC");
 		else
-			$query = parent::query("SELECT * FROM pagine WHERE (titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%') ORDER BY titolo ASC");
+			$query = parent::query("SELECT * FROM {$this->prefix}pagine WHERE (titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%') ORDER BY titolo ASC");
 		if(!$query)
 			return false;
 		if(parent::count($query) > 0) {
@@ -113,7 +113,7 @@ class Page extends Category {
 	
 	/* Ricerca le pagine per categoria. */
 	public function searchPageByCategory($keyword) {
-		if(!$query = parent::query("SELECT * FROM pagine WHERE categoria='$keyword' ORDER BY id DESC"))
+		if(!$query = parent::query("SELECT * FROM {$this->prefix}pagine WHERE categoria='$keyword' ORDER BY id DESC"))
 			return false;
 		if(parent::count($query) > 0) {
 			$pagine = array();
@@ -129,7 +129,7 @@ class Page extends Category {
 	
 	/* Ricerca le pagine per utente. */
 	public function searchPageByUser($nickname) {
-		if(!$query = parent::query("SELECT * FROM pagine WHERE autore='$nickname' ORDER BY id DESC"))
+		if(!$query = parent::query("SELECT * FROM {$this->prefix}pagine WHERE autore='$nickname' ORDER BY id DESC"))
 			return false;
 		if(parent::count($query) > 0) {
 			$pagine = array();
@@ -145,7 +145,7 @@ class Page extends Category {
 	
 	/* Ricerca le pagine per approvazione. */
 	public function searchPageByApprovation() {
-		if(!$query = parent::query("SELECT * FROM pagine WHERE approvato='0' ORDER BY id DESC"))
+		if(!$query = parent::query("SELECT * FROM {$this->prefix}pagine WHERE approvato='0' ORDER BY id DESC"))
 			return false;
 		if(parent::count($query) > 0) {
 			$pagine = array();
@@ -164,7 +164,7 @@ class Page extends Category {
 		if(empty($array))
 			return false;
 		if((!$this->isPage($array[2])) && (parent::isCategory('pagine', $array[4])) && (parent::isUser($array[0]))) {
-			$query = parent::query('SELECT * FROM pagine LIMIT 1');
+			$query = parent::query('SELECT * FROM '.$this->prefix.'pagine LIMIT 1');
 			if(!$campi = parent::getColumns($query))
 				return false;
 			$query = 'INSERT INTO pagine(';
@@ -184,12 +184,12 @@ class Page extends Category {
 	
 	/* Modifica una pagina. */
 	public function editPage($campo, $valore, $minititolo) {
-		return parent::query("UPDATE pagine SET $campo='$valore' WHERE minititolo='$minititolo'") ? true : false;
+		return parent::query("UPDATE {$this->prefix}pagine SET $campo='$valore' WHERE minititolo='$minititolo'") ? true : false;
 	}
 	
 	/* Elimina una pagina. */
 	public function deletePage($minititolo) {
-		return parent::query("DELETE FROM pagine WHERE minititolo='$minititolo'") ? true : false;
+		return parent::query("DELETE FROM {$this->prefix}pagine WHERE minititolo='$minititolo'") ? true : false;
 	}
 	
 	/* Elimina le pagine di un utente. */
@@ -212,7 +212,7 @@ class Page extends Category {
 			list($d, $m, $y) = ((isset($v->dataultimamodifica)) && ($v->dataultimamodifica !== '')) ? explode('-', $v->dataultimamodifica) : explode('-', $v->data);
 			$sitemap .= "
 	<url>
-		<loc>{$this->config[0]->url_index}/pagina.php?titolo={$v->minititolo}</loc>
+		<loc>{$this->config[0]->url_index}/pagina/{$v->minititolo}.html</loc>
 		<lastmod>20$y-$m-$d</lastmod>
 		<changefreq>weekly</changefreq>
 		<priority>0.8</priority>
@@ -245,9 +245,9 @@ class Page extends Category {
 		<author>".parent::xmlentities(htmlentities($nickname[0]->email)).'('.parent::xmlentities(htmlentities($v->autore)).")</author>
 		<category>".parent::xmlentities(htmlentities($v->categoria))."</category>
 		<pubDate>".str_replace('+0000', '+0200', date('r', mktime($h,$mn,$s,$m,$d,$y)))."</pubDate>
-		<link>{$this->config[0]->url_index}/pagina.php?titolo={$v->minititolo}</link>
-		<comments>{$this->config[0]->url_index}/pagina.php?titolo={$v->minititolo}</comments>
-		<guid>{$this->config[0]->url_index}/pagina?titolo={$v->minititolo}</guid>
+		<link>{$this->config[0]->url_index}/pagina/{$v->minititolo}.html</link>
+		<comments>{$this->config[0]->url_index}/pagina/{$v->minititolo}.html</comments>
+		<guid>{$this->config[0]->url_index}/pagina/{$v->minititolo}.html</guid>
 	</item>";
 		}
 		$feed .= '

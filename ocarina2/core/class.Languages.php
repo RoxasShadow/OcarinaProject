@@ -4,6 +4,9 @@
 	(C) Giovanni Capuano 2011
 */
 
+/* Questa è la classe di base, quindi disattivo l'error reporting qui. */
+error_reporting(0);
+
 /* Questa classe include le lingue per il core. */
 class Languages {
 

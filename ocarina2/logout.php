@@ -12,7 +12,7 @@ if((isset($_GET['redirect'])) && ($_GET['redirect'] !== ''))
 elseif((isset($_SERVER['HTTP_REFERER'])) && ($_SERVER['HTTP_REFERER'] !== ''))
 	$redirect = $user->purge($_SERVER['HTTP_REFERER']);
 else
-	$redirect = $user->config[0]->url_index.'/Aindex.php';
+	$redirect = $user->config[0]->url_index.'/index.php';
 
 if($user->isLogged()) {
 	$user->logout();

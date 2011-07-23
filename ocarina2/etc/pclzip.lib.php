@@ -4241,6 +4241,7 @@
 
       // ----- Generate a local information
       $v_local_header = array();
+
       $this->privConvertHeader2FileInfo($p_entry, $v_local_header);
       
       // ----- Swap the content to header

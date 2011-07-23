@@ -17,4 +17,4 @@ if(($comments->isLogged()) && ($comments->username[0]->grado < 3)) {
 if(isset($_SERVER['HTTP_REFERER']))
 	header('Location: '.$_SERVER['HTTP_REFERER']);
 else
-	header('Location: '.$config[0]->url_index.'/Aindex.php');
+	header('Location: '.$config[0]->url_index.'/index.php');
