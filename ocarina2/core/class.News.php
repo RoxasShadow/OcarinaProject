@@ -163,7 +163,7 @@ class News extends Category {
 			$query = parent::query('SELECT * FROM '.$this->prefix.'news ORDER BY id DESC LIMIT 1');
 			if(!$campi = parent::getColumns($query))
 				return false;
-			$query = 'INSERT INTO news(';
+			$query = 'INSERT INTO '.$this->prefix.'news(';
 			foreach($campi as $var)
 				if(($var !== 'id') && ($var !== 'dataultimamodifica') && ($var !== 'oraultimamodifica') && ($var !== 'autoreultimamodifica') && ($var !== 'visite') && ($var !== 'visitatori') && ($var !== 'voti') && ($var !== 'votanti'))
 				$query .= $var.', ';

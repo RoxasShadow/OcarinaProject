@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-16 00:26:05
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-23 16:53:39
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/include/header.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:1034978894e20da9d3803f7-40577149%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:9902376114e2afc936a65a3-75114703%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'ff19f579de2a4f1ee418c8728e9c2f8b8ccdd1c6' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/default/include/header.tpl',
-      1 => 1310775638,
+      1 => 1311434218,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '1034978894e20da9d3803f7-40577149',
+  'nocache_hash' => '9902376114e2afc936a65a3-75114703',
   'function' => 
   array (
   ),
@@ -43,7 +43,7 @@ $_smarty_tpl->decodeProperties(array (
 </div>
 <div id="menu" align="center">
 <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
-/Aindex.php">News</a> | <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/index.php">News</a> | <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /archivio.php">Archivio</a> | <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /ricerca.php">Cerca nel sito</a> | <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /profilo.php">Profili</a> | <a href="#">Filler</a><br />

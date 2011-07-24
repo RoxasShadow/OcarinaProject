@@ -62,7 +62,7 @@ elseif($submit) {
 		  $captcha->checkCaptcha();
 		  if($captcha->getError() !== false)
 		  	$rendering->addValue('result', $user->getLanguage('registration', 12));
-		elseif((($password == $confPassword) && (strlen($password) > 4)) || (strlen($nickname) > 4))
+		elseif(($password == $confPassword) && (strlen($password) > 4) && (strlen($nickname) > 4)) {
 			if($user->config[0]->validazioneaccount == 1) {
 				$codice = $user->getCode(); // Validazione account
 				$array = array($nickname, $password, $email, 6, date('d-m-y'), date('G:m:s'), $codice, $user->config[0]->skin);

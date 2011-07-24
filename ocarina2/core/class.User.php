@@ -153,7 +153,7 @@ class User extends Configuration {
 			if(!$campi = parent::getColumns($query))
 				return false;
 			$array[1] = md5($array[1]);
-			$query = 'INSERT INTO utenti(';
+			$query = 'INSERT INTO '.$this->prefix.'utenti(';
 			foreach($campi as $var)
 				if(($var !== 'id') && ($var !== 'secret') && ($var !== 'bio') && ($var !== 'avatar') && ($var !== 'lastlogout') && ($var !== 'ip') && ($var !== 'browsername') && ($var !== 'browserversion') && ($var !== 'platform') && ($var !== 'codicerecupero'))
 					$query .= $var.', ';
