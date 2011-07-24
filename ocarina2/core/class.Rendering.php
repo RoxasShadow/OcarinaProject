@@ -22,7 +22,7 @@ class Rendering extends Configuration {
 		$this->smarty->template_dir = $path.'/templates';
 		$this->smarty->compile_dir = $path.'/templates_c';
 		$this->smarty->config_dir = $path.'/configs';
-		$this->smarty->error_reporting = E_ALL | E_STRICT; // Mostra tutti i tipi di errore
+		$this->smarty->error_reporting = 0; // Nasconde tutti gli errori. E_ALL | E_STRICT per mostrare tutti i tipi di errore
 		$this->smarty->allow_php_tag = true; // Serve per leggere il numero di commenti di ogni news dalla index :(
 		$this->smarty->force_compile = false; // Permette di non recompilare ogni volta il template
 		$this->smarty->loadFilter('output', 'trimwhitespace'); // Plugin che comprime l'HTML velocizzando la renderizzazione da parte del browser

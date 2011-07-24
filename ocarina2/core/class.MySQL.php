@@ -9,7 +9,7 @@ require_once('class.Utilities.php');
 class MySQL extends Utilities {
 	private $host = 'localhost';
 	private $username = 'root';
-	private $password = 'kronos';
+	private $password = 'password';
 	private $database = 'ocarina2';
 	private $connected;
 	public $numQuery = 0;
@@ -28,9 +28,7 @@ class MySQL extends Utilities {
 	/* Esegue una connessione al database. */
 	protected function connect() {
 		if(!$this->connected) {
-			if(!$connessione = mysql_connect($this->host,$this->username,$this->password))
-				return false;
-			if(!mysql_selectdb($this->database, $connessione))
+			if(!mysql_selectdb($this->database, mysql_connect($this->host,$this->username,$this->password)))
 				return false;
 			$this->connected = true;
 		}
