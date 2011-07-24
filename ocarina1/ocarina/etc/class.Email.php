@@ -1,1 +1,0 @@
-<?php/* Questa classe permette di inviare email */class Emailer {public function email($mittente,$destinatario,$oggetto,$testo) {	$header = "From: $mittente";	mail($destinatario,$oggetto,$testo,$header);}}?>
