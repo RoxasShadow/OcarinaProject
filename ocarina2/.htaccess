@@ -1,0 +1,49 @@
+# /.htaccess
+# (C) Giovanni Capuano 2011
+<Files .htaccess>
+order allow,deny
+deny from all
+</Files>
+
+ErrorDocument 301 /ocarina2/error/401.html
+ErrorDocument 403 /ocarina2/error/403.html
+ErrorDocument 404 /ocarina2/error/404.html
+ErrorDocument 500 /ocarina2/error/500.html
+
+AddType text/html php htm html
+AddDefaultCharset UTF-8
+SetOutputFilter DEFLATE
+SetEnv TZ Europe/Rome
+
+<IfModule mod_expires.c>
+<IfModule mod_headers.c>
+<FilesMatch "\.(jpg|jpeg|png|gif|swf|js|css|js.php)$"> # Estensioni che verranno messe in cache per 15 giorni (1296000 secondi)
+Header set Cache-Control "max-age=1296000, public"
+</FilesMatch>
+</IfModule>
+</IfModule>
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /ocarina2/
+
+# Security
+RewriteCond %{QUERY_STRING} proc/self/environ [OR]
+RewriteCond %{QUERY_STRING} mosConfig_[a-zA-Z_]{1,21}(=|\%3D) [OR]
+RewriteCond %{QUERY_STRING} base64_encode.*(.*) [OR]
+RewriteCond %{QUERY_STRING} (<|%3C).*script.*(>|%3E) [NC,OR]
+RewriteCond %{QUERY_STRING} GLOBALS(=|[|\%[0-9A-Z]{0,2}) [OR]
+RewriteCond %{QUERY_STRING} _REQUEST(=|[|\%[0-9A-Z]{0,2})
+RewriteRule ^(.*)$ error/403.html [F,L]
+
+#Permalinks
+RewriteRule ^p/([0-9]+).html$ index.php?p=$1 [L]
+RewriteRule ^category/([^/]+).html$ categoria.php?cat=$1 [L]
+RewriteRule ^comment/([0-9]+).html$ commento.php?id=$1 [L]
+RewriteRule ^error/([0-9]+).html$ errorpage.php?id=$1 [L]
+RewriteRule ^news/([^/]+).html$ news.php?titolo=$1 [L]
+RewriteRule ^page/([^/]+).html$ pagina.php?titolo=$1 [L]
+RewriteRule ^profile/([^/]+).html$ profilo.php?nickname=$1 [L]
+RewriteRule ^feed/([^/]+).html$ feed.php?content=$1 [L]
+RewriteRule ^sitemap/([^/]+).xml$ sitemap.php?content=$1 [L]
+</IfModule>

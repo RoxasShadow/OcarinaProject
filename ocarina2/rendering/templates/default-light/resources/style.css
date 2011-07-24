@@ -1,0 +1,21 @@
+/**	/rendering/templates/default-light/resources/style.css
+	Opera derivata dal template originale rilasciato da Paolo 'nessuno' Galeone sotto licenza Creative Commons BY-SA 2.5 <http://nessuno.gotdns.org>
+	(C) Giovanni Capuano 2011
+*/
+
+#header{color:#000000;text-align:center;font-weight:bold;font-size:20pt;margin-top:1%;}
+#colunica{background-color:#c2c2c2;margin-right:2%;margin-left:2%;margin-top:3%;padding-top:2pt;padding-bottom:2pt;padding-left:2pt;padding-right:2pt;font-size:9pt;border:0.8pt dashed #FFFFFF;margin-bottom:3%;vertical-align:top;color:#8c8c8e;width:96%;}
+#colunica a{color:#8c8c8e;}
+body{color:#000000;background-color:#8c8c8e;font-family:monospace;height:97%;width:99%;}
+a{text-decoration:none;color:#2370B6;}
+a:hover{text-decoration:underline;color:#2370B6;}
+hr{border:1pt dashed;}
+input{background-color:#242424;color:#FFFFFF;border-style:solid;border-color:#4B4B4B;}
+textarea{background-color:#242424;color:#FFFFFF;border-style:solid;border-color:#4B4B4B;padding:2pt;}
+blockquote{background-color:#242424;color:#FFFFFF;border-style:solid;border-color:#4B4B4B;padding:2pt;}
+blockquote span{font-style:italic;display:block;width:100%;}
+select{background-color:#242424;color:#FFFFFF;border-style:solid;border-color:#4B4B4B;}
+html{height:100%;width:100%;}
+#titolo{color:#2370B6;text-align:center;font-weight:bold;font-size:11pt;width:100%;}
+#newstitle{color:#2370B6;text-align:center;font-weight:bold;font-size:11pt;width:100%;}
+.spoiler{height:auto;border:1px dashed white;margin-top:2px;margin-left:2px;padding:2px;}
