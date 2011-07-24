@@ -9,11 +9,11 @@ require_once('class.Utilities.php');
 class MySQL extends Utilities {
 	private $host = 'localhost';
 	private $username = 'root';
-	private $password = 'kronos';
+	private $password = 'password';
 	private $database = 'ocarina2';
 	private $connected;
 	public $numQuery = 0;
-	public $prefix = '';
+	public $prefix = 'ocarina_';
 	
 	/* Quando la classe viene istanziata, il costruttore provvede a connettersi al database. */
 	public function __construct() {
