@@ -26,7 +26,8 @@ Header set Cache-Control "max-age=1296000, public"
 
 <IfModule mod_rewrite.c>
 RewriteEngine On
- 
+RewriteBase /ocarina2/
+
 # Security
 RewriteCond %{QUERY_STRING} proc/self/environ [OR]
 RewriteCond %{QUERY_STRING} mosConfig_[a-zA-Z_]{1,21}(=|\%3D) [OR]

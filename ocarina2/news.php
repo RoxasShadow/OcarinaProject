@@ -21,8 +21,10 @@ $rendering->addValue('visitatoronline', $comment->getVisitatorOnline());
 if($titolo == '')
 	$rendering->addValue('error', $comment->getLanguage('news', 1));
 else {
-	if(!$news = $comment->getNews($titolo))
+	if(!$news = $comment->getNews($titolo)) {
 		$rendering->addValue('error', $comment->getLanguage('news', 2));
+		$rendering->addValue('titolo', $comment->config[0]->nomesito);
+	}
 	else {
 		if($comment->config[0]->bbcode == 1) {
 			for($i=0, $count=count($news); $i<$count; ++$i)
@@ -31,7 +33,7 @@ else {
 		}
 		$rendering->addValue('description', $comment->getDescription($news[0]->contenuto));
 		$rendering->addValue('news', $news);
-		$rendering->addValue('titolo', $news[0]->titolo !== '' ? $news[0]->titolo.$comment->getLanguage('title', 2).$comment->config[0]->nomesito : $comment->config[0]->nomesito);
+		$rendering->addValue('titolo', $news[0]->titolo.$comment->getLanguage('title', 2).$comment->config[0]->nomesito);
 		
 		if(!$getComment = $comment->getComment($news[0]->minititolo))
 			$rendering->addValue('commenti', $comment->getLanguage('news', 3));
