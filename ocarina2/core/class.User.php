@@ -83,8 +83,7 @@ class User extends Configuration {
 	
 	/* Controlla se l'utente è loggato. */
 	public function isLogged() {
-		$cookie = $this->getCookie();
-		if(!$cookie) {
+		if(!$cookie = $this->getCookie()) {
 			$this->newVisitator(false);
 			return false;
 		}
@@ -92,8 +91,7 @@ class User extends Configuration {
 			$this->newVisitator(false);
 			return false;
 		}
-		$result = mysql_result($query, 0, 0);
-		if($result > 0) {
+		if(mysql_result($query, 0, 0) > 0) {
 			$this->newVisitator(true);
 			return true;
 		}
@@ -220,11 +218,13 @@ class User extends Configuration {
 	/* Crea e ritorna un secret code. */
 	public function getCode() {
 		$code = parent::rng(12);
-		$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}utenti WHERE secret='$code'");
+		if(!$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}utenti WHERE secret='$code'"))
+			return $code;
 		if(mysql_result($query, 0, 0) > 0)
 			while(mysql_result($query, 0, 0) > 0) {
 				$code = parent::rng(12);
-				$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}utenti WHERE secret='$code'");
+				if(!$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}utenti WHERE secret='$code'"))
+					return $code;
 			}
 		return $code;
 	}
@@ -264,8 +264,9 @@ class User extends Configuration {
 	
 	/* Effettua il logout dell'utente. */
 	public function logout() {
-		$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}utenti WHERE secret='{$this->getCookie()}'");
-		if(mysql_result($query, 0, 0) > 0) {
+		if(!$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}utenti WHERE secret='{$this->getCookie()}'"))
+			$this->unSetCookie();
+		elseif(mysql_result($query, 0, 0) > 0) {
 			parent::query("UPDATE {$this->prefix}utenti SET secret='', lastlogout='".date('d-m-y')."' WHERE secret='{$this->getCookie()}'");
 			$this->unSetCookie();
 		}

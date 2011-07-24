@@ -49,7 +49,8 @@ class Page extends Category {
 	public function votePage($minititolo) {
 		if(parent::isLogged()) {
 			$nickname = $this->username[0]->nickname;
-			$votanti = parent::query("SELECT COUNT(*) FROM {$this->prefix}voti WHERE minititolo='$minititolo' AND nickname='$nickname' AND tipo='pagine' AND approvato='1'");
+			if(!$votanti = parent::query("SELECT COUNT(*) FROM {$this->prefix}voti WHERE minititolo='$minititolo' AND nickname='$nickname' AND tipo='pagine' AND approvato='1'"))
+				return false;
 			if(mysql_result($votanti, 0, 0) > 0)
 				return false;
 			if(!$votanti = parent::query("SELECT COUNT(*) FROM {$this->prefix}voti WHERE minititolo='$minititolo' AND tipo='pagine' AND approvato='1'"))
@@ -65,7 +66,8 @@ class Page extends Category {
 	/* Registra una visita in una pagina */
 	public function addVisitPage($minititolo) {
 		$visitatore = (parent::isLogged()) ? $this->username[0]->nickname : $_SERVER['REMOTE_ADDR'];
-		$visitatori = parent::query("SELECT COUNT(*) FROM {$this->prefix}visite WHERE minititolo='$minititolo' AND nickname='$visitatore' AND tipo='pagine' AND approvato='1'");
+		if(!$visitatori = parent::query("SELECT COUNT(*) FROM {$this->prefix}visite WHERE minititolo='$minititolo' AND nickname='$visitatore' AND tipo='pagine' AND approvato='1'"))
+			return false;
 		if(mysql_result($visitatori, 0, 0) > 0)
 			return false;
 		if(!$visitatori = parent::query("SELECT COUNT(*) FROM {$this->prefix}visite WHERE minititolo='$minititolo' AND tipo='pagine' AND approvato='1'"))
@@ -194,8 +196,7 @@ class Page extends Category {
 	
 	/* Elimina le pagine di un utente. */
 	public function deletePageByUser($nickname) {
-		$page = $this->searchPageByUser($nickname);
-		if(!$page)
+		if(!$page = $this->searchPageByUser($nickname))
 			return false;
 		foreach($page as $v)
 			$this->deletePage($v->minititolo);

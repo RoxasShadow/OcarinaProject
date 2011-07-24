@@ -166,8 +166,7 @@ class Comments extends News {
 	
 	/* Elimina i commenti di un utente. */
 	public function deleteCommentByUser($nickname) {
-		$comments = $this->searchCommentByUser($nickname);
-		if(!$comments)
+		if(!$comments = $this->searchCommentByUser($nickname))
 			return false;
 		foreach($comments as $v)
 			$this->deleteComment($v->id);

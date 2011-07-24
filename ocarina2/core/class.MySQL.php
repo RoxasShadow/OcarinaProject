@@ -9,7 +9,7 @@ require_once('class.Utilities.php');
 class MySQL extends Utilities {
 	private $host = 'localhost';
 	private $username = 'root';
-	private $password = 'password';
+	private $password = 'kronos';
 	private $database = 'ocarina2';
 	private $connected;
 	public $numQuery = 0;
@@ -48,7 +48,7 @@ class MySQL extends Utilities {
 		$result = mysql_query($query);
 		if(!$result)
 			return false;
-		$this->numQuery++;
+		++$this->numQuery;
 		return $result;
 	}
 
@@ -95,8 +95,9 @@ class MySQL extends Utilities {
 			  `contenuto` text NOT NULL,
 			  `data` varchar(10) NOT NULL,
 			  `ora` varchar(10) NOT NULL,
-			  PRIMARY KEY (`id`)
-			) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
+			  PRIMARY KEY (`id`),
+			  KEY `minititolo` (`minititolo`)
+			) ENGINE=MyISAM DEFAULT CHARSET=latin1;",
 
 			"CREATE TABLE IF NOT EXISTS `{$this->prefix}commenti` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
@@ -140,7 +141,6 @@ class MySQL extends Utilities {
 			  `totalevisitatori` int(10) NOT NULL
 			) ENGINE=MyISAM DEFAULT CHARSET=latin1;",
 
-
 			"CREATE TABLE IF NOT EXISTS `{$this->prefix}log` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `nickname` varchar(100) NOT NULL,
@@ -159,7 +159,7 @@ class MySQL extends Utilities {
 			  `titolo` varchar(100) NOT NULL,
 			  `minititolo` varchar(100) NOT NULL,
 			  `contenuto` text NOT NULL,
-			  `categoria` enum('Senza categoria') DEFAULT 'Senza categoria',
+			  `categoria` enum('Senza categoria') NOT NULL DEFAULT 'Senza categoria',
 			  `data` varchar(10) NOT NULL,
 			  `ora` varchar(10) NOT NULL,
 			  `dataultimamodifica` varchar(10) NOT NULL,
@@ -168,7 +168,8 @@ class MySQL extends Utilities {
 			  `approvato` tinyint(1) NOT NULL,
 			  `voti` int(100) NOT NULL,
 			  `visite` int(100) NOT NULL,
-			  PRIMARY KEY (`id`)
+			  PRIMARY KEY (`id`),
+			  KEY `minititolo` (`minititolo`)
 			) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
 
 			"CREATE TABLE IF NOT EXISTS `{$this->prefix}pagine` (
@@ -186,7 +187,8 @@ class MySQL extends Utilities {
 			  `approvato` tinyint(1) NOT NULL,
 			  `voti` int(100) NOT NULL,
 			  `visite` int(100) NOT NULL,
-			  PRIMARY KEY (`id`)
+			  PRIMARY KEY (`id`),
+			  KEY `minititolo` (`minititolo`)
 			) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
 
 			"CREATE TABLE IF NOT EXISTS `{$this->prefix}utenti` (
@@ -208,7 +210,9 @@ class MySQL extends Utilities {
 			  `browsername` varchar(100) NOT NULL,
 			  `browserversion` varchar(100) NOT NULL,
 			  `platform` varchar(100) NOT NULL,
-			  PRIMARY KEY (`id`)
+			  PRIMARY KEY (`id`),
+			  KEY `secret` (`secret`),
+			  KEY `nickname` (`nickname`)
 			) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
 
 			"CREATE TABLE IF NOT EXISTS `{$this->prefix}visitatori` (
@@ -225,7 +229,8 @@ class MySQL extends Utilities {
 			  `minititolo` varchar(100) NOT NULL,
 			  `nickname` varchar(100) NOT NULL,
 			  `tipo` enum('pagine','news') NOT NULL DEFAULT 'pagine',
-			  PRIMARY KEY (`id`)
+			  PRIMARY KEY (`id`),
+			  KEY `minititolo` (`minititolo`,`nickname`,`tipo`)
 			) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
 
 			"CREATE TABLE IF NOT EXISTS `{$this->prefix}voti` (
@@ -233,8 +238,9 @@ class MySQL extends Utilities {
 			  `minititolo` varchar(100) NOT NULL,
 			  `nickname` varchar(100) NOT NULL,
 			  `tipo` enum('pagine','news') NOT NULL DEFAULT 'pagine',
-			  PRIMARY KEY (`id`)
-			) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
+			  PRIMARY KEY (`id`),
+			  KEY `minititolo` (`minititolo`,`nickname`,`tipo`)
+			) ENGINE=MyISAM  DEFAULT CHARSET=latin1;"
 		);
 		for($i=0, $count=count($array); $i<$count; ++$i)
 			$this->query($array[$i]) or die(mysql_error());

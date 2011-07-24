@@ -49,7 +49,8 @@ class News extends Category {
 	public function voteNews($minititolo) {
 		if(parent::isLogged()) {
 			$nickname = $this->username[0]->nickname;
-			$votanti = parent::query("SELECT COUNT(*) FROM {$this->prefix}voti WHERE minititolo='$minititolo' AND approvato='1' AND nickname='$nickname' AND tipo='news'");
+			if(!$votanti = parent::query("SELECT COUNT(*) FROM {$this->prefix}voti WHERE minititolo='$minititolo' AND approvato='1' AND nickname='$nickname' AND tipo='news'"))
+				return false;
 			if(mysql_result($votanti, 0, 0) > 0)
 				return false;
 			if(!$votanti = parent::query("SELECT COUNT(*) FROM {$this->prefix}voti WHERE minititolo='$minititolo' AND approvato='1' AND tipo='news'"))
@@ -65,7 +66,8 @@ class News extends Category {
 	/* Registra una visita in una news */
 	public function addVisitNews($minititolo) {
 		$visitatore = (parent::isLogged()) ? $this->username[0]->nickname : $_SERVER['REMOTE_ADDR'];
-		$visitatori = parent::query("SELECT COUNT(*) FROM {$this->prefix}visite WHERE minititolo='$minititolo' AND nickname='$visitatore' AND tipo='news' AND approvato='1'");
+		if(!$visitatori = parent::query("SELECT COUNT(*) FROM {$this->prefix}visite WHERE minititolo='$minititolo' AND nickname='$visitatore' AND tipo='news' AND approvato='1'"))
+			return false;
 		if(mysql_result($visitatori, 0, 0) > 0)
 			return false;
 		if(!$visitatori = parent::query("SELECT COUNT(*) FROM {$this->prefix}visite WHERE minititolo='$minititolo' AND tipo='news' AND approvato='1'"))
@@ -190,8 +192,7 @@ class News extends Category {
 	
 	/* Elimina le news di un utente. */
 	public function deleteNewsByUser($nickname) {
-		$news = $this->searchNewsByUser($nickname);
-		if(!$news)
+		if(!$news = $this->searchNewsByUser($nickname))
 			return false;
 		foreach($news as $v)
 			$this->deleteNews($v->minititolo);
