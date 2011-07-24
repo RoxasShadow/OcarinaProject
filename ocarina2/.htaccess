@@ -46,4 +46,5 @@ RewriteRule ^news/([^/]+).html$ news.php?titolo=$1 [L]
 RewriteRule ^page/([^/]+).html$ pagina.php?titolo=$1 [L]
 RewriteRule ^profile/([^/]+).html$ profilo.php?nickname=$1 [L]
 RewriteRule ^feed/([^/]+).html$ feed.php?content=$1 [L]
+RewriteRule ^sitemap/([^/]+).xml$ sitemap.php?content=$1 [L]
 </IfModule>

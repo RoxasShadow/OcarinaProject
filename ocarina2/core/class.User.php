@@ -331,7 +331,7 @@ class User extends Configuration {
 			list($d, $m, $y) = explode('-', $v->data);
 			$sitemap .= "
 	<url>
-		<loc>{$this->config[0]->url_index}/profilo/{$v->nickname}.html</loc>
+		<loc>{$this->config[0]->url_index}/profile/{$v->nickname}.html</loc>
 		<lastmod>20$y-$m-$d</lastmod>
 		<changefreq>weekly</changefreq>
 		<priority>0.8</priority>

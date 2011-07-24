@@ -36,15 +36,15 @@ else {
 	elseif($pager->currentPage == $pager->numPages) {
 		for($i=0, $count=count($getNews); $i<$count; ++$i) {
 			if($news->config[0]->limitenews !== 0)
-				$getNews[$i]->contenuto = $news->reduceLen($getNews[$i]->contenuto, $news->config[0]->limitenews, '[br][b][url='.$news->config[0]->url_index.'/news.php?titolo='.$getNews[$i]->minititolo.']'.$news->getLanguage('news', 0).'[/url][/b]');
+				$getNews[$i]->contenuto = $news->reduceLen($getNews[$i]->contenuto, $news->config[0]->limitenews, '[br][b][url='.$news->config[0]->url_index.'/news/'.$getNews[$i]->minititolo.'.html]'.$news->getLanguage('news', 0).'[/url][/b]');
 			$getNews[$i]->contenuto = $bbcode->bbcode($getNews[$i]->contenuto);
 		}
 		$rendering->addValue('news', $getNews);
 	}
 	else {
-		for($i=0; $i<$pager->max; ++$i) { // È uno spreco di memoria iterare tutti gli elementi, basta iterarne solo quelli che vengono mostrati
+		for($i=0; $i<$pager->max; ++$i) { // È uno spreco di tempo iterare tutti gli elementi, basta iterarne solo quelli che vengono mostrati
 			if($news->config[0]->limitenews !== 0)
-			$getNews[$i]->contenuto = $news->reduceLen($getNews[$i]->contenuto, $news->config[0]->limitenews, '[br][b][url='.$news->config[0]->url_index.'/news.php?titolo='.$getNews[$i]->minititolo.']'.$news->getLanguage('news', 0).'[/url][/b]');
+			$getNews[$i]->contenuto = $news->reduceLen($getNews[$i]->contenuto, $news->config[0]->limitenews, '[br][b][url='.$news->config[0]->url_index.'/news/'.$getNews[$i]->minititolo.'.html]'.$news->getLanguage('news', 0).'[/url][/b]');
 			$getNews[$i]->contenuto = $bbcode->bbcode($getNews[$i]->contenuto);
 		}
 		$rendering->addValue('news', $getNews);

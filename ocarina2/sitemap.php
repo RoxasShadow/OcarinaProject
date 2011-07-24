@@ -22,15 +22,15 @@ else
 	echo '<?xml version="1.0" encoding="UTF-8"?>
 	<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 		<sitemap>
-			<loc>'.$page->config[0]->url_index.'/sitemap.php?content=page</loc>
+			<loc>'.$page->config[0]->url_index.'/sitemap/page.xml</loc>
 		</sitemap>
 		<sitemap>
-			<loc>'.$page->config[0]->url_index.'/sitemap.php?content=news</loc>
+			<loc>'.$page->config[0]->url_index.'/sitemap/news.xml</loc>
 		</sitemap>
 		<sitemap>
-			<loc>'.$page->config[0]->url_index.'/sitemap.php?content=comment</loc>
+			<loc>'.$page->config[0]->url_index.'/sitemap/comment.xml</loc>
 		</sitemap>
 		<sitemap>
-			<loc>'.$page->config[0]->url_index.'/sitemap.php?content=user</loc>
+			<loc>'.$page->config[0]->url_index.'/sitemap.php/user.xml</loc>
 		</sitemap>
 	</sitemapindex>';

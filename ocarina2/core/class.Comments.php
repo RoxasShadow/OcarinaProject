@@ -13,7 +13,7 @@ class Comments extends News {
 		$commenti = array();
 		if($news !== '') {
 			if($this->isComment($news)) {
-				if(!$query = parent::query("SELECT * FROM {$this->prefix}commenti WHERE news='$news' ORDER BY id ASC"))
+				if(!$query = parent::query("SELECT * FROM {$this->prefix}commenti WHERE news='$news' AND approvato='1' ORDER BY id ASC"))
 					return false;
 				while($result = parent::get($query))
 					array_push($commenti, $result);
@@ -24,7 +24,7 @@ class Comments extends News {
 			return false;
 		}
 		else {
-			if(!$query = parent::query('SELECT * FROM '.$this->prefix.'commenti ORDER BY id ASC'))
+			if(!$query = parent::query('SELECT * FROM '.$this->prefix.'commenti WHERE approvato=\'1\' ORDER BY id ASC'))
 				return false;
 			if(parent::count($query) > 0) {
 				while($result = parent::get($query))
@@ -40,28 +40,28 @@ class Comments extends News {
 	
 	/* Controlla se il commento esiste. */
 	public function isComment($news) {
-		if(!$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}commenti WHERE news='$news'"))
+		if(!$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}commenti WHERE news='$news' AND approvato='1'"))
 			return false;
 		return mysql_result($query, 0, 0) > 0 ? true : false;
 	}
 	
 	/* Conta quanti commenti sono presenti nel database. */
 	public function countComments() {
-		if(!$query = parent::query('SELECT COUNT(*) FROM '.$this->prefix.'commenti'))
+		if(!$query = parent::query('SELECT COUNT(*) FROM '.$this->prefix.'commenti WHERE approvato=\'1\''))
 			return false;
 		return mysql_result($query, 0, 0);
 	}
 	
 	/* Conta quanti commenti collegati ad una news sono presenti nel database. */
 	public function countCommentByNews($news) {
-		if(!$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}commenti WHERE news='$news'"))
+		if(!$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}commenti WHERE news='$news' AND approvato='1'"))
 			return false;
 		return mysql_result($query, 0, 0);
 	}
 	
 	/* Ricerca i commenti da una keyword. */
 	public function searchComment($keyword) {
-		if(!$query = parent::query("SELECT * FROM {$this->prefix}commenti WHERE contenuto LIKE '%$keyword%' ORDER BY id DESC"))
+		if(!$query = parent::query("SELECT * FROM {$this->prefix}commenti WHERE contenuto LIKE '%$keyword%' AND approvato='1' ORDER BY id DESC"))
 			return false;
 		if(parent::count($query) > 0) {
 			$commenti = array();
@@ -78,7 +78,7 @@ class Comments extends News {
 	
 	/* Ricerca il commento da un id. */
 	public function searchCommentById($id) {
-		if(!$query = parent::query("SELECT * FROM {$this->prefix}commenti WHERE id='$id'"))
+		if(!$query = parent::query("SELECT * FROM {$this->prefix}commenti WHERE id='$id' AND approvato='1'"))
 			return false;
 		if(parent::count($query) > 0) {
 			$commenti = array();
@@ -112,7 +112,7 @@ class Comments extends News {
 	
 	/* Ricerca i commenti per utente. */
 	public function searchCommentByUser($nickname) {
-		if(!$query = parent::query("SELECT * FROM {$this->prefix}commenti WHERE autore='$nickname'"))
+		if(!$query = parent::query("SELECT * FROM {$this->prefix}commenti WHERE autore='$nickname' AND approvato='1'"))
 			return false;
 		if(parent::count($query) > 0) {
 			$commenti = array();
@@ -132,10 +132,10 @@ class Comments extends News {
 		if(empty($array))
 			return false;
 		if((parent::isNews($array[2])) && (parent::isUser($array[0]))) {
-			$query = parent::query('SELECT * FROM '.$this->prefix.'commenti LIMIT 1');
+			$query = parent::query('SELECT * FROM '.$this->prefix.'commenti WHERE approvato=\'1\' LIMIT 1');
 			if(!$campi = parent::getColumns($query))
 				return false;
-			$query = 'INSERT INTO commenti(';
+			$query = 'INSERT INTO '.$this->prefix.'commenti(';
 			foreach($campi as $var)
 				if($var !== 'id')
 					$query .= $var.', ';
@@ -184,7 +184,7 @@ class Comments extends News {
 			list($d, $m, $y) = explode('-', $v->data);
 			$sitemap .= "
 	<url>
-		<loc>{$this->config[0]->url_index}/commento/{$v->id}.html</loc>
+		<loc>{$this->config[0]->url_index}/comment/{$v->id}.html</loc>
 		<lastmod>20$y-$m-$d</lastmod>
 		<changefreq>weekly</changefreq>
 		<priority>0.8</priority>

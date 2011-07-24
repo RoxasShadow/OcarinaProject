@@ -13,7 +13,7 @@ class Page extends Category {
 		$pagine = array();
 		if($minititolo !== '') {
 			if($this->isPage($minititolo)) {
-				if(!$query = parent::query("SELECT * FROM {$this->prefix}pagine WHERE minititolo='$minititolo' ORDER BY titolo ASC"))
+				if(!$query = parent::query("SELECT * FROM {$this->prefix}pagine WHERE minititolo='$minititolo' AND approvato='1' ORDER BY titolo ASC"))
 					return false;
 				array_push($pagine, parent::get($query));
 				if(!empty($pagine))  {
@@ -26,11 +26,11 @@ class Page extends Category {
 		}
 		else {
 			if(($min == '') && ($max == '')) {
-				if(!$query = parent::query('SELECT * FROM '.$this->prefix.'pagine ORDER BY titolo ASC'))
+				if(!$query = parent::query('SELECT * FROM '.$this->prefix.'pagine WHERE approvato=\'1\' ORDER BY titolo ASC'))
 					return false;
 			}
 			else {
-				if(!$query = parent::query("SELECT * FROM {$this->prefix}pagine ORDER BY titolo ASC LIMIT $min, $max"))
+				if(!$query = parent::query("SELECT * FROM {$this->prefix}pagine WHERE approvato='1' ORDER BY titolo ASC LIMIT $min, $max"))
 					return false;
 			}
 			if(parent::count($query) > 0) {
@@ -49,14 +49,14 @@ class Page extends Category {
 	public function votePage($minititolo) {
 		if(parent::isLogged()) {
 			$nickname = $this->username[0]->nickname;
-			$votanti = parent::query("SELECT COUNT(*) FROM {$this->prefix}voti WHERE minititolo='$minititolo' AND nickname='$nickname' AND tipo='pagine'");
+			$votanti = parent::query("SELECT COUNT(*) FROM {$this->prefix}voti WHERE minititolo='$minititolo' AND nickname='$nickname' AND tipo='pagine' AND approvato='1'");
 			if(mysql_result($votanti, 0, 0) > 0)
 				return false;
-			if(!$votanti = parent::query("SELECT COUNT(*) FROM {$this->prefix}voti WHERE minititolo='$minititolo' AND tipo='pagine'"))
+			if(!$votanti = parent::query("SELECT COUNT(*) FROM {$this->prefix}voti WHERE minititolo='$minititolo' AND tipo='pagine' AND approvato='1'"))
 				$voti = 1;
 			else
 				$voti = mysql_result($votanti, 0, 0) + 1;
-			if((parent::query("INSERT INTO {$this->prefix}voti(minititolo, nickname, tipo) VALUES('$minititolo', '$nickname', 'pagine')")) && (parent::query("UPDATE pagine SET voti='$voti' WHERE minititolo='$minititolo'")))
+			if((parent::query("INSERT INTO {$this->prefix}voti(minititolo, nickname, tipo) VALUES('$minititolo', '$nickname', 'pagine')")) && (parent::query("UPDATE pagine SET voti='$voti' WHERE minititolo='$minititolo' AND approvato='1'")))
 				return true;
 		}
 		return false;
@@ -65,28 +65,28 @@ class Page extends Category {
 	/* Registra una visita in una pagina */
 	public function addVisitPage($minititolo) {
 		$visitatore = (parent::isLogged()) ? $this->username[0]->nickname : $_SERVER['REMOTE_ADDR'];
-		$visitatori = parent::query("SELECT COUNT(*) FROM {$this->prefix}visite WHERE minititolo='$minititolo' AND nickname='$visitatore' AND tipo='pagine'");
+		$visitatori = parent::query("SELECT COUNT(*) FROM {$this->prefix}visite WHERE minititolo='$minititolo' AND nickname='$visitatore' AND tipo='pagine' AND approvato='1'");
 		if(mysql_result($visitatori, 0, 0) > 0)
 			return false;
-		if(!$visitatori = parent::query("SELECT COUNT(*) FROM visite WHERE minititolo='$minititolo' AND tipo='pagine'"))
+		if(!$visitatori = parent::query("SELECT COUNT(*) FROM {$this->prefix}visite WHERE minititolo='$minititolo' AND tipo='pagine' AND approvato='1'"))
 			$visite = 1;
 		else
 			$visite = mysql_result($visitatori, 0, 0) + 1;
-		if((parent::query("INSERT INTO {$this->prefix}visite(minititolo, nickname, tipo) VALUES('$minititolo', '$visitatore', 'pagine')")) && (parent::query("UPDATE pagine SET visite='$visite' WHERE minititolo='$minititolo'")))
+		if((parent::query("INSERT INTO {$this->prefix}visite(minititolo, nickname, tipo) VALUES('$minititolo', '$visitatore', 'pagine')")) && (parent::query("UPDATE pagine SET visite='$visite' WHERE minititolo='$minititolo' AND approvato='1'")))
 				return true;
 		return true;
 	}
 	
 	/* Controlla se la pagina esiste. */
 	public function isPage($minititolo) {
-		if(!$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}pagine WHERE minititolo='$minititolo'"))
+		if(!$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}pagine WHERE minititolo='$minititolo' AND approvato='1'"))
 			return false;
 		return mysql_result($query, 0, 0) > 0 ? true : false;
 	}
 	
 	/* Conta quante pagine sono presenti nel database. */
 	public function countPage() {
-		if(!$query = parent::query('SELECT COUNT(*) FROM '.$this->prefix.'pagine'))
+		if(!$query = parent::query('SELECT COUNT(*) FROM '.$this->prefix.'pagine WHERE approvato=\'1\''))
 			return false;
 		return mysql_result($query, 0, 0);
 	}
@@ -94,9 +94,9 @@ class Page extends Category {
 	/* Ricerca le pagine da una keyword. */
 	public function searchPage($keyword, $orderById = '') {
 		if($orderById !== '')
-			$query = parent::query("SELECT * FROM {$this->prefix}pagine WHERE (titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%') ORDER BY id DESC");
+			$query = parent::query("SELECT * FROM {$this->prefix}pagine WHERE (titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%') AND approvato='1' ORDER BY id DESC");
 		else
-			$query = parent::query("SELECT * FROM {$this->prefix}pagine WHERE (titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%') ORDER BY titolo ASC");
+			$query = parent::query("SELECT * FROM {$this->prefix}pagine WHERE (titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%') AND approvato='1' ORDER BY titolo ASC");
 		if(!$query)
 			return false;
 		if(parent::count($query) > 0) {
@@ -113,7 +113,7 @@ class Page extends Category {
 	
 	/* Ricerca le pagine per categoria. */
 	public function searchPageByCategory($keyword) {
-		if(!$query = parent::query("SELECT * FROM {$this->prefix}pagine WHERE categoria='$keyword' ORDER BY id DESC"))
+		if(!$query = parent::query("SELECT * FROM {$this->prefix}pagine WHERE categoria='$keyword' AND approvato='1' ORDER BY id DESC"))
 			return false;
 		if(parent::count($query) > 0) {
 			$pagine = array();
@@ -129,7 +129,7 @@ class Page extends Category {
 	
 	/* Ricerca le pagine per utente. */
 	public function searchPageByUser($nickname) {
-		if(!$query = parent::query("SELECT * FROM {$this->prefix}pagine WHERE autore='$nickname' ORDER BY id DESC"))
+		if(!$query = parent::query("SELECT * FROM {$this->prefix}pagine WHERE autore='$nickname' AND approvato='1' ORDER BY id DESC"))
 			return false;
 		if(parent::count($query) > 0) {
 			$pagine = array();
@@ -164,10 +164,10 @@ class Page extends Category {
 		if(empty($array))
 			return false;
 		if((!$this->isPage($array[2])) && (parent::isCategory('pagine', $array[4])) && (parent::isUser($array[0]))) {
-			$query = parent::query('SELECT * FROM '.$this->prefix.'pagine LIMIT 1');
+			$query = parent::query('SELECT * FROM '.$this->prefix.'pagine WHERE approvato=\'1\' LIMIT 1');
 			if(!$campi = parent::getColumns($query))
 				return false;
-			$query = 'INSERT INTO pagine(';
+			$query = 'INSERT INTO '.$this->prefix.'pagine(';
 			foreach($campi as $var)
 				if(($var !== 'id') && ($var !== 'dataultimamodifica') && ($var !== 'oraultimamodifica') && ($var !== 'autoreultimamodifica') && ($var !== 'visite') && ($var !== 'visitatori') && ($var !== 'voti') && ($var !== 'votanti'))
 				$query .= $var.', ';
@@ -212,7 +212,7 @@ class Page extends Category {
 			list($d, $m, $y) = ((isset($v->dataultimamodifica)) && ($v->dataultimamodifica !== '')) ? explode('-', $v->dataultimamodifica) : explode('-', $v->data);
 			$sitemap .= "
 	<url>
-		<loc>{$this->config[0]->url_index}/pagina/{$v->minititolo}.html</loc>
+		<loc>{$this->config[0]->url_index}/page/{$v->minititolo}.html</loc>
 		<lastmod>20$y-$m-$d</lastmod>
 		<changefreq>weekly</changefreq>
 		<priority>0.8</priority>

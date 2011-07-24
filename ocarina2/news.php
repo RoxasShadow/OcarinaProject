@@ -27,8 +27,7 @@ else {
 	}
 	else {
 		if($comment->config[0]->bbcode == 1) {
-			for($i=0, $count=count($news); $i<$count; ++$i)
-				$news[$i]->contenuto = $bbcode->bbcode($news[$i]->contenuto);
+			$news[0]->contenuto = $bbcode->bbcode($news[0]->contenuto);
 			$rendering->addValue('bbcode', $comment->config[0]->bbcode);
 		}
 		$rendering->addValue('description', $comment->getDescription($news[0]->contenuto));
@@ -46,16 +45,16 @@ else {
 		if(($commento !== '') && ($comment->isLogged())) {
 			$array = ($comment->config[0]->approvacommenti == 0) ? array($comment->username[0]->nickname, $commento, $news[0]->minititolo, date('d-m-y'), date('G:m:s'), 1) : array($comment->username[0]->nickname, $commento, $news[0]->minititolo, date('d-m-y'), date('G:m:s'), 0);
 			if($comment->config[0]->commenti == 0)
-				$rendering->addValue('commentSended', $comment->getLanguage('news', 4).header('Refresh: 2; URL='.$comment->config[0]->url_index.'/news.php?titolo='.$titolo));
+				$rendering->addValue('commentSended', $comment->getLanguage('news', 4).header('Refresh: 2; URL='.$comment->config[0]->url_index.'/news/'.$titolo.'.html'));
 			elseif($comment->createComment($array)) {
 				if($comment->config[0]->log == 1)
 					$comment->log($comment->username[0]->nickname, 'Comment sended.');
-				($comment->config[0]->approvacommenti == 0) ? $rendering->addValue('commentSended', $comment->getLanguage('news', 5).header('Refresh: 2; URL='.$comment->config[0]->url_index.'/news.php?titolo='.$titolo)) : $rendering->addValue('commentSended', $comment->getLanguage('news', 6).header('Refresh: 2; URL='.$comment->config[0]->url_index.'/news.php?titolo='.$titolo));
+				($comment->config[0]->approvacommenti == 0) ? $rendering->addValue('commentSended', $comment->getLanguage('news', 5).header('Refresh: 2; URL='.$comment->config[0]->url_index.'/news/'.$titolo.'.html')) : $rendering->addValue('commentSended', $comment->getLanguage('news', 6).header('Refresh: 2; URL='.$comment->config[0]->url_index.'/news/'.$titolo.'.html'));
 			}
 			else {
 				if($comment->config[0]->log == 1)
 					$comment->log($comment->username[0]->nickname, 'Comment was not sended.');
-				$rendering->addValue('commentSended', $comment->getLanguage('news', 7).header('Refresh: 2; URL='.$comment->config[0]->url_index.'/news.php?titolo='.$titolo));
+				$rendering->addValue('commentSended', $comment->getLanguage('news', 7).header('Refresh: 2; URL='.$comment->config[0]->url_index.'/news/'.$titolo.'.html'));
 			}
 		}
 		elseif(($commento !== '') && (!$comment->isLogged()))

@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-23 16:53:46
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-24 17:20:28
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/news.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:9744372354e2afc9a94fa61-36061859%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:16903020344e2c545cb9bb22-61364994%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '27182b59aacf39946fd552a3d1fff0f04232f2ce' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/default/news.tpl',
-      1 => 1310856884,
+      1 => 1311527918,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '9744372354e2afc9a94fa61-36061859',
+  'nocache_hash' => '16903020344e2c545cb9bb22-61364994',
   'function' => 
   array (
   ),
@@ -36,10 +36,9 @@ if ($_smarty_tpl->_count($_from) > 0){
  $_smarty_tpl->tpl_vars['key']->value = $_smarty_tpl->tpl_vars['item']->key;
  $_smarty_tpl->tpl_vars['item']->iteration++;
 ?>
-			<?php if ($_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->approvato==1){?>
-				<div class="titolo"><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->titolo;?>
+			<div class="titolo"><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->titolo;?>
 </div>
-				<div class="newsheader" align="center">Scritto da <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+			<div class="newsheader" align="center">Scritto da <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /profile/<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->autore;?>
 .html"><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->autore;?>
 </a> il giorno <?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->data;?>
@@ -51,25 +50,22 @@ if ($_smarty_tpl->_count($_from) > 0){
 <?php }?> alle ore <?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->ora;?>
  <?php if ($_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->autoreultimamodifica!==$_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->autore){?>da parte di <?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->autoreultimamodifica;?>
 .<?php }?><?php }?></div><br />
-				<div class="news"><p><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->contenuto;?>
+			<div class="news"><p><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->contenuto;?>
 </p></div><br />
-				<?php if ($_smarty_tpl->getVariable('utente')->value!==''){?>
-					<a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+			<?php if ($_smarty_tpl->getVariable('utente')->value!==''){?>
+				<a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /vote.php?action=news&titolo=<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->minititolo;?>
 ">Vota questa news</a>
-					<?php if ($_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->voti==1){?>
-						(1 voto)
-					<?php }else{ ?>
-						(<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->voti;?>
+				<?php if ($_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->voti==1){?>
+					(1 voto)
+				<?php }else{ ?>
+					(<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->voti;?>
  voti)
 					<?php }?>
-				<?php }else{ ?>
-					<a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+			<?php }else{ ?>
+				<a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /registrazione.php">Registrati</a> o <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /login.php">accedi</a> per votare questa news.
-				<?php }?>
-			<?php }else{ ?>
-				La news non è stata approvata, e quindi non è visibile.
 			<?php }?>
 		<?php }} ?>
 		<?php if (!is_array($_smarty_tpl->getVariable('commenti')->value)){?>
@@ -87,8 +83,7 @@ if ($_smarty_tpl->_count($_from) > 0){
  $_smarty_tpl->tpl_vars['key']->value = $_smarty_tpl->tpl_vars['item']->key;
  $_smarty_tpl->tpl_vars['item']->iteration++;
 ?>
-				<?php if ($_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->approvato==1){?>
-					<fieldset><legend><a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+				<fieldset><legend><a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /comment/<?php echo $_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->id;?>
 .html">#<?php echo $_smarty_tpl->tpl_vars['item']->iteration;?>
 </a> Commento inviato il giorno <?php echo $_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->data;?>
@@ -102,7 +97,6 @@ if ($_smarty_tpl->_count($_from) > 0){
 ');">Quota</a></legend><div id="<?php echo $_smarty_tpl->tpl_vars['item']->iteration;?>
 "><?php echo $_smarty_tpl->getVariable('commenti')->value[$_smarty_tpl->tpl_vars['key']->value]->contenuto;?>
 </div></fieldset><br />
-				<?php }?>
 			<?php }} ?>
 		<?php }?>
 		<br />

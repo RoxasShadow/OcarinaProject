@@ -10,9 +10,7 @@
 		{elseif isset($news)}
 			&bull; <b>News</b> <a href="{$url_index}/feed/news.html"><img src="{$url_rendering}/templates/{$skin}/resources/images/rss.png" alt="Feed RSS News" height="12" width="18" /></a><br />
 			{foreach from=$news key=key item=item}
-				{if $news[$key]->approvato == 1}
-					&raquo; <a href="{$url_index}/news/{$news[$key]->minititolo}.html">{$news[$key]->titolo}</a> ({$news[$key]->visite} visite)<br />
-				{/if}
+				&raquo; <a href="{$url_index}/news/{$news[$key]->minititolo}.html">{$news[$key]->titolo}</a> ({$news[$key]->visite} visite)<br />
 			{/foreach}
 		{/if}
 		<hr />
@@ -21,9 +19,7 @@
 		{elseif isset($news)}
 			&bull; <b>Pagine <a href="{$url_index}/feed/page.html"><img src="{$url_rendering}/templates/{$skin}/resources/images/rss.png" alt="Feed RSS News" height="12" width="18" /></a></b><br />
 			{foreach from=$pagine key=key item=item}
-				{if $pagine[$key]->approvato == 1}
-					&raquo; <a href="{$url_index}/page/{$pagine[$key]->minititolo}.html">{$pagine[$key]->titolo}</a> ({$pagine[$key]->visite} visite)<br />
-				{/if}
+				&raquo; <a href="{$url_index}/page/{$pagine[$key]->minititolo}.html">{$pagine[$key]->titolo}</a> ({$pagine[$key]->visite} visite)<br />
 			{/foreach}
 		{/if}
 	{/if}

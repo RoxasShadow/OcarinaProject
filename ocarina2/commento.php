@@ -25,8 +25,7 @@ else {
 		$rendering->addValue('error', $comments->getLanguage('comment', 1));
 	else {
 		if($comments->config[0]->bbcode == 1)
-			for($i=0, $count=count($getComment); $i<$count; ++$i)
-				$getComment[$i]->contenuto = $bbcode->bbcodecommenti($getComment[$i]->contenuto);
+			$getComment[0]->contenuto = $bbcode->bbcodecommenti($getComment[0]->contenuto);
 		$rendering->addValue('description', $comments->getDescription('description', $getComment[0]->contenuto));
 		$rendering->addValue('commento', $getComment);
 	}

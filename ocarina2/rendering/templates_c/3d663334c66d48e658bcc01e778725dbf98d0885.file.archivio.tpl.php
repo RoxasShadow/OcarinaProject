@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-16 18:43:58
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-24 17:20:20
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/archivio.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:8716247014e21dbee0d2b20-06301812%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:5538473994e2c545433f350-73209867%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '3d663334c66d48e658bcc01e778725dbf98d0885' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/default/archivio.tpl',
-      1 => 1310841835,
+      1 => 1311527918,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '8716247014e21dbee0d2b20-06301812',
+  'nocache_hash' => '5538473994e2c545433f350-73209867',
   'function' => 
   array (
   ),
@@ -39,13 +39,11 @@ if ($_smarty_tpl->_count($_from) > 0){
     foreach ($_from as $_smarty_tpl->tpl_vars['item']->key => $_smarty_tpl->tpl_vars['item']->value){
  $_smarty_tpl->tpl_vars['key']->value = $_smarty_tpl->tpl_vars['item']->key;
 ?>
-				<?php if ($_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->approvato==1){?>
-					&raquo; <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+				&raquo; <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /news/<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->minititolo;?>
 .html"><?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->titolo;?>
 </a> (<?php echo $_smarty_tpl->getVariable('news')->value[$_smarty_tpl->tpl_vars['key']->value]->visite;?>
  visite)<br />
-				<?php }?>
 			<?php }} ?>
 		<?php }?>
 		<hr />
@@ -64,13 +62,11 @@ if ($_smarty_tpl->_count($_from) > 0){
     foreach ($_from as $_smarty_tpl->tpl_vars['item']->key => $_smarty_tpl->tpl_vars['item']->value){
  $_smarty_tpl->tpl_vars['key']->value = $_smarty_tpl->tpl_vars['item']->key;
 ?>
-				<?php if ($_smarty_tpl->getVariable('pagine')->value[$_smarty_tpl->tpl_vars['key']->value]->approvato==1){?>
-					&raquo; <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+				&raquo; <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /page/<?php echo $_smarty_tpl->getVariable('pagine')->value[$_smarty_tpl->tpl_vars['key']->value]->minititolo;?>
 .html"><?php echo $_smarty_tpl->getVariable('pagine')->value[$_smarty_tpl->tpl_vars['key']->value]->titolo;?>
 </a> (<?php echo $_smarty_tpl->getVariable('pagine')->value[$_smarty_tpl->tpl_vars['key']->value]->visite;?>
  visite)<br />
-				<?php }?>
 			<?php }} ?>
 		<?php }?>
 	<?php }?>

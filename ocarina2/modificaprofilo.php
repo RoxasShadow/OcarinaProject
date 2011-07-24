@@ -40,7 +40,7 @@ if($user->isLogged())
 			elseif(($user->editUser('email', $email, $user->username[0]->nickname)) && ($user->editUser('bio', $bio, $user->username[0]->nickname)) && ($user->editUser('skin', $skin, $user->username[0]->nickname)) && ($user->editUser('avatar', $avatar, $user->username[0]->nickname))) {
 				if($user->config[0]->log == 1)
 						$user->log($user->username[0]->nickname, 'Profile modificated.');
-				$rendering->addValue('result', $user->getLanguage('editprofile', 1).header('Refresh: 2; URL='.$user->config[0]->url_index.'/profilo.php?nickname='.$user->username[0]->nickname));
+				$rendering->addValue('result', $user->getLanguage('editprofile', 1).header('Refresh: 2; URL='.$user->config[0]->url_index.'/profile/'.$user->username[0]->nickname.'.html'));
 			}
 			else {
 				if($user->config[0]->log == 1)

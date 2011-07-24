@@ -24,9 +24,7 @@
 	{else if isset($news)}
 		&bull; <b>News</b><br />
 		{foreach from=$news key=key item=item}
-			{if $news[$key]->approvato == 1}
-				&raquo; <a href="{$url_index}/news/{$news[$key]->minititolo}.html">{$news[$key]->titolo}</a><br />
-			{/if}
+			&raquo; <a href="{$url_index}/news/{$news[$key]->minititolo}.html">{$news[$key]->titolo}</a><br />
 		{/foreach}
 	{/if}
 	
@@ -35,9 +33,7 @@
 	{else if isset($pagina)}
 		&bull; <b>Pagine</b><br />
 		{foreach from=$pagina key=key item=item}
-			{if $pagina[$key]->approvato == 1}
-				&raquo; <a href="{$url_index}/page/{$pagina[$key]->minititolo}.html">{$pagina[$key]->titolo}</a><br />
-			{/if}
+			&raquo; <a href="{$url_index}/page/{$pagina[$key]->minititolo}.html">{$pagina[$key]->titolo}</a><br />
 		{/foreach}
 	{/if}
 	
@@ -46,9 +42,7 @@
 	{else if isset($commento)}
 		&bull; <b>Commenti</b><br />
 		{foreach from=$commento key=key item=item}
-			{if $commento[$key]->approvato == 1}
-				&raquo; <a href="{$url_index}/comment/{$commento[$key]->id}.html">#{$commento[$key]->id} - {$commento[$key]->autore}</a><br />
-			{/if}
+			&raquo; <a href="{$url_index}/comment/{$commento[$key]->id}.html">#{$commento[$key]->id} - {$commento[$key]->autore}</a><br />
 		{/foreach}
 	{/if}
 	

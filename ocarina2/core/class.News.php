@@ -13,7 +13,7 @@ class News extends Category {
 		$news = array();
 		if($minititolo !== '') {
 			if($this->isNews($minititolo)) {
-				if(!$query = parent::query("SELECT * FROM {$this->prefix}news WHERE minititolo='$minititolo' ORDER BY titolo ASC"))
+				if(!$query = parent::query("SELECT * FROM {$this->prefix}news WHERE minititolo='$minititolo' AND approvato='1' ORDER BY titolo ASC"))
 					return false;
 				array_push($news, parent::get($query));
 				if(!empty($news)) {
@@ -26,11 +26,11 @@ class News extends Category {
 		}
 		else {
 			if(($min == '') && ($max == '')) {
-				if(!$query = parent::query('SELECT * FROM '.$this->prefix.'news ORDER BY titolo ASC'))
+				if(!$query = parent::query('SELECT * FROM '.$this->prefix.'news WHERE approvato=\'1\' ORDER BY titolo ASC'))
 					return false;
 			}
 			else {
-				if(!$query = parent::query("SELECT * FROM {$this->prefix}news ORDER BY id DESC LIMIT $min, $max"))
+				if(!$query = parent::query("SELECT * FROM {$this->prefix}news WHERE approvato='1' ORDER BY id DESC LIMIT $min, $max"))
 					return false;
 			}
 			if(parent::count($query) > 0) {
@@ -49,14 +49,14 @@ class News extends Category {
 	public function voteNews($minititolo) {
 		if(parent::isLogged()) {
 			$nickname = $this->username[0]->nickname;
-			$votanti = parent::query("SELECT COUNT(*) FROM {$this->prefix}voti WHERE minititolo='$minititolo' AND nickname='$nickname' AND tipo='news'");
+			$votanti = parent::query("SELECT COUNT(*) FROM {$this->prefix}voti WHERE minititolo='$minititolo' AND approvato='1' AND nickname='$nickname' AND tipo='news'");
 			if(mysql_result($votanti, 0, 0) > 0)
 				return false;
-			if(!$votanti = parent::query("SELECT COUNT(*) FROM {$this->prefix}voti WHERE minititolo='$minititolo' AND tipo='news'"))
+			if(!$votanti = parent::query("SELECT COUNT(*) FROM {$this->prefix}voti WHERE minititolo='$minititolo' AND approvato='1' AND tipo='news'"))
 				$voti = 1;
 			else
 				$voti = mysql_result($votanti, 0, 0) + 1;
-			if((parent::query("INSERT INTO {$this->prefix}voti(minititolo, nickname, tipo) VALUES('$minititolo', '$nickname', 'news')")) && (parent::query("UPDATE news SET voti='$voti' WHERE minititolo='$minititolo'")))
+			if((parent::query("INSERT INTO {$this->prefix}voti(minititolo, nickname, tipo) VALUES('$minititolo', '$nickname', 'news')")) && (parent::query("UPDATE news SET voti='$voti' WHERE minititolo='$minititolo' AND approvato='1'")))
 				return true;
 		}
 		return false;
@@ -65,35 +65,35 @@ class News extends Category {
 	/* Registra una visita in una news */
 	public function addVisitNews($minititolo) {
 		$visitatore = (parent::isLogged()) ? $this->username[0]->nickname : $_SERVER['REMOTE_ADDR'];
-		$visitatori = parent::query("SELECT COUNT(*) FROM {$this->prefix}visite WHERE minititolo='$minititolo' AND nickname='$visitatore' AND tipo='news'");
+		$visitatori = parent::query("SELECT COUNT(*) FROM {$this->prefix}visite WHERE minititolo='$minititolo' AND nickname='$visitatore' AND tipo='news' AND approvato='1'");
 		if(mysql_result($visitatori, 0, 0) > 0)
 			return false;
-		if(!$visitatori = parent::query("SELECT COUNT(*) FROM {$this->prefix}visite WHERE minititolo='$minititolo' AND tipo='news'"))
+		if(!$visitatori = parent::query("SELECT COUNT(*) FROM {$this->prefix}visite WHERE minititolo='$minititolo' AND tipo='news' AND approvato='1'"))
 			$visite = 1;
 		else
 			$visite = mysql_result($visitatori, 0, 0) + 1;
-		if((parent::query("INSERT INTO {$this->prefix}visite(minititolo, nickname, tipo) VALUES('$minititolo', '$visitatore', 'news')")) && (parent::query("UPDATE news SET visite='$visite' WHERE minititolo='$minititolo'")))
+		if((parent::query("INSERT INTO {$this->prefix}visite(minititolo, nickname, tipo) VALUES('$minititolo', '$visitatore', 'news')")) && (parent::query("UPDATE news SET visite='$visite' WHERE minititolo='$minititolo' AND approvato='1'")))
 				return true;
 		return true;
 	}
 	
 	/* Controlla se la news esiste. */
 	public function isNews($minititolo) {
-		if(!$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}news WHERE minititolo='$minititolo' LIMIT 1"))
+		if(!$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}news WHERE minititolo='$minititolo' AND approvato='1' LIMIT 1"))
 			return false;
 		return mysql_result($query, 0, 0) > 0 ? true : false;
 	}
 	
 	/* Conta quante news sono presenti nel database. */
 	public function countNews() {
-		if(!$query = parent::query('SELECT COUNT(*) FROM '.$this->prefix.'news'))
+		if(!$query = parent::query('SELECT COUNT(*) FROM '.$this->prefix.'news WHERE approvato=\'1\''))
 			return false;
 		return mysql_result($query, 0, 0);
 	}
 	
 	/* Ricerca le news da una keyword. */
 	public function searchNews($keyword) {
-		if(!$query = parent::query("SELECT * FROM {$this->prefix}news WHERE (titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%') ORDER BY id DESC"))
+		if(!$query = parent::query("SELECT * FROM {$this->prefix}news WHERE (titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%') AND approvato='1' ORDER BY id DESC"))
 			return false;
 		if(parent::count($query) > 0) {
 			$news = array();
@@ -109,7 +109,7 @@ class News extends Category {
 	
 	/* Ricerca le news per categoria. */
 	public function searchNewsByCategory($keyword) {
-		if(!$query = parent::query("SELECT * FROM {$this->prefix}news WHERE categoria='$keyword' ORDER BY id DESC"))
+		if(!$query = parent::query("SELECT * FROM {$this->prefix}news WHERE categoria='$keyword' AND approvato='1' ORDER BY id DESC"))
 			return false;
 		if(parent::count($query) > 0) {
 			$news = array();
@@ -125,7 +125,7 @@ class News extends Category {
 	
 	/* Ricerca le news per utente. */
 	public function searchNewsByUser($nickname) {
-		if(!$query = parent::query("SELECT * FROM {$this->prefix}news WHERE autore='$nickname' ORDER BY id DESC"))
+		if(!$query = parent::query("SELECT * FROM {$this->prefix}news WHERE autore='$nickname' AND approvato='1' ORDER BY id DESC"))
 			return false;
 		if(parent::count($query) > 0) {
 			$news = array();
@@ -160,7 +160,7 @@ class News extends Category {
 		if(empty($array))
 			return false;
 		if((!$this->isNews($array[2])) && (parent::isCategory('news', $array[4])) && (parent::isUser($array[0]))) {
-			$query = parent::query('SELECT * FROM '.$this->prefix.'news ORDER BY id DESC LIMIT 1');
+			$query = parent::query('SELECT * FROM '.$this->prefix.'news WHERE approvato=\'1\' ORDER BY id DESC LIMIT 1');
 			if(!$campi = parent::getColumns($query))
 				return false;
 			$query = 'INSERT INTO '.$this->prefix.'news(';

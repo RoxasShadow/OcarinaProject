@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-16 23:10:10
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-24 17:20:48
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/commento.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:9179749104e221a5217a126-70937650%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:1473199884e2c54707fa055-14318679%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '55288e1340297256175cc3087ed33f0153b00b58' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/default/commento.tpl',
-      1 => 1310856884,
+      1 => 1311527918,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '9179749104e221a5217a126-70937650',
+  'nocache_hash' => '1473199884e2c54707fa055-14318679',
   'function' => 
   array (
   ),
@@ -32,10 +32,9 @@ if ($_smarty_tpl->_count($_from) > 0){
     foreach ($_from as $_smarty_tpl->tpl_vars['item']->key => $_smarty_tpl->tpl_vars['item']->value){
  $_smarty_tpl->tpl_vars['key']->value = $_smarty_tpl->tpl_vars['item']->key;
 ?>
-				<?php if ($_smarty_tpl->getVariable('commento')->value[$_smarty_tpl->tpl_vars['key']->value]->approvato==1){?>
-					<div class="titolo">Commento #<?php echo $_smarty_tpl->getVariable('commento')->value[$_smarty_tpl->tpl_vars['key']->value]->id;?>
+				<div class="titolo">Commento #<?php echo $_smarty_tpl->getVariable('commento')->value[$_smarty_tpl->tpl_vars['key']->value]->id;?>
 </div>
-					<div class="newsheader" align="center">Scritto da <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+				<div class="newsheader" align="center">Scritto da <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /profile/<?php echo $_smarty_tpl->getVariable('commento')->value[$_smarty_tpl->tpl_vars['key']->value]->autore;?>
 .html"><?php echo $_smarty_tpl->getVariable('commento')->value[$_smarty_tpl->tpl_vars['key']->value]->autore;?>
 </a> il giorno <?php echo $_smarty_tpl->getVariable('commento')->value[$_smarty_tpl->tpl_vars['key']->value]->data;?>
@@ -43,11 +42,8 @@ if ($_smarty_tpl->_count($_from) > 0){
 .(<a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /news/<?php echo $_smarty_tpl->getVariable('commento')->value[$_smarty_tpl->tpl_vars['key']->value]->news;?>
 .html">News originale</a>)</div><br />
-					<div class="news"><?php echo $_smarty_tpl->getVariable('commento')->value[$_smarty_tpl->tpl_vars['key']->value]->contenuto;?>
+				<div class="news"><?php echo $_smarty_tpl->getVariable('commento')->value[$_smarty_tpl->tpl_vars['key']->value]->contenuto;?>
 </div>
-				<?php }else{ ?>
-					Il commento non è stato approvato, e quindi non è visibile.
-				<?php }?>
 			<?php }} ?>
 		<?php }?>
 	<?php }?>
