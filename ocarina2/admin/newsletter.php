@@ -16,7 +16,7 @@ $rendering->addValue('grado', $user->isLogged() ? $user->username[0]->grado : ''
 $rendering->skin = 'admin';
 $rendering->addValue('titolo', $user->getLanguage('title', 30).$user->getLanguage('title', 2).$user->getLanguage('title', 10).$user->getLanguage('title', 2).$user->config[0]->nomesito);
 
-if(($user->isLogged()) && ($user->username[0]->grado <= 2))
+if(($user->isLogged()) && ($user->username[0]->grado == 1))
 	if($submit)
 		if(($testo_email !== '') && ($oggetto_email !== '')) {
 			$users = $user->getUser();

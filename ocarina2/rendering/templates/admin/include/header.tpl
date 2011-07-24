@@ -104,6 +104,7 @@
 <li><a class="active">Utenti</a></li>
 <li><a href="{$url_admin}/modificagrado.php">Modifica grado</a></li>
 <li><a href="{$url_admin}/cancellautente.php">Cancella utente</a></li>
+<li><a href="{$url_admin}/newsletter.php">Newsletter</a></li>
 <li><a class="active">News</a></li>
 <li><a href="{$url_admin}/creanews.php">Crea news</a></li>
 <li><a href="{$url_admin}/modificanews.php">Modifica news</a></li>

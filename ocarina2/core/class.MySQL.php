@@ -7,13 +7,15 @@ require_once('class.Utilities.php');
 
 /* Questa classe mette a disposizione dei metodi per gestire il database. */
 class MySQL extends Utilities {
+	/* EDIT HERE */
 	private $host = 'localhost';
 	private $username = 'root';
 	private $password = 'password';
-	private $database = 'ocarina2';
+	private $database = 'dbname';
+	public $prefix = '';
+	/* STOP, HAVE FUN! :) */
 	private $connected;
 	public $numQuery = 0;
-	public $prefix = 'ocarina_';
 	
 	/* Quando la classe viene istanziata, il costruttore provvede a connettersi al database. */
 	public function __construct() {

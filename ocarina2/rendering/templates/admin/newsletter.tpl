@@ -2,7 +2,7 @@
 	(C) Giovanni Capuano 2011
 *}
 {include file="$root_rendering/templates/$skin/include/header.tpl"}
-	{if ($grado <= 2)}
+	{if ($grado == 1)}
 		{if !$submit}
 			<form action="" method="post">
 			Oggetto<br />

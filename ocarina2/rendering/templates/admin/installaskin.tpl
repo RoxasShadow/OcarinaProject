@@ -2,7 +2,7 @@
 	(C) Giovanni Capuano 2011
 *}
 {include file="$root_rendering/templates/$skin/include/header.tpl"}
-	{if (($grado == '') || ($grado <> 4))}
+	{if !(($grado == 1) || ($grado == 4))}
 		Accesso negato.
 	{elseif !$submit}
 		<form action="" method="post" enctype="multipart/form-data">
