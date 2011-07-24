@@ -92,8 +92,7 @@ Notare che la skin per l'amministrazione deve sempre chiamarsi admin.
 I tag attualmente disponibili sono quelli usati nei template dell'amministrazione e di default, il quale effetto
 è semplice da capire, ma nulla vi vieta di crearne altri, dovete utilizzare il metodo addValue() del motore
 di rendering all'interno degli script PHP o, globalmente, nella classe del core class.Rendering.php.
-Per maggiori informazioni visualizzate la documentazione ufficiale di Smarty 3.0 che trovate nella cartella
-apposita del motore di rendering.
+Per maggiori informazioni visualizzate la documentazione ufficiale di Smarty 3.0 che trovate in /doc.
 Un buon modo di sviluppare le risorse grafiche, è utilizzare il plugin Firebug insieme a Pagespeed.
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

@@ -4,7 +4,6 @@
 order allow,deny
 deny from all
 </Files>
-Options All -Indexes
 
 ErrorDocument 301 /ocarina2/error/401.html
 ErrorDocument 403 /ocarina2/error/403.html
@@ -35,7 +34,7 @@ RewriteCond %{QUERY_STRING} base64_encode.*(.*) [OR]
 RewriteCond %{QUERY_STRING} (<|%3C).*script.*(>|%3E) [NC,OR]
 RewriteCond %{QUERY_STRING} GLOBALS(=|[|\%[0-9A-Z]{0,2}) [OR]
 RewriteCond %{QUERY_STRING} _REQUEST(=|[|\%[0-9A-Z]{0,2})
-RewriteRule ^(.*)$ errorpage.php?id=403 [F,L]
+RewriteRule ^(.*)$ error/403.html [F,L]
 
 #Permalinks
 RewriteRule ^p/([0-9]+).html$ index.php?p=$1 [L]
