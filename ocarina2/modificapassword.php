@@ -20,6 +20,7 @@ $rendering->addValue('titolo', $user->getLanguage('title', 5).$user->getLanguage
 $rendering->addValue('description', $user->getLanguage('description', 3));
 $rendering->addValue('useronline', $user->getUserOnline());
 $rendering->addValue('visitatoronline', $user->getVisitatorOnline());
+$rendering->addValue('totaleaccessi', $user->getTotalVisits());
 
 if($user->isLogged()) 
 	if(($oldPassword !== '') && ($password !== '') && ($confPassword !== ''))

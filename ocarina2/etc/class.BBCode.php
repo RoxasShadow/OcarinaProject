@@ -87,7 +87,7 @@ class BBCode extends Configuration {
 			'<u>$1</u>',
 			'<s>$1</s>',
 			'<font color="$1">$2</font>',
-			'<a href="$1">$2</a>',
+			'<a href="$1" rel="nofollow" target="_blank">$2</a>',
 			'<input type="submit" class="buttonSpoiler" value="Mostra/Nascondi" /><div class="spoiler">$1</div>',
 			'<div align="center">$1</div>',
 			'<div align="right">$1</div>',

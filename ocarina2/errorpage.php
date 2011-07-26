@@ -15,6 +15,7 @@ $rendering->skin = $news->isLogged() ? $news->username[0]->skin : $news->config[
 $rendering->addValue('titolo', $news->getLanguage('title', 3).$id.$news->getLanguage('title', 2).$news->config[0]->nomesito);
 $rendering->addValue('useronline', $news->getUserOnline());
 $rendering->addValue('visitatoronline', $news->getVisitatorOnline());
+$rendering->addValue('totaleaccessi', $news->getTotalVisits());
 
 if($news->config[0]->log == 1)
 	$news->log(($news->isLogged()) ? $news->username[0]->nickname : '~', 'Error '.$id);

@@ -125,6 +125,13 @@ class User extends Configuration {
 		return $visitatorOnline;
 	}
 	
+	/* Ritorna il numero totale di visite. */
+	public function getTotalVisits() {
+		if(!$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}visitatori"))
+			return false;
+		return mysql_result($query, 0, 0);
+	}
+	
 	/* Ricerca gli utenti per un campo specifico. */
 	public function searchUserByField($campo, $valore) {
 		if(!$query = parent::query("SELECT * FROM {$this->prefix}utenti WHERE $campo='$valore' ORDER BY nickname ASC"))
@@ -173,7 +180,6 @@ class User extends Configuration {
 	
 	/* Crea un nuovo visitatore. */
 	public function newVisitator($logged) {
-		$this->archiveVisitator();
 		$lastaction = time();
 		$giorno = date('d');
 		if($logged) {
@@ -195,19 +201,6 @@ class User extends Configuration {
 				return parent::query("UPDATE {$this->prefix}visitatori SET lastaction='$lastaction', giorno='$giorno', nickname='$nickname' WHERE ip='{$_SERVER['REMOTE_ADDR']}'") ? true : false;
 		}
 		return false;
-	}
-	
-	/* Archivia i visitatori. */
-	public function archiveVisitator() {
-		if(!$visitator = $this->getVisitator())
-			return false;
-		foreach($visitator as $v)
-			if(date('d') > $v->giorno) {
-				$config = parent::getConfig();
-				if(parent::editConfig('totalevisitatori', $config[0]->totalevisitatori + 1))
-					parent::query("DELETE FROM {$this->prefix}visitatori WHERE id='{$v->id}'");
-			}
-		return true;					
 	}
 	
 	/* Elimina un utente. */

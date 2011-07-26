@@ -18,6 +18,7 @@ $rendering->addValue('titolo', $user->getLanguage('title', 4).$user->getLanguage
 $rendering->addValue('description', $user->getLanguage('description', 2));
 $rendering->addValue('useronline', $user->getUserOnline());
 $rendering->addValue('visitatoronline', $user->getVisitatorOnline());
+$rendering->addValue('totaleaccessi', $user->getTotalVisits());
 
 if($user->isLogged())
 	$rendering->addValue('result', 'Hai già effettuato l\'accesso, non hai bisogno di farlo nuovamente.');

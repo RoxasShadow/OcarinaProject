@@ -16,6 +16,7 @@ $rendering->addValue('utente', $pagina->isLogged() ? $pagina->username[0]->nickn
 $rendering->skin = $pagina->isLogged() ? $pagina->username[0]->skin : $pagina->config[0]->skin;
 $rendering->addValue('useronline', $pagina->getUserOnline());
 $rendering->addValue('visitatoronline', $pagina->getVisitatorOnline());
+$rendering->addValue('totaleaccessi', $pagina->getTotalVisits());
 
 if($titolo == '')
 	$rendering->addValue('error', $pagina->getLanguage('page', 0));

@@ -10,8 +10,8 @@ class MySQL extends Utilities {
 	/* EDIT HERE */
 	private $host = 'localhost';
 	private $username = 'root';
-	private $password = 'password';
-	private $database = 'dbname';
+	private $password = 'kronos';
+	private $database = 'ocarina2';
 	public $prefix = '';
 	/* STOP, HAVE FUN! :) */
 	private $connected;
@@ -240,6 +240,7 @@ class MySQL extends Utilities {
 			  `minititolo` varchar(100) NOT NULL,
 			  `nickname` varchar(100) NOT NULL,
 			  `tipo` enum('pagine','news') NOT NULL DEFAULT 'pagine',
+			  `data` varchar(10) NOT NULL,
 			  PRIMARY KEY (`id`),
 			  KEY `minititolo` (`minititolo`,`nickname`,`tipo`)
 			) ENGINE=MyISAM  DEFAULT CHARSET=latin1;"

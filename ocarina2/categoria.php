@@ -18,6 +18,7 @@ $rendering->addValue('titolo', $categoria !== '' ? $news->getLanguage('title', 0
 $rendering->addValue('description', $news->getLanguage('description', 1));
 $rendering->addValue('useronline', $news->getUserOnline());
 $rendering->addValue('visitatoronline', $news->getVisitatorOnline());
+$rendering->addValue('totaleaccessi', $news->getTotalVisits());
 
 if($categoria == '')
 	$rendering->addValue('error', $news->getLanguage('error', 1));

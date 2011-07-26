@@ -17,6 +17,7 @@ $rendering->skin = $comments->isLogged() ? $comments->username[0]->skin : $comme
 $rendering->addValue('titolo', $id !== '' ? str_replace('{$num}', $id, $comments->getLanguage('title', 1)).$comments->getLanguage('title', 2).$comments->config[0]->nomesito : $comments->config[0]->nomesito);
 $rendering->addValue('useronline', $comments->getUserOnline());
 $rendering->addValue('visitatoronline', $comments->getVisitatorOnline());
+$rendering->addValue('totaleaccessi', $comments->getTotalVisits());
 
 if($id == '')
 	$rendering->addValue('error', $comments->getLanguage('comment', 0));

@@ -17,6 +17,7 @@ $rendering->addValue('utente', $comment->isLogged() ? $comment->username[0]->nic
 $rendering->skin = $comment->isLogged() ? $comment->username[0]->skin : $comment->config[0]->skin;
 $rendering->addValue('useronline', $comment->getUserOnline());
 $rendering->addValue('visitatoronline', $comment->getVisitatorOnline());
+$rendering->addValue('totaleaccessi', $comment->getTotalVisits());
 
 if($titolo == '')
 	$rendering->addValue('error', $comment->getLanguage('news', 1));

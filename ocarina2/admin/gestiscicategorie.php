@@ -4,6 +4,8 @@
 	(C) Giovanni Capuano 2011
 */
 require_once('../core/class.Category.php');
+require_once('../core/class.News.php');
+require_once('../core/class.Page.php');
 require_once('../core/class.Rendering.php');
 
 $categoria = new Category();
@@ -46,8 +48,17 @@ if(($categoria->isLogged()) && ($categoria->username[0]->grado <= 3))
 				if($categoria->config[0]->log == 1)
 					$categoria->log($categoria->username[0]->nickname, 'Category '.$categoria_pagina.' creation failed.');
 			}
-		elseif($categoria_news_rimuovi !== '')
-			if($categoria->deleteCategory('news', $categoria_news_rimuovi)) {
+		elseif($categoria_news_rimuovi !== '') {
+			$news = new News();
+			$getNews = $news->searchNewsByCategory($categoria_news_rimuovi);
+			foreach($getNews as $v)
+				$news->editNews('categoria', 'Senza categoria', $v->minititolo);
+			if($categoria_news_rimuovi) {
+				$rendering->addValue('result', $categoria->getLanguage('managecategory', 8));
+				if($categoria->config[0]->log == 1)
+					$categoria->log($categoria->username[0]->nickname, 'Category '.$categoria_news_rimuovi.' deletion failed.');
+			}
+			elseif($categoria->deleteCategory('news', $categoria_news_rimuovi)) {
 				$rendering->addValue('result', $categoria->getLanguage('managecategory', 4));
 				if($categoria->config[0]->log == 1)
 					$categoria->log($categoria->username[0]->nickname, 'Category '.$categoria_news_rimuovi.' deleted.');
@@ -57,8 +68,18 @@ if(($categoria->isLogged()) && ($categoria->username[0]->grado <= 3))
 				if($categoria->config[0]->log == 1)
 					$categoria->log($categoria->username[0]->nickname, 'Category '.$categoria_news_rimuovi.' deletion failed.');
 			}
-		elseif($categoria_pagina_rimuovi !== '')
-			if($categoria->deleteCategory('pagine', $categoria_pagina_rimuovi)) {
+		}
+		elseif($categoria_pagina_rimuovi !== '') {
+			$page = new Page();
+			$getPage = $page->searchPageByCategory($categoria_pagina_rimuovi);
+			foreach($getPage as $v)
+				$page->editPage('categoria', 'Senza categoria', $v->minititolo);
+			if($categoria_pagina_rimuovi) {
+				$rendering->addValue('result', $categoria->getLanguage('managecategory', 8));
+				if($categoria->config[0]->log == 1)
+					$categoria->log($categoria->username[0]->nickname, 'Category '.$categoria_news_rimuovi.' deletion failed.');
+			}
+			elseif($categoria->deleteCategory('pagine', $categoria_pagina_rimuovi)) {
 				$rendering->addValue('result', $categoria->getLanguage('managecategory', 6));
 				if($categoria->config[0]->log == 1)
 					$categoria->log($categoria->username[0]->nickname, 'Category '.$categoria_pagina_rimuovi.' deletion failed.');
@@ -68,6 +89,7 @@ if(($categoria->isLogged()) && ($categoria->username[0]->grado <= 3))
 				if($categoria->config[0]->log == 1)
 					$categoria->log($categoria->username[0]->nickname, 'Category '.$categoria_pagina_rimuovi.' deletion failed.');
 			}
+		}
 		else {
 			$rendering->addValue('result', $categoria->getLanguage('error', 0));
 			if($categoria->config[0]->log == 1)

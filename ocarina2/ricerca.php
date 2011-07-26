@@ -21,6 +21,7 @@ $rendering->addValue('titolo', $comment->getLanguage('title', 9).$comment->getLa
 $rendering->addValue('description', $comment->getLanguage('description', 9));
 $rendering->addValue('useronline', $comment->getUserOnline());
 $rendering->addValue('visitatoronline', $comment->getVisitatorOnline());
+$rendering->addValue('totaleaccessi', $comment->getTotalVisits());
 
 if($cercaNews !== '') {
 	if(!$search = $comment->searchNews($cercaNews))

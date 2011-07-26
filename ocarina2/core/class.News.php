@@ -57,7 +57,8 @@ class News extends Category {
 				$voti = 1;
 			else
 				$voti = mysql_result($votanti, 0, 0) + 1;
-			if((parent::query("INSERT INTO {$this->prefix}voti(minititolo, nickname, tipo) VALUES('$minititolo', '$nickname', 'news')")) && (parent::query("UPDATE news SET voti='$voti' WHERE minititolo='$minititolo' AND approvato='1'")))
+			$data = date('d-m-y');
+			if((parent::query("INSERT INTO {$this->prefix}voti(minititolo, nickname, tipo, data) VALUES('$minititolo', '$nickname', 'news', '$data')")) && (parent::query("UPDATE news SET voti='$voti' WHERE minititolo='$minititolo' AND approvato='1'")))
 				return true;
 		}
 		return false;

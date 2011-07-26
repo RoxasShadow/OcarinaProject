@@ -205,6 +205,7 @@ class Languages {
 				'È accaduto un errore durante la rimozione della categoria.',
 				'La categoria è stata rimossa con successo.',
 				'È accaduto un errore durante la rimozione della categoria.'
+				'Eliminazione negata per la categoria `Senza categoria`.',
 			),
 			'log' => array(
 				'I log sono stati cancellati',

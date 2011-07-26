@@ -17,6 +17,7 @@ $rendering->skin = $user->isLogged() ? $user->username[0]->skin : $user->config[
 $rendering->addValue('description', ($nickname !== '') ? $user->getLanguage('description', 6).$nickname.'.' : $user->getLanguage('description', 5));
 $rendering->addValue('useronline', $user->getUserOnline());
 $rendering->addValue('visitatoronline', $user->getVisitatorOnline());
+$rendering->addValue('totaleaccessi', $user->getTotalVisits());
 
 if($nickname == '') {
 	$rendering->addValue('titolo', $user->getLanguage('profile', 0).$user->getLanguage('title', 2).$user->config[0]->nomesito);

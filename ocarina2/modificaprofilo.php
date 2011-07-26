@@ -21,6 +21,7 @@ $rendering->addValue('titolo', $user->getLanguage('title', 6).$user->getLanguage
 $rendering->addValue('description', $user->getLanguage('description', 4));
 $rendering->addValue('useronline', $user->getUserOnline());
 $rendering->addValue('visitatoronline', $user->getVisitatorOnline());
+$rendering->addValue('totaleaccessi', $user->getTotalVisits());
 
 if($user->isLogged())
 	if(!$submit) {
