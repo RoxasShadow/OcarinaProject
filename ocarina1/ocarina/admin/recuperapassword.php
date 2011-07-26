@@ -71,7 +71,7 @@ ATTENZIONE: Se non sei tu il richiedente della password, ti chiediamo di ignorar
 
 A presto,
 '.$cms->nomesito().'.';
-	email($mittente,$destinatario,$oggetto,$testo);
+	mail($mittente,$destinatario,$oggetto,$testo);
 
 	$text = 'La password è stata generata ed è stata inviata al tuo indirizzo email.';
 	// Visualizzo la pagina
