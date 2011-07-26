@@ -39,12 +39,12 @@ if(($categoria->isLogged()) && ($categoria->username[0]->grado <= 3))
 			}
 		elseif($categoria_pagina !== '')
 			if($categoria->createCategory('pagine', $categoria_pagina)) {
-				$rendering->addValue('result', $categoria->getLanguage('managecategory', 2));
+				$rendering->addValue('result', $categoria->getLanguage('managecategory', 0));
 				if($categoria->config[0]->log == 1)
 					$categoria->log($categoria->username[0]->nickname, 'Category '.$categoria_pagina.' created.');
 			}
 			else {
-				$rendering->addValue('result', $categoria->getLanguage('managecategory', 3));
+				$rendering->addValue('result', $categoria->getLanguage('managecategory', 1));
 				if($categoria->config[0]->log == 1)
 					$categoria->log($categoria->username[0]->nickname, 'Category '.$categoria_pagina.' creation failed.');
 			}
@@ -59,12 +59,12 @@ if(($categoria->isLogged()) && ($categoria->username[0]->grado <= 3))
 					$categoria->log($categoria->username[0]->nickname, 'Category '.$categoria_news_rimuovi.' deletion failed.');
 			}
 			elseif($categoria->deleteCategory('news', $categoria_news_rimuovi)) {
-				$rendering->addValue('result', $categoria->getLanguage('managecategory', 4));
+				$rendering->addValue('result', $categoria->getLanguage('managecategory', 2));
 				if($categoria->config[0]->log == 1)
 					$categoria->log($categoria->username[0]->nickname, 'Category '.$categoria_news_rimuovi.' deleted.');
 			}
 			else {
-				$rendering->addValue('result', $categoria->getLanguage('managecategory', 5));
+				$rendering->addValue('result', $categoria->getLanguage('managecategory', 3));
 				if($categoria->config[0]->log == 1)
 					$categoria->log($categoria->username[0]->nickname, 'Category '.$categoria_news_rimuovi.' deletion failed.');
 			}
@@ -80,12 +80,12 @@ if(($categoria->isLogged()) && ($categoria->username[0]->grado <= 3))
 					$categoria->log($categoria->username[0]->nickname, 'Category '.$categoria_news_rimuovi.' deletion failed.');
 			}
 			elseif($categoria->deleteCategory('pagine', $categoria_pagina_rimuovi)) {
-				$rendering->addValue('result', $categoria->getLanguage('managecategory', 6));
+				$rendering->addValue('result', $categoria->getLanguage('managecategory', 2));
 				if($categoria->config[0]->log == 1)
 					$categoria->log($categoria->username[0]->nickname, 'Category '.$categoria_pagina_rimuovi.' deletion failed.');
 			}
 			else {
-				$rendering->addValue('result', $categoria->getLanguage('managecategory', 7));
+				$rendering->addValue('result', $categoria->getLanguage('managecategory', 3));
 				if($categoria->config[0]->log == 1)
 					$categoria->log($categoria->username[0]->nickname, 'Category '.$categoria_pagina_rimuovi.' deletion failed.');
 			}
