@@ -51,7 +51,7 @@ if(isset($_POST['recuperapassword'])) {
 	}
 
 	// Genero una nuova password con l'RNG e la inserisco nel database
-	$rng = $rng(); // Creo la password
+	$rng = rng(); // Creo la password
 	$nuovapassword = $func->hash($rng); // La passo per un algoritmo di hash
 	$db->connettidb(); // Mi connetto al database
 	$query = $db->query("UPDATE utenti SET password='$rng' WHERE nickname='$nickname' AND email='$email'");
