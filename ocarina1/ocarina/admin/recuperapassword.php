@@ -1,4 +1,4 @@
-<?php
+rima<?php
 /* Permette di recuperare la password */
 // Includo le classi principali
 include_once "../core/class.MySQL.php";
@@ -54,7 +54,7 @@ if(isset($_POST['recuperapassword'])) {
 	$rng = rng(); // Creo la password
 	$nuovapassword = $func->hash($rng); // La passo per un algoritmo di hash
 	$db->connettidb(); // Mi connetto al database
-	$query = $db->query("UPDATE utenti SET password='$rng' WHERE nickname='$nickname' AND email='$email'");
+	$query = $db->query("UPDATE utenti SET password='$nuovapassword' WHERE nickname='$nickname' AND email='$email'");
 	$db->disconnettidb(); // Mi disconnetto dal database
 
 	// Invio la password via email
@@ -65,7 +65,7 @@ if(isset($_POST['recuperapassword'])) {
 Mediante il servizio Recupera password di '.$cms->nomesito().' hai richiesto il recupero della tua password.
 Essa è stata generata automaticamente e potrai modificarla tramite l\'apposita pagina Modifica password.
 
-La tua password è '.$rng.'
+La tua password è la seguente: '.$rng.'
 
 ATTENZIONE: Se non sei tu il richiedente della password, ti chiediamo di ignorare questa email.
 
