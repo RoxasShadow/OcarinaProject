@@ -24,8 +24,8 @@ $rendering->addValue('totaleaccessi', $user->getTotalVisits());
 
 if($user->isLogged()) 
 	if(($oldPassword !== '') && ($password !== '') && ($confPassword !== ''))
-		if((md5($oldPassword) == $user->username[0]->password) && ($password == $confPassword) && (strlen($password) > 4))
-			if($user->editUser('password', md5($password), $user->username[0]->nickname)) {
+		if((md5($user->salt.$oldPassword) == $user->username[0]->password) && ($password == $confPassword) && (strlen($password) > 4))
+			if($user->editUser('password', md5($user->salt.$password), $user->username[0]->nickname)) {
 				if($user->config[0]->log == 1)
 					$user->log($user->username[0]->nickname, 'Password modificated.');
 				$rendering->addValue('result', $user->getLanguage('editpassword', 0).header('Refresh: 2; URL='.$user->config[0]->url_index.'/logout.php?redirect=login.php'));

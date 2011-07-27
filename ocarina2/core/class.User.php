@@ -9,6 +9,7 @@ require_once('class.Configuration.php');
 class User extends Configuration {
 	public $logged = NULL;
 	public $username = NULL;
+	public $salt = 'njhbijk2gfcvgjiu8yt6';
 	
 	public function __construct() {
 		parent::__construct();
@@ -157,7 +158,7 @@ class User extends Configuration {
 			$query = parent::query('SELECT * FROM '.$this->prefix.'utenti LIMIT 1');
 			if(!$campi = parent::getColumns($query))
 				return false;
-			$array[1] = md5($array[1]);
+			$array[1] = md5($this->salt.$array[1]);
 			$query = 'INSERT INTO '.$this->prefix.'utenti(';
 			foreach($campi as $var)
 				if(($var !== 'id') && ($var !== 'secret') && ($var !== 'bio') && ($var !== 'avatar') && ($var !== 'lastlogout') && ($var !== 'ip') && ($var !== 'browsername') && ($var !== 'browserversion') && ($var !== 'platform') && ($var !== 'codicerecupero'))
@@ -241,7 +242,7 @@ class User extends Configuration {
 	public function login($nickname, $password) {
 		if(!$this->isUser($nickname))
 			return false;
-		$password = md5($password);
+		$password = md5($this->salt.$password);
 		if(!$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}utenti WHERE nickname='$nickname' AND password='$password' AND codiceregistrazione=''"))
 			return false;
 		if(mysql_result($query, 0, 0) > 0) {

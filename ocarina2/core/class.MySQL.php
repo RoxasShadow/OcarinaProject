@@ -196,7 +196,7 @@ class MySQL extends Utilities {
 			"CREATE TABLE IF NOT EXISTS `{$this->prefix}utenti` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `nickname` varchar(100) NOT NULL,
-			  `password` varchar(40) NOT NULL,
+			  `password` varchar(100) NOT NULL,
 			  `secret` varchar(40) NOT NULL,
 			  `email` varchar(100) NOT NULL,
 			  `grado` tinyint(1) NOT NULL,
