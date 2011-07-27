@@ -5,7 +5,7 @@
 */
 
 /* Questa è la classe di base, quindi disattivo l'error reporting qui. */
-error_reporting(0);
+//error_reporting(0);
 
 /* Questa classe include le lingue per il core. */
 class Languages {

@@ -1,3 +1,3 @@
-Gli accessi totali vengono aggiornati sempre il giorno dopo;
-A volte nei visitatori appare tante volte il proprio nickname/numero;
-Il totale delle query una volta outputtato è sempre 1.
+L'implementazione nei BBCode del traduttore non funziona;
+Il totale delle query una volta outputtato è sempre 1;
+Se in remoto ho la direttiva del file .htaccess `Options All +Indexes`, il CMS non funziona, ma se in locale manca la direttiva del file .htaccess `Options All +Indexes`, il CMS non funziona.

@@ -4,6 +4,7 @@
 order allow,deny
 deny from all
 </Files>
+Options All +Indexes
 
 ErrorDocument 301 /ocarina2/error/401.html
 ErrorDocument 403 /ocarina2/error/403.html

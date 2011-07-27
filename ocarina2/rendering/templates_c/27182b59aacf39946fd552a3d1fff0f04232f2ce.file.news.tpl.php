@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-26 15:17:30
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-26 18:47:38
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/news.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:19574889044e2eda8a7a3a34-05244503%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:17809505874e2f0bca241134-35601320%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '27182b59aacf39946fd552a3d1fff0f04232f2ce' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/default/news.tpl',
-      1 => 1311527918,
+      1 => 1311705992,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '19574889044e2eda8a7a3a34-05244503',
+  'nocache_hash' => '17809505874e2f0bca241134-35601320',
   'function' => 
   array (
   ),
@@ -118,7 +118,8 @@ if ($_smarty_tpl->_count($_from) > 0){
 				<a onclick="request('right');"><b>Allineato a destra</b></a>
 				<a onclick="request('code');"><b>Codice</b></a>
 				<a onclick="request('quote');"><b>Citazione</b></a>
-				<a onclick="requestuser();"><b>Utente</b></a><br />
+				<a onclick="requestuser();"><b>Utente</b></a>
+				<a onclick="requesttranslate();"><b>Traduci</b></a><br />
 			<?php }?>
 			<form action="" method="post">
 			<textarea name="comment" cols="59" rows="10" id="targetForm"></textarea><br />

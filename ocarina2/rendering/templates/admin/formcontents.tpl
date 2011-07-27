@@ -37,7 +37,8 @@
 			<a onclick="request('code');"><b>Codice</b></a>
 			<a onclick="request('quote');"><b>Citazione</b></a>
 			<a onclick="requestuser();"><b>Utente</b></a>
-			<a onclick="requestyoutube();"><b>Youtube</b></a><br />
+			<a onclick="requestyoutube();"><b>Youtube</b></a>
+			<a onclick="requesttranslate();"><b>Traduci</b></a><br />
 		{else}
 			Tag HTML permessi.<br />
 		{/if}

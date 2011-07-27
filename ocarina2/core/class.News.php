@@ -49,14 +49,11 @@ class News extends Category {
 	public function voteNews($minititolo) {
 		if(parent::isLogged()) {
 			$nickname = $this->username[0]->nickname;
-			if(!$votanti = parent::query("SELECT COUNT(*) FROM {$this->prefix}voti WHERE minititolo='$minititolo' AND approvato='1' AND nickname='$nickname' AND tipo='news'"))
+			if(!$votanti = parent::query("SELECT COUNT(*) FROM {$this->prefix}voti WHERE minititolo='$minititolo' AND nickname='$nickname' AND tipo='news'"))
 				return false;
 			if(mysql_result($votanti, 0, 0) > 0)
 				return false;
-			if(!$votanti = parent::query("SELECT COUNT(*) FROM {$this->prefix}voti WHERE minititolo='$minititolo' AND approvato='1' AND tipo='news'"))
-				$voti = 1;
-			else
-				$voti = mysql_result($votanti, 0, 0) + 1;
+			$voti = (!$votanti = parent::query("SELECT COUNT(*) FROM {$this->prefix}voti WHERE minititolo='$minititolo' AND tipo='news'")) ? 1 : mysql_result($votanti, 0, 0) + 1;
 			$data = date('d-m-y');
 			if((parent::query("INSERT INTO {$this->prefix}voti(minititolo, nickname, tipo, data) VALUES('$minititolo', '$nickname', 'news', '$data')")) && (parent::query("UPDATE news SET voti='$voti' WHERE minititolo='$minititolo' AND approvato='1'")))
 				return true;
