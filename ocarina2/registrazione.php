@@ -60,9 +60,9 @@ elseif($submit) {
 	if($user->config[0]->registrazioni == 0)
 		$rendering->addValue('result', $user->getLanguage('registration', 5));
 	elseif(($nickname !== '') && ($password !== '') && ($confPassword !== '') && ($email !== '')) {
-		  $captcha->checkCaptcha();
-		  if($captcha->getError() !== false)
-		  	$rendering->addValue('result', $user->getLanguage('registration', 12));
+		$captcha->checkCaptcha();
+		if($captcha->getError() !== false)
+			$rendering->addValue('result', $user->getLanguage('registration', 12));
 		elseif(($password == $confPassword) && (strlen($password) > 4) && (strlen($nickname) > 4)) {
 			if($user->config[0]->validazioneaccount == 1) {
 				$codice = $user->getCode(); // Validazione account

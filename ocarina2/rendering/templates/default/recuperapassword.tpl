@@ -12,12 +12,11 @@
 		Email<br />
 		<input type="text" name="email" /><br />
 		</td>
-		<td>
+		</table>
+		<br />
+		{$captcha}
 		<br />
 		<input type="submit" value="Recupera password" name="submit" />
-		</td>
-		</tr>
-		</table>
 		</form>
 	{else}
 		<div class="titolo">{$result}</div>
