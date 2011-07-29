@@ -15,7 +15,7 @@ class Rendering extends Configuration {
 	public function __construct() {
 		parent::__construct(); // Eredito il costruttore della superclasse
 		$this->time_start = $this->microtime_float(); // Il timer lo avvio qui poichè la classe viene istanziata ad ogni script.
-		require_once(parent::$this->config[0]->root_rendering.'/Smarty.class.php');
+		require_once($this->config[0]->root_rendering.'/Smarty.class.php');
 		$this->smarty = new Smarty;
 		$path = $this->config[0]->root_rendering;
 		$this->smarty->cache_dir = $path.'/cache';
@@ -78,11 +78,17 @@ class Rendering extends Configuration {
 		$this->addValue('root_immagini', $this->config[0]->root_immagini);
 		$this->addValue('query', $this->numQuery);
 		$this->addValue('time', $this->microtime_float() - $this->time_start);
+		require_once($this->config[0]->root_index.'/etc/mobile_device_detect.php');
+		
 		if($this->skin == 'admin') {
 			if($filename == 'index.tpl')
 				$this->addValue('lastversion', file_get_contents('http://www.giovannicapuano.net/ocarina2/lastversion.php'));
 			$this->addValue('skin','admin');
 			$this->smarty->display('admin/'.$filename);
+		}
+		elseif((mobile_device_detect(true,true,true,true,true,true,true,false,false)) && ($this->skinExists('mobile'))) {
+			$this->addValue('skin', 'mobile');
+			$this->smarty->display('mobile'.'/'.$filename);
 		}
 		elseif($this->skinExists($this->skin)) {
 			$this->addValue('skin', $this->skin);
@@ -100,7 +106,7 @@ class Rendering extends Configuration {
 		$apri = opendir($dir);
 		$f = array();
 		while($skin = readdir($apri))
-			if(($skin !== '.') && ($skin !== '..') && ($skin !== 'admin') && (is_dir($dir.$skin)))
+			if(($skin !== '.') && ($skin !== '..') && ($skin !== 'admin') && ($skin !== 'mobile') && (is_dir($dir.$skin)))
 				$f[] = $skin;
 		return $f;
 	}

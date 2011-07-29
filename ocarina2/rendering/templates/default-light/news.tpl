@@ -48,7 +48,8 @@
 				<a onclick="request('right');"><b>Allineato a destra</b></a>
 				<a onclick="request('code');"><b>Codice</b></a>
 				<a onclick="request('quote');"><b>Citazione</b></a>
-				<a onclick="requestuser();"><b>Utente</b></a><br />
+				<a onclick="requestuser();"><b>Utente</b></a>
+				<a onclick="requesttranslate();"><b>Traduci</b></a><br />
 			{/if}
 			<form action="" method="post">
 			<textarea name="comment" cols="59" rows="10" id="targetForm"></textarea><br />
