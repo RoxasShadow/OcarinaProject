@@ -82,6 +82,7 @@ class osh:
 		print 'countaccess -> count the total access in the site'
 		print 'useronline -> read the online users'
 		print 'visitatoronline -> read the number of online visitators'
+		print 'countpm -> read the number of personal message unreaded'
 		print 'registration -> registrate new user'
 		print 'login -> login'
 		print 'logout -> logout'
@@ -290,6 +291,10 @@ class osh:
 
 	def parseCountAccess(self, json):
 		print 'Total access in the site: '+self.bold+json['response']+self.normal+'.'
+			print 'There are '+self.bold+json['response']+self.normal+' users registrated.'
+
+	def parseCountPM(self, json):
+		print 'PM unreaded: '+self.bold+json['response']+self.normal+'.'
 
 	def parseGetNickname(self, json):
 		if(json['response'] != 2):
@@ -383,6 +388,8 @@ class osh:
 				self.parseUserOnline(self.getContent('useronline'))
 			elif action == 'visitatoronline':
 				self.parseVisitatorOnline(self.getContent('visitatoronline'))
+			elif action == 'countpm':
+				self.parseCountPM(self.getContent('countpm'))
 			elif action == 'registration':
 				nickname = raw_input("Nickname: ")
 				password = raw_input("Password: ")
