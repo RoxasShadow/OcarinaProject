@@ -8,13 +8,11 @@
 		<div class="titolo">Nessun MP ricevuto.</div>
 	{else}
 		{if is_numeric($id)}
-			{foreach from=$result key=key item=item}
-				<b>Da:</b> <a href="{$url_index}/profile/{$result[0]->mittente}.html">{$result[0]->mittente}</a><br />
-				<b>Data:</b> {$result[0]->data}<br />
-				<b>Oggetto:</b> {$result[0]->oggetto}<br />
-				<b>Contenuto:</b><br />
-				{$result[0]->contenuto}
-			{/foreach}
+			<b>Da:</b> <a href="{$url_index}/profile/{$result[0]->mittente}.html">{$result[0]->mittente}</a><br />
+			<b>Data:</b> {$result[0]->data}<br />
+			<b>Oggetto:</b> {$result[0]->oggetto}<br />
+			<b>Contenuto:</b><br />
+			{$result[0]->contenuto}
 		{else}
 			{foreach from=$result key=key item=item}
 				{if $result[$key]->letto == 1}

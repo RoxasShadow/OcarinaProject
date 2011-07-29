@@ -7,21 +7,19 @@
 	{else if isset($commentSended)}
 		<div class="titolo">{$commentSended}</div>
 	{elseif is_array($news)}
-		{foreach from=$news key=key item=item}
-			<div class="titolo">{$news[$key]->titolo}</div>
-			<div class="newsheader" align="center">Scritto da <a href="{$url_index}/profile/{$news[$key]->autore}.html">{$news[$key]->autore}</a> il giorno {$news[$key]->data} alle ore {$news[$key]->ora} nella categoria <a href="{$url_index}/category/{$news[$key]->categoria}.html">{$news[$key]->categoria}</a>. {if $news[$key]->oraultimamodifica == $news[$key]->ora}Ultima modifica {if $news[$key]->dataultimamodifica == $news[$key]->data}oggi{else} il giorno {$news[$key]->dataultimamodifica}{/if} alle ore {$news[$key]->ora} {if $news[$key]->autoreultimamodifica !== $news[$key]->autore}da parte di {$news[$key]->autoreultimamodifica}.{/if}{/if}</div><br />
-			<div class="news"><p>{$news[$key]->contenuto}</p></div><br />
-			{if $utente !== ''}
-				<a href="{$url_index}/vote.php?action=news&titolo={$news[$key]->minititolo}">Vota questa news</a>
-				{if $news[$key]->voti == 1}
-					(1 voto)
-				{else}
-					({$news[$key]->voti} voti)
-					{/if}
+		<div class="titolo">{$news[0]->titolo}</div>
+		<div class="newsheader" align="center">Scritto da <a href="{$url_index}/profile/{$news[0]->autore}.html">{$news[0]->autore}</a> il giorno {$news[0]->data} alle ore {$news[0]->ora} nella categoria <a href="{$url_index}/category/{$news[0]->categoria}.html">{$news[0]->categoria}</a>. {if $news[0]->oraultimamodifica == $news[0]->ora}Ultima modifica {if $news[0]->dataultimamodifica == $news[0]->data}oggi{else} il giorno {$news[0]->dataultimamodifica}{/if} alle ore {$news[0]->ora} {if $news[0]->autoreultimamodifica !== $news[0]->autore}da parte di {$news[0]->autoreultimamodifica}.{/if}{/if}</div><br />
+		<div class="news"><p>{$news[0]->contenuto}</p></div><br />
+		{if $utente !== ''}
+			<a href="{$url_index}/vote.php?action=news&titolo={$news[0]->minititolo}">Vota questa news</a>
+			{if $news[0]->voti == 1}
+				(1 voto)
 			{else}
-				<a href="{$url_index}/registrazione.php">Registrati</a> o <a href="{$url_index}/login.php">accedi</a> per votare questa news.
-			{/if}
-		{/foreach}
+				({$news[0]->voti} voti)
+				{/if}
+		{else}
+			<a href="{$url_index}/registrazione.php">Registrati</a> o <a href="{$url_index}/login.php">accedi</a> per votare questa news.
+		{/if}
 		{if !is_array($commenti)}
 			<br /><hr /><br />
 			<div class="news">{$commenti}</div>

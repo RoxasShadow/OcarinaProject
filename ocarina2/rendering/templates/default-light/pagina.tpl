@@ -6,21 +6,21 @@
 		<div class="titolo">{$error}</div>
 	{else}
 		{if is_array($pagina)}
-			{foreach from=$pagina key=key item=item}
-				<div class="titolo">{$pagina[$key]->titolo}</div>
-				<div class="newsheader" align="center">Scritto da <a href="{$url_index}/profile/{$pagina[$key]->autore}.html">{$pagina[$key]->autore}</a> il giorno {$pagina[$key]->data} alle ore {$pagina[$key]->ora} nella categoria <a href="{$url_index}/category/{$pagina[$key]->categoria}.html">{$pagina[$key]->categoria}</a>. {if $pagina[$key]->oraultimamodifica == $pagina[$key]->ora}Ultima modifica {if $pagina[$key]->dataultimamodifica == $pagina[$key]->data}oggi{else} il giorno {$pagina[$key]->dataultimamodifica}{/if} alle ore {$pagina[$key]->ora} {if $pagina[$key]->autoreultimamodifica !== $pagina[$key]->autore}da parte di {$pagina[$key]->autoreultimamodifica}.{/if}{/if}</div><br />
-				<div class="news"><p>{$pagina[$key]->contenuto}</p></div><br />
-				{if $utente !== ''}
-					<a href="{$url_index}/vote.php?action=page&titolo={$pagina[$key]->minititolo}">Vota questa pagina</a>
-					{if $pagina[$key]->voti == 1}
-						(1 voto)
-					{else}
-						({$pagina[$key]->voti} voti)
-					{/if}
+		{foreach from=$pagina key=key item=item}
+			<div class="titolo">{$pagina[0]->titolo}</div>
+			<div class="newsheader" align="center">Scritto da <a href="{$url_index}/profile/{$pagina[0]->autore}.html">{$pagina[0]->autore}</a> il giorno {$pagina[0]->data} alle ore {$pagina[0]->ora} nella categoria <a href="{$url_index}/category/{$pagina[0]->categoria}.html">{$pagina[0]->categoria}</a>. {if $pagina[0]->oraultimamodifica == $pagina[0]->ora}Ultima modifica {if $pagina[0]->dataultimamodifica == $pagina[0]->data}oggi{else} il giorno {$pagina[0]->dataultimamodifica}{/if} alle ore {$pagina[0]->ora} {if $pagina[0]->autoreultimamodifica !== $pagina[0]->autore}da parte di {$pagina[0]->autoreultimamodifica}.{/if}{/if}</div><br />
+			<div class="news"><p>{$pagina[0]->contenuto}</p></div><br />
+			{if $utente !== ''}
+				<a href="{$url_index}/vote.php?action=page&titolo={$pagina[0]->minititolo}">Vota questa pagina</a>
+				{if $pagina[0]->voti == 1}
+					(1 voto)
 				{else}
-					<a href="{$url_index}/registrazione.php">Registrati</a> o <a href="{$url_index}/login.php">accedi</a> per votare questa pagina.
+					({$pagina[0]->voti} voti)
 				{/if}
-			{/foreach}
+			{else}
+				<a href="{$url_index}/registrazione.php">Registrati</a> o <a href="{$url_index}/login.php">accedi</a> per votare questa pagina.
+			{/if}
+		{/foreach}
 		{/if}
 	{/if}
 {include file="$root_rendering/templates/$skin/include/footer.tpl"}

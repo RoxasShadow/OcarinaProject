@@ -14,32 +14,30 @@
 		</form>
 		</div>
 	{elseif is_array($result)}
-		{foreach from=$result key=key item=item}
-			<div align="center">
-			<div class="titolo">{$result[$key]->nickname}</div>
-			{if $result[$key]->avatar !== ''}<img src="{$result[$key]->avatar}" /><br />{/if}
-			<br />
+		<div align="center">
+		<div class="titolo">{$result[0]->nickname}</div>
+		{if $result[0]->avatar !== ''}<img src="{$result[0]->avatar}" /><br />{/if}
+		<br />
 			
-			<table border="0" cellpadding="2">
-			<tr>
-			<td><b>Email</b></td>
-			<td><b>Data registrazione</b></td>
-			<td><b>Grado</b></td>
-			<td><b>Bio</b></td>
-			<td><b>Browser</b></td>
-			<td><b>Piattaforma</b></td>
-			</tr>
-			<tr>
-			<td>{mailto address={$result[$key]->email} encode='javascript_charcode'}</td>
-			<td>{$result[$key]->data}</td>
-			<td>{if $result[$key]->grado == 1}Amministratore{elseif $result[$key]->grado == 2}Moderatore{elseif $result[$key]->grado == 3}Editore{elseif $result[$key]->grado == 4}Grafico{elseif $result[$key]->grado == 5}SEO{elseif $result[$key]->grado == 6}Utente{elseif $result[$key]->grado == 7}Bannato{/if}</td>
-			<td>{$result[$key]->bio}</td>
-			<td>{$result[$key]->browsername}<br />{$result[$key]->browserversion}</td>
-			<td>{$result[$key]->platform}</td>
-			</tr>
-			</table>
-			</div>
-		{/foreach}
+		<table border="0" cellpadding="2">
+		<tr>
+		<td><b>Email</b></td>
+		<td><b>Data registrazione</b></td>
+		<td><b>Grado</b></td>
+		<td><b>Bio</b></td>
+		<td><b>Browser</b></td>
+		<td><b>Piattaforma</b></td>
+		</tr>
+		<tr>
+		<td>{mailto address={$result[0]->email} encode='javascript_charcode'}</td>
+		<td>{$result[0]->data}</td>
+		<td>{if $result[0]->grado == 1}Amministratore{elseif $result[0]->grado == 2}Moderatore{elseif $result[0]->grado == 3}Editore{elseif $result[0]->grado == 4}Grafico{elseif $result[0]->grado == 5}SEO{elseif $result[0]->grado == 6}Utente{elseif $result[0]->grado == 7}Bannato{/if}</td>
+		<td>{$result[0]->bio}</td>
+		<td>{$result[0]->browsername}<br />{$result[0]->browserversion}</td>
+		<td>{$result[0]->platform}</td>
+		</tr>
+		</table>
+		</div>
 	{else}
 		<div class="titolo">{$result}</div>
 	{/if}

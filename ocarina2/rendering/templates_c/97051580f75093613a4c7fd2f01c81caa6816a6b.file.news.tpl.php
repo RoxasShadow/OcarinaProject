@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-29 17:58:22
-         compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/news.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:10124805254e32f4bec25141-45719253%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-29 19:22:43
+         compiled from "/var/www/htdocs/ocarina2/rendering//templates/mobile/news.tpl" */ ?>
+<?php /*%%SmartyHeaderCode:10270547234e330883f258e6-42171276%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
-    '27182b59aacf39946fd552a3d1fff0f04232f2ce' => 
+    '97051580f75093613a4c7fd2f01c81caa6816a6b' => 
     array (
-      0 => '/var/www/htdocs/ocarina2/rendering//templates/default/news.tpl',
-      1 => 1311962293,
+      0 => '/var/www/htdocs/ocarina2/rendering//templates/mobile/news.tpl',
+      1 => 1311967354,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '10124805254e32f4bec25141-45719253',
+  'nocache_hash' => '10270547234e330883f258e6-42171276',
   'function' => 
   array (
   ),
@@ -21,15 +21,19 @@ $_smarty_tpl->decodeProperties(array (
 <?php $_template = new Smarty_Internal_Template(($_smarty_tpl->getVariable('root_rendering')->value)."/templates/".($_smarty_tpl->getVariable('skin')->value)."/include/header.tpl", $_smarty_tpl->smarty, $_smarty_tpl, $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null);
  echo $_template->getRenderedTemplate(); $_template->rendered_content = null;?><?php unset($_template);?>
 	<?php if (isset($_smarty_tpl->getVariable('error',null,true,false)->value)){?>
-		<div class="titolo"><?php echo $_smarty_tpl->getVariable('error')->value;?>
-</div>
+		<div id="post-0" class="post">
+		<h2 class="title"><?php echo $_smarty_tpl->getVariable('error')->value;?>
+</h2>
+		</div>
 	<?php }elseif(isset($_smarty_tpl->getVariable('commentSended',null,true,false)->value)){?>
-		<div class="titolo"><?php echo $_smarty_tpl->getVariable('commentSended')->value;?>
-</div>
+		<div id="post-0" class="post">
+		<h2 class="title"><?php echo $_smarty_tpl->getVariable('commentSended')->value;?>
+</h2>
+		</div>
 	<?php }elseif(is_array($_smarty_tpl->getVariable('news')->value)){?>
-		<div class="titolo"><?php echo $_smarty_tpl->getVariable('news')->value[0]->titolo;?>
-</div>
-		<div class="newsheader" align="center">Scritto da <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+		<h2 class="title"><?php echo $_smarty_tpl->getVariable('news')->value[0]->titolo;?>
+</h2>
+		<div class="meta">Scritto da <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /profile/<?php echo $_smarty_tpl->getVariable('news')->value[0]->autore;?>
 .html"><?php echo $_smarty_tpl->getVariable('news')->value[0]->autore;?>
 </a> il giorno <?php echo $_smarty_tpl->getVariable('news')->value[0]->data;?>
@@ -41,8 +45,8 @@ $_smarty_tpl->decodeProperties(array (
 <?php }?> alle ore <?php echo $_smarty_tpl->getVariable('news')->value[0]->ora;?>
  <?php if ($_smarty_tpl->getVariable('news')->value[0]->autoreultimamodifica!==$_smarty_tpl->getVariable('news')->value[0]->autore){?>da parte di <?php echo $_smarty_tpl->getVariable('news')->value[0]->autoreultimamodifica;?>
 .<?php }?><?php }?></div><br />
-		<div class="news"><p><?php echo $_smarty_tpl->getVariable('news')->value[0]->contenuto;?>
-</p></div><br />
+		<p><?php echo $_smarty_tpl->getVariable('news')->value[0]->contenuto;?>
+</p><br />
 		<?php if ($_smarty_tpl->getVariable('utente')->value!==''){?>
 			<a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /vote.php?action=news&titolo=<?php echo $_smarty_tpl->getVariable('news')->value[0]->minititolo;?>
@@ -118,6 +122,7 @@ if ($_smarty_tpl->_count($_from) > 0){
 			<div id="previewBox"></div>
 			</form>
 		<?php }?>
+		</div>
 	<?php }?>
 <?php $_template = new Smarty_Internal_Template(($_smarty_tpl->getVariable('root_rendering')->value)."/templates/".($_smarty_tpl->getVariable('skin')->value)."/include/footer.tpl", $_smarty_tpl->smarty, $_smarty_tpl, $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null);
  echo $_template->getRenderedTemplate(); $_template->rendered_content = null;?><?php unset($_template);?>

@@ -17,7 +17,7 @@
 <body>
 <div id="header">{$titolo}</div>
 <div id="menu" align="center">
-<a href="{$url_index}/index.php">News</a> | <a href="{$url_index}/archivio.php">Archivio</a> | <a href="{$url_index}/ricerca.php">Cerca nel sito</a> | <a href="{$url_index}/profilo.php">Profili</a> | <a href="#">Filler</a><br />
+<a href="{$url_index}/index.php">News</a> | <a href="{$url_index}/archivio.php">Archivio</a> | <a href="{$url_index}/ricerca.php">Cerca nel sito</a> | <a href="{$url_index}/profilo.php">Profili</a><br />
 {if $utente == ''}
 Benvenuto su {$nomesito}! Per usufruire di tutte le funzionalità che ti offriamo <a href="{$url_index}/login.php">accedi</a> oppure <a href="{$url_index}/registrazione.php">registrati</a>. (<a href="{$url_index}/recuperapassword.php">Password persa?</a>)
 {else}

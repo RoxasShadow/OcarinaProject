@@ -86,7 +86,7 @@ class Rendering extends Configuration {
 			$this->addValue('skin','admin');
 			$this->smarty->display('admin/'.$filename);
 		}
-		elseif((mobile_device_detect(true,true,true,true,true,true,true,false,false)) && ($this->skinExists('mobile'))) {
+		elseif((mobile_device_detect()) && ($this->skinExists('mobile'))) {
 			$this->addValue('skin', 'mobile');
 			$this->smarty->display('mobile'.'/'.$filename);
 		}

@@ -2,6 +2,7 @@
 	(C) Giovanni Capuano 2011
 *}
 {include file="$root_rendering/templates/$skin/include/header.tpl"}
+	<div id="post-0" class="post">
 	{if $cerca}
 		Cerca tra le news:<br />
 		<form action="" method="post">
@@ -20,7 +21,7 @@
 	{else}
 	
 	{if isset($error_news)}
-		<div class="titolo">{$error_news}</div>
+		<h2 class="title">{$error_news}</h2>
 	{else if isset($news)}
 		&bull; <b>News</b><br />
 		{foreach from=$news key=key item=item}
@@ -29,7 +30,7 @@
 	{/if}
 	
 	{if isset($error_page)}
-		<div class="titolo">{$error_page}</div>
+		<h2 class="title">{$error_page}</h2>
 	{else if isset($pagina)}
 		&bull; <b>Pagine</b><br />
 		{foreach from=$pagina key=key item=item}
@@ -38,7 +39,7 @@
 	{/if}
 	
 	{if isset($error_comment)}
-		<div class="titolo">{$error_comment}</div>
+		<h2 class="title">{$error_comment}</h2>
 	{else if isset($commento)}
 		&bull; <b>Commenti</b><br />
 		{foreach from=$commento key=key item=item}
@@ -47,4 +48,5 @@
 	{/if}
 	
 	{/if}
+	</div>
 {include file="$root_rendering/templates/$skin/include/footer.tpl"}
