@@ -22,6 +22,10 @@ $rendering->addValue('description', $user->getLanguage('description', 4));
 $rendering->addValue('useronline', $user->getUserOnline());
 $rendering->addValue('visitatoronline', $user->getVisitatorOnline());
 $rendering->addValue('totaleaccessi', $user->getTotalVisits());
+require_once('core/class.PersonalMessage.php');
+$pm = new PersonalMessage();
+$rendering->addValue('numeromp', $pm->countPM());
+unset($pm);
 
 if($user->isLogged())
 	if(!$submit) {

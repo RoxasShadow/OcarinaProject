@@ -18,6 +18,10 @@ $rendering->skin = $comment->isLogged() ? $comment->username[0]->skin : $comment
 $rendering->addValue('useronline', $comment->getUserOnline());
 $rendering->addValue('visitatoronline', $comment->getVisitatorOnline());
 $rendering->addValue('totaleaccessi', $comment->getTotalVisits());
+require_once('core/class.PersonalMessage.php');
+$pm = new PersonalMessage();
+$rendering->addValue('numeromp', $pm->countPM());
+unset($pm);
 
 if($titolo == '')
 	$rendering->addValue('error', $comment->getLanguage('news', 1));

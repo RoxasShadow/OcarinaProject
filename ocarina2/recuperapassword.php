@@ -22,6 +22,10 @@ $rendering->addValue('description', $user->getLanguage('description', 7));
 $rendering->addValue('useronline', $user->getUserOnline());
 $rendering->addValue('visitatoronline', $user->getVisitatorOnline());
 $rendering->addValue('totaleaccessi', $user->getTotalVisits());
+require_once('core/class.PersonalMessage.php');
+$pm = new PersonalMessage();
+$rendering->addValue('numeromp', $pm->countPM());
+unset($pm);
 
 if(!$submit) {
 	$rendering->addValue('captcha', $captcha->getCaptcha());

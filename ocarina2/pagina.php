@@ -17,6 +17,10 @@ $rendering->skin = $pagina->isLogged() ? $pagina->username[0]->skin : $pagina->c
 $rendering->addValue('useronline', $pagina->getUserOnline());
 $rendering->addValue('visitatoronline', $pagina->getVisitatorOnline());
 $rendering->addValue('totaleaccessi', $pagina->getTotalVisits());
+require_once('core/class.PersonalMessage.php');
+$pm = new PersonalMessage();
+$rendering->addValue('numeromp', $pm->countPM());
+unset($pm);
 
 if($titolo == '')
 	$rendering->addValue('error', $pagina->getLanguage('page', 0));

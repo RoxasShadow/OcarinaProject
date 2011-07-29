@@ -18,6 +18,10 @@ $rendering->addValue('titolo', $id !== '' ? str_replace('{$num}', $id, $comments
 $rendering->addValue('useronline', $comments->getUserOnline());
 $rendering->addValue('visitatoronline', $comments->getVisitatorOnline());
 $rendering->addValue('totaleaccessi', $comments->getTotalVisits());
+require_once('core/class.PersonalMessage.php');
+$pm = new PersonalMessage();
+$rendering->addValue('numeromp', $pm->countPM());
+unset($pm);
 
 if($id == '')
 	$rendering->addValue('error', $comments->getLanguage('comment', 0));

@@ -19,6 +19,10 @@ $rendering->addValue('description', $news->getLanguage('description', 1));
 $rendering->addValue('useronline', $news->getUserOnline());
 $rendering->addValue('visitatoronline', $news->getVisitatorOnline());
 $rendering->addValue('totaleaccessi', $news->getTotalVisits());
+require_once('core/class.PersonalMessage.php');
+$pm = new PersonalMessage();
+$rendering->addValue('numeromp', $pm->countPM());
+unset($pm);
 
 if($categoria == '')
 	$rendering->addValue('error', $news->getLanguage('error', 1));

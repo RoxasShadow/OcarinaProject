@@ -42,6 +42,7 @@
 		user($nickname)
 		countuser()
 		countaccess()
+		countpm()
 		registration($nickname, $password, $email)
 		login($nickname, $password)
 		logout()
@@ -79,6 +80,7 @@ $actionPermitted = array(
 	'user',
 	'countuser',
 	'countaccess',
+	'countpm',
 	'login',
 	'logout',
 	'islogged',
@@ -408,6 +410,11 @@ elseif($action == 'countuser') {
 }
 elseif($action == 'countaccess') {
 	echo '{"response":'.json_encode($user->config[0]->totalevisitatori).'}';
+}
+elseif($action == 'countpm') {
+	require_once('core/class.PersonalMessage.php');
+	$pm = new PersonalMessage();
+	echo '{"response":'.json_encode($pm->countPM()).'}';
 }
 elseif(($action == 'registration') && ($nickname !== '') && ($password !== '') && ($email !== '')) {
 	if($user->isLogged())

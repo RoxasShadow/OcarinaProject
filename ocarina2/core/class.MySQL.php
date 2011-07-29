@@ -193,6 +193,19 @@ class MySQL extends Utilities {
 			  KEY `minititolo` (`minititolo`)
 			) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
 
+			"CREATE TABLE IF NOT EXISTS `{$this->prefix}personalmessage` (
+			  `id` int(10) NOT NULL AUTO_INCREMENT,
+			  `mittente` varchar(100) NOT NULL,
+			  `destinatario` varchar(100) NOT NULL,
+			  `data` varchar(10) NOT NULL,
+			  `ora` varchar(10) NOT NULL,
+			  `oggetto` varchar(100) NOT NULL,
+			  `contenuto` text NOT NULL,
+			  `letto` tinyint(1) NOT NULL,
+			  PRIMARY KEY (`id`),
+			  KEY `minititolo` (`mittente`,`destinatario`)
+			) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
+
 			"CREATE TABLE IF NOT EXISTS `{$this->prefix}utenti` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `nickname` varchar(100) NOT NULL,

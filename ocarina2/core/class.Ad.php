@@ -3,10 +3,10 @@
 	core/class.Ad.php
 	(C) Giovanni Capuano 2011
 */
-require_once('class.User.php');
+require_once('class.PersonalMessage.php');
 
 /* Questa classe permette di creare, modificare e cancellare gli annunci dell'amministrazion. */
-class Ad extends User {
+class Ad extends PersonalMessage {
 
 	/* Ottiene uno o più annunci. */
 	public function getAd($minititolo = '') {

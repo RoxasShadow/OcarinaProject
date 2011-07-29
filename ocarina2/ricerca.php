@@ -22,6 +22,10 @@ $rendering->addValue('description', $comment->getLanguage('description', 9));
 $rendering->addValue('useronline', $comment->getUserOnline());
 $rendering->addValue('visitatoronline', $comment->getVisitatorOnline());
 $rendering->addValue('totaleaccessi', $comment->getTotalVisits());
+require_once('core/class.PersonalMessage.php');
+$pm = new PersonalMessage();
+$rendering->addValue('numeromp', $pm->countPM());
+unset($pm);
 
 if($cercaNews !== '') {
 	if(!$search = $comment->searchNews($cercaNews))

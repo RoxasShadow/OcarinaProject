@@ -3,10 +3,10 @@
 	/login.php
 	(C) Giovanni Capuano 2011
 */
-require_once('core/class.User.php');
+require_once('core/class.PersonalMessage.php');
 require_once('core/class.Rendering.php');
 
-$user = new User();
+$user = new PersonalMessage();
 $rendering = new Rendering();
 $nickname = ((isset($_POST['nickname'])) && ($_POST['nickname'] !== '')) ? $user->purge($_POST['nickname']) : '';
 $password = ((isset($_POST['password'])) && ($_POST['password'] !== '')) ? $user->purge($_POST['password']) : '';
@@ -19,6 +19,10 @@ $rendering->addValue('description', $user->getLanguage('description', 2));
 $rendering->addValue('useronline', $user->getUserOnline());
 $rendering->addValue('visitatoronline', $user->getVisitatorOnline());
 $rendering->addValue('totaleaccessi', $user->getTotalVisits());
+require_once('core/class.PersonalMessage.php');
+$pm = new PersonalMessage();
+$rendering->addValue('numeromp', $pm->countPM());
+unset($pm);
 
 if($user->isLogged())
 	$rendering->addValue('result', 'Hai già effettuato l\'accesso, non hai bisogno di farlo nuovamente.');

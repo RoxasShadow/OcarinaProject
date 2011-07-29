@@ -3,7 +3,7 @@
 	/profilo.php
 	(C) Giovanni Capuano 2011
 */
-require_once('core/class.Page.php');
+require_once('core/class.User.php');
 require_once('core/class.Rendering.php');
 
 $user = new User();
@@ -18,6 +18,10 @@ $rendering->addValue('description', ($nickname !== '') ? $user->getLanguage('des
 $rendering->addValue('useronline', $user->getUserOnline());
 $rendering->addValue('visitatoronline', $user->getVisitatorOnline());
 $rendering->addValue('totaleaccessi', $user->getTotalVisits());
+require_once('core/class.PersonalMessage.php');
+$pm = new PersonalMessage();
+$rendering->addValue('numeromp', $pm->countPM());
+unset($pm);
 
 if($nickname == '') {
 	$rendering->addValue('titolo', $user->getLanguage('profile', 0).$user->getLanguage('title', 2).$user->config[0]->nomesito);

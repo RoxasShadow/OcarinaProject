@@ -1,6 +1,6 @@
 <?php
 /**
-	core/class.News.phpz
+	core/class.News.php
 	(C) Giovanni Capuano 2011
 */
 require_once('class.Category.php');

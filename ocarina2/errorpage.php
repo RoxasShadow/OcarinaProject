@@ -16,6 +16,10 @@ $rendering->addValue('titolo', $news->getLanguage('title', 3).$id.$news->getLang
 $rendering->addValue('useronline', $news->getUserOnline());
 $rendering->addValue('visitatoronline', $news->getVisitatorOnline());
 $rendering->addValue('totaleaccessi', $news->getTotalVisits());
+require_once('core/class.PersonalMessage.php');
+$pm = new PersonalMessage();
+$rendering->addValue('numeromp', $pm->countPM());
+unset($pm);
 
 if($news->config[0]->log == 1)
 	$news->log(($news->isLogged()) ? $news->username[0]->nickname : '~', 'Error '.$id);

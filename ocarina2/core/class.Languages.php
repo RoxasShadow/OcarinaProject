@@ -68,7 +68,8 @@ class Languages {
 				'Annunci', // 29
 				'Newsletter',
 				'Disinstalla skin',
-				'Installa skin'
+				'Installa skin',
+				'Leggi MP'
 			),
 			'error' => array(
 				'È accaduto un errore',
@@ -264,6 +265,11 @@ class Languages {
 			'installskin' => array(
 				'La skin è stata installata.',
 				'È accaduto un errore durante l\'installazione della skin.'
+			),
+			'sendpm' => array(
+				'PM sended.',
+				'È accaduto un errore durante l\'invio dell\'MP.',
+				'È accaduto un errore durante l\'invio dell\'MP. Controlla di non aver lasciato alcun campo vuoto.'
 			)
 		);
 	}

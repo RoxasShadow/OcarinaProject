@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-28 15:32:09
+<?php /* Smarty version Smarty-3.0.8, created on 2011-07-29 16:25:55
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/include/header.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:4221637364e3180f9da5622-04888846%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:18067490704e32df13258822-78951164%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'ff19f579de2a4f1ee418c8728e9c2f8b8ccdd1c6' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/default/include/header.tpl',
-      1 => 1311434218,
+      1 => 1311956753,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '4221637364e3180f9da5622-04888846',
+  'nocache_hash' => '18067490704e32df13258822-78951164',
   'function' => 
   array (
   ),
@@ -57,6 +57,9 @@ Benvenuto su <?php echo $_smarty_tpl->getVariable('nomesito')->value;?>
 Bentornato <?php echo $_smarty_tpl->getVariable('utente')->value;?>
  (<a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /logout.php">Logout</a> | <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/mp.php"><?php echo $_smarty_tpl->getVariable('numeromp')->value;?>
+</a> MP | <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/inviamp.php">Invia MP</a> | <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /profile/<?php echo $_smarty_tpl->getVariable('utente')->value;?>
 .html">Profilo</a> | <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /modificaprofilo.php">Modifica profilo</a> | <a href="modificapassword.php">Modifica password</a>)

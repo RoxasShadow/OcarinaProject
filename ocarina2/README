@@ -5,7 +5,7 @@ network, un sito di e-commerce o una web-application di tua ideazione.
 Requisiti:
 Apache2 & GNU/Linux*
 PHP5
-MySQL
+MySQL**
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 Ocarina2 (da ora chiamato anche CMS) ti dà la possibilità di scrivere news e pagine,
@@ -25,7 +25,8 @@ indistintamente, e mostra, inoltre, anche le visite di ciascuna.
 Tramite il motore di ricerca, è possibile cercare pagine, news e commenti digitando
 una parola chiave.
 Ogni utente, dopo la registrazione, può commentare, può votare le news o le pagine,
-può personalizzare il proprio profilo e verrà visualizzato nella lista degli utenti online.
+può personalizzare il proprio profilo e verrà visualizzato nella lista degli utenti online,
+nonchè potrà anche inviare messaggi personali ad altri utenti.
 Nel caso un utente smarrisca la propria password, potrà farsene inviare una nuova e casuale
 nell'indirizzo email specificato alla registrazione (e sempre modificabile), per poi poterla
 modificare senza alcun problema.
@@ -102,6 +103,8 @@ Da slogan di Ocarina2, il CMS è stato creato per svolgere qualsiasi lavoro.
 Nel core troviamo una struttura di classi che si ereditano a vicenda.
 Di seguito una breve spiegazione delle classi e delle funzioni principali, in ordine gerarchico
 
+/core/
+
 -class.Languages.php
 Viene usato per le traduzioni per i testi che rilascia il CMS.
 Il metodo getLanguage() prende come argomento la categoria e l'indice dove si trova la riga di 
@@ -129,8 +132,9 @@ Dispone di una variabile globale che viene popolata all'istanziazione della clas
 contenente i record della omonima tabella.
 Contiene inoltre metodi per la gestione della configurazione.
 
--class.Category.php | class.News.php | class.Comments.php | class.Page.php | class.Ad.php
-La prima classe gestisce le categorie come campi enum, mentre le restanti quattro dispongono di metodi
+-class.Category.php | class.News.php | class.Comments.php | class.Page.php | class.Ad.php |
+class.PersonalMessage.php
+La prima classe gestisce le categorie come campi enum, mentre le restanti cinque dispongono di metodi
 per la visualizzazione, rimozione, inserimento e modifica degli elementi ominimi.
 
 -class.User.php
@@ -156,11 +160,21 @@ In /doc/ è possibile trovare un template ed uno script che possono dare degli e
 template.
 Ricordate che potete modificare la classe per essere compatibile anche con altri motori di rendering.
 
+/etc/
+
 -class.BBCode.php
-Questa classe facente parte di /etc/ traduce i BBCode in HTML tramite le regex.
+Questa classe traduce i BBCode in HTML tramite le regex.
 
 -class.Pager.php
 È la classe che si occupa dell'impaginazione delle news nella index.
+
+-loadJavascript.js.php
+È da includere come uno script javascript nei template.
+In sostanza include tutti gli script presenti in /etc/js/ ottimizzandoli.
+
+-class.Recaptcha.php
+È la classe che permette di gestire i captcha.
+Di default è presente ReCaptcha, ma è possibile usarne altri modificando il contenuto dei vari metodi.
 
 Andiamo sviluppatori, create le vostre classi, modificate quelle esistenti, portate le prestazioni al limite,
 aumentate la compatibilità, la stabilità e la velocità e date sfogo alla vostra creatività e genialità! :D
@@ -170,6 +184,8 @@ li potete trattare come qualsiasi classe del core.
 (C) 2011 - Giovanni Capuano
 
 *Ocarina2, come già detto in precedenza, utilizza l'url_rewriting e delle direttive specifiche anche a livello
-di sicurezza nel file .htaccess.
+di sicurezza e di ottimizzazione nel file .htaccess.
 È consigliato quindi avere attiva la direttiva url_rewrite e il parsing dei file .htaccess.
 Per ottenere il caching delle risorse, inoltre, c'è bisogno anche dei moduli expires e header, ma non è obbligatorio.
+
+**Modificando la classe class.MySQL.php, è possibile abilitare il supporto per qualsiasi DBMS.
