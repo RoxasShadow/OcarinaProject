@@ -24,6 +24,7 @@
 	JSON request (GET):
 		news()
 		news($minititoloNews)
+		lastnews()
 		countnews()
 		searchnews($contenuto)
 		votenews($minititoloNews)
@@ -66,6 +67,7 @@ $contenuto = isset($_GET['content']) ? $comment->purge($_GET['content']) : '';
 $id = ((isset($_GET['id'])) && is_numeric($_GET['id'])) ? (int)$_GET['id'] : '';
 $actionPermitted = array(
 	'news',
+	'lastnews',
 	'countnews',
 	'searchnews',
 	'votenews',
@@ -114,6 +116,31 @@ if(($action == 'news') && ($titolo !== '')) {
 }
 elseif(($action == 'news') && ($titolo == '')) {
 	if(!$comment = $comment->getNews())
+		echo '{"response":"1"}';
+	else {
+		$json = '{"response": [';
+		foreach($comment as $v) {
+			$json .= '{';
+				$json .= '"id":'.json_encode($v->id).',';
+				$json .= '"author":'.json_encode($v->autore).',';
+				$json .= '"title":'.json_encode($v->titolo).',';
+				$json .= '"minititle":'.json_encode($v->minititolo).',';
+				$json .= '"content":'.json_encode($v->contenuto).',';
+				$json .= '"category":'.json_encode($v->categoria).',';
+				$json .= '"date":'.json_encode($v->data).',';
+				$json .= '"hour":'.json_encode($v->ora).',';
+				$json .= '"lastmoddate":'.json_encode($v->dataultimamodifica).',';
+				$json .= '"lastmodhour":'.json_encode($v->oraultimamodifica).',';
+				$json .= '"lastmodauthor":'.json_encode($v->autoreultimamodifica).',';
+				$json .= '"visits":'.json_encode($v->visite).',';
+				$json .= '"votes":'.json_encode($v->voti);
+			$json .= '},';
+		}
+	 	echo trim($json, ',').']}';
+	}
+}
+elseif($action == 'lastnews') {
+	if(!$comment = $comment->getNews('', 0, 10))
 		echo '{"response":"1"}';
 	else {
 		$json = '{"response": [';

@@ -16,36 +16,17 @@ class Configuration extends MySQL {
 
 	/* Ottengo un oggetto contenente la configurazione. */
 	public function getConfig($campo = '') {
-		$config = array();
-		if($campo !== '') {
-			if(!$query = parent::query("SELECT {$this->prefix}$campo FROM configurazione LIMIT 1"))
-				return false;
-			if(parent::count($query) > 0) {
-				array_push($config, parent::get($query));
-				if(!empty($config))
-					return $config;
-			}
-			return false;
-		}
-		else {
-			if(!$query = parent::query('SELECT * FROM '.$this->prefix.'configurazione LIMIT 1'))
-				return false;
-			if(parent::count($query) > 0) {
-				array_push($config, parent::get($query));
-				if(!empty($config))
-					return $config;
-			}
-			return false;
-		}
+		if($campo !== '')
+			return ($result = parent::get("SELECT $campo FROM {$this->prefix}configurazione LIMIT 1")) ? $result : false;
+		else
+			return ($result = parent::get('SELECT * FROM '.$this->prefix.'configurazione LIMIT 1')) ? $result : false;
 	}
 	
 	/* Creo una nuova configurazione. */
 	public function createConfig($config) {
 		if(empty($config))
 			return false;
-		if(!$query = parent::query('SELECT * FROM '.$this->prefix.'configurazione LIMIT 1'))
-			return false;
-		if(!$campi = parent::getColumns($query))
+		if(!$campi = parent::getColumns('SELECT * FROM '.$this->prefix.'configurazione LIMIT 1'))
 			return false;
 		$query = 'INSERT INTO '.$this->prefix.'configurazione(';
 		foreach($campi as $var)

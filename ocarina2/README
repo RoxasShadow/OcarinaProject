@@ -8,51 +8,48 @@ PHP5
 MySQL**
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
-Ocarina2 (da ora chiamato anche CMS) ti dà la possibilità di scrivere news e pagine,
-ovvero contenuti personalizzabili via dei tag chiamati BBCode divisi in categorie.
+Ocarina2 è un Content Management System (CMS) che ti dà la possibilità di scrivere news e pagine,
+ovvero contenuti personalizzabili tramite dei tag chiamati BBCode, divise in categorie.
 Le news sono visualizzate in anteprima nella pagina principale, insieme ai commenti
 che sono stati inviati dagli utenti.
 Ogni news ha una singola pagina dedicata che permette di visualizzarla per tutta la sua
 interezza, di votarla, di commentarla, di leggere gli altri commenti e di raggiungerli
 tramite una pagina dedicata.
-Per le pagine valgono le stesse nozioni su descritte, ma al contrario non permettono
-di essere commentate e non sono visualizzate nella index.
-Ogni pagina o news è indicata nell'URL con un minititolo (o permalink), ovvero una conversione
-del titolo ottimizzato per i motori di ricerca e, come già detto, appartiene ad una determinata categoria.
-Accedendoci sarà possibile visualizzare tutti i contenuti ad essa legati.
-L'archivio, al contrario, raggruppa tutte le pagine e le news che sono state create,
-indistintamente, e mostra, inoltre, anche le visite di ciascuna.
-Tramite il motore di ricerca, è possibile cercare pagine, news e commenti digitando
+Per le pagine vale lo stesso, ma non permettono di essere commentate e non sono visualizzate nella index.
+Ogni pagina o news è indicata nell'URL con un minititolo (o permalink), ovvero un titolo ottimizzato per
+i motori di ricerca.
+L'archivio raggruppa tutte le pagine e le news che sono state create,
+indistintamente, e mostra, inoltre, anche le visite di ciascuna, mentre le categorie mostrano le news e
+le pagine che sono raggruppate in essa.
+Tramite il motore di ricerca integrato, è possibile cercare pagine, news e commenti digitando
 una parola chiave.
-Ogni utente, dopo la registrazione, può commentare, può votare le news o le pagine,
-può personalizzare il proprio profilo e verrà visualizzato nella lista degli utenti online,
-nonchè potrà anche inviare messaggi personali ad altri utenti.
-Nel caso un utente smarrisca la propria password, potrà farsene inviare una nuova e casuale
-nell'indirizzo email specificato alla registrazione (e sempre modificabile), per poi poterla
-modificare senza alcun problema.
+Ogni utente, dopo la registrazione, può commentare, votare, personalizzare il proprio profilo e perfino
+inviare messaggi personali ad altri utenti.
+Nel caso un utente smarrisca la propria password, potrà farsene inviare una nuova
+nell'indirizzo email specificato alla registrazione, per poi poterla modificare senza alcun problema.
 Sia gli utenti che i visitatori potranno abbonarsi ai feed RSS sia delle pagine che delle news,
 e i motori di ricerca potranno visualizzare un archivio completo di tutte le pagine del sito
 tramite una sitemap sempre aggiornata.
 Potrete dare agli utenti anche la possibilità di scrivere della applicazioni che interagiscano
 con il vostro sito.
-Potranno infatti includere nei loro programmi per desktop, server o dispositivi mobili quasi
-tutte le funzioni di cui potrebbero usufruire via un normalissimo browser internet.
+Potranno infatti includere nei loro programmi per desktop, server o dispositivi mobili tutte le funzioni
+di cui potrebbero usufruire con un normalissimo browser internet, in tutta sicurezza.
 Dall'area di amministrazione, gli amministratori (che possiedono tutti i poteri all'interno del sito),
 potranno creare/modificare/cancellare/approvare le pagine, le news e i commenti.
-Potrà apportare modifiche alla configurazione del CMS, gestire le categorie, caricare o rimuovere
-immagini, visualizzare o cancellare i log che vengono aggiornati ad ogni azione particolarmente
-importante di ogni utente, modificare il grado di questi ultimi e creare il proprio robots.txt,
-che comunica ai motori di ricerca quali pagine indicizzare e quali no.
-La maggior parte dei link (news, pagine, commenti, profili degli utenti, feed, errori, categorie e
-news sfogliate dalla index) sono ottimizzati per i motori di ricerca sfruttando la direttiva url_rewrite
-messa a disposizione dal potente server web Apache2.
-Il CMS dispone di un motore di rendering che permette la creazione anche di più skin (o temi, o template,
-o layout), in modo che l'utente possa visualizzare il sito con quella che preferisce.
+Potranno apportare modifiche alla configurazione del CMS, gestire le categorie, caricare o rimuovere
+immagini, visualizzare o cancellare i log aggiornati ad ogni azione saliente di ogni utente,
+modificare il grado di questi ultimi e creare il proprio robots.txt che comunica ai motori di ricerca
+quali pagine indicizzare e quali no.
+Il CMS dispone di un semplice programma di monitoraggio delle visite, che riporta sia le visite dei
+visitatori che degli utenti registrati, nonchè il totale degli accessi unici all'interno del sito, nonchè
+di un motore di rendering, che permette la creazione anche di più skin (temi), in modo che l'utente possa
+visualizzare il sito con quella che più gli aggrada.
 Il grafico potrà quindi usufruire dei tag dinamici messi a disposizione per creare qualsiasi skin voglia,
 senza alcun tipo di restrizione.
 Dispone, infine, di un controllore degli aggiornamenti, così che l'amministratore possa effettuare
-gli aggiornamenti tempestivamente e gli annunci, ovvero dei testi, simili alle news leggibili solo dallo
-staff.
+gli aggiornamenti tempestivamente, nonchè gli annunci, ovvero delle pagine leggibili solo dallo staff,
+nonchè un gestore di permessi, che permette, tra le altre cose, di effettuare dei ban e di portare un utente
+anche a diventare Amministratore, Moderatore, Grafico, SEO...
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
@@ -60,11 +57,11 @@ staff.
 Come già detto, Ocarina2 dispone di un potente motore di rendering, Smarty 3.0.
 Ogni skin si deve trovare in una cartella chiamata con un qualsiasi nome nella directory
 dei template (di default è /rendering/templates/).
-All'interno di essa devono esserci i file template (estensione .tpl) contenenti il codice
+All'interno di essa devono esserci i file template (con estensione .tpl) contenenti il codice
 HTML e i tag dinamici.
 Nella sottocartella resources andranno messi i fogli di stile, e in un eventuale sottocartella
 images le immagini.
-È possibile creare una sottocartella include per inserire i template da includere automaticamente
+È possibile creare una sottocartella `include` per inserire i template da includere automaticamente
 in tutti gli altri (come ad esempio l'header e il footer).
 
 Rappresentando:
@@ -79,20 +76,19 @@ include/ → *.tpl
 resources/ → *.css → images/
 
 Le eventuali risorse Javascript dovranno essere inserite in /etc/js/, dal momento che verranno
-all'occorrenza caricate dinamicamente.
-Da notare che di default, è abilitato il caching per 15 giorni nel browser dei file Javascript,
-CSS, SWF e delle immagini nel file .htaccess.
-Con eventuali modifiche di tali file, l'utente dovrà svuotare la cache del proprio browser per
-usufruirne.
+caricate dinamicamente all'occorrenza.
+Da notare che di default nel file .htaccess è abilitato il caching nel browser per 15 giorni dei file Javascript,
+CSS, SWF e delle immagini.
 Inoltre per velocizzare lo scaricamento delle pagine e con un conseguente alleggerimento di esse,
-vengono, sempre di default, compresse nel formato gzip.
+vengono, sempre di default, compresse nel formato gzip dal file sopra accennato.
 È possibile creare anche più skin uguali, nei quali cambia la lingua usata.
 In /doc/ è possibile trovare un template ed uno script che possono dare degli esempi per la creazione di nuovi
 template.
-Notare che la skin per l'amministrazione deve sempre chiamarsi admin.
-I tag attualmente disponibili sono quelli usati nei template dell'amministrazione e di default, il quale effetto
-è semplice da capire, ma nulla vi vieta di crearne altri, dovete utilizzare il metodo addValue() del motore
-di rendering all'interno degli script PHP o, globalmente, nella classe del core class.Rendering.php.
+Notare che la skin per l'amministrazione deve sempre chiamarsi `admin`, e quella per i dispositivi mobili `mobile`
+(quest'ultimo è possibile modificarlo in /core/class.Rendering.php comunque).
+I tag attualmente disponibili sono quasi tutti usati nei template `admin` e `default`, ma nulla vi vieta di crearne
+altri, dovete utilizzare il metodo addValue() del motore di rendering all'interno degli script PHP o, globalmente
+nella classe /core/class.Rendering.php.
 Per maggiori informazioni visualizzate la documentazione ufficiale di Smarty 3.0 che trovate in /doc.
 Un buon modo di sviluppare le risorse grafiche, è utilizzare il plugin Firebug insieme a Pagespeed.
 
@@ -122,9 +118,14 @@ immagini, eccetera.
 
 -class.MySQL.php
 È l'unica classe che comunica direttamente con il database facendo da tramite.
-query() esegue direttamente una query SQL, count() prende in input una query già
-eseguita con il metodo appena descritto e ritorna le occorrenze trovate, getEnum()
-ritorna gli elementi dei campi enum del database, getColumns() ritorna le colonne di una tabella e
+Utilizza un motore di caching, che permette di effettuare le query una sola volta, perchè poi vengono
+serializzate su file, che vengono richiamati all'occorrenza, aumentando le prestazioni globali.
+In caso di query che modificano la struttura del database (INSERT, UPDATE, DELETE...), i file di cache
+vengono cancellati.
+Data una query:
+query() esegue direttamente una query SQL, count() ritorna le occorrenze trovate;
+getEnum() ritorna un array con gli elementi dei campi enum del database;
+getColumns() ritorna un array con le colonne di una tabella;
 get() ritorna un oggetto con i record trovati.
 
 -class.Configuration.php
@@ -135,7 +136,7 @@ Contiene inoltre metodi per la gestione della configurazione.
 -class.Category.php | class.News.php | class.Comments.php | class.Page.php | class.Ad.php |
 class.PersonalMessage.php
 La prima classe gestisce le categorie come campi enum, mentre le restanti cinque dispongono di metodi
-per la visualizzazione, rimozione, inserimento e modifica degli elementi ominimi.
+per la visualizzazione, ricerca, rimozione, inserimento e modifica degli elementi ominimi.
 
 -class.User.php
 La classe gestisce gli utenti.
@@ -165,21 +166,39 @@ Ricordate che potete modificare la classe per essere compatibile anche con altri
 -class.BBCode.php
 Questa classe traduce i BBCode in HTML tramite le regex.
 
--class.Pager.php
+-class.NewsPager.php
 È la classe che si occupa dell'impaginazione delle news nella index.
-
--loadJavascript.js.php
-È da includere come uno script javascript nei template.
-In sostanza include tutti gli script presenti in /etc/js/ ottimizzandoli.
 
 -class.Recaptcha.php
 È la classe che permette di gestire i captcha.
 Di default è presente ReCaptcha, ma è possibile usarne altri modificando il contenuto dei vari metodi.
 
-Andiamo sviluppatori, create le vostre classi, modificate quelle esistenti, portate le prestazioni al limite,
+-class.Translator.php
+È la classe che si interfaccia con le API di Google Traduttore e permette di tradurre i commenti in varie
+lingue tramite i BBCode.
+
+-class.Translator.php
+È la classe che si interfaccia con le API di Google Traduttore e permette di tradurre i commenti in varie
+lingue tramite i BBCode.
+
+-loadJavascript.js.php
+È da includere come uno script javascript nei template.
+In sostanza include tutti gli script presenti in /etc/js/ ottimizzandoli.
+
+-mobile_device_detect.php
+Permette di sapere che un visitatore utilizza un dispositivo mobile, e in caso affermativo imposta la skin
+`mobile`.
+
+-pcl_zip.lib.php
+È la classe che gestisce gli archivi zip, comprimendoli e decomprimendoli, permettendo così l'installazione
+delle skin.
+
+Forza sviluppatori, create le vostre classi, modificate quelle esistenti, portate le prestazioni al limite,
 aumentate la compatibilità, la stabilità e la velocità e date sfogo alla vostra creatività e genialità! :D
-Notare che i componenti aggiuntivi (che non fanno parte del core), devono essere aggiunti in /etc/, dopodichè
+Notate che i componenti aggiuntivi (che non fanno parte del core), devono essere aggiunti in /etc/, dopodichè
 li potete trattare come qualsiasi classe del core.
+Inoltre per il database utilizzate sempre la classe apposita, e se potete attenetevi allo stile con cui
+sono state scritte le classi di default.
 
 (C) 2011 - Giovanni Capuano
 

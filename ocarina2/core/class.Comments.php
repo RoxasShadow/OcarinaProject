@@ -10,32 +10,13 @@ class Comments extends News {
 
 	/* Ottiene uno o più commenti. */
 	public function getComment($news = '') {
-		$commenti = array();
-		if($news !== '') {
-			if($this->isComment($news)) {
-				if(!$query = parent::query("SELECT * FROM {$this->prefix}commenti WHERE news='$news' AND approvato='1' ORDER BY id ASC"))
-					return false;
-				while($result = parent::get($query))
-					array_push($commenti, $result);
-				if(!empty($commenti))
-					return $commenti;
+		if($news !== '')
+			if($this->isComment($news))
+				return ($result = parent::get("SELECT * FROM {$this->prefix}commenti WHERE news='$news' AND approvato='1' LIMIT 1")) ? $result : false;
+			else
 				return false;
-			}
-			return false;
-		}
-		else {
-			if(!$query = parent::query('SELECT * FROM '.$this->prefix.'commenti WHERE approvato=\'1\' ORDER BY id ASC'))
-				return false;
-			if(parent::count($query) > 0) {
-				while($result = parent::get($query))
-					array_push($commenti, $result);
-				if(!empty($commenti))
-					return $commenti;
-				return false;
-			}
-			return false;
-		}
-		return false;
+		else
+			return ($result = parent::get('SELECT * FROM '.$this->prefix.'commenti WHERE approvato=\'1\' ORDER BY id ASC')) ? $result : false;
 	}
 	
 	/* Controlla se il commento esiste. */
@@ -61,70 +42,24 @@ class Comments extends News {
 	
 	/* Ricerca i commenti da una keyword. */
 	public function searchComment($keyword) {
-		if(!$query = parent::query("SELECT * FROM {$this->prefix}commenti WHERE contenuto LIKE '%$keyword%' AND approvato='1' ORDER BY id DESC"))
+		if(!$result = parent::get("SELECT * FROM {$this->prefix}commenti WHERE contenuto LIKE '%$keyword%' AND approvato='1' ORDER BY id DESC"))
 			return false;
-		if(parent::count($query) > 0) {
-			$commenti = array();
-			while($result = parent::get($query)) {
-				array_push($commenti, $result);
-			}
-			if(!empty($commenti))
-				return $commenti;
-			return false;
-		}
-		else
-			return false;
+		return $result;
 	}
 	
 	/* Ricerca il commento da un id. */
 	public function searchCommentById($id) {
-		if(!$query = parent::query("SELECT * FROM {$this->prefix}commenti WHERE id='$id' AND approvato='1'"))
-			return false;
-		if(parent::count($query) > 0) {
-			$commenti = array();
-			while($result = parent::get($query)) {
-				array_push($commenti, $result);
-			}
-			if(!empty($commenti))
-				return $commenti;
-			return false;
-		}
-		else
-			return false;
+		return ($result = parent::get("SELECT * FROM {$this->prefix}commenti WHERE id='$id' AND approvato='1'")) ? $result : false;
 	}
 	
 	/* Ricerca i commenti per approvazione. */
 	public function searchCommentByApprovation() {
-		if(!$query = parent::query("SELECT * FROM {$this->prefix}commenti WHERE approvato='0'"))
-			return false;
-		if(parent::count($query) > 0) {
-			$commenti = array();
-			while($result = parent::get($query)) {
-				array_push($commenti, $result);
-			}
-			if(!empty($commenti))
-				return $commenti;
-			return false;
-		}
-		else
-			return false;
+		return ($result = parent::get("SELECT * FROM {$this->prefix}commenti WHERE approvato='0'")) ? $result : false;
 	}
 	
 	/* Ricerca i commenti per utente. */
 	public function searchCommentByUser($nickname) {
-		if(!$query = parent::query("SELECT * FROM {$this->prefix}commenti WHERE autore='$nickname' AND approvato='1'"))
-			return false;
-		if(parent::count($query) > 0) {
-			$commenti = array();
-			while($result = parent::get($query)) {
-				array_push($commenti, $result);
-			}
-			if(!empty($commenti))
-				return $commenti;
-			return false;
-		}
-		else
-			return false;
+		return ($result = parent::get("SELECT * FROM {$this->prefix}commenti WHERE autore='$nickname' AND approvato='1'")) ? $result : false;
 	}
 	
 	/* Crea un commento. */
@@ -132,8 +67,7 @@ class Comments extends News {
 		if(empty($array))
 			return false;
 		if((parent::isNews($array[2])) && (parent::isUser($array[0]))) {
-			$query = parent::query('SELECT * FROM '.$this->prefix.'commenti WHERE approvato=\'1\' LIMIT 1');
-			if(!$campi = parent::getColumns($query))
+			if(!$campi = parent::getColumns('SELECT * FROM '.$this->prefix.'commenti WHERE approvato=\'1\' LIMIT 1'))
 				return false;
 			$query = 'INSERT INTO '.$this->prefix.'commenti(';
 			foreach($campi as $var)

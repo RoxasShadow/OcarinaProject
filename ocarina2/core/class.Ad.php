@@ -10,31 +10,11 @@ class Ad extends PersonalMessage {
 
 	/* Ottiene uno o più annunci. */
 	public function getAd($minititolo = '') {
-		$Ad = array();
-		if($minititolo !== '') {
-			if($this->isAd($minititolo)) {
-				if(!$query = parent::query("SELECT * FROM {$this->prefix}annunci WHERE minititolo='$minititolo' ORDER BY id DESC"))
-					return false;
-				array_push($Ad, parent::get($query));
-				if(!empty($Ad))
-					return $Ad;
-				return false;
-			}
-			return false;
-		}
-		else {
-			if(!$query = parent::query('SELECT * FROM '.$this->prefix.'annunci ORDER BY id DESC'))
-				return false;
-			if(parent::count($query) > 0) {
-				while($result = parent::get($query))
-					array_push($Ad, $result);
-				if(!empty($Ad))
-					return $Ad;
-				return false;
-			}
-			return false;
-		}
-		return false;
+		if($minititolo !== '')
+			if($this->isAd($minititolo))
+				return ($result = parent::get("SELECT * FROM {$this->prefix}annunci WHERE minititolo='$minititolo' LIMIT 1")) ? $result : false;
+		else
+			return ($result = parent::get('SELECT * FROM '.$this->prefix.'annunci ORDER BY id DESC')) ? $result : false;
 	}
 	
 	/* Controlla se l'annuncio esiste. */
@@ -49,8 +29,7 @@ class Ad extends PersonalMessage {
 		if(empty($array))
 			return false;
 		if((!$this->isAd($array[2])) && (parent::isUser($array[0]))) {
-			$query = parent::query('SELECT * FROM '.$this->prefix.'annunci LIMIT 1');
-			if(!$campi = parent::getColumns($query))
+			if(!$campi = parent::getColumns('SELECT * FROM '.$this->prefix.'annunci LIMIT 1'))
 				return false;
 			$query = 'INSERT INTO '.$this->prefix.'annunci(';
 			foreach($campi as $var)

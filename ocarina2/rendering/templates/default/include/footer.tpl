@@ -8,14 +8,14 @@
 </tr>
 </table>
 <div align="center">
-<p><font color="white">Pagina generata in {$time} secondi effettuando {$query} query.<br />
+<p><font color="white">Pagina generata in {$time} secondi.<br />
 {if ((isset($useronline)) && (!empty($useronline)))}
 	Utenti online: 
 	{foreach $useronline as $user}
 		{if $user@last}
-			{$user}
+			<a href="{$url_index}/profile/{$user}.html">{$user}</a>
 		{else}
-			{$user}, 
+			<a href="{$url_index}/profile/{$user}.html">{$user}</a>, 
 		{/if}
 	{/foreach}
 {else}

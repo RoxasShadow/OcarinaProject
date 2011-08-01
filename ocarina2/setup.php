@@ -164,9 +164,9 @@ else
 	<body>
 	<div align="center"><h1>Setup &raquo; Ocarina2 CMS</h1></div>
 	Benvenuto nel setup di Ocarina2.<br />
-	Per prima cosa modifica il file <i>class.MySQL.php</i> della cartella <i>core</i>, inserendo nelle righe 10-13 i dati riguardanti il database (host, username, password e nome del database), e nella 16 un prefisso per le tabelle del database, il più complesso possibile (ex.: asdfghjk12345).<br />
+	Per prima cosa modifica il file <i>class.MySQL.php</i> della cartella <i>core</i>, inserendo nelle righe 10-13 i dati riguardanti il database (host, username, password e nome del database), nella 14 un prefisso per le tabelle del database, il più complesso possibile (ex.: asdfghjk12345), nella 15 abilita o meno il caching* (di default è abilitato) e nella 16 inserisci il percorso assoluto della cartella che contiene i file di cache (ex.: /var/www/htdocs/ocarina2/cache/).<br />
 	Una volta salvato il file, compila il seguente form con ciò che è richiesto dalle righe sovrastanti, e poni attenzione nella sezione riguardante i percorsi, stando attento agli slash (<i>/</i>), come riportato negli eventuali esempi.<br />
-	In caso la directory di installazione non sia /ocarina2, modificala correttamente nelle righe 9-12 e 29 del file <i>.htaccess</i>.<br />
+	In caso la directory di installazione non sia /ocarina2, modificala correttamente nelle righe 9-12, 28-31 e 34 del file <i>.htaccess</i>.<br />
 	Subito dopo l\'invio della configurazione, ti verrà presentato un form per registrarti come amministratore, dopodichè ti basterà eliminare questo file (<i>setup.php</i>).
 	<p align="right">Buon proseguimento con Ocarina,<br />
 	<i>Giovanni Capuano</i></p><br />
@@ -252,6 +252,10 @@ else
 
 	<input type="submit" name="submit" value="Installa" />
 	</form>
+	<br /><br />
+	
+	*Il caching consiste nel salvare sottoforma di file le richieste verso il database, in modo che finchè non vi è alcuna modifica, esso non viene più interpellato, poichè i dati saranno prelevati dai suddetti file.<br />
+	La convenienza sussiste nel fatto che le prestazioni globali aumenteranno, ma ci saranno uno o più file per ogni pagina, il che potrebbe dare problemi per lo spazio FTP concesso ad Ocarina.
 
 	</body>
 	</html>';

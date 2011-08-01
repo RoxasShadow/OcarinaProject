@@ -10,39 +10,16 @@ class News extends Category {
 
 	/* Ottiene una o più news. */
 	public function getNews($minititolo = '', $min = '', $max = '') {
-		$news = array();
-		if($minititolo !== '') {
-			if($this->isNews($minititolo)) {
-				if(!$query = parent::query("SELECT * FROM {$this->prefix}news WHERE minititolo='$minititolo' AND approvato='1' ORDER BY titolo ASC"))
-					return false;
-				array_push($news, parent::get($query));
-				if(!empty($news)) {
-					$this->addVisitNews($minititolo);
-					return $news;
-				}
+		if($minititolo !== '')
+			if($this->isNews($minititolo))
+				return ($result = parent::get("SELECT * FROM {$this->prefix}news WHERE minititolo='$minititolo' AND approvato='1' LIMIT 1")) ? $result : false;
+			else
 				return false;
-			}
-			return false;
-		}
-		else {
-			if(($min == '') && ($max == '')) {
-				if(!$query = parent::query('SELECT * FROM '.$this->prefix.'news WHERE approvato=\'1\' ORDER BY titolo ASC'))
-					return false;
-			}
-			else {
-				if(!$query = parent::query("SELECT * FROM {$this->prefix}news WHERE approvato='1' ORDER BY id DESC LIMIT $min, $max"))
-					return false;
-			}
-			if(parent::count($query) > 0) {
-				while($result = parent::get($query))
-					array_push($news, $result);
-				if(!empty($news))
-					return $news;
-				return false;
-			}
-			return false;
-		}
-		return false;
+		else
+			if(($min == '') && ($max == ''))
+				return ($result = parent::get('SELECT * FROM '.$this->prefix.'news WHERE approvato=\'1\' ORDER BY titolo ASC')) ? $result : false;
+			else
+				return ($result = parent::get("SELECT * FROM {$this->prefix}news WHERE approvato='1' ORDER BY id DESC LIMIT $min, $max")) ? $result : false;
 	}
 	
 	/* Permette di votare una news. */
@@ -93,66 +70,22 @@ class News extends Category {
 	
 	/* Ricerca le news da una keyword. */
 	public function searchNews($keyword) {
-		if(!$query = parent::query("SELECT * FROM {$this->prefix}news WHERE (titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%') AND approvato='1' ORDER BY id DESC"))
-			return false;
-		if(parent::count($query) > 0) {
-			$news = array();
-			while($result = parent::get($query))
-				array_push($news, $result);
-			if(!empty($news))
-				return $news;
-			return false;
-		}
-		else
-			return false;
+		return ($result = parent::get("SELECT * FROM {$this->prefix}news WHERE (titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%') AND approvato='1' ORDER BY id DESC")) ? $result : false;
 	}
 	
 	/* Ricerca le news per categoria. */
 	public function searchNewsByCategory($keyword) {
-		if(!$query = parent::query("SELECT * FROM {$this->prefix}news WHERE categoria='$keyword' AND approvato='1' ORDER BY id DESC"))
-			return false;
-		if(parent::count($query) > 0) {
-			$news = array();
-			while($result = parent::get($query))
-				array_push($news, $result);
-			if(!empty($news))
-				return $news;
-			return false;
-		}
-		else
-			return false;
+		return ($result = parent::get("SELECT * FROM {$this->prefix}news WHERE categoria='$keyword' AND approvato='1' ORDER BY id DESC")) ? $result : false;
 	}
 	
 	/* Ricerca le news per utente. */
 	public function searchNewsByUser($nickname) {
-		if(!$query = parent::query("SELECT * FROM {$this->prefix}news WHERE autore='$nickname' AND approvato='1' ORDER BY id DESC"))
-			return false;
-		if(parent::count($query) > 0) {
-			$news = array();
-			while($result = parent::get($query))
-				array_push($news, $result);
-			if(!empty($news))
-				return $news;
-			return false;
-		}
-		else
-			return false;
+		return ($result = parent::get("SELECT * FROM {$this->prefix}news WHERE autore='$nickname' AND approvato='1' ORDER BY id DESC")) ? $result : false;
 	}
 	
 	/* Ricerca le news per approvazione. */
 	public function searchNewsByApprovation() {
-		if(!$query = parent::query("SELECT * FROM {$this->prefix}news WHERE approvato='0' ORDER BY id DESC"))
-			return false;
-		if(parent::count($query) > 0) {
-			$news = array();
-			while($result = parent::get($query))
-				array_push($news, $result);
-			if(!empty($news))
-				return $news;
-			return false;
-		}
-		else
-			return false;
+		return ($result = parent::get("SELECT * FROM {$this->prefix}news WHERE approvato='0' ORDER BY id DESC")) ? $result : false;
 	}
 
 	/* Crea una news. */
@@ -160,8 +93,7 @@ class News extends Category {
 		if(empty($array))
 			return false;
 		if((!$this->isNews($array[2])) && (parent::isCategory('news', $array[4])) && (parent::isUser($array[0]))) {
-			$query = parent::query('SELECT * FROM '.$this->prefix.'news WHERE approvato=\'1\' ORDER BY id DESC LIMIT 1');
-			if(!$campi = parent::getColumns($query))
+			if(!$campi = parent::getColumns('SELECT * FROM '.$this->prefix.'news WHERE approvato=\'1\' ORDER BY id DESC LIMIT 1'))
 				return false;
 			$query = 'INSERT INTO '.$this->prefix.'news(';
 			foreach($campi as $var)

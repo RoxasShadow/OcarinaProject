@@ -10,39 +10,16 @@ class Page extends Category {
 
 	/* Ottiene una o più pagine. */
 	public function getPage($minititolo = '', $min = '', $max = '') {
-		$pagine = array();
-		if($minititolo !== '') {
-			if($this->isPage($minititolo)) {
-				if(!$query = parent::query("SELECT * FROM {$this->prefix}pagine WHERE minititolo='$minititolo' AND approvato='1' ORDER BY titolo ASC"))
-					return false;
-				array_push($pagine, parent::get($query));
-				if(!empty($pagine))  {
-					$this->addVisitPage($minititolo);
-					return $pagine;
-				}
+		if($minititolo !== '')
+			if($this->isPage($minititolo))
+				return ($result = parent::get("SELECT * FROM {$this->prefix}pagine WHERE minititolo='$minititolo' AND approvato='1' LIMIT 1")) ? $result : false;
+			else
 				return false;
-			}
-			return false;
-		}
-		else {
-			if(($min == '') && ($max == '')) {
-				if(!$query = parent::query('SELECT * FROM '.$this->prefix.'pagine WHERE approvato=\'1\' ORDER BY titolo ASC'))
-					return false;
-			}
-			else {
-				if(!$query = parent::query("SELECT * FROM {$this->prefix}pagine WHERE approvato='1' ORDER BY titolo ASC LIMIT $min, $max"))
-					return false;
-			}
-			if(parent::count($query) > 0) {
-				while($result = parent::get($query))
-					array_push($pagine, $result);
-				if(!empty($pagine))
-					return $pagine;
-				return false;
-			}
-			return false;
-		}
-		return false;
+		else
+			if(($min == '') && ($max == ''))
+				return ($result = parent::get('SELECT * FROM '.$this->prefix.'pagine WHERE approvato=\'1\' ORDER BY titolo ASC')) ? $result : false;
+			else
+				return ($result = parent::get("SELECT * FROM {$this->prefix}pagine WHERE approvato='1' ORDER BY titolo ASC LIMIT $min, $max")) ? $result : false;
 	}
 	
 	/* Permette di votare una pagina. */
@@ -94,69 +71,27 @@ class Page extends Category {
 	/* Ricerca le pagine da una keyword. */
 	public function searchPage($keyword, $orderById = '') {
 		if($orderById !== '')
-			$query = parent::query("SELECT * FROM {$this->prefix}pagine WHERE (titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%') AND approvato='1' ORDER BY id DESC");
+			if(!$result = parent::get("SELECT * FROM {$this->prefix}pagine WHERE (titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%') AND approvato='1' ORDER BY id DESC"))
+				return false;
 		else
-			$query = parent::query("SELECT * FROM {$this->prefix}pagine WHERE (titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%') AND approvato='1' ORDER BY titolo ASC");
-		if(!$query)
-			return false;
-		if(parent::count($query) > 0) {
-			$pagine = array();
-			while($result = parent::get($query))
-				array_push($pagine, $result);
-			if(!empty($pagine))
-				return $pagine;
-			return false;
-		}
-		else
-			return false;
+			if(!$result = parent::get("SELECT * FROM {$this->prefix}pagine WHERE (titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%') AND approvato='1' ORDER BY titolo ASC"))
+				return false;
+		return $result;
 	}
 	
 	/* Ricerca le pagine per categoria. */
 	public function searchPageByCategory($keyword) {
-		if(!$query = parent::query("SELECT * FROM {$this->prefix}pagine WHERE categoria='$keyword' AND approvato='1' ORDER BY id DESC"))
-			return false;
-		if(parent::count($query) > 0) {
-			$pagine = array();
-			while($result = parent::get($query))
-				array_push($pagine, $result);
-			if(!empty($pagine))
-				return $pagine;
-			return false;
-		}
-		else
-			return false;
+		return ($result = parent::get("SELECT * FROM {$this->prefix}pagine WHERE categoria='$keyword' AND approvato='1' ORDER BY id DESC")) ? $result : false;
 	}
 	
 	/* Ricerca le pagine per utente. */
 	public function searchPageByUser($nickname) {
-		if(!$query = parent::query("SELECT * FROM {$this->prefix}pagine WHERE autore='$nickname' AND approvato='1' ORDER BY id DESC"))
-			return false;
-		if(parent::count($query) > 0) {
-			$pagine = array();
-			while($result = parent::get($query))
-				array_push($pagine, $result);
-			if(!empty($pagine))
-				return $pagine;
-			return false;
-		}
-		else
-			return false;
+		return ($result = parent::get("SELECT * FROM {$this->prefix}pagine WHERE autore='$nickname' AND approvato='1' ORDER BY id DESC")) ? $result : false;
 	}
 	
 	/* Ricerca le pagine per approvazione. */
 	public function searchPageByApprovation() {
-		if(!$query = parent::query("SELECT * FROM {$this->prefix}pagine WHERE approvato='0' ORDER BY id DESC"))
-			return false;
-		if(parent::count($query) > 0) {
-			$pagine = array();
-			while($result = parent::get($query))
-				array_push($pagine, $result);
-			if(!empty($pagine))
-				return $pagine;
-			return false;
-		}
-		else
-			return false;
+		return ($result = parent::get("SELECT * FROM {$this->prefix}pagine WHERE approvato='0' ORDER BY id DESC")) ? $result : false;
 	}
 	
 	/* Crea una pagina. */
@@ -164,8 +99,7 @@ class Page extends Category {
 		if(empty($array))
 			return false;
 		if((!$this->isPage($array[2])) && (parent::isCategory('pagine', $array[4])) && (parent::isUser($array[0]))) {
-			$query = parent::query('SELECT * FROM '.$this->prefix.'pagine WHERE approvato=\'1\' LIMIT 1');
-			if(!$campi = parent::getColumns($query))
+			if(!$campi = parent::getColumns('SELECT * FROM '.$this->prefix.'pagine WHERE approvato=\'1\' LIMIT 1'))
 				return false;
 			$query = 'INSERT INTO '.$this->prefix.'pagine(';
 			foreach($campi as $var)

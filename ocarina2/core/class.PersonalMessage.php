@@ -10,31 +10,15 @@ class PersonalMessage extends User {
 
 	/* Ottiene uno o più mp. */
 	public function getPM($id = '', $nickname = '') {
-		$pm = array();
-		if($id !== '') {
-			if($this->isPM($id)) {
-				if(!$query = parent::query("SELECT * FROM {$this->prefix}personalmessage WHERE id='$id' LIMIT 1"))
-					return false;
-				array_push($pm, parent::get($query));
-				if(!empty($pm))
-					return $pm;
+		if($id !== '')
+			if($this->isPM($id))
+				return ($result = parent::get("SELECT * FROM {$this->prefix}personalmessage WHERE id='$id' LIMIT 1")) ? $result : false;
+			else
 				return false;
-			}
+		elseif($nickname !== '')
+			return ($result = parent::get("SELECT * FROM {$this->prefix}personalmessage WHERE destinatario='$nickname' ORDER BY id")) ? $result : false;
+		else
 			return false;
-		}
-		elseif($nickname !== '') {
-			if(!$query = parent::query("SELECT * FROM {$this->prefix}personalmessage WHERE destinatario='$nickname' ORDER BY id"))
-				return false;
-			if(parent::count($query) > 0) {
-				while($result = parent::get($query))
-					array_push($pm, $result);
-				if(!empty($pm))
-					return $pm;
-				return false;
-			}
-			return false;
-		}
-		return false;
 	}
 	
 	/* Controlla se l'MP esiste. */
@@ -59,8 +43,7 @@ class PersonalMessage extends User {
 		if(empty($array))
 			return false;
 		if((parent::isUser($array[0])) && (parent::isUser($array[1]))) {
-			$query = parent::query('SELECT * FROM '.$this->prefix.'personalmessage LIMIT 1');
-			if(!$campi = parent::getColumns($query))
+			if(!$campi = parent::getColumns('SELECT * FROM '.$this->prefix.'personalmessage LIMIT 1'))
 				return false;
 			$query = 'INSERT INTO '.$this->prefix.'personalmessage(';
 			foreach($campi as $var)

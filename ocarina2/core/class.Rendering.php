@@ -76,7 +76,6 @@ class Rendering extends Configuration {
 		$this->addValue('root_admin', $this->config[0]->root_admin);
 		$this->addValue('root_rendering', $this->config[0]->root_rendering);
 		$this->addValue('root_immagini', $this->config[0]->root_immagini);
-		$this->addValue('query', $this->numQuery);
 		$this->addValue('time', $this->microtime_float() - $this->time_start);
 		require_once($this->config[0]->root_index.'/etc/mobile_device_detect.php');
 		

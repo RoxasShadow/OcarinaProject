@@ -10,18 +10,12 @@ class Category extends Ad {
 
 	/* Ottengo le categorie. */
 	public function getCategory($campo) {
-		if(!$query = parent::query("SHOW COLUMNS FROM {$this->prefix}$campo LIKE 'categoria'"))
-			return false;
-		if(!$array = parent::getEnum($query))
-			return false;
-		return $array;
+		return ($array = parent::getEnum("SHOW COLUMNS FROM {$this->prefix}$campo LIKE 'categoria'")) ? $array : false;
 	}
 	
 	/* Controlla se una categoria esiste. */
 	public function isCategory($campo, $categoria) {
-		if(!$query = parent::query("SHOW COLUMNS FROM {$this->prefix}$campo LIKE 'categoria'"))
-			return false;
-		if(!$array = parent::getEnum($query))
+		if(!$array = parent::getEnum("SHOW COLUMNS FROM {$this->prefix}$campo LIKE 'categoria'"))
 			return false;
 		foreach($array as $var)
 			if($var == $categoria)
@@ -41,9 +35,7 @@ class Category extends Ad {
 			}
 			$query = trim($query, ', ');
 			$query .= ')';
-			if(!parent::query($query))
-				return false;
-			return true;
+			return (!parent::query($query)) ? false : true;
 		}
 		return false;
 	}
@@ -61,9 +53,7 @@ class Category extends Ad {
 			}
 			$query = trim($query, ', ');
 			$query .= ')';
-			if(!parent::query($query))
-				return false;
-			return true;
+			return (!parent::query($query)) ? false : true;
 		}
 		return false;
 	}

@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-28 15:32:11
+<?php /* Smarty version Smarty-3.0.8, created on 2011-08-01 15:08:12
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/include/footer.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:13932385044e3180fb68e719-63149811%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:13551599574e36c15c5381b8-92501145%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '0911fbf39850b2695021150d73b77bd07645458a' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/default/include/footer.tpl',
-      1 => 1310739150,
+      1 => 1312211290,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '13932385044e3180fb68e719-63149811',
+  'nocache_hash' => '13551599574e36c15c5381b8-92501145',
   'function' => 
   array (
   ),
@@ -26,8 +26,7 @@ $_smarty_tpl->decodeProperties(array (
 </table>
 <div align="center">
 <p><font color="white">Pagina generata in <?php echo $_smarty_tpl->getVariable('time')->value;?>
- secondi effettuando <?php echo $_smarty_tpl->getVariable('query')->value;?>
- query.<br />
+ secondi.<br />
 <?php if (((isset($_smarty_tpl->getVariable('useronline',null,true,false)->value))&&(!empty($_smarty_tpl->getVariable('useronline',null,true,false)->value)))){?>
 	Utenti online: 
 	<?php  $_smarty_tpl->tpl_vars['user'] = new Smarty_Variable;
@@ -40,11 +39,15 @@ if ($_smarty_tpl->tpl_vars['user']->total > 0){
  $_smarty_tpl->tpl_vars['user']->last = $_smarty_tpl->tpl_vars['user']->iteration === $_smarty_tpl->tpl_vars['user']->total;
 ?>
 		<?php if ($_smarty_tpl->tpl_vars['user']->last){?>
-			<?php echo $_smarty_tpl->tpl_vars['user']->value;?>
-
+			<a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/profile/<?php echo $_smarty_tpl->tpl_vars['user']->value;?>
+.html"><?php echo $_smarty_tpl->tpl_vars['user']->value;?>
+</a>
 		<?php }else{ ?>
-			<?php echo $_smarty_tpl->tpl_vars['user']->value;?>
-, 
+			<a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/profile/<?php echo $_smarty_tpl->tpl_vars['user']->value;?>
+.html"><?php echo $_smarty_tpl->tpl_vars['user']->value;?>
+</a>, 
 		<?php }?>
 	<?php }} ?>
 <?php }else{ ?>

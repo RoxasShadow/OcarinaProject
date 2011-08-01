@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-29 17:12:48
+<?php /* Smarty version Smarty-3.0.8, created on 2011-08-01 13:10:13
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/mp.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:9453850044e32ea103c00a0-19096845%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:9655360364e36a5b51a1a36-21942492%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'bc082912cf343439026d230e854c00f51bf06324' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/default/mp.tpl',
-      1 => 1311959567,
+      1 => 1311967238,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '9453850044e32ea103c00a0-19096845',
+  'nocache_hash' => '9655360364e36a5b51a1a36-21942492',
   'function' => 
   array (
   ),
@@ -27,25 +27,17 @@ $_smarty_tpl->decodeProperties(array (
 		<div class="titolo">Nessun MP ricevuto.</div>
 	<?php }else{ ?>
 		<?php if (is_numeric($_smarty_tpl->getVariable('id')->value)){?>
-			<?php  $_smarty_tpl->tpl_vars['item'] = new Smarty_Variable;
- $_smarty_tpl->tpl_vars['key'] = new Smarty_Variable;
- $_from = $_smarty_tpl->getVariable('result')->value; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
-if ($_smarty_tpl->_count($_from) > 0){
-    foreach ($_from as $_smarty_tpl->tpl_vars['item']->key => $_smarty_tpl->tpl_vars['item']->value){
- $_smarty_tpl->tpl_vars['key']->value = $_smarty_tpl->tpl_vars['item']->key;
-?>
-				<b>Da:</b> <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+			<b>Da:</b> <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /profile/<?php echo $_smarty_tpl->getVariable('result')->value[0]->mittente;?>
 .html"><?php echo $_smarty_tpl->getVariable('result')->value[0]->mittente;?>
 </a><br />
-				<b>Data:</b> <?php echo $_smarty_tpl->getVariable('result')->value[0]->data;?>
+			<b>Data:</b> <?php echo $_smarty_tpl->getVariable('result')->value[0]->data;?>
 <br />
-				<b>Oggetto:</b> <?php echo $_smarty_tpl->getVariable('result')->value[0]->oggetto;?>
+			<b>Oggetto:</b> <?php echo $_smarty_tpl->getVariable('result')->value[0]->oggetto;?>
 <br />
-				<b>Contenuto:</b><br />
-				<?php echo $_smarty_tpl->getVariable('result')->value[0]->contenuto;?>
+			<b>Contenuto:</b><br />
+			<?php echo $_smarty_tpl->getVariable('result')->value[0]->contenuto;?>
 
-			<?php }} ?>
 		<?php }else{ ?>
 			<?php  $_smarty_tpl->tpl_vars['item'] = new Smarty_Variable;
  $_smarty_tpl->tpl_vars['key'] = new Smarty_Variable;

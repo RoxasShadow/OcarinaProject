@@ -7,82 +7,128 @@ require_once('class.Utilities.php');
 
 /* Questa classe mette a disposizione dei metodi per gestire il database. */
 class MySQL extends Utilities {
-	/* EDIT HERE */
 	private $host = 'localhost';
 	private $username = 'root';
 	private $password = 'kronos';
 	private $database = 'ocarina2';
 	public $prefix = '';
-	/* STOP, HAVE FUN! :) */
-	private $connected;
-	public $numQuery = 0;
+	public $caching = true; // `true` -> Caching abilitato; `false` -> Caching disabilitato.
+	private $storage = '/var/www/htdocs/ocarina2/cache/';
 	
-	/* Quando la classe viene istanziata, il costruttore provvede a connettersi al database. */
 	public function __construct() {
-		$this->connect();
+		if(!mysql_selectdb($this->database, mysql_connect($this->host, $this->username, $this->password)))
+			die('Database connection failed.');
+		elseif($this->caching)
+			if(!is_dir($this->storage))
+				die('The cache directory not exists.');
+			elseif(!is_writable($this->storage))
+				die('The cache directory is not writable. You should fix the permissions.'); 
 	}
 	
-	/* Quando la classe viene distrutta, il distruttore provvede a disconnettersi dal database. */
 	public function __distruct() {
-		$this->disconnect();
+		mysql_close();
 	}
 	
-	/* Esegue una connessione al database. */
-	protected function connect() {
-		if(!$this->connected) {
-			if(!mysql_selectdb($this->database, mysql_connect($this->host,$this->username,$this->password)))
-				return false;
-			$this->connected = true;
-		}
+	/* Private methods. */
+	private function serial($file, $obj) {
+		$f = fopen($this->storage.$file, 'w');
+		fwrite($f, serialize($obj));
+		fclose($f);
 	}
 	
-	/* Esegue una disconnessione dal database. */
-	protected function disconnect() {
-		if($this->connected) {
-			if(!mysql_close())
-				return false;
-			$this->connected = false;
-		}
+	private function unserial($file) {
+		$filetime = filemtime($this->storage.$file);
+		$f = fopen($this->storage.$file, 'r');
+		$content = fread($f, filesize($this->storage.$file));
+		fclose($f);
+		return unserialize($content);
 	}
-
-	/* Esegue una query. */
-	protected function query($query) {
-		$result = mysql_query($query);
-		if(!$result)
+	
+	private function is_cachable($query) {
+		return !preg_match('/\s*(INSERT[\s]+|DELETE[\s]+|UPDATE[\s]+|REPLACE[\s]+|CREATE[\s]+|ALTER[\s]+|SET[\s]+|FOUND_ROWS[\s]+|SQL_NO_CACHE[\s]+)/si', $query);
+	}
+	
+	private function is_cached($file) {
+		return file_exists($this->storage.$file) ? true : false;
+	}
+	
+	private function cache_remove($file) {
+		if($this->is_cached($file))
+			unlink($this->storage.$file);
+	}
+	
+	/* Public methods. */
+	public function cache_clean() {
+		$dir = opendir($this->storage);
+		while($file = readdir($dir))
+			if(substr($file, -6) == '.cache')
+				$this->cache_remove($file);
+	}
+	
+	public function query($query) {
+		if(!$result = mysql_query($query))
 			return false;
-		++$this->numQuery;
-		return $result;
-	}
-
-	/* Conta le occorrenze di una query. */
-	protected function count($query) {
-		$result = mysql_num_rows($query);
-		if(!$result)
-			return 0;
-		if($result <= 0)
-			return 0;
+		if($this->caching)
+			if(!$this->is_cachable($query))
+				$this->cache_clean();
 		return $result;
 	}
 	
-	/* Estrae un oggetto con dei record provenienti da una query. */
-	protected function get($query) {
-		$result = mysql_fetch_object($query);
-		return (!$result) ? false : $result;
-	}
-	
-	/* Estrae un oggetto con dei record provenienti da una query. */
-	protected function getEnum($query) {
-		$array = mysql_fetch_row($query);
-		$category = explode("','", preg_replace("/(enum|set)\('(.+?)'\)/", "\\2", $array[1]));
-		return (!empty($category)) ? $category : false;
-	}
-	
-	/* Ritorna un array contenente le colonne di una tabella. */
-	protected function getColumns($query) {
+	public function get($query) {
+		if(!$this->caching) {
+			if(!$result = mysql_query($query))
+				return false;
+			$array = array();
+			while($fetch = mysql_fetch_object($result))
+				array_push($array, $fetch);
+			mysql_free_result($result);
+			return empty($array) ? false : $array;
+		}
+		$file = md5($query).'.cache';
+		if($this->is_cached($file))
+			return $this->unserial($file);
+		if(!$result = mysql_query($query))
+			return false;
 		$array = array();
-		$columns = mysql_num_fields($query);
+		while($fetch = mysql_fetch_object($result))
+			array_push($array, $fetch);
+		mysql_free_result($result);
+		if(!$this->is_cached($file))
+			$this->serial($file, $array);
+		return empty($array) ? false : $array;
+	}
+	
+	public function count($query) {
+		if($this->caching) {
+			$file = md5($query).'.cache';
+			if($this->is_cached($file)) {
+				$count = count($this->unserial($file));
+				return ((!$count) || (!is_numeric($count)) || ((int)$count <= 0)) ? 0 : (int)$count;
+			}
+		}
+		if(!$result = mysql_query($query))
+			return false;
+		$count = mysql_num_rows($result);
+		return ((!$count) || (!is_numeric($count)) || ((int)$count <= 0)) ? 0 : (int)$count;
+	}
+	
+	public function getEnum($query) {
+		if(!$result = mysql_query($query));
+			return false;
+		if(!$rows = mysql_fetch_row($result))
+			return false;
+		$category = explode("','", preg_replace("/(enum|set)\('(.+?)'\)/", "\\2", $rows[1]));
+		return (empty($category)) ? false : $category;
+	}
+	
+	public function getColumns($query) {
+		if(!$result = mysql_query($query))
+			return false;
+		$array = array();
+		if(!$columns = mysql_num_fields($result))
+			return false;
 		for($i=0; $i<$columns; $i++)
-			$array[$i] = mysql_field_name($query, $i);
+			$array[$i] = mysql_field_name($result, $i);
 		return (empty($array)) ? false : $array;
 	}
 	
@@ -259,6 +305,7 @@ class MySQL extends Utilities {
 			) ENGINE=MyISAM  DEFAULT CHARSET=latin1;"
 		);
 		for($i=0, $count=count($array); $i<$count; ++$i)
-			$this->query($array[$i]) or die(mysql_error());
+			if(!$this->query($array[$i]))
+				die(mysql_error());
 	}
 }

@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-07-26 15:40:20
+<?php /* Smarty version Smarty-3.0.8, created on 2011-08-01 13:10:26
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/ricerca.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:2698694534e2edfe4d1a213-07569196%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:13406168594e36a5c25d8ee0-03688234%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'a671e611ae7f3d59f55487015a156eeeb7c4935d' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/default/ricerca.tpl',
-      1 => 1311527918,
+      1 => 1311967659,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '2698694534e2edfe4d1a213-07569196',
+  'nocache_hash' => '13406168594e36a5c25d8ee0-03688234',
   'function' => 
   array (
   ),
@@ -20,6 +20,7 @@ $_smarty_tpl->decodeProperties(array (
 
 <?php $_template = new Smarty_Internal_Template(($_smarty_tpl->getVariable('root_rendering')->value)."/templates/".($_smarty_tpl->getVariable('skin')->value)."/include/header.tpl", $_smarty_tpl->smarty, $_smarty_tpl, $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null);
  echo $_template->getRenderedTemplate(); $_template->rendered_content = null;?><?php unset($_template);?>
+	<div id="post-0" class="post">
 	<?php if ($_smarty_tpl->getVariable('cerca')->value){?>
 		Cerca tra le news:<br />
 		<form action="" method="post">
@@ -38,8 +39,8 @@ $_smarty_tpl->decodeProperties(array (
 	<?php }else{ ?>
 	
 	<?php if (isset($_smarty_tpl->getVariable('error_news',null,true,false)->value)){?>
-		<div class="titolo"><?php echo $_smarty_tpl->getVariable('error_news')->value;?>
-</div>
+		<h2 class="title"><?php echo $_smarty_tpl->getVariable('error_news')->value;?>
+</h2>
 	<?php }elseif(isset($_smarty_tpl->getVariable('news',null,true,false)->value)){?>
 		&bull; <b>News</b><br />
 		<?php  $_smarty_tpl->tpl_vars['item'] = new Smarty_Variable;
@@ -57,8 +58,8 @@ if ($_smarty_tpl->_count($_from) > 0){
 	<?php }?>
 	
 	<?php if (isset($_smarty_tpl->getVariable('error_page',null,true,false)->value)){?>
-		<div class="titolo"><?php echo $_smarty_tpl->getVariable('error_page')->value;?>
-</div>
+		<h2 class="title"><?php echo $_smarty_tpl->getVariable('error_page')->value;?>
+</h2>
 	<?php }elseif(isset($_smarty_tpl->getVariable('pagina',null,true,false)->value)){?>
 		&bull; <b>Pagine</b><br />
 		<?php  $_smarty_tpl->tpl_vars['item'] = new Smarty_Variable;
@@ -76,8 +77,8 @@ if ($_smarty_tpl->_count($_from) > 0){
 	<?php }?>
 	
 	<?php if (isset($_smarty_tpl->getVariable('error_comment',null,true,false)->value)){?>
-		<div class="titolo"><?php echo $_smarty_tpl->getVariable('error_comment')->value;?>
-</div>
+		<h2 class="title"><?php echo $_smarty_tpl->getVariable('error_comment')->value;?>
+</h2>
 	<?php }elseif(isset($_smarty_tpl->getVariable('commento',null,true,false)->value)){?>
 		&bull; <b>Commenti</b><br />
 		<?php  $_smarty_tpl->tpl_vars['item'] = new Smarty_Variable;
@@ -96,5 +97,6 @@ if ($_smarty_tpl->_count($_from) > 0){
 	<?php }?>
 	
 	<?php }?>
+	</div>
 <?php $_template = new Smarty_Internal_Template(($_smarty_tpl->getVariable('root_rendering')->value)."/templates/".($_smarty_tpl->getVariable('skin')->value)."/include/footer.tpl", $_smarty_tpl->smarty, $_smarty_tpl, $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null);
  echo $_template->getRenderedTemplate(); $_template->rendered_content = null;?><?php unset($_template);?>

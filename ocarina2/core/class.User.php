@@ -19,46 +19,18 @@ class User extends Configuration {
 
 	/* Ottiene uno o più utenti. */
 	public function getUser($nickname = '') {
-		$utenti = array();
-		if($nickname !== '') {
-			if($this->isUser($nickname)) {
-				if(!$query = parent::query("SELECT * FROM {$this->prefix}utenti WHERE nickname='$nickname' LIMIT 1"))
-					return false;
-				array_push($utenti, parent::get($query));
-				if(!empty($utenti))
-					return $utenti;
+		if($nickname !== '')
+			if($this->isUser($nickname))
+				return ($result = parent::get("SELECT * FROM {$this->prefix}utenti WHERE nickname='$nickname' LIMIT 1")) ? $result : false;
+			else
 				return false;
-			}
-			return false;
-		}
-		else {
-			if(!$query = parent::query('SELECT * FROM '.$this->prefix.'utenti ORDER BY nickname ASC'))
-				return false;
-			if(parent::count($query) > 0) {
-				while($result = parent::get($query))
-					array_push($utenti, $result);
-				if(!empty($utenti))
-					return $utenti;
-				return false;
-			}
-			return false;
-		}
-		return false;
+		else
+			return ($result = parent::get('SELECT * FROM '.$this->prefix.'utenti ORDER BY nickname ASC')) ? $result : false;
 	}
 
 	/* Ottiene i visitatori. */
 	public function getVisitator() {
-		$visitatori = array();
-		if(!$query = parent::query('SELECT * FROM '.$this->prefix.'visitatori ORDER BY id ASC'))
-			return false;
-		if(parent::count($query) > 0) {
-			while($result = parent::get($query))
-				array_push($visitatori, $result);
-			if(!empty($visitatori))
-				return $visitatori;
-			return false;
-		}
-		return false;
+		return ($result = parent::get('SELECT * FROM '.$this->prefix.'visitatori ORDER BY id ASC')) ? $result : false;
 	}
 	
 	/* Controlla se l'utente esiste. */
@@ -135,19 +107,7 @@ class User extends Configuration {
 	
 	/* Ricerca gli utenti per un campo specifico. */
 	public function searchUserByField($campo, $valore) {
-		if(!$query = parent::query("SELECT * FROM {$this->prefix}utenti WHERE $campo='$valore' ORDER BY nickname ASC"))
-			return false;
-		if(parent::count($query) > 0) {
-			$utenti = array();
-			while($result = parent::get($query))
-				array_push($utenti, $result);
-			array_push($utenti, parent::get($query));
-			if(!empty($utenti))
-				return $utenti;
-			return false;
-		}
-		else
-			return false;
+		return ($result = parent::get("SELECT * FROM {$this->prefix}utenti WHERE $campo='$valore' ORDER BY nickname ASC")) ? $result : false;
 	}
 	
 	/* Crea un commento. */
@@ -155,8 +115,7 @@ class User extends Configuration {
 		if(empty($array))
 			return false;
 		if((!$this->isUser($array[0])) && (parent::isEmail($array[2]))) {
-			$query = parent::query('SELECT * FROM '.$this->prefix.'utenti LIMIT 1');
-			if(!$campi = parent::getColumns($query))
+			if(!$campi = parent::getColumns('SELECT * FROM '.$this->prefix.'utenti LIMIT 1'))
 				return false;
 			$array[1] = md5($this->salt.$array[1]);
 			$query = 'INSERT INTO '.$this->prefix.'utenti(';
@@ -284,31 +243,13 @@ class User extends Configuration {
 
 	/* Visualizza i log. */
 	public function getLog($nickname = '') {
-		$log = array();
 		if($nickname !== '') {
-			if($this->isUser($nickname)) {
-				if(!$query = parent::query("SELECT * FROM {$this->prefix}log WHERE nickname='$nickname' ORDER BY id DESC"))
-					return false;
-				array_push($log, parent::get($query));
-				if(!empty($log))
-					return $log;
-				return false;
-			}
+			if($this->isUser($nickname))
+				return ($result = parent::get("SELECT * FROM {$this->prefix}log WHERE nickname='$nickname' ORDER BY id DESC")) ? $result : false;
 			return false;
 		}
-		else {
-			if(!$query = parent::query('SELECT * FROM '.$this->prefix.'log ORDER BY id DESC'))
-				return false;
-			if(parent::count($query) > 0) {
-				while($result = parent::get($query))
-					array_push($log, $result);
-				if(!empty($log))
-					return $log;
-				return false;
-			}
-			return false;
-		}
-		return false;
+		else
+			return ($result = parent::get('SELECT * FROM '.$this->prefix.'log ORDER BY id DESC')) ? $result : false;
 	}
 	
 	/* Elimina i log. */
