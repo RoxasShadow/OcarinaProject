@@ -66,6 +66,7 @@ class osh:
 		print 'help -> view this help'
 		print 'clear -> clear the terminal'
 		print 'news -> read the news'
+		print 'lastnews -> read the last 10 news'
 		print 'countnews -> count the news'
 		print 'searchnews -> search the news'
 		print 'votenews -> vote the news'
@@ -291,7 +292,7 @@ class osh:
 
 	def parseCountAccess(self, json):
 		print 'Total access in the site: '+self.bold+json['response']+self.normal+'.'
-			print 'There are '+self.bold+json['response']+self.normal+' users registrated.'
+		print 'There are '+self.bold+json['response']+self.normal+' users registrated.'
 
 	def parseCountPM(self, json):
 		print 'PM unreaded: '+self.bold+json['response']+self.normal+'.'
@@ -346,6 +347,8 @@ class osh:
 				print 'Bye bye'
 			elif action == 'news':
 				self.parseNews(self.getContent('news', 'title', raw_input("Write the minititle of the news wich you want to see, otherwise type enter to see all the news: ")))
+			elif action == 'lastnews':
+				self.parseNews(self.getContent('lastnews'))
 			elif action == 'countnews':
 				self.parseCountNews(self.getContent('countnews'))
 			elif action == 'searchnews':
