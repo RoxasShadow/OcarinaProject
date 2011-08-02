@@ -27,13 +27,7 @@ unset($pm);
 if($categoria == '')
 	$rendering->addValue('error', $news->getLanguage('error', 1));
 else {
-	if(!$getNewsCat = $news->searchNewsByCategory($categoria))
-		$rendering->addValue('error_news', str_replace('{$cat}', $categoria, $news->getLanguage('error', 2)));
-	else
-		$rendering->addValue('news', $getNewsCat);
-	if(!$getPageCat = $pagine->searchPageByCategory($categoria))
-		$rendering->addValue('error_page', str_replace('{$cat}', $categoria, $news->getLanguage('error', 3)));
-	else
-		$rendering->addValue('pagine', $getPageCat);
+	(!$getNewsCat = $news->searchNewsByCategory($categoria)) ? $rendering->addValue('error_news', str_replace('{$cat}', $categoria, $news->getLanguage('error', 2))) : $rendering->addValue('news', $getNewsCat);
+	(!$getPageCat = $pagine->searchPageByCategory($categoria)) ? $rendering->addValue('error_page', str_replace('{$cat}', $categoria, $news->getLanguage('error', 3))) : $rendering->addValue('pagine', $getPageCat);
 }
 (($news->isLogged()) && ($news->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('archivio.tpl');

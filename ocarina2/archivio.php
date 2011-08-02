@@ -23,13 +23,6 @@ $pm = new PersonalMessage();
 $rendering->addValue('numeromp', $pm->countPM());
 unset($pm);
 
-if(!$getNews = $news->searchNews(''))
-	$rendering->addValue('error_news', $news->getLanguage('error', 0));
-else
-	$rendering->addValue('news', $getNews);
-if(!$getPage = $pagine->searchPage('', 'wildcard'))
-	$rendering->addValue('error_page', $news->getLanguage('error', 0));
-else
-	$rendering->addValue('pagine', $getPage);
-
+(!$getNews = $news->searchNews('')) ? $rendering->addValue('error_news', $news->getLanguage('error', 0)) : $rendering->addValue('news', $getNews);
+(!$getPage = $pagine->searchPage('', 'wildcard')) ? $rendering->addValue('error_page', $news->getLanguage('error', 0)) : $rendering->addValue('pagine', $getPage);
 (($news->isLogged()) && ($news->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('archivio.tpl');

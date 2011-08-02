@@ -73,7 +73,7 @@ class MySQL extends Utilities {
 				$this->cache_clean();
 		return $result;
 	}
-	
+		
 	public function get($query) {
 		if(!$this->caching) {
 			if(!$result = mysql_query($query))

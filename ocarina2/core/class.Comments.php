@@ -12,7 +12,7 @@ class Comments extends News {
 	public function getComment($news = '') {
 		if($news !== '')
 			if($this->isComment($news))
-				return ($result = parent::get("SELECT * FROM {$this->prefix}commenti WHERE news='$news' AND approvato='1' LIMIT 1")) ? $result : false;
+				return ($result = parent::get("SELECT * FROM {$this->prefix}commenti WHERE news='$news' AND approvato='1'")) ? $result : false;
 			else
 				return false;
 		else

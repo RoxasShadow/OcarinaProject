@@ -14,9 +14,13 @@ class Rendering extends Configuration {
 	/* Quando la classe viene istanziata, il costruttore provvede a creare un nuovo oggetto Smarty. */
 	public function __construct() {
 		parent::__construct(); // Eredito il costruttore della superclasse
-		$this->time_start = $this->microtime_float(); // Il timer lo avvio qui poichè la classe viene istanziata ad ogni script.
 		require_once($this->config[0]->root_rendering.'/Smarty.class.php');
+		require_once($this->config[0]->root_index.'/etc/class.CSRF.php');
+		$this->time_start = $this->microtime_float(); // Il timer lo avvio qui poichè la classe viene istanziata ad ogni script.
 		$this->smarty = new Smarty;
+		$csrf = new CSRF();
+		$csrf->enable();
+		
 		$path = $this->config[0]->root_rendering;
 		$this->smarty->cache_dir = $path.'/cache';
 		$this->smarty->template_dir = $path.'/templates';

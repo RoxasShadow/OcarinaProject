@@ -2,8 +2,9 @@
 	(C) Giovanni Capuano 2011
 *}
 {include file="$root_rendering/templates/$skin/include/header.tpl"}
+	<div id="post-0" class="post">
 	{if $logged || isset($recupera)}
-		<div class="titolo">{$result}</div>
+		<h2 class="title">{$result}</h2>
 	{elseif !$submit && !isset($recupero)}
 		<form action="" method="post">
 		<table border="0">
@@ -19,6 +20,7 @@
 		<input type="submit" value="Recupera password" name="submit" />
 		</form>
 	{else}
-		<div class="titolo">{$result}</div>
+		<h2 class="title">{$result}</h2>
 	{/if}
+	</div>
 {include file="$root_rendering/templates/$skin/include/footer.tpl"}

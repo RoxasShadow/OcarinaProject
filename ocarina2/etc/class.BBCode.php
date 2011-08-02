@@ -10,8 +10,8 @@ class BBCode extends Configuration {
 	
 	public function __construct() {
 		parent::__construct();
-		include_once('class.Translator.php');
-		$this->translator = new Translator();
+		//include_once('class.Translator.php');
+		//$this->translator = new Translator();
 	}
 	
 	public function bbcode($text) {
@@ -99,7 +99,8 @@ class BBCode extends Configuration {
 			'<textarea style="border: 0px; overflow: auto; width:100%;" rows="8">$1</textarea>',
 			'<blockquote><span>$1</span></blockquote>',
 			'<a href="'.$this->config[0]->url_index.'/profile/$1.html">$1</a>',
-			$this->translator->translate('$3', '$1', '$2'),
+			//$this->translator->translate('$3', '$1', '$2'),
+			'',
 			'♥',
 			'☻',
 			'&copy;',

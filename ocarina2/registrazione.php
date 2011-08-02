@@ -34,9 +34,8 @@ if($user->isLogged())
 elseif($codiceRegistrazione !== '') {
 	if($user->config[0]->validazioneaccount == 0)
 		$rendering->addValue('result', $user->getLanguage('registration', 1));
-	else {
-		$user->username = $user->searchUserByField('codiceregistrazione', $codiceRegistrazione);
-		if(!$user->username) {
+	else
+		if(!$user->username = $user->searchUserByField('codiceregistrazione', $codiceRegistrazione);) {
 			if($user->config[0]->log == 1)
 				$user->log('~', 'Invalid validation code.');
 			$rendering->addValue('result', $user->getLanguage('registration', 2));
@@ -58,7 +57,6 @@ elseif($codiceRegistrazione !== '') {
 			if($user->config[0]->log == 1)
 				$user->log('~', 'Invalid validation code.');
 		}
-	}
 }
 elseif($submit) {
 	if($user->config[0]->registrazioni == 0)

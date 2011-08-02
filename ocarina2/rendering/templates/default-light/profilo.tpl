@@ -2,6 +2,7 @@
 	(C) Giovanni Capuano 2011
 *}
 {include file="$root_rendering/templates/$skin/include/header.tpl"}
+	<div id="post-0" class="post">
 	{if isset($listautenti)}
 		<div align="center">
 		<form action="" method="post">
@@ -39,6 +40,7 @@
 		</table>
 		</div>
 	{else}
-		<div class="titolo">{$result}</div>
+		<h2 class="title">{$result}</h2>
 	{/if}
+	</div>
 {include file="$root_rendering/templates/$skin/include/footer.tpl"}

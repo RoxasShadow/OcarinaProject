@@ -7,7 +7,7 @@
    È possibile includerlo direttamente nel file di template come fosse un semplice script. */
 header('Content-type: text/javascript');
 header('Last-Modified: '.gmstrftime("%a, %d %b %Y %H:%M:%S GMT", getlastmod()));
-require_once('./core/class.Configuration.php');
+require_once('../core/class.Configuration.php');
 $config = new Configuration();
 $apri = opendir($config->config[0]->root_index.'/etc/js/');
 $f = array();

@@ -32,9 +32,8 @@ if(!$submit) {
 	$rendering->addValue('result', $user->getLanguage('recoverpassword', 8));
 }
 elseif(!$user->isLogged())
-	if(($email == '') && ($recupero) && ($codiceRecupero !== '')) {
-		$username = $user->searchUserByField('codicerecupero', $codiceRecupero);
-		if(!$username) {
+	if(($email == '') && ($recupero) && ($codiceRecupero !== ''))
+		if(!$username = $user->searchUserByField('codicerecupero', $codiceRecupero)) {
 			$rendering->addValue('result', $user->getLanguage('recoverpassword', 0));
 			if($user->config[0]->log == 1)
 				$user->log('~', 'Invalid recover code.');
@@ -56,14 +55,12 @@ elseif(!$user->isLogged())
 		}
 		else
 			$rendering->addValue('result', $user->getLanguage('recoverpassword', 3));
-	}
 	elseif(($email !== '') && (!$recupero)) {
 		$captcha->checkCaptcha();
 		if($captcha->getError() !== false)
 			$rendering->addValue('result', $user->getLanguage('recoverpassword', 9));
-		else {
-			$username = $user->searchUserByField('email', $email);
-			if($username !== false) {
+		else
+			if(($username = $user->searchUserByField('email', $email)) !== false) {
 				if($username[0]->email == $email) {
 					$nickname = $username[0]->nickname;
 					$codice = $user->getCode();
@@ -102,7 +99,6 @@ elseif(!$user->isLogged())
 				if($user->config[0]->log == 1)
 					$user->log('~', 'Recover mail was not sended.');
 			}
-		}
 	}
 	else {
 		$rendering->addValue('result', $user->getLanguage('recoverpassword', 7));

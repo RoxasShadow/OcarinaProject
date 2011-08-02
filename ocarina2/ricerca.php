@@ -28,24 +28,15 @@ $rendering->addValue('numeromp', $pm->countPM());
 unset($pm);
 
 if($cercaNews !== '') {
-	if(!$search = $comment->searchNews($cercaNews))
-		$rendering->addValue('error_news', $comment->getLanguage('search', 0));
-	else
-		$rendering->addValue('news', $search);
+	(!$search = $comment->searchNews($cercaNews)) ? $rendering->addValue('error_news', $comment->getLanguage('search', 0)) : $rendering->addValue('news', $search);
 	$cerca = false;
 }
 elseif($cercaPagine !== '') {
-	if(!$search = $pagina->searchPage($cercaPagine, 'wildcard'))
-		$rendering->addValue('error_page', $comment->getLanguage('search', 1));
-	else
-		$rendering->addValue('pagina', $search);
+	(!$search = $pagina->searchPage($cercaPagine, 'wildcard')) ? $rendering->addValue('error_page', $comment->getLanguage('search', 1)) : $rendering->addValue('pagina', $search);
 	$cerca = false;
 }
 elseif($cercaCommenti !== '') {
-	if(!$search = $comment->searchComment($cercaCommenti))
-		$rendering->addValue('error_comment', $comment->getLanguage('search', 2));
-	else
-		$rendering->addValue('commento', $search);
+	(!$search = $comment->searchComment($cercaCommenti)) ? $rendering->addValue('error_comment', $comment->getLanguage('search', 2)) : $rendering->addValue('commento', $search);
 	$cerca = false;
 }
 $rendering->addValue('cerca', $cerca);
