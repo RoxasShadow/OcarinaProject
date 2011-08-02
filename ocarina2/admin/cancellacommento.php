@@ -3,15 +3,15 @@
 	/admin/cancellanews.php
 	(C) Giovanni Capuano 2011
 */
-require_once('../core/class.Comments.php');
+require_once('../core/class.Ocarina.php');
 
-$comments = new Comments();
+$ocarina = new Ocarina();
 $id = ((isset($_GET['id'])) && ($_GET['id'] !== '') && (is_numeric($_GET['id']))) ? (int)$_GET['id'] : '';
 
-if(($comments->isLogged()) && ($comments->username[0]->grado < 3)) {
-	$comments->deleteComment($id);
-	if($comments->config[0]->log == 1)
-		$comments->log($comments->username[0]->nickname, 'Comment '.$id.' deleted.');
+if(($ocarina->isLogged()) && ($ocarina->username[0]->grado < 3)) {
+	$ocarina->deleteComment($id);
+	if($ocarina->config[0]->log == 1)
+		$ocarina->log($ocarina->username[0]->nickname, 'Comment '.$id.' deleted.');
 }
 
 if(isset($_SERVER['HTTP_REFERER']))

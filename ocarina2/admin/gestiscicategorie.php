@@ -3,99 +3,94 @@
 	/admin/creacategoria.php
 	(C) Giovanni Capuano 2011
 */
-require_once('../core/class.Category.php');
-require_once('../core/class.News.php');
-require_once('../core/class.Page.php');
-require_once('../core/class.Rendering.php');
+require_once('../core/class.Ocarina.php');
 
-$categoria = new Category();
-$rendering = new Rendering();
-$categoria_news = ((isset($_POST['categoria_news'])) && (isset($_POST['creaCategoriaNews'])) && ($_POST['categoria_news'] !== '')) ? $categoria->purge($_POST['categoria_news']) : '';
-$categoria_pagina = ((isset($_POST['categoria_pagina'])) && (isset($_POST['creaCategoriaPagine'])) &&  ($_POST['categoria_pagina'] !== '')) ? $categoria->purge($_POST['categoria_pagina']) : '';
-$categoria_news_rimuovi = ((isset($_POST['categoria_news_rimuovi'])) && (isset($_POST['rimuoviCategoriaNews'])) &&  ($_POST['categoria_news_rimuovi'] !== '')) ? $categoria->purge($_POST['categoria_news_rimuovi']) : '';
-$categoria_pagina_rimuovi = ((isset($_POST['categoria_pagina_rimuovi'])) && (isset($_POST['rimuoviCategoriaPagine'])) &&  ($_POST['categoria_pagina_rimuovi'] !== '')) ? $categoria->purge($_POST['categoria_pagina_rimuovi']) : '';
+$ocarina = new Ocarina();
+$ocarina_news = ((isset($_POST['categoria_news'])) && (isset($_POST['creaCategoriaNews'])) && ($_POST['categoria_news'] !== '')) ? $ocarina->purge($_POST['categoria_news']) : '';
+$ocarina_pagina = ((isset($_POST['categoria_pagina'])) && (isset($_POST['creaCategoriaPagine'])) &&  ($_POST['categoria_pagina'] !== '')) ? $ocarina->purge($_POST['categoria_pagina']) : '';
+$ocarina_news_rimuovi = ((isset($_POST['categoria_news_rimuovi'])) && (isset($_POST['rimuoviCategoriaNews'])) &&  ($_POST['categoria_news_rimuovi'] !== '')) ? $ocarina->purge($_POST['categoria_news_rimuovi']) : '';
+$ocarina_pagina_rimuovi = ((isset($_POST['categoria_pagina_rimuovi'])) && (isset($_POST['rimuoviCategoriaPagine'])) &&  ($_POST['categoria_pagina_rimuovi'] !== '')) ? $ocarina->purge($_POST['categoria_pagina_rimuovi']) : '';
 $submit = ((isset($_POST['creaCategoriaNews'])) || (isset($_POST['creaCategoriaPagine'])) || (isset($_POST['rimuoviCategoriaNews'])) || (isset($_POST['rimuoviCategoriaPagine']))) ? true : false;
 
-$rendering->addValue('grado', $categoria->isLogged() ? $categoria->username[0]->grado : '');
-$rendering->skin = 'admin';
-$rendering->addValue('titolo', $categoria->getLanguage('title', 18).$categoria->getLanguage('title', 2).$categoria->getLanguage('title', 10).$categoria->getLanguage('title', 2).$categoria->config[0]->nomesito);
+$ocarina->skin = 'admin';
+$ocarina->addValue('titolo', $ocarina->getLanguage('title', 18).$ocarina->getLanguage('title', 2).$ocarina->getLanguage('title', 10).$ocarina->getLanguage('title', 2).$ocarina->config[0]->nomesito);
 
-if(($categoria->isLogged()) && ($categoria->username[0]->grado <= 3))
+if(($ocarina->isLogged()) && ($ocarina->username[0]->grado <= 3))
 	if(!$submit) {
-		$rendering->addValue('categorie_news', $categoria->getCategory('news'));
-		$rendering->addValue('categorie_pagine', $categoria->getCategory('pagine'));
+		$ocarina->addValue('categorie_news', $ocarina->getCategory('news'));
+		$ocarina->addValue('categorie_pagine', $ocarina->getCategory('pagine'));
 	}
 	else
-		if($categoria_news !== '')
-			if($categoria->createCategory('news', $categoria_news)) {
-				$rendering->addValue('result', $categoria->getLanguage('managecategory', 0));
-				if($categoria->config[0]->log == 1)
-					$categoria->log($categoria->username[0]->nickname, 'Category '.$categoria_news.' created.');
+		if($ocarina_news !== '')
+			if($ocarina->createCategory('news', $ocarina_news)) {
+				$ocarina->addValue('result', $ocarina->getLanguage('managecategory', 0));
+				if($ocarina->config[0]->log == 1)
+					$ocarina->log($ocarina->username[0]->nickname, 'Category '.$ocarina_news.' created.');
 			}
 			else {
-				$rendering->addValue('result', $categoria->getLanguage('managecategory', 1));
-				if($categoria->config[0]->log == 1)
-					$categoria->log($categoria->username[0]->nickname, 'Category '.$categoria_news.' creation failed.');
+				$ocarina->addValue('result', $ocarina->getLanguage('managecategory', 1));
+				if($ocarina->config[0]->log == 1)
+					$ocarina->log($ocarina->username[0]->nickname, 'Category '.$ocarina_news.' creation failed.');
 			}
-		elseif($categoria_pagina !== '')
-			if($categoria->createCategory('pagine', $categoria_pagina)) {
-				$rendering->addValue('result', $categoria->getLanguage('managecategory', 0));
-				if($categoria->config[0]->log == 1)
-					$categoria->log($categoria->username[0]->nickname, 'Category '.$categoria_pagina.' created.');
+		elseif($ocarina_pagina !== '')
+			if($ocarina->createCategory('pagine', $ocarina_pagina)) {
+				$ocarina->addValue('result', $ocarina->getLanguage('managecategory', 0));
+				if($ocarina->config[0]->log == 1)
+					$ocarina->log($ocarina->username[0]->nickname, 'Category '.$ocarina_pagina.' created.');
 			}
 			else {
-				$rendering->addValue('result', $categoria->getLanguage('managecategory', 1));
-				if($categoria->config[0]->log == 1)
-					$categoria->log($categoria->username[0]->nickname, 'Category '.$categoria_pagina.' creation failed.');
+				$ocarina->addValue('result', $ocarina->getLanguage('managecategory', 1));
+				if($ocarina->config[0]->log == 1)
+					$ocarina->log($ocarina->username[0]->nickname, 'Category '.$ocarina_pagina.' creation failed.');
 			}
-		elseif($categoria_news_rimuovi !== '') {
-			$news = new News();
-			$getNews = $news->searchNewsByCategory($categoria_news_rimuovi);
+		elseif($ocarina_news_rimuovi !== '') {
+			$ocarina = new News();
+			$getNews = $ocarina->searchNewsByCategory($ocarina_news_rimuovi);
 			foreach($getNews as $v)
-				$news->editNews('categoria', 'Senza categoria', $v->minititolo);
-			if($categoria_news_rimuovi) {
-				$rendering->addValue('result', $categoria->getLanguage('managecategory', 8));
-				if($categoria->config[0]->log == 1)
-					$categoria->log($categoria->username[0]->nickname, 'Category '.$categoria_news_rimuovi.' deletion failed.');
+				$ocarina->editNews('categoria', 'Senza categoria', $v->minititolo);
+			if($ocarina_news_rimuovi) {
+				$ocarina->addValue('result', $ocarina->getLanguage('managecategory', 8));
+				if($ocarina->config[0]->log == 1)
+					$ocarina->log($ocarina->username[0]->nickname, 'Category '.$ocarina_news_rimuovi.' deletion failed.');
 			}
-			elseif($categoria->deleteCategory('news', $categoria_news_rimuovi)) {
-				$rendering->addValue('result', $categoria->getLanguage('managecategory', 2));
-				if($categoria->config[0]->log == 1)
-					$categoria->log($categoria->username[0]->nickname, 'Category '.$categoria_news_rimuovi.' deleted.');
+			elseif($ocarina->deleteCategory('news', $ocarina_news_rimuovi)) {
+				$ocarina->addValue('result', $ocarina->getLanguage('managecategory', 2));
+				if($ocarina->config[0]->log == 1)
+					$ocarina->log($ocarina->username[0]->nickname, 'Category '.$ocarina_news_rimuovi.' deleted.');
 			}
 			else {
-				$rendering->addValue('result', $categoria->getLanguage('managecategory', 3));
-				if($categoria->config[0]->log == 1)
-					$categoria->log($categoria->username[0]->nickname, 'Category '.$categoria_news_rimuovi.' deletion failed.');
+				$ocarina->addValue('result', $ocarina->getLanguage('managecategory', 3));
+				if($ocarina->config[0]->log == 1)
+					$ocarina->log($ocarina->username[0]->nickname, 'Category '.$ocarina_news_rimuovi.' deletion failed.');
 			}
 		}
-		elseif($categoria_pagina_rimuovi !== '') {
-			$page = new Page();
-			$getPage = $page->searchPageByCategory($categoria_pagina_rimuovi);
+		elseif($ocarina_pagina_rimuovi !== '') {
+			$ocarina = new Page();
+			$getPage = $ocarina->searchPageByCategory($ocarina_pagina_rimuovi);
 			foreach($getPage as $v)
-				$page->editPage('categoria', 'Senza categoria', $v->minititolo);
-			if($categoria_pagina_rimuovi) {
-				$rendering->addValue('result', $categoria->getLanguage('managecategory', 8));
-				if($categoria->config[0]->log == 1)
-					$categoria->log($categoria->username[0]->nickname, 'Category '.$categoria_news_rimuovi.' deletion failed.');
+				$ocarina->editPage('categoria', 'Senza categoria', $v->minititolo);
+			if($ocarina_pagina_rimuovi) {
+				$ocarina->addValue('result', $ocarina->getLanguage('managecategory', 8));
+				if($ocarina->config[0]->log == 1)
+					$ocarina->log($ocarina->username[0]->nickname, 'Category '.$ocarina_news_rimuovi.' deletion failed.');
 			}
-			elseif($categoria->deleteCategory('pagine', $categoria_pagina_rimuovi)) {
-				$rendering->addValue('result', $categoria->getLanguage('managecategory', 2));
-				if($categoria->config[0]->log == 1)
-					$categoria->log($categoria->username[0]->nickname, 'Category '.$categoria_pagina_rimuovi.' deletion failed.');
+			elseif($ocarina->deleteCategory('pagine', $ocarina_pagina_rimuovi)) {
+				$ocarina->addValue('result', $ocarina->getLanguage('managecategory', 2));
+				if($ocarina->config[0]->log == 1)
+					$ocarina->log($ocarina->username[0]->nickname, 'Category '.$ocarina_pagina_rimuovi.' deletion failed.');
 			}
 			else {
-				$rendering->addValue('result', $categoria->getLanguage('managecategory', 3));
-				if($categoria->config[0]->log == 1)
-					$categoria->log($categoria->username[0]->nickname, 'Category '.$categoria_pagina_rimuovi.' deletion failed.');
+				$ocarina->addValue('result', $ocarina->getLanguage('managecategory', 3));
+				if($ocarina->config[0]->log == 1)
+					$ocarina->log($ocarina->username[0]->nickname, 'Category '.$ocarina_pagina_rimuovi.' deletion failed.');
 			}
 		}
 		else {
-			$rendering->addValue('result', $categoria->getLanguage('error', 0));
-			if($categoria->config[0]->log == 1)
-				$categoria->log($categoria->username[0]->nickname, 'Error in category management.');
+			$ocarina->addValue('result', $ocarina->getLanguage('error', 0));
+			if($ocarina->config[0]->log == 1)
+				$ocarina->log($ocarina->username[0]->nickname, 'Error in category management.');
 		}
 else
-	$rendering->addValue('result', $categoria->getLanguage('error', 4));
-$rendering->addValue('submit', $submit);
-(($categoria->isLogged()) && ($categoria->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('gestiscicategorie.tpl');
+	$ocarina->addValue('result', $ocarina->getLanguage('error', 4));
+$ocarina->addValue('submit', $submit);
+(($ocarina->isLogged()) && ($ocarina->username[0]->grado == 7)) ? $ocarina->renderize('bannato.tpl') : $ocarina->renderize('gestiscicategorie.tpl');

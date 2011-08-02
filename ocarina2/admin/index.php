@@ -3,14 +3,10 @@
 	/admin/index.php
 	(C) Giovanni Capuano 2011
 */
-require_once('../core/class.User.php');
-require_once('../core/class.Rendering.php');
+require_once('../core/class.Ocarina.php');
 
-$user = new User();
-$rendering = new Rendering();
-
-$rendering->addValue('grado', $user->isLogged() ? $user->username[0]->grado : '');
-$rendering->addValue('nickname', $user->isLogged() ? $user->username[0]->nickname : '');
-$rendering->skin = 'admin';
-$rendering->addValue('titolo', $user->getLanguage('title', 10).$user->getLanguage('title', 2).$user->config[0]->nomesito);
-(($user->isLogged()) && ($user->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('index.tpl');
+$ocarina = new Ocarina();
+$ocarina->addValue('nickname', $ocarina->isLogged() ? $ocarina->username[0]->nickname : '');
+$ocarina->skin = 'admin';
+$ocarina->addValue('titolo', $ocarina->getLanguage('title', 10).$ocarina->getLanguage('title', 2).$ocarina->config[0]->nomesito);
+(($ocarina->isLogged()) && ($ocarina->username[0]->grado == 7)) ? $ocarina->renderize('bannato.tpl') : $ocarina->renderize('index.tpl');

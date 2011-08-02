@@ -3,19 +3,17 @@
 	/vote.php
 	(C) Giovanni Capuano 2011
 */
-require_once('core/class.Page.php');
-require_once('core/class.News.php');
+require_once('core/class.Ocarina.php');
 
-$page = new Page();
-$news = new News();
-$action = ((isset($_GET['action'])) && ($_GET['action'] !== '')) ? $page->purge($_GET['action']) : '';
-$titolo = ((isset($_GET['titolo'])) && ($_GET['titolo'] !== '')) ? $page->purge($_GET['titolo']) : '';
+$ocarina = new Ocarina();
+$action = ((isset($_GET['action'])) && ($_GET['action'] !== '')) ? $ocarina->purge($_GET['action']) : '';
+$titolo = ((isset($_GET['titolo'])) && ($_GET['titolo'] !== '')) ? $ocarina->purge($_GET['titolo']) : '';
 
-if($page->isLogged())
+if($ocarina->isLogged())
 	if($action == 'page')
-		$page->votePage($titolo);
+		$ocarina->votePage($titolo);
 	elseif($action == 'news')
-		$news->voteNews($titolo);
+		$ocarina->voteNews($titolo);
 
 if(isset($_SERVER['HTTP_REFERER']))
 	header('Location: '.$_SERVER['HTTP_REFERER']);

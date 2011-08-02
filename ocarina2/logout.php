@@ -3,19 +3,18 @@
 	/logout.php
 	(C) Giovanni Capuano 2011
 */
-require_once('core/class.User.php');
-require_once('core/class.Rendering.php');
+require_once('core/class.Ocarina.php');
 
-$user = new User();
+$ocarina = new Ocarina();
 if((isset($_GET['redirect'])) && ($_GET['redirect'] !== ''))
-	$redirect = $user->config[0]->url_index.'/'.$user->purge($_GET['redirect']);
+	$redirect = $ocarina->config[0]->url_index.'/'.$ocarina->purge($_GET['redirect']);
 elseif((isset($_SERVER['HTTP_REFERER'])) && ($_SERVER['HTTP_REFERER'] !== ''))
-	$redirect = $user->purge($_SERVER['HTTP_REFERER']);
+	$redirect = $ocarina->purge($_SERVER['HTTP_REFERER']);
 else
-	$redirect = $user->config[0]->url_index.'/index.php';
+	$redirect = $ocarina->config[0]->url_index.'/index.php';
 
-if($user->isLogged()) {
-	$user->logout();
+if($ocarina->isLogged()) {
+	$ocarina->logout();
 	header('Refresh: 0; URL='.$redirect);
 }
 else

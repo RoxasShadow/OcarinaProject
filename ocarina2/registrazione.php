@@ -3,113 +3,103 @@
 	/registrazione.php
 	(C) Giovanni Capuano 2011
 */
-require_once('core/class.User.php');
-require_once('core/class.Rendering.php');
+require_once('core/class.Ocarina.php');
 require_once('etc/class.ReCaptcha.php');
 
-$user = new User();
-$rendering = new Rendering();
+$ocarina = new Ocarina();
 $captcha = new ReCaptcha();
-$nickname = ((isset($_POST['nickname'])) && ($_POST['nickname'] !== '')) ? $user->purge($_POST['nickname']) : '';
-$password = ((isset($_POST['password'])) && ($_POST['password'] !== '')) ? $user->purge($_POST['password']) : '';
-$confPassword = ((isset($_POST['confPassword'])) && ($_POST['confPassword'] !== '')) ? $user->purge($_POST['confPassword']) : '';
-$email = ((isset($_POST['email'])) && ($_POST['email'] !== '')) ? $user->purge($_POST['email']) : '';
+$nickname = ((isset($_POST['nickname'])) && ($_POST['nickname'] !== '')) ? $ocarina->purge($_POST['nickname']) : '';
+$password = ((isset($_POST['password'])) && ($_POST['password'] !== '')) ? $ocarina->purge($_POST['password']) : '';
+$confPassword = ((isset($_POST['confPassword'])) && ($_POST['confPassword'] !== '')) ? $ocarina->purge($_POST['confPassword']) : '';
+$email = ((isset($_POST['email'])) && ($_POST['email'] !== '')) ? $ocarina->purge($_POST['email']) : '';
 $submit = isset($_POST['submit']) ? true : false;
-$codiceRegistrazione = ((isset($_GET['codice'])) && ($_GET['codice'] !== '')) ? $user->purge($_GET['codice']) : '';
+$codiceRegistrazione = ((isset($_GET['codice'])) && ($_GET['codice'] !== '')) ? $ocarina->purge($_GET['codice']) : '';
 
-$rendering->addValue('utente', $user->isLogged() ? $user->username[0]->nickname : '');
-$rendering->skin = $user->isLogged() ? $user->username[0]->skin : $user->config[0]->skin;
-$rendering->addValue('titolo', $user->getLanguage('title', 8).$user->getLanguage('title', 2).$user->config[0]->nomesito);
-$rendering->addValue('description', $user->getLanguage('description', 8));
-$rendering->addValue('useronline', $user->getUserOnline());
-$rendering->addValue('visitatoronline', $user->getVisitatorOnline());
-$rendering->addValue('totaleaccessi', $user->getTotalVisits());
-require_once('core/class.PersonalMessage.php');
-$pm = new PersonalMessage();
-$rendering->addValue('numeromp', $pm->countPM());
-unset($pm);
+$ocarina->skin = $ocarina->isLogged() ? $ocarina->username[0]->skin : $ocarina->config[0]->skin;
+$ocarina->addValue('titolo', $ocarina->getLanguage('title', 8).$ocarina->getLanguage('title', 2).$ocarina->config[0]->nomesito);
+$ocarina->addValue('description', $ocarina->getLanguage('description', 8));
 
-if($user->isLogged())
-	$rendering->addValue('result', $user->getLanguage('registration', 0));
+if($ocarina->isLogged())
+	$ocarina->addValue('result', $ocarina->getLanguage('registration', 0));
 elseif($codiceRegistrazione !== '') {
-	if($user->config[0]->validazioneaccount == 0)
-		$rendering->addValue('result', $user->getLanguage('registration', 1));
+	if($ocarina->config[0]->validazioneaccount == 0)
+		$ocarina->addValue('result', $ocarina->getLanguage('registration', 1));
 	else
-		if(!$user->username = $user->searchUserByField('codiceregistrazione', $codiceRegistrazione);) {
-			if($user->config[0]->log == 1)
-				$user->log('~', 'Invalid validation code.');
-			$rendering->addValue('result', $user->getLanguage('registration', 2));
+		if(!$ocarina->username = $ocarina->searchUserByField('codiceregistrazione', $codiceRegistrazione)) {
+			if($ocarina->config[0]->log == 1)
+				$ocarina->log('~', 'Invalid validation code.');
+			$ocarina->addValue('result', $ocarina->getLanguage('registration', 2));
 		}
-		elseif($user->username[0]->codiceregistrazione == $codiceRegistrazione) {
-			if($user->editUser('codiceregistrazione', '', $user->username[0]->nickname)) {
-				if($user->config[0]->log == 1)
-					$user->log('~', 'Validation account complete.');
-				$rendering->addValue('result', $user->getLanguage('registration', 3).header('Refresh: 2; URL='.$user->config[0]->url_index.'/login.php'));
+		elseif($ocarina->username[0]->codiceregistrazione == $codiceRegistrazione) {
+			if($ocarina->editUser('codiceregistrazione', '', $ocarina->username[0]->nickname)) {
+				if($ocarina->config[0]->log == 1)
+					$ocarina->log('~', 'Validation account complete.');
+				$ocarina->addValue('result', $ocarina->getLanguage('registration', 3).header('Refresh: 2; URL='.$ocarina->config[0]->url_index.'/login.php'));
 			}
 			else {
-				if($user->config[0]->$rendering->addValue('result', $user->getLanguage('registration', 11)) == 1)
-					$user->log('~', 'Validation account failed.');
-				$rendering->addValue('result', $user->getLanguage('registration', 4));
+				if($ocarina->config[0]->$ocarina->addValue('result', $ocarina->getLanguage('registration', 11)) == 1)
+					$ocarina->log('~', 'Validation account failed.');
+				$ocarina->addValue('result', $ocarina->getLanguage('registration', 4));
 			}		
 		}
 		else {
-			$rendering->addValue('result', $user->getLanguage('registration', 2));
-			if($user->config[0]->log == 1)
-				$user->log('~', 'Invalid validation code.');
+			$ocarina->addValue('result', $ocarina->getLanguage('registration', 2));
+			if($ocarina->config[0]->log == 1)
+				$ocarina->log('~', 'Invalid validation code.');
 		}
 }
 elseif($submit) {
-	if($user->config[0]->registrazioni == 0)
-		$rendering->addValue('result', $user->getLanguage('registration', 5));
+	if($ocarina->config[0]->registrazioni == 0)
+		$ocarina->addValue('result', $ocarina->getLanguage('registration', 5));
 	elseif(($nickname !== '') && ($password !== '') && ($confPassword !== '') && ($email !== '')) {
 		$captcha->checkCaptcha();
 		if($captcha->getError() !== false)
-			$rendering->addValue('result', $user->getLanguage('registration', 12));
+			$ocarina->addValue('result', $ocarina->getLanguage('registration', 12));
 		elseif(($password == $confPassword) && (strlen($password) > 4) && (strlen($nickname) > 4)) {
-			if($user->config[0]->validazioneaccount == 1) {
-				$codice = $user->getCode(); // Validazione account
-				$array = array($nickname, $password, $email, 6, date('d-m-y'), date('G:m:s'), $codice, $user->config[0]->skin);
-				if($user->createUser($array)) {
-					$user->sendMail($email, $user->config[0]->nomesito.' @ Validazione account per '.$nickname.'.', 'Ciao '.$nickname.',
+			if($ocarina->config[0]->validazioneaccount == 1) {
+				$codice = $ocarina->getCode(); // Validazione account
+				$array = array($nickname, $password, $email, 6, date('d-m-y'), date('G:m:s'), $codice, $ocarina->config[0]->skin);
+				if($ocarina->createUser($array)) {
+					$ocarina->sendMail($email, $ocarina->config[0]->nomesito.' @ Validazione account per '.$nickname.'.', 'Ciao '.$nickname.',
 					dal momento che ti sei registrato, il sistema ha bisogno di essere sicuro che la tua email sia valida.
-					Per validarla ti basta cliccare il seguente link: '.$user->config[0]->url_index.'/registrazione.php?codice='.$codice.'
+					Per validarla ti basta cliccare il seguente link: '.$ocarina->config[0]->url_index.'/registrazione.php?codice='.$codice.'
 
 					Se non sei tu '.$nickname.', ignora questa email.
 
-					Il webmaster di '.$user->config[0]->nomesito.'.');
-					$rendering->addValue('result', $user->getLanguage('registration', 6).header('Refresh: 2; URL='.$user->config[0]->url_index.'/login.php'));
-					if($user->config[0]->log == 1)
-						$user->log($nickname, 'Registrated.');
+					Il webmaster di '.$ocarina->config[0]->nomesito.'.');
+					$ocarina->addValue('result', $ocarina->getLanguage('registration', 6).header('Refresh: 2; URL='.$ocarina->config[0]->url_index.'/login.php'));
+					if($ocarina->config[0]->log == 1)
+						$ocarina->log($nickname, 'Registrated.');
 				}
 				else {
-					$rendering->addValue('result', $user->getLanguage('registration', 7));
-					if($user->config[0]->log == 1)
-						$user->log($nickname, 'Registration failed.');
+					$ocarina->addValue('result', $ocarina->getLanguage('registration', 7));
+					if($ocarina->config[0]->log == 1)
+						$ocarina->log($nickname, 'Registration failed.');
 				}
 			}
 			else {
-				$array = array($nickname, $password, $email, 6, date('d-m-y'), date('G:m:s'), '', $user->config[0]->skin);
-				if($user->createUser($array)) {
-					$rendering->addValue('result', $user->getLanguage('registration', 8).header('Refresh: 2; URL='.$user->config[0]->url_index.'/login.php'));
-					if($user->config[0]->log == 1)
-						$user->log($nickname, 'Registrated.');
+				$array = array($nickname, $password, $email, 6, date('d-m-y'), date('G:m:s'), '', $ocarina->config[0]->skin);
+				if($ocarina->createUser($array)) {
+					$ocarina->addValue('result', $ocarina->getLanguage('registration', 8).header('Refresh: 2; URL='.$ocarina->config[0]->url_index.'/login.php'));
+					if($ocarina->config[0]->log == 1)
+						$ocarina->log($nickname, 'Registrated.');
 				}
 				else {
-					$rendering->addValue('result', $user->getLanguage('registration', 9));
-					if($user->config[0]->log == 1)
-						$user->log($nickname, 'Registration failed.');
+					$ocarina->addValue('result', $ocarina->getLanguage('registration', 9));
+					if($ocarina->config[0]->log == 1)
+						$ocarina->log($nickname, 'Registration failed.');
 				}
 			}
 		}
 		else
-			$rendering->addValue('result', $user->getLanguage('registration', 10));
+			$ocarina->addValue('result', $ocarina->getLanguage('registration', 10));
 	}
 	else
-		$rendering->addValue('result', $user->getLanguage('registration', 11));
+		$ocarina->addValue('result', $ocarina->getLanguage('registration', 11));
 }
 elseif(!$submit)
-	$rendering->addValue('captcha', $captcha->getCaptcha());
-$rendering->addValue('codiceRegistrazione', $codiceRegistrazione);
-$rendering->addValue('logged', $user->isLogged());
-$rendering->addValue('submit', $submit);
-(($user->isLogged()) && ($user->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('registrazione.tpl');
+	$ocarina->addValue('captcha', $captcha->getCaptcha());
+$ocarina->addValue('codiceRegistrazione', $codiceRegistrazione);
+$ocarina->addValue('logged', $ocarina->isLogged());
+$ocarina->addValue('submit', $submit);
+(($ocarina->isLogged()) && ($ocarina->username[0]->grado == 7)) ? $ocarina->renderize('bannato.tpl') : $ocarina->renderize('registrazione.tpl');

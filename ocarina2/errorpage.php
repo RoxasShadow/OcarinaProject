@@ -3,25 +3,15 @@
 	/errorpage.php
 	(C) Giovanni Capuano 2011
 */
-require_once('core/class.News.php');
-require_once('core/class.Rendering.php');
+require_once('core/class.Ocarina.php');
 
-$news = new News();
-$rendering = new Rendering();
+$ocarina = new Ocarina();
 $id = ((isset($_GET['id'])) && is_numeric($_GET['id'])) ? (int)$_GET['id'] : '';
 
-$rendering->addValue('utente', $news->isLogged() ? $news->username[0]->nickname : '');
-$rendering->skin = $news->isLogged() ? $news->username[0]->skin : $news->config[0]->skin;
-$rendering->addValue('titolo', $news->getLanguage('title', 3).$id.$news->getLanguage('title', 2).$news->config[0]->nomesito);
-$rendering->addValue('useronline', $news->getUserOnline());
-$rendering->addValue('visitatoronline', $news->getVisitatorOnline());
-$rendering->addValue('totaleaccessi', $news->getTotalVisits());
-require_once('core/class.PersonalMessage.php');
-$pm = new PersonalMessage();
-$rendering->addValue('numeromp', $pm->countPM());
-unset($pm);
+$ocarina->skin = $ocarina->isLogged() ? $ocarina->username[0]->skin : $ocarina->config[0]->skin;
+$ocarina->addValue('titolo', $ocarina->getLanguage('title', 3).$id.$ocarina->getLanguage('title', 2).$ocarina->config[0]->nomesito);
 
-if($news->config[0]->log == 1)
-	$news->log(($news->isLogged()) ? $news->username[0]->nickname : '~', 'Error '.$id);
-$rendering->addValue('id', $id);
-(($news->isLogged()) && ($news->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('errorpage.tpl');
+if($ocarina->config[0]->log == 1)
+	$ocarina->log(($ocarina->isLogged()) ? $ocarina->username[0]->nickname : '~', 'Error '.$id);
+$ocarina->addValue('id', $id);
+(($ocarina->isLogged()) && ($ocarina->username[0]->grado == 7)) ? $ocarina->renderize('bannato.tpl') : $ocarina->renderize('errorpage.tpl');

@@ -3,20 +3,17 @@
 	/admin/annunci.php
 	(C) Giovanni Capuano 2011
 */
-require_once('../core/class.Ad.php');
-require_once('../core/class.Rendering.php');
+require_once('../core/class.Ocarina.php');
 
-$ad = new Ad();
-$rendering = new Rendering();
+$ocarina = new Ocarina();
 $submit = isset($_POST['submit']) ? true : false;
 
-$rendering->addValue('grado', $ad->isLogged() ? $ad->username[0]->grado : '');
-$rendering->skin = 'admin';
-$rendering->addValue('titolo', $ad->getLanguage('title', 29).$ad->getLanguage('title', 2).$ad->getLanguage('title', 10).$ad->getLanguage('title', 2).$ad->config[0]->nomesito);
+$ocarina->skin = 'admin';
+$ocarina->addValue('titolo', $ocarina->getLanguage('title', 29).$ocarina->getLanguage('title', 2).$ocarina->getLanguage('title', 10).$ocarina->getLanguage('title', 2).$ocarina->config[0]->nomesito);
 
-if(($ad->isLogged()) && ($ad->username[0]->grado < 6))
-	$rendering->addValue('ads', $ad->getAd());
+if(($ocarina->isLogged()) && ($ocarina->username[0]->grado < 6))
+	$ocarina->addValue('ads', $ocarina->getAd());
 else
-	$rendering->addValue('result', $ad->getLanguage('error', 4));
-$rendering->addValue('submit', $submit);
-(($ad->isLogged()) && ($ad->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('annunci.tpl');
+	$ocarina->addValue('result', $ocarina->getLanguage('error', 4));
+$ocarina->addValue('submit', $submit);
+(($ocarina->isLogged()) && ($ocarina->username[0]->grado == 7)) ? $ocarina->renderize('bannato.tpl') : $ocarina->renderize('annunci.tpl');

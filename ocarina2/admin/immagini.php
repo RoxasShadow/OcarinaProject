@@ -3,25 +3,22 @@
 	/admin/immagini.php
 	(C) Giovanni Capuano 2011
 */
-require_once('../core/class.User.php');
-require_once('../core/class.Rendering.php');
+require_once('../core/class.Ocarina.php');
 
-$user = new User();
-$rendering = new Rendering();
-$delete = ((isset($_GET['delete'])) && ($_GET['delete'])) ? $user->purge($_GET['delete']) : '';
+$ocarina = new Ocarina();
+$delete = ((isset($_GET['delete'])) && ($_GET['delete'])) ? $ocarina->purge($_GET['delete']) : '';
 
-$rendering->addValue('grado', $user->isLogged() ? $user->username[0]->grado : '');
-$rendering->skin = 'admin';
-$rendering->addValue('titolo', $user->getLanguage('title', 19).$user->getLanguage('title', 2).$user->getLanguage('title', 10).$user->getLanguage('title', 2).$user->config[0]->nomesito);
+$ocarina->skin = 'admin';
+$ocarina->addValue('titolo', $ocarina->getLanguage('title', 19).$ocarina->getLanguage('title', 2).$ocarina->getLanguage('title', 10).$ocarina->getLanguage('title', 2).$ocarina->config[0]->nomesito);
 
-if(($user->isLogged()) && ($user->username[0]->grado < 4) && ($delete == ''))
-	$rendering->addValue('immagini', $user->getImage());
-elseif(($user->isLogged()) && ($user->username[0]->grado < 4) && ($delete !== ''))
-	if($user->deleteImage($user->config[0]->root_immagini.'/'.$delete))
+if(($ocarina->isLogged()) && ($ocarina->username[0]->grado < 4) && ($delete == ''))
+	$ocarina->addValue('immagini', $ocarina->getImage());
+elseif(($ocarina->isLogged()) && ($ocarina->username[0]->grado < 4) && ($delete !== ''))
+	if($ocarina->deleteImage($ocarina->config[0]->root_immagini.'/'.$delete))
 		if(isset($_SERVER['HTTP_REFERER']))
 			header('Location: '.$_SERVER['HTTP_REFERER']);
 		else
 			header('Location: '.$config[0]->url_admin.'/immagini.php');
 else
-	$rendering->addValue('result', $user->getLanguage('error', 4));
-(($user->isLogged()) && ($user->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('index.tpl');
+	$ocarina->addValue('result', $ocarina->getLanguage('error', 4));
+(($ocarina->isLogged()) && ($ocarina->username[0]->grado == 7)) ? $ocarina->renderize('bannato.tpl') : $ocarina->renderize('index.tpl');

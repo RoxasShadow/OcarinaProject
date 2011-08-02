@@ -129,7 +129,7 @@ class Languages {
 				'Il codice per il recupero da te inserito non è valido.',
 				'È stata inviata una email all\'indirizzo da te dato per aiutarti a recuperare la password.',
 				'È accaduto un problema durante il recupero della password.',
-				'L\'email da immessa non corrisponde a nessun utente attualmente registrato.',
+				'L\'email da te immessa non corrisponde a nessun utente attualmente registrato.',
 				'È accaduto un problema durante la modifica della password. Controlla di aver inserito correttamente l\'indirizzo email.',
 				'Se hai già effettuato l\'accesso non hai bisogno di recuperare la tua password.',
 				'Captcha non corrispondente.'

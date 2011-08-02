@@ -5,7 +5,7 @@
 */
 require_once('class.PersonalMessage.php');
 
-/* Questa classe permette di creare, modificare e cancellare gli annunci dell'amministrazion. */
+/* Questa classe permette di creare, modificare e cancellare gli annunci dell'amministrazione. */
 class Ad extends PersonalMessage {
 
 	/* Ottiene uno o più annunci. */

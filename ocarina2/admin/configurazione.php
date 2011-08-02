@@ -3,79 +3,76 @@
 	/admin/configurazione.php
 	(C) Giovanni Capuano 2011
 */
-require_once('../core/class.User.php');
-require_once('../core/class.Rendering.php');
+require_once('../core/class.Ocarina.php');
 
-$user = new User();
-$rendering = new Rendering();
-$nomesito = ((isset($_POST['nomesito'])) && ($_POST['nomesito'] !== '')) ? $user->purge($_POST['nomesito']) : '';
-$email = ((isset($_POST['email'])) && ($_POST['email'] !== '')) ? $user->purge($_POST['email']) : '';
-$bbcode = ((isset($_POST['bbcode'])) && (is_numeric($_POST['bbcode'])) && ($_POST['bbcode'] !== '')) ? $user->purge((int)$_POST['bbcode']) : '';
-$registrazioni = ((isset($_POST['registrazioni'])) && (is_numeric($_POST['registrazioni'])) && ($_POST['registrazioni'] !== '')) ? $user->purge((int)$_POST['registrazioni']) : '';
-$validazioneaccount = ((isset($_POST['validazioneaccount'])) && (is_numeric($_POST['validazioneaccount'])) && ($_POST['validazioneaccount'] !== '')) ? $user->purge((int)$_POST['validazioneaccount']) : '';
-$commenti = ((isset($_POST['commenti'])) && (is_numeric($_POST['commenti'])) && ($_POST['commenti'] !== '')) ? $user->purge((int)$_POST['commenti']) : '';
-$approvacommenti = ((isset($_POST['approvacommenti'])) && (is_numeric($_POST['approvacommenti'])) && ($_POST['approvacommenti'] !== '')) ? $user->purge((int)$_POST['approvacommenti']) : '';
-$log = ((isset($_POST['log'])) && (is_numeric($_POST['log'])) && ($_POST['log'] !== '')) ? $user->purge((int)$_POST['log']) : '';
-$cookie = ((isset($_POST['cookie'])) && ($_POST['cookie'] !== '')) ? $user->purge($_POST['cookie']) : '';
-$loginexpire = ((isset($_POST['loginexpire'])) && ($_POST['loginexpire'] !== '')) ? $user->purge($_POST['loginexpire']) : '';
-$skin = ((isset($_POST['skin'])) && ($_POST['skin'] !== '')) ? $user->purge($_POST['skin']) : '';
-$description = ((isset($_POST['description'])) && ($_POST['description'] !== '')) ? $user->purge($_POST['description']) : '';
-$limitenews = ((isset($_POST['limitenews'])) && (is_numeric($_POST['limitenews'])) && ($_POST['limitenews'] !== '')) ? $user->purge((int)$_POST['limitenews']) : '';
-$impaginazionenews = ((isset($_POST['impaginazionenews'])) && (is_numeric($_POST['impaginazionenews'])) && ($_POST['impaginazionenews'] !== '')) ? $user->purge((int)$_POST['impaginazionenews']) : '';
-$limiteonline = ((isset($_POST['limiteonline'])) && (is_numeric($_POST['limiteonline'])) && ($_POST['limiteonline'] !== '')) ? $user->purge((int)$_POST['limiteonline']) : '';
-$permettivoto = ((isset($_POST['permettivoto'])) && (is_numeric($_POST['permettivoto'])) && ($_POST['permettivoto'] !== '')) ? $user->purge((int)$_POST['permettivoto']) : '';
-$url = ((isset($_POST['url'])) && ($_POST['url'] !== '')) ? $user->purge($_POST['url']) : '';
-$url_index = ((isset($_POST['url_index'])) && ($_POST['url_index'] !== '')) ? $user->purge($_POST['url_index']) : '';
-$url_admin = ((isset($_POST['url_admin'])) && ($_POST['url_admin'] !== '')) ? $user->purge($_POST['url_admin']) : '';
-$url_rendering = ((isset($_POST['url_rendering'])) && ($_POST['url_rendering'] !== '')) ? $user->purge($_POST['url_rendering']) : '';
-$url_immagini = ((isset($_POST['url_immagini'])) && ($_POST['url_immagini'] !== '')) ? $user->purge($_POST['url_immagini']) : '';
-$root = ((isset($_POST['root'])) && ($_POST['root'] !== '')) ? $user->purge($_POST['root']) : '';
-$root_index = ((isset($_POST['root_index'])) && ($_POST['root_index'] !== '')) ? $user->purge($_POST['root_index']) : '';
-$root_admin = ((isset($_POST['root_admin'])) && ($_POST['root_admin'] !== '')) ? $user->purge($_POST['root_admin']) : '';
-$root_rendering = ((isset($_POST['root_rendering'])) && ($_POST['root_rendering'] !== '')) ? $user->purge($_POST['root_rendering']) : '';
-$root_immagini = ((isset($_POST['root_immagini'])) && ($_POST['root_immagini'] !== '')) ? $user->purge($_POST['root_immagini']) : '';
+$ocarina = new Ocarina();
+$nomesito = ((isset($_POST['nomesito'])) && ($_POST['nomesito'] !== '')) ? $ocarina->purge($_POST['nomesito']) : '';
+$email = ((isset($_POST['email'])) && ($_POST['email'] !== '')) ? $ocarina->purge($_POST['email']) : '';
+$bbcode = ((isset($_POST['bbcode'])) && (is_numeric($_POST['bbcode'])) && ($_POST['bbcode'] !== '')) ? $ocarina->purge((int)$_POST['bbcode']) : '';
+$registrazioni = ((isset($_POST['registrazioni'])) && (is_numeric($_POST['registrazioni'])) && ($_POST['registrazioni'] !== '')) ? $ocarina->purge((int)$_POST['registrazioni']) : '';
+$validazioneaccount = ((isset($_POST['validazioneaccount'])) && (is_numeric($_POST['validazioneaccount'])) && ($_POST['validazioneaccount'] !== '')) ? $ocarina->purge((int)$_POST['validazioneaccount']) : '';
+$commenti = ((isset($_POST['commenti'])) && (is_numeric($_POST['commenti'])) && ($_POST['commenti'] !== '')) ? $ocarina->purge((int)$_POST['commenti']) : '';
+$approvacommenti = ((isset($_POST['approvacommenti'])) && (is_numeric($_POST['approvacommenti'])) && ($_POST['approvacommenti'] !== '')) ? $ocarina->purge((int)$_POST['approvacommenti']) : '';
+$log = ((isset($_POST['log'])) && (is_numeric($_POST['log'])) && ($_POST['log'] !== '')) ? $ocarina->purge((int)$_POST['log']) : '';
+$cookie = ((isset($_POST['cookie'])) && ($_POST['cookie'] !== '')) ? $ocarina->purge($_POST['cookie']) : '';
+$loginexpire = ((isset($_POST['loginexpire'])) && ($_POST['loginexpire'] !== '')) ? $ocarina->purge($_POST['loginexpire']) : '';
+$skin = ((isset($_POST['skin'])) && ($_POST['skin'] !== '')) ? $ocarina->purge($_POST['skin']) : '';
+$description = ((isset($_POST['description'])) && ($_POST['description'] !== '')) ? $ocarina->purge($_POST['description']) : '';
+$limitenews = ((isset($_POST['limitenews'])) && (is_numeric($_POST['limitenews'])) && ($_POST['limitenews'] !== '')) ? $ocarina->purge((int)$_POST['limitenews']) : '';
+$impaginazionenews = ((isset($_POST['impaginazionenews'])) && (is_numeric($_POST['impaginazionenews'])) && ($_POST['impaginazionenews'] !== '')) ? $ocarina->purge((int)$_POST['impaginazionenews']) : '';
+$limiteonline = ((isset($_POST['limiteonline'])) && (is_numeric($_POST['limiteonline'])) && ($_POST['limiteonline'] !== '')) ? $ocarina->purge((int)$_POST['limiteonline']) : '';
+$permettivoto = ((isset($_POST['permettivoto'])) && (is_numeric($_POST['permettivoto'])) && ($_POST['permettivoto'] !== '')) ? $ocarina->purge((int)$_POST['permettivoto']) : '';
+$url = ((isset($_POST['url'])) && ($_POST['url'] !== '')) ? $ocarina->purge($_POST['url']) : '';
+$url_index = ((isset($_POST['url_index'])) && ($_POST['url_index'] !== '')) ? $ocarina->purge($_POST['url_index']) : '';
+$url_admin = ((isset($_POST['url_admin'])) && ($_POST['url_admin'] !== '')) ? $ocarina->purge($_POST['url_admin']) : '';
+$url_rendering = ((isset($_POST['url_rendering'])) && ($_POST['url_rendering'] !== '')) ? $ocarina->purge($_POST['url_rendering']) : '';
+$url_immagini = ((isset($_POST['url_immagini'])) && ($_POST['url_immagini'] !== '')) ? $ocarina->purge($_POST['url_immagini']) : '';
+$root = ((isset($_POST['root'])) && ($_POST['root'] !== '')) ? $ocarina->purge($_POST['root']) : '';
+$root_index = ((isset($_POST['root_index'])) && ($_POST['root_index'] !== '')) ? $ocarina->purge($_POST['root_index']) : '';
+$root_admin = ((isset($_POST['root_admin'])) && ($_POST['root_admin'] !== '')) ? $ocarina->purge($_POST['root_admin']) : '';
+$root_rendering = ((isset($_POST['root_rendering'])) && ($_POST['root_rendering'] !== '')) ? $ocarina->purge($_POST['root_rendering']) : '';
+$root_immagini = ((isset($_POST['root_immagini'])) && ($_POST['root_immagini'] !== '')) ? $ocarina->purge($_POST['root_immagini']) : '';
 $submit = isset($_POST['submit']) ? true : false;
 
-$rendering->addValue('grado', $user->isLogged() ? $user->username[0]->grado : '');
-$rendering->skin = 'admin';
-$rendering->addValue('titolo', $user->getLanguage('title', 15).$user->getLanguage('title', 2).$user->getLanguage('title', 10).$user->getLanguage('title', 2).$user->config[0]->nomesito);
+$ocarina->skin = 'admin';
+$ocarina->addValue('titolo', $ocarina->getLanguage('title', 15).$ocarina->getLanguage('title', 2).$ocarina->getLanguage('title', 10).$ocarina->getLanguage('title', 2).$ocarina->config[0]->nomesito);
 
-if(($user->isLogged()) && ($user->username[0]->grado == 1))
+if(($ocarina->isLogged()) && ($ocarina->username[0]->grado == 1))
 	if(!$submit) {
-		$rendering->addValue('nomesito_default', $user->config[0]->nomesito);
-		$rendering->addValue('email_default', $user->config[0]->email);
-		$rendering->addValue('bbcode_default', $user->config[0]->bbcode);
-		$rendering->addValue('registrazioni_default', $user->config[0]->registrazioni);
-		$rendering->addValue('validazioneaccount_default', $user->config[0]->validazioneaccount);
-		$rendering->addValue('commenti_default', $user->config[0]->commenti);
-		$rendering->addValue('approvacommenti_default', $user->config[0]->approvacommenti);
-		$rendering->addValue('log_default', $user->config[0]->log);
-		$rendering->addValue('cookie_default', $user->config[0]->cookie);
-		$rendering->addValue('loginexpire_default', $user->config[0]->loginexpire);
-		$rendering->addValue('listaskin', $rendering->getSkinList());
-		$rendering->addValue('skin_default', $user->config[0]->skin);
-		$rendering->addValue('description_default', $user->config[0]->description);
-		$rendering->addValue('limitenews_default', $user->config[0]->limitenews);
-		$rendering->addValue('impaginazionenews_default', $user->config[0]->impaginazionenews);
-		$rendering->addValue('limiteonline_default', $user->config[0]->limiteonline);
-		$rendering->addValue('permettivoto_default', $user->config[0]->permettivoto);
-		$rendering->addValue('url_default', $user->config[0]->url);
-		$rendering->addValue('url_index_default', $user->config[0]->url_index);
-		$rendering->addValue('url_admin_default', $user->config[0]->url_admin);
-		$rendering->addValue('url_rendering_default', $user->config[0]->url_rendering);
-		$rendering->addValue('url_immagini_default', $user->config[0]->url_immagini);
-		$rendering->addValue('root_default', $user->config[0]->root);
-		$rendering->addValue('root_index_default', $user->config[0]->root_index);
-		$rendering->addValue('root_admin_default', $user->config[0]->root_admin);
-		$rendering->addValue('root_rendering_default', $user->config[0]->root_rendering);
-		$rendering->addValue('root_immagini_default', $user->config[0]->root_immagini);
+		$ocarina->addValue('nomesito_default', $ocarina->config[0]->nomesito);
+		$ocarina->addValue('email_default', $ocarina->config[0]->email);
+		$ocarina->addValue('bbcode_default', $ocarina->config[0]->bbcode);
+		$ocarina->addValue('registrazioni_default', $ocarina->config[0]->registrazioni);
+		$ocarina->addValue('validazioneaccount_default', $ocarina->config[0]->validazioneaccount);
+		$ocarina->addValue('commenti_default', $ocarina->config[0]->commenti);
+		$ocarina->addValue('approvacommenti_default', $ocarina->config[0]->approvacommenti);
+		$ocarina->addValue('log_default', $ocarina->config[0]->log);
+		$ocarina->addValue('cookie_default', $ocarina->config[0]->cookie);
+		$ocarina->addValue('loginexpire_default', $ocarina->config[0]->loginexpire);
+		$ocarina->addValue('listaskin', $ocarina->getSkinList());
+		$ocarina->addValue('skin_default', $ocarina->config[0]->skin);
+		$ocarina->addValue('description_default', $ocarina->config[0]->description);
+		$ocarina->addValue('limitenews_default', $ocarina->config[0]->limitenews);
+		$ocarina->addValue('impaginazionenews_default', $ocarina->config[0]->impaginazionenews);
+		$ocarina->addValue('limiteonline_default', $ocarina->config[0]->limiteonline);
+		$ocarina->addValue('permettivoto_default', $ocarina->config[0]->permettivoto);
+		$ocarina->addValue('url_default', $ocarina->config[0]->url);
+		$ocarina->addValue('url_index_default', $ocarina->config[0]->url_index);
+		$ocarina->addValue('url_admin_default', $ocarina->config[0]->url_admin);
+		$ocarina->addValue('url_rendering_default', $ocarina->config[0]->url_rendering);
+		$ocarina->addValue('url_immagini_default', $ocarina->config[0]->url_immagini);
+		$ocarina->addValue('root_default', $ocarina->config[0]->root);
+		$ocarina->addValue('root_index_default', $ocarina->config[0]->root_index);
+		$ocarina->addValue('root_admin_default', $ocarina->config[0]->root_admin);
+		$ocarina->addValue('root_rendering_default', $ocarina->config[0]->root_rendering);
+		$ocarina->addValue('root_immagini_default', $ocarina->config[0]->root_immagini);
 	}
 	else
-		if(($user->editConfig('nomesito', $nomesito)) && ($user->editConfig('email', $email)) && ($user->editConfig('bbcode', $bbcode)) && ($user->editConfig('registrazioni', $registrazioni)) && ($user->editConfig('validazioneaccount', $validazioneaccount)) && ($user->editConfig('commenti', $commenti)) && ($user->editConfig('approvacommenti', $approvacommenti)) && ($user->editConfig('log', $log)) && ($user->editConfig('cookie', $cookie)) && ($user->editConfig('loginexpire', $loginexpire)) && ($user->editConfig('skin', $skin)) && ($user->editConfig('description', $description)) && ($user->editConfig('limitenews', $limitenews)) && ($user->editConfig('impaginazionenews', $impaginazionenews)) && ($user->editConfig('permettivoto', $permettivoto)) && ($user->editConfig('limiteonline', $limiteonline)) && ($user->editConfig('url', $url)) && ($user->editConfig('url_index', $url_index)) && ($user->editConfig('url_admin', $url_admin)) && ($user->editConfig('url_rendering', $url_rendering)) && ($user->editConfig('url_immagini', $url_immagini)) && ($user->editConfig('root', $root)) && ($user->editConfig('root_index', $root_index)) && ($user->editConfig('root_admin', $root_admin)) && ($user->editConfig('root_rendering', $root_rendering)) && ($user->editConfig('root_immagini', $root_immagini)))
-			$rendering->addValue('result', $user->getLanguage('configuration', 0));
+		if(($ocarina->editConfig('nomesito', $nomesito)) && ($ocarina->editConfig('email', $email)) && ($ocarina->editConfig('bbcode', $bbcode)) && ($ocarina->editConfig('registrazioni', $registrazioni)) && ($ocarina->editConfig('validazioneaccount', $validazioneaccount)) && ($ocarina->editConfig('commenti', $commenti)) && ($ocarina->editConfig('approvacommenti', $approvacommenti)) && ($ocarina->editConfig('log', $log)) && ($ocarina->editConfig('cookie', $cookie)) && ($ocarina->editConfig('loginexpire', $loginexpire)) && ($ocarina->editConfig('skin', $skin)) && ($ocarina->editConfig('description', $description)) && ($ocarina->editConfig('limitenews', $limitenews)) && ($ocarina->editConfig('impaginazionenews', $impaginazionenews)) && ($ocarina->editConfig('permettivoto', $permettivoto)) && ($ocarina->editConfig('limiteonline', $limiteonline)) && ($ocarina->editConfig('url', $url)) && ($ocarina->editConfig('url_index', $url_index)) && ($ocarina->editConfig('url_admin', $url_admin)) && ($ocarina->editConfig('url_rendering', $url_rendering)) && ($ocarina->editConfig('url_immagini', $url_immagini)) && ($ocarina->editConfig('root', $root)) && ($ocarina->editConfig('root_index', $root_index)) && ($ocarina->editConfig('root_admin', $root_admin)) && ($ocarina->editConfig('root_rendering', $root_rendering)) && ($ocarina->editConfig('root_immagini', $root_immagini)))
+			$ocarina->addValue('result', $ocarina->getLanguage('configuration', 0));
 		else
-			$rendering->addValue('result', $user->getLanguage('configuration', 0));
+			$ocarina->addValue('result', $ocarina->getLanguage('configuration', 0));
 else
-	$rendering->addValue('result', $user->getLanguage('error', 4));
-$rendering->addValue('submit', $submit);
-(($user->isLogged()) && ($user->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('configurazione.tpl');
+	$ocarina->addValue('result', $ocarina->getLanguage('error', 4));
+$ocarina->addValue('submit', $submit);
+(($ocarina->isLogged()) && ($ocarina->username[0]->grado == 7)) ? $ocarina->renderize('bannato.tpl') : $ocarina->renderize('configurazione.tpl');

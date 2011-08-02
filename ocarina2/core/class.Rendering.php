@@ -3,10 +3,10 @@
 	core/class.Rendering.php
 	(C) Giovanni Capuano 2011
 */
-require_once('class.Configuration.php');
+require_once('class.Page.php');
 
 /* Questa classe mette a disposizione dei metodi per interagire con il motore di rendering. */
-class Rendering extends Configuration {
+class Rendering extends Page {
 	private $smarty = NULL;
 	public $skin = NULL;
 	private $time_start = NULL;
@@ -81,6 +81,12 @@ class Rendering extends Configuration {
 		$this->addValue('root_rendering', $this->config[0]->root_rendering);
 		$this->addValue('root_immagini', $this->config[0]->root_immagini);
 		$this->addValue('time', $this->microtime_float() - $this->time_start);
+		$this->addValue('utente', parent::isLogged() ? $this->username[0]->nickname : '');
+		$this->addValue('grado', parent::isLogged() ? $this->username[0]->grado : '');
+		$this->addValue('useronline', parent::getUserOnline());
+		$this->addValue('visitatoronline', parent::getVisitatorOnline());
+		$this->addValue('totaleaccessi', parent::getTotalVisits());
+		$this->addValue('numeromp', parent::countPM());
 		require_once($this->config[0]->root_index.'/etc/mobile_device_detect.php');
 		
 		if($this->skin == 'admin') {

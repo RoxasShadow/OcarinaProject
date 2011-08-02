@@ -3,34 +3,31 @@
 	/admin/modificagrado.php
 	(C) Giovanni Capuano 2011
 */
-require_once('../core/class.User.php');
-require_once('../core/class.Rendering.php');
+require_once('../core/class.Ocarina.php');
 
-$user = new User();
-$rendering = new Rendering();
-$nickname = ((isset($_POST['nickname'])) && ($_POST['nickname'] !== '')) ? $rendering->purgeByXSS($_POST['nickname']) : '';
+$ocarina = new Ocarina();
+$nickname = ((isset($_POST['nickname'])) && ($_POST['nickname'] !== '')) ? $ocarina->purgeByXSS($_POST['nickname']) : '';
 $grado = ((isset($_POST['grado'])) && ($_POST['grado'] !== '') && (is_numeric($_POST['grado']))) ? (int)$_POST['grado'] : '';
 $submit = isset($_POST['submit']) ? true : false;
 
-$rendering->addValue('grado', $user->isLogged() ? $user->username[0]->grado : '');
-$rendering->skin = 'admin';
-$rendering->addValue('titolo', $user->getLanguage('title', 21).$user->getLanguage('title', 2).$user->getLanguage('title', 10).$user->getLanguage('title', 2).$user->config[0]->nomesito);
+$ocarina->skin = 'admin';
+$ocarina->addValue('titolo', $ocarina->getLanguage('title', 21).$ocarina->getLanguage('title', 2).$ocarina->getLanguage('title', 10).$ocarina->getLanguage('title', 2).$ocarina->config[0]->nomesito);
 
-if(($user->isLogged()) && ($user->username[0]->grado == 1))
+if(($ocarina->isLogged()) && ($ocarina->username[0]->grado == 1))
 	if(!$submit)
-		$rendering->addValue('utenti', $user->getUser());
+		$ocarina->addValue('utenti', $ocarina->getUser());
 	else
-		if($user->editUser('grado', $grado, $nickname)) {
-			if($user->config[0]->log == 1)
-				$user->log($user->username[0]->nickname, $nickname.' now is in the grade '.$grado.'.');
-			$rendering->addValue('result', $user->getLanguage('editgrade', 0));
+		if($ocarina->editUser('grado', $grado, $nickname)) {
+			if($ocarina->config[0]->log == 1)
+				$ocarina->log($ocarina->username[0]->nickname, $nickname.' now is in the grade '.$grado.'.');
+			$ocarina->addValue('result', $ocarina->getLanguage('editgrade', 0));
 		}
 		else {
-			if($user->config[0]->log == 1)
-				$user->log($user->username[0]->nickname, $nickname->username[0]->nickname.' has failed to change the grade of '.$nickname.' in '.$grado.'.');
-			$rendering->addValue('result', str_replace('{$nickname}', $nickname, $user->getLanguage('editgrade', 1), $user->getLanguage('editgrade', 0)));
+			if($ocarina->config[0]->log == 1)
+				$ocarina->log($ocarina->username[0]->nickname, $nickname->username[0]->nickname.' has failed to change the grade of '.$nickname.' in '.$grado.'.');
+			$ocarina->addValue('result', str_replace('{$nickname}', $nickname, $ocarina->getLanguage('editgrade', 1), $ocarina->getLanguage('editgrade', 0)));
 		}
 else
-	$rendering->addValue('result', $user->getLanguage('error', 4));
-$rendering->addValue('submit', $submit);
-(($user->isLogged()) && ($user->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('modificagrado.tpl');
+	$ocarina->addValue('result', $ocarina->getLanguage('error', 4));
+$ocarina->addValue('submit', $submit);
+(($ocarina->isLogged()) && ($ocarina->username[0]->grado == 7)) ? $ocarina->renderize('bannato.tpl') : $ocarina->renderize('modificagrado.tpl');

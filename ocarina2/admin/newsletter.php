@@ -3,38 +3,35 @@
 	/admin/newsletter.php
 	(C) Giovanni Capuano 2011
 */
-require_once('../core/class.User.php');
-require_once('../core/class.Rendering.php');
+require_once('../core/class.Ocarina.php');
 
-$user = new User();
-$rendering = new Rendering();
+$ocarina = new Ocarina();
 $testo_email = ((isset($_POST['testo'])) && ($_POST['testo'] !== '')) ? $_POST['testo'] : '';
 $oggetto_email = ((isset($_POST['oggetto'])) && ($_POST['oggetto'] !== '')) ? $_POST['oggetto'] : '';
 $submit = isset($_POST['submit']) ? true : false;
 
-$rendering->addValue('grado', $user->isLogged() ? $user->username[0]->grado : '');
-$rendering->skin = 'admin';
-$rendering->addValue('titolo', $user->getLanguage('title', 30).$user->getLanguage('title', 2).$user->getLanguage('title', 10).$user->getLanguage('title', 2).$user->config[0]->nomesito);
+$ocarina->skin = 'admin';
+$ocarina->addValue('titolo', $ocarina->getLanguage('title', 30).$ocarina->getLanguage('title', 2).$ocarina->getLanguage('title', 10).$ocarina->getLanguage('title', 2).$ocarina->config[0]->nomesito);
 
-if(($user->isLogged()) && ($user->username[0]->grado == 1))
+if(($ocarina->isLogged()) && ($ocarina->username[0]->grado == 1))
 	if($submit)
 		if(($testo_email !== '') && ($oggetto_email !== '')) {
-			$users = $user->getUser();
+			$ocarinas = $ocarina->getUser();
 			$notsended = 0;
 			$sended = 0;
-			foreach($users as $v)
-				if(!$user->sendMail($v->email, $oggetto_email, $testo_email))
+			foreach($ocarinas as $v)
+				if(!$ocarina->sendMail($v->email, $oggetto_email, $testo_email))
 					++$notsended;
 				else
 					++$sended;
 			if($notsended == 0)
-				$rendering->addValue('result', str_replace('{$sended}', $sended, $user->getLanguage('newsletter', 0)));
+				$ocarina->addValue('result', str_replace('{$sended}', $sended, $ocarina->getLanguage('newsletter', 0)));
 			else
-				$rendering->addValue('result', str_replace('{$notsended}', $notsended, str_replace('{$sended}', $sended, $user->getLanguage('newsletter', 1))));
+				$ocarina->addValue('result', str_replace('{$notsended}', $notsended, str_replace('{$sended}', $sended, $ocarina->getLanguage('newsletter', 1))));
 		}
 		else
-			$rendering->addValue('result', $user->getLanguage('newsletter', 2));
+			$ocarina->addValue('result', $ocarina->getLanguage('newsletter', 2));
 else
-	$rendering->addValue('result', $user->getLanguage('error', 4));
-$rendering->addValue('submit', $submit);
-(($user->isLogged()) && ($user->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('newsletter.tpl');
+	$ocarina->addValue('result', $ocarina->getLanguage('error', 4));
+$ocarina->addValue('submit', $submit);
+(($ocarina->isLogged()) && ($ocarina->username[0]->grado == 7)) ? $ocarina->renderize('bannato.tpl') : $ocarina->renderize('newsletter.tpl');

@@ -3,53 +3,46 @@
 	/inviamp.php
 	(C) Giovanni Capuano 2011
 */
-require_once('core/class.PersonalMessage.php');
-require_once('core/class.Rendering.php');
+require_once('core/class.Ocarina.php');
 require_once('etc/class.ReCaptcha.php');
 
-$pm = new PersonalMessage();
-$rendering = new Rendering();
+$ocarina = new Ocarina();
 $captcha = new ReCaptcha();
-$destinatario = ((isset($_POST['destinatario'])) && ($_POST['destinatario'] !== '')) ? $pm->purge($_POST['destinatario']) : '';
-$oggetto = ((isset($_POST['oggetto'])) && ($_POST['oggetto'] !== '')) ? $pm->purge($_POST['oggetto']) : '';
-$contenuto = ((isset($_POST['contenuto'])) && ($_POST['contenuto'] !== '')) ? $pm->purge($_POST['contenuto']) : '';
+$destinatario = ((isset($_POST['destinatario'])) && ($_POST['destinatario'] !== '')) ? $ocarina->purge($_POST['destinatario']) : '';
+$oggetto = ((isset($_POST['oggetto'])) && ($_POST['oggetto'] !== '')) ? $ocarina->purge($_POST['oggetto']) : '';
+$contenuto = ((isset($_POST['contenuto'])) && ($_POST['contenuto'] !== '')) ? $ocarina->purge($_POST['contenuto']) : '';
 $submit = isset($_POST['submit']) ? true : false;
 
-$rendering->addValue('utente', $pm->isLogged() ? $pm->username[0]->nickname : '');
-$rendering->skin = $pm->isLogged() ? $pm->username[0]->skin : $pm->config[0]->skin;
-$rendering->addValue('titolo', $pm->getLanguage('title', 33).$pm->getLanguage('title', 2).$pm->config[0]->nomesito);
-$rendering->addValue('useronline', $pm->getUserOnline());
-$rendering->addValue('visitatoronline', $pm->getVisitatorOnline());
-$rendering->addValue('totaleaccessi', $pm->getTotalVisits());
-$rendering->addValue('numeromp', $pm->countPM());
+$ocarina->skin = $ocarina->isLogged() ? $ocarina->username[0]->skin : $ocarina->config[0]->skin;
+$ocarina->addValue('titolo', $ocarina->getLanguage('title', 33).$ocarina->getLanguage('title', 2).$ocarina->config[0]->nomesito);
 
-if(!$pm->isLogged())
-	$rendering->addValue('result', $pm->getLanguage('error', 4));
+if(!$ocarina->isLogged())
+	$ocarina->addValue('result', $ocarina->getLanguage('error', 4));
 elseif(!$submit) {
-	$rendering->addValue('listautenti', $pm->getUser());
-	$rendering->addValue('captcha', $captcha->getCaptcha());
+	$ocarina->addValue('listautenti', $ocarina->getUser());
+	$ocarina->addValue('captcha', $captcha->getCaptcha());
 }
 elseif($submit) {
 	$captcha->checkCaptcha();
 	if($captcha->getError() !== false)
-		$rendering->addValue('result', $pm->getLanguage('registration', 12));
+		$ocarina->addValue('result', $ocarina->getLanguage('registration', 12));
 	elseif(($destinatario !== '') && ($oggetto !== '') && ($contenuto !== ''))
-		if(($pm->isUser($destinatario)) && ($pm->createPM(array($pm->username[0]->nickname, $destinatario, date('d-m-y'), date('G:m:i'), $oggetto, $contenuto, 0)))) {
-			if($pm->config[0]->log == 1)
-				$pm->log($pm->username[0]->nickname, 'PM sended to '.$destinatario.'.');
-			$rendering->addValue('result', $pm->getLanguage('sendpm', 0));
+		if(($ocarina->isUser($destinatario)) && ($ocarina->createPM(array($ocarina->username[0]->nickname, $destinatario, date('d-m-y'), date('G:m:i'), $oggetto, $contenuto, 0)))) {
+			if($ocarina->config[0]->log == 1)
+				$ocarina->log($ocarina->username[0]->nickname, 'PM sended to '.$destinatario.'.');
+			$ocarina->addValue('result', $ocarina->getLanguage('sendpm', 0));
 		}
 		else {
-			if($pm->config[0]->log == 1)
-				$pm->log($pm->username[0]->nickname, 'failed the send of PM to '.$destinatario.'.');
-			$rendering->addValue('result', $pm->getLanguage('sendpm', 1));
+			if($ocarina->config[0]->log == 1)
+				$ocarina->log($ocarina->username[0]->nickname, 'failed the send of PM to '.$destinatario.'.');
+			$ocarina->addValue('result', $ocarina->getLanguage('sendpm', 1));
 		}
 	else {
-		if($pm->config[0]->log == 1)
-			$pm->log($pm->username[0]->nickname, 'failed the PM send to '.$destinatario.'.');
-		$rendering->addValue('result', $pm->getLanguage('sendpm', 2));
+		if($ocarina->config[0]->log == 1)
+			$ocarina->log($ocarina->username[0]->nickname, 'failed the PM send to '.$destinatario.'.');
+		$ocarina->addValue('result', $ocarina->getLanguage('sendpm', 2));
 	}
 }
-$rendering->addValue('logged', $pm->isLogged());
-$rendering->addValue('submit', $submit);
-(($pm->isLogged()) && ($pm->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('inviamp.tpl');
+$ocarina->addValue('logged', $ocarina->isLogged());
+$ocarina->addValue('submit', $submit);
+(($ocarina->isLogged()) && ($ocarina->username[0]->grado == 7)) ? $ocarina->renderize('bannato.tpl') : $ocarina->renderize('inviamp.tpl');

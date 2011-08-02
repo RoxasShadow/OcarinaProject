@@ -3,33 +3,23 @@
 	/profilo.php
 	(C) Giovanni Capuano 2011
 */
-require_once('core/class.User.php');
-require_once('core/class.Rendering.php');
+require_once('core/class.Ocarina.php');
 
-$user = new User();
-$rendering = new Rendering();
-$nickname = ((isset($_GET['nickname'])) && ($_GET['nickname'] !== '')) ? $user->purge($_GET['nickname']) : '';
+$ocarina = new Ocarina();
+$nickname = ((isset($_GET['nickname'])) && ($_GET['nickname'] !== '')) ? $ocarina->purge($_GET['nickname']) : '';
 if($nickname == '')
-	$nickname = ((isset($_POST['nickname'])) && ($_POST['nickname'] !== '')) ? $user->purge($_POST['nickname']) : '';
+	$nickname = ((isset($_POST['nickname'])) && ($_POST['nickname'] !== '')) ? $ocarina->purge($_POST['nickname']) : '';
 
-$rendering->addValue('utente', $user->isLogged() ? $user->username[0]->nickname : '');
-$rendering->skin = $user->isLogged() ? $user->username[0]->skin : $user->config[0]->skin;
-$rendering->addValue('description', ($nickname !== '') ? $user->getLanguage('description', 6).$nickname.'.' : $user->getLanguage('description', 5));
-$rendering->addValue('useronline', $user->getUserOnline());
-$rendering->addValue('visitatoronline', $user->getVisitatorOnline());
-$rendering->addValue('totaleaccessi', $user->getTotalVisits());
-require_once('core/class.PersonalMessage.php');
-$pm = new PersonalMessage();
-$rendering->addValue('numeromp', $pm->countPM());
-unset($pm);
+$ocarina->skin = $ocarina->isLogged() ? $ocarina->username[0]->skin : $ocarina->config[0]->skin;
+$ocarina->addValue('description', ($nickname !== '') ? $ocarina->getLanguage('description', 6).$nickname.'.' : $ocarina->getLanguage('description', 5));
 
 if($nickname == '') {
-	$rendering->addValue('titolo', $user->getLanguage('profile', 0).$user->getLanguage('title', 2).$user->config[0]->nomesito);
-	$rendering->addValue('listautenti', $user->getUser());
+	$ocarina->addValue('titolo', $ocarina->getLanguage('profile', 0).$ocarina->getLanguage('title', 2).$ocarina->config[0]->nomesito);
+	$ocarina->addValue('listautenti', $ocarina->getUser());
 }
 else {
-	$rendering->addValue('titolo', (($user->isLogged()) && ($nickname == $user->username[0]->nickname)) ? $user->getLanguage('profile', 1) : $user->getLanguage('profile', 2).$nickname.$user->getLanguage('title', 2).$user->config[0]->nomesito);
-	$getUser = $user->getUser($nickname);
-	$rendering->addValue('result', $getUser ? $getUser : $user->getLanguage('profile', 3));		
+	$ocarina->addValue('titolo', (($ocarina->isLogged()) && ($nickname == $ocarina->username[0]->nickname)) ? $ocarina->getLanguage('profile', 1) : $ocarina->getLanguage('profile', 2).$nickname.$ocarina->getLanguage('title', 2).$ocarina->config[0]->nomesito);
+	$getUser = $ocarina->getUser($nickname);
+	$ocarina->addValue('result', $getUser ? $getUser : $ocarina->getLanguage('profile', 3));		
 }
-(($user->isLogged()) && ($user->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('profilo.tpl');
+(($ocarina->isLogged()) && ($ocarina->username[0]->grado == 7)) ? $ocarina->renderize('bannato.tpl') : $ocarina->renderize('profilo.tpl');

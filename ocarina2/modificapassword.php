@@ -3,51 +3,41 @@
 	/modificapassword.php
 	(C) Giovanni Capuano 2011
 */
-require_once('core/class.User.php');
-require_once('core/class.Rendering.php');
+require_once('core/class.Ocarina.php');
 
-$user = new User();
-$rendering = new Rendering();
-$config = $user->getConfig();
-$oldPassword = ((isset($_POST['oldPassword'])) && ($_POST['oldPassword'] !== '')) ? $user->purge($_POST['oldPassword']) : '';
-$password = ((isset($_POST['password'])) && ($_POST['password'] !== '')) ? $user->purge($_POST['password']) : '';
-$confPassword = ((isset($_POST['confPassword'])) && ($_POST['confPassword'] !== '')) ? $user->purge($_POST['confPassword']) : '';
+$ocarina = new Ocarina();
+$config = $ocarina->getConfig();
+$oldPassword = ((isset($_POST['oldPassword'])) && ($_POST['oldPassword'] !== '')) ? $ocarina->purge($_POST['oldPassword']) : '';
+$password = ((isset($_POST['password'])) && ($_POST['password'] !== '')) ? $ocarina->purge($_POST['password']) : '';
+$confPassword = ((isset($_POST['confPassword'])) && ($_POST['confPassword'] !== '')) ? $ocarina->purge($_POST['confPassword']) : '';
 $submit = isset($_POST['submit']) ? true : false;
 
-$rendering->addValue('utente', $user->isLogged() ? $user->username[0]->nickname : '');
-$rendering->skin = $user->isLogged() ? $user->username[0]->skin : $user->config[0]->skin;
-$rendering->addValue('titolo', $user->getLanguage('title', 5).$user->getLanguage('title', 2).$user->config[0]->nomesito);
-$rendering->addValue('description', $user->getLanguage('description', 3));
-$rendering->addValue('useronline', $user->getUserOnline());
-$rendering->addValue('visitatoronline', $user->getVisitatorOnline());
-$rendering->addValue('totaleaccessi', $user->getTotalVisits());
-require_once('core/class.PersonalMessage.php');
-$pm = new PersonalMessage();
-$rendering->addValue('numeromp', $pm->countPM());
-unset($pm);
+$ocarina->skin = $ocarina->isLogged() ? $ocarina->username[0]->skin : $ocarina->config[0]->skin;
+$ocarina->addValue('titolo', $ocarina->getLanguage('title', 5).$ocarina->getLanguage('title', 2).$ocarina->config[0]->nomesito);
+$ocarina->addValue('description', $ocarina->getLanguage('description', 3));
 
-if($user->isLogged()) 
+if($ocarina->isLogged()) 
 	if(($oldPassword !== '') && ($password !== '') && ($confPassword !== ''))
-		if((md5($user->salt.$oldPassword) == $user->username[0]->password) && ($password == $confPassword) && (strlen($password) > 4))
-			if($user->editUser('password', md5($user->salt.$password), $user->username[0]->nickname)) {
-				if($user->config[0]->log == 1)
-					$user->log($user->username[0]->nickname, 'Password modificated.');
-				$rendering->addValue('result', $user->getLanguage('editpassword', 0).header('Refresh: 2; URL='.$user->config[0]->url_index.'/logout.php?redirect=login.php'));
+		if((md5($ocarina->salt.$oldPassword) == $ocarina->username[0]->password) && ($password == $confPassword) && (strlen($password) > 4))
+			if($ocarina->editUser('password', md5($ocarina->salt.$password), $ocarina->username[0]->nickname)) {
+				if($ocarina->config[0]->log == 1)
+					$ocarina->log($ocarina->username[0]->nickname, 'Password modificated.');
+				$ocarina->addValue('result', $ocarina->getLanguage('editpassword', 0).header('Refresh: 2; URL='.$ocarina->config[0]->url_index.'/logout.php?redirect=login.php'));
 			}
 			else {
-				if($user->config[0]->log == 1)
-					$user->log($user->username[0]->nickname, 'Password modification failed');
-				$rendering->addValue('result', $user->getLanguage('editpassword', 1));
+				if($ocarina->config[0]->log == 1)
+					$ocarina->log($ocarina->username[0]->nickname, 'Password modification failed');
+				$ocarina->addValue('result', $ocarina->getLanguage('editpassword', 1));
 			}
 		else {
-			if($user->config[0]->log == 1)
-				$user->log($user->username[0]->nickname, 'Password modification failed');
-			$rendering->addValue('result', $user->getLanguage('editpassword', 2));
+			if($ocarina->config[0]->log == 1)
+				$ocarina->log($ocarina->username[0]->nickname, 'Password modification failed');
+			$ocarina->addValue('result', $ocarina->getLanguage('editpassword', 2));
 		}
 	else
-		$rendering->addValue('result', $user->getLanguage('editpassword', 3));
+		$ocarina->addValue('result', $ocarina->getLanguage('editpassword', 3));
 else
-	$rendering->addValue('result', $user->getLanguage('editpassword', 4));
-$rendering->addValue('logged', $user->isLogged());
-$rendering->addValue('submit', $submit);
-(($user->isLogged()) && ($user->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('modificapassword.tpl');
+	$ocarina->addValue('result', $ocarina->getLanguage('editpassword', 4));
+$ocarina->addValue('logged', $ocarina->isLogged());
+$ocarina->addValue('submit', $submit);
+(($ocarina->isLogged()) && ($ocarina->username[0]->grado == 7)) ? $ocarina->renderize('bannato.tpl') : $ocarina->renderize('modificapassword.tpl');

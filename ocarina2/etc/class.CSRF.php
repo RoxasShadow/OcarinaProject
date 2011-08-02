@@ -4,17 +4,17 @@
 	(C) Giovanni Capuano 2011
 */
 
-/* Versione modificata della classe CsrfProtect di Simon Willson. */
+/* Questa classe permette di difendersi dagli attacchi di tipo CSRF, inserendo un campo hidden all'interno di ogni form contenente un token, che viene validato al momento dell'invio. */
 class CSRF {
 	private $csrf_form_field = 'token';
+	private $lifetime = 3600; // Tempo per cui un token è valido.
 	
 	function __construct() {
 		session_start();
 	}
 	
 	function generate_token() {
-		/* Ricorda che dopo 1 ora (3600 secondi), il token diventa invalido, e dovrai quindi aggiornare la pagina se vuoi inviare un POST, o verrai segnalato per un attack attempt. */
-		if((isset($_SESSION['token-id'])) && (isset($_SESSION['token-time'])) && ((time() - $_SESSION['token-time']) <= 3600))
+		if((isset($_SESSION['token-id'])) && (isset($_SESSION['token-time'])) && ((time() - $_SESSION['token-time']) <= $this->lifetime))
 			return $_SESSION['token-id'];
 		$array = array();
 		$str = '';
@@ -24,6 +24,8 @@ class CSRF {
 		for($i=0; $i<$num; $i++)
 			$str .= $array[$i];
 		$str = md5(md5((isset($_SESSION['token-id'])) ? $_SESSION['token-id'].$str : $str)); // Se c'è ancora il vecchio token, lo utilizzo come salt :)
+		$_SESSION['token-id'] = $str;
+		$_SESSION['token-time'] = time();
 		return $str;
 	}
 	

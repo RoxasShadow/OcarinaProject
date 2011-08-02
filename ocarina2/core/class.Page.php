@@ -3,10 +3,10 @@
 	core/class.Page.php
 	(C) Giovanni Capuano 2011
 */
-require_once('class.Category.php');
+require_once('class.Comments.php');
 
 /* Questa classe mette a disposizione dei metodi per gestire le pagine. */
-class Page extends Category {
+class Page extends Comments {
 
 	/* Ottiene una o più pagine. */
 	public function getPage($minititolo = '', $min = '', $max = '') {

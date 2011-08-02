@@ -1,6 +1,6 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-08-01 15:03:05
+<?php /* Smarty version Smarty-3.0.8, created on 2011-08-02 18:47:16
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/recuperapassword.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:19502088914e36c0298f5348-56263415%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:2388593434e38463465c3b3-38834996%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
@@ -11,7 +11,7 @@ $_smarty_tpl->decodeProperties(array (
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '19502088914e36c0298f5348-56263415',
+  'nocache_hash' => '2388593434e38463465c3b3-38834996',
   'function' => 
   array (
   ),

@@ -3,41 +3,38 @@
 	/admin/log.php
 	(C) Giovanni Capuano 2011
 */
-require_once('../core/class.User.php');
-require_once('../core/class.Rendering.php');
+require_once('../core/class.Ocarina.php');
 
-$user = new User();
-$rendering = new Rendering();
+$ocarina = new Ocarina();
 $submit = isset($_POST['submit']) ? true : false;
 
-$rendering->addValue('grado', $user->isLogged() ? $user->username[0]->grado : '');
-$rendering->skin = 'admin';
-$rendering->addValue('titolo', $user->getLanguage('title', 20).$user->getLanguage('title', 2).$user->getLanguage('title', 10).$user->getLanguage('title', 2).$user->config[0]->nomesito);
+$ocarina->skin = 'admin';
+$ocarina->addValue('titolo', $ocarina->getLanguage('title', 20).$ocarina->getLanguage('title', 2).$ocarina->getLanguage('title', 10).$ocarina->getLanguage('title', 2).$ocarina->config[0]->nomesito);
 
-if(($user->isLogged()) && ($user->username[0]->grado < 6))
+if(($ocarina->isLogged()) && ($ocarina->username[0]->grado < 6))
 	if(!$submit) {
-		if($user->config[0]->log == 1)
-			$user->log($user->username[0]->nickname, 'Logs readed.');
-		$rendering->addValue('log', $user->getLog());
+		if($ocarina->config[0]->log == 1)
+			$ocarina->log($ocarina->username[0]->nickname, 'Logs readed.');
+		$ocarina->addValue('log', $ocarina->getLog());
 	}
 	else
-		if($user->username[0]->grado == 1)
-			if($user->deleteLog()) {
-				if($user->config[0]->log == 1)
-					$user->log($user->username[0]->nickname, 'Logs deleted.');
-				$rendering->addValue('result', $user->getLanguage('log', 0));
+		if($ocarina->username[0]->grado == 1)
+			if($ocarina->deleteLog()) {
+				if($ocarina->config[0]->log == 1)
+					$ocarina->log($ocarina->username[0]->nickname, 'Logs deleted.');
+				$ocarina->addValue('result', $ocarina->getLanguage('log', 0));
 			}
 			else {
-				if($user->config[0]->log == 1)
-					$user->log($user->username[0]->nickname, 'Logs deletion failed.');
-				$rendering->addValue('result', $user->getLanguage('log', 1));
+				if($ocarina->config[0]->log == 1)
+					$ocarina->log($ocarina->username[0]->nickname, 'Logs deletion failed.');
+				$ocarina->addValue('result', $ocarina->getLanguage('log', 1));
 			}
 		else {
-			if($user->config[0]->log == 1)
-				$user->log($user->username[0]->nickname, 'Logs deletion failed.');
-			$rendering->addValue('result', $user->getLanguage('log', 2));
+			if($ocarina->config[0]->log == 1)
+				$ocarina->log($ocarina->username[0]->nickname, 'Logs deletion failed.');
+			$ocarina->addValue('result', $ocarina->getLanguage('log', 2));
 		}
 else
-	$rendering->addValue('result', $user->getLanguage('error', 4));
-$rendering->addValue('submit', $submit);
-(($user->isLogged()) && ($user->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('log.tpl');
+	$ocarina->addValue('result', $ocarina->getLanguage('error', 4));
+$ocarina->addValue('submit', $submit);
+(($ocarina->isLogged()) && ($ocarina->username[0]->grado == 7)) ? $ocarina->renderize('bannato.tpl') : $ocarina->renderize('log.tpl');

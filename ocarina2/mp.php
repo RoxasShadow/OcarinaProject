@@ -3,32 +3,25 @@
 	/mp.php
 	(C) Giovanni Capuano 2011
 */
-require_once('core/class.PersonalMessage.php');
-require_once('core/class.Rendering.php');
+require_once('core/class.Ocarina.php');
 
-$pm = new PersonalMessage();
-$rendering = new Rendering();
+$ocarina = new Ocarina();
 $id = ((isset($_GET['id'])) && is_numeric($_GET['id'])) ? (int)$_GET['id'] : '';
 
-$rendering->addValue('utente', $pm->isLogged() ? $pm->username[0]->nickname : '');
-$rendering->skin = $pm->isLogged() ? $pm->username[0]->skin : $pm->config[0]->skin;
-$rendering->addValue('titolo', $pm->getLanguage('title', 33).$pm->getLanguage('title', 2).$pm->config[0]->nomesito);
-$rendering->addValue('useronline', $pm->getUserOnline());
-$rendering->addValue('visitatoronline', $pm->getVisitatorOnline());
-$rendering->addValue('totaleaccessi', $pm->getTotalVisits());
-$rendering->addValue('numeromp', $pm->countPM());
+$ocarina->skin = $ocarina->isLogged() ? $ocarina->username[0]->skin : $ocarina->config[0]->skin;
+$ocarina->addValue('titolo', $ocarina->getLanguage('title', 33).$ocarina->getLanguage('title', 2).$ocarina->config[0]->nomesito);
 
-if(!$pm->isLogged())
-	$rendering->addValue('result', $pm->getLanguage('error', 4));
+if(!$ocarina->isLogged())
+	$ocarina->addValue('result', $ocarina->getLanguage('error', 4));
 elseif($id == '')
-	$rendering->addValue('result', $pm->getPM('', $pm->username[0]->nickname));
+	$ocarina->addValue('result', $ocarina->getPM('', $ocarina->username[0]->nickname));
 else {
-	$yourPM = $pm->getPM($id);
-	if($yourPM[0]->destinatario == $pm->username[0]->nickname) {
-		$rendering->addValue('result', $yourPM);
-		$pm->readedPM($id);
+	$yourPM = $ocarina->getPM($id);
+	if($yourPM[0]->destinatario == $ocarina->username[0]->nickname) {
+		$ocarina->addValue('result', $yourPM);
+		$ocarina->readedPM($id);
 	}
 }
-$rendering->addValue('logged', $pm->isLogged());
-$rendering->addValue('id', $id);
-(($pm->isLogged()) && ($pm->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('mp.tpl');
+$ocarina->addValue('logged', $ocarina->isLogged());
+$ocarina->addValue('id', $id);
+(($ocarina->isLogged()) && ($ocarina->username[0]->grado == 7)) ? $ocarina->renderize('bannato.tpl') : $ocarina->renderize('mp.tpl');

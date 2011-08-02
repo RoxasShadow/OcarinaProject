@@ -3,40 +3,37 @@
 	/admin/cancellapagina.php
 	(C) Giovanni Capuano 2011
 */
-require_once('../core/class.Page.php');
-require_once('../core/class.Rendering.php');
+require_once('../core/class.Ocarina.php');
 
-$pagina = new Page();
-$rendering = new Rendering();
-$minititolo_pagina = ((isset($_POST['content'])) && ($_POST['content'] !== '')) ? $pagina->purge($_POST['content']) : '';
+$ocarina = new Ocarina();
+$minititolo_pagina = ((isset($_POST['content'])) && ($_POST['content'] !== '')) ? $ocarina->purge($_POST['content']) : '';
 $submit = isset($_POST['submit']) ? true : false;
 
-$rendering->addValue('grado', $pagina->isLogged() ? $pagina->username[0]->grado : '');
-$rendering->skin = 'admin';
-$rendering->addValue('titolo', $pagina->getLanguage('title', 13).$pagina->getLanguage('title', 2).$pagina->getLanguage('title', 10).$pagina->getLanguage('title', 2).$pagina->config[0]->nomesito);
+$ocarina->skin = 'admin';
+$ocarina->addValue('titolo', $ocarina->getLanguage('title', 13).$ocarina->getLanguage('title', 2).$ocarina->getLanguage('title', 10).$ocarina->getLanguage('title', 2).$ocarina->config[0]->nomesito);
 
-if(($pagina->isLogged()) && ($pagina->username[0]->grado < 3))
+if(($ocarina->isLogged()) && ($ocarina->username[0]->grado < 3))
 	if(!$submit)
-		$rendering->addValue('content', $pagina->searchPage('', 'wildcard'));
+		$ocarina->addValue('content', $ocarina->searchPage('', 'wildcard'));
 	else
 		if($minititolo_pagina !== '')
-			if($pagina->deletePage($minititolo_pagina)) {
-				$rendering->addValue('result', $pagina->getLanguage('deletepage', 0));
-				if($pagina->config[0]->log == 1)
-					$pagina->log($pagina->username[0]->nickname, 'Page \''.$minititolo_pagina.'\' deleted.');
+			if($ocarina->deletePage($minititolo_pagina)) {
+				$ocarina->addValue('result', $ocarina->getLanguage('deletepage', 0));
+				if($ocarina->config[0]->log == 1)
+					$ocarina->log($ocarina->username[0]->nickname, 'Page \''.$minititolo_pagina.'\' deleted.');
 			}
 			else {
-				$rendering->addValue('result', $pagina->getLanguage('deletepage', 1));
-				if($pagina->config[0]->log == 1)
-					$pagina->log($pagina->username[0]->nickname, 'Page \''.$minititolo_pagina.'\' deletion failed.');
+				$ocarina->addValue('result', $ocarina->getLanguage('deletepage', 1));
+				if($ocarina->config[0]->log == 1)
+					$ocarina->log($ocarina->username[0]->nickname, 'Page \''.$minititolo_pagina.'\' deletion failed.');
 			}
 		else {
-			$rendering->addValue('result', $pagina->getLanguage('deletepage', 2));
-			if($pagina->config[0]->log == 1)
-				$pagina->log($pagina->username[0]->nickname, 'Page \''.$minititolo_pagina.'\' deletion failed.');
+			$ocarina->addValue('result', $ocarina->getLanguage('deletepage', 2));
+			if($ocarina->config[0]->log == 1)
+				$ocarina->log($ocarina->username[0]->nickname, 'Page \''.$minititolo_pagina.'\' deletion failed.');
 		}
 else
-	$rendering->addValue('result', $pagina->getLanguage('error', 4));
-$rendering->addValue('submit', $submit);
-$rendering->addValue('whatis', 'pagina');
-(($pagina->isLogged()) && ($pagina->username[0]->grado == 7)) ? $rendering->renderize('bannato.tpl') : $rendering->renderize('deletecontent.tpl');
+	$ocarina->addValue('result', $ocarina->getLanguage('error', 4));
+$ocarina->addValue('submit', $submit);
+$ocarina->addValue('whatis', 'pagina');
+(($ocarina->isLogged()) && ($ocarina->username[0]->grado == 7)) ? $ocarina->renderize('bannato.tpl') : $ocarina->renderize('deletecontent.tpl');
