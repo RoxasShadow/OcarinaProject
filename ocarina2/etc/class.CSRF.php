@@ -8,9 +8,14 @@
 class CSRF {
 	private $csrf_form_field = 'token';
 	
+	function __construct() {
+		session_start();
+	}
+	
 	function generate_token() {
-		if(isset($_COOKIE['token']))
-			return $_COOKIE['token'];
+		/* Ricorda che dopo 1 ora (3600 secondi), il token diventa invalido, e dovrai quindi aggiornare la pagina se vuoi inviare un POST, o verrai segnalato per un attack attempt. */
+		if((isset($_SESSION['token-id'])) && (isset($_SESSION['token-time'])) && ((time() - $_SESSION['token-time']) <= 3600))
+			return $_SESSION['token-id'];
 		$array = array();
 		$str = '';
 		$num = 10;
@@ -18,8 +23,7 @@ class CSRF {
 			$array[$i] = chr(rand(97, 122));
 		for($i=0; $i<$num; $i++)
 			$str .= $array[$i];
-		$str = md5(md5($str));
-		setcookie('token', $str, time()+3600);
+		$str = md5(md5((isset($_SESSION['token-id'])) ? $_SESSION['token-id'].$str : $str)); // Se c'è ancora il vecchio token, lo utilizzo come salt :)
 		return $str;
 	}
 	
@@ -43,7 +47,7 @@ class CSRF {
 		ob_start(array($this, 'ob_callback'));
 	}
 	
-	function should_rewrite_forms($html) {
+	function is_html_file($html) {
 		$sent_headers = headers_list();
 		foreach($sent_headers as $header) 
 			if(preg_match('/^Content-Type:/i', $header) && strpos($header, 'text/html') === false)
@@ -56,11 +60,13 @@ class CSRF {
 	}
 	
 	function ob_callback($html) {
-		if(!$this->should_rewrite_forms($html))
+		if(!$this->is_html_file($html))
 			return $html;
 		$token = $this->generate_token();
 		$hidden = '<input type="hidden" name="'.$this->csrf_form_field.'" value="'.$token.'"'.($this->is_xhtml($html) ? ' />' : '>');
-		//return preg_replace('/(<form\W[^>]*\bmethod=(\'|"|)POST(\'|"|)\b[^>]*>)/i', '\\1'.$hidden, $html);
+		// return preg_replace('/(<form\W[^>]*\bmethod=(\'|"|)POST(\'|"|)\b[^>]*>)/i', '\\1'.$hidden, $html);
+		/* La riga qui sopra inserisce il campo per il token subito dopo l'apertura di un form di tipo POST.
+		Il seguente risulta essere più veloce, ed inserisce il campo subito prima la chiusura di un qualsiasi tipo di campo. */
 		return str_replace('</form>', "$hidden\n</form>", $html);
 	}
 }
