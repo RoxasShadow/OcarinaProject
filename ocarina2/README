@@ -166,16 +166,16 @@ Ricordate che potete modificare la classe per essere compatibile anche con altri
 -class.BBCode.php
 Questa classe traduce i BBCode in HTML tramite le regex.
 
+-class.CSRF.php
+Provvede a proteggere i form da attacchi di tipo CSRF tramite token.
+È attivato globalmente dalla classe di Rendering.
+
 -class.NewsPager.php
 È la classe che si occupa dell'impaginazione delle news nella index.
 
 -class.Recaptcha.php
 È la classe che permette di gestire i captcha.
 Di default è presente ReCaptcha, ma è possibile usarne altri modificando il contenuto dei vari metodi.
-
--class.Translator.php
-È la classe che si interfaccia con le API di Google Traduttore e permette di tradurre i commenti in varie
-lingue tramite i BBCode.
 
 -class.Translator.php
 È la classe che si interfaccia con le API di Google Traduttore e permette di tradurre i commenti in varie

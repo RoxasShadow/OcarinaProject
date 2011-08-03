@@ -26,7 +26,7 @@ class Rendering extends Page {
 		$this->smarty->template_dir = $path.'/templates';
 		$this->smarty->compile_dir = $path.'/templates_c';
 		$this->smarty->config_dir = $path.'/configs';
-		$this->smarty->error_reporting = 0; // Nasconde tutti gli errori. E_ALL | E_STRICT per mostrare tutti i tipi di errore
+		$this->smarty->error_reporting = E_ALL | E_STRICT; // 0 nasconde tutti gli errori. E_ALL | E_STRICT per mostrare tutti i tipi di errore
 		$this->smarty->allow_php_tag = true; // Serve per leggere il numero di commenti di ogni news dalla index :(
 		$this->smarty->force_compile = false; // Permette di non recompilare ogni volta il template
 		$this->smarty->loadFilter('output', 'trimwhitespace'); // Plugin che comprime l'HTML velocizzando la renderizzazione da parte del browser
@@ -68,6 +68,8 @@ class Rendering extends Page {
 
 	/* Il motore di rendering effettua il rendering del template in input e lo visualizza. */
 	public function renderize($filename) {
+		require_once($this->config[0]->root_index.'/etc/mobile_device_detect.php');
+		require_once('class.Plugin.php');
 		$this->addValue('versione', $this->config[0]->versione);
 		$this->addValue('nomesito', $this->config[0]->nomesito);
 		$this->addValue('url', $this->config[0]->url);
@@ -87,8 +89,24 @@ class Rendering extends Page {
 		$this->addValue('visitatoronline', parent::getVisitatorOnline());
 		$this->addValue('totaleaccessi', parent::getTotalVisits());
 		$this->addValue('numeromp', parent::countPM());
-		require_once($this->config[0]->root_index.'/etc/mobile_device_detect.php');
 		
+		/* Carica e runna ogni plugin attivo. */
+		$plugins = Plugin::listPlugins();
+		foreach($plugins as $name) {
+			if(Plugin::getMetadata($name, 'enabled', '') == 'true') {
+				try {
+					$plugin = Plugin::loadPlugin($name);
+					$plugin->main();
+					unset($plugin);
+				}
+				catch(Exception $e) {
+					echo $e->getMessage();
+				}
+			}
+		}
+		unset($plugins);
+		
+		/* Renderizza il tutto con la skin appropriata. */
 		if($this->skin == 'admin') {
 			if($filename == 'index.tpl')
 				$this->addValue('lastversion', file_get_contents('http://www.giovannicapuano.net/ocarina2/lastversion.php'));

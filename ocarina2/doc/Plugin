@@ -1,0 +1,58 @@
+Un plugin consente di estendere le funzionalità di Ocarina, implementando nuove funzioni.
+Di seguito un breve tutorial pratico per lo sviluppo e l'installazione.
+
+1. Il file plugins.cfg
+	Il file plugins.cfg (/plugin/plugins.cfg) consente di monitorare i plugin attivi
+	e di ottenere eventuali informazioni su ognuno di essi.
+	Quando si installa un nuovo plugin, bisogna aggiungere una nuova sezione al file.
+	Un esempio per il plugin `Today` potrebbe essere il seguente.
+	
+		name = HelloWorld
+		author = Giovanni Capuano
+		description = Saluta il mondo!
+		path = /var/www/htdocs/ocarina2/plugin/plugins/HelloWorld/hello.php
+		enabled = true
+	
+		name = Today
+		author = Your Name
+		description = Today ti permette di scoprire quale giorno è oggi.
+		path = /var/www/htdocs/ocarina2/plugin/plugins/Today/today.php
+		enabled = true
+		
+	Nella prima riga abbiamo un il nome con cui viene individuato il plugin, l'autore,
+	una breve descrizione delle sue funzionalità, il percorso assoluto e infine lo stato,
+	`true` se attivo, `false` se disattivo.
+	
+2. Il plugin
+	Ora procediamo a creare il plugin vero e proprio, che altro non farà che visualizzare
+	la data odierna al visitatore.
+	Creiamo quindi una cartella chiamata `Today` in /plugin/plugins/, nel quale creiamo un
+	file vuoto chiamato `today.php`.
+	Procediamo con lo scrivere il codice.
+	
+	<?php
+	class Today extends Rendering implements FrameworkPlugin {
+		private function getDate() {
+			return date('d-m-y');
+		}
+	
+		public function main() {
+			parent::addValue('data', $this->getDate());
+		}
+	}
+	
+	Come possiamo vedere, abbiamo dato alla classe lo stesso nome del plugin.
+	La classe estende Rendering, per darci la possibilità di interagire con il
+	motore di rendering e visualizzare la data.
+	Dichiaramo un metodo privato `getDate()` che ritorna la data odierna in formato
+	GG-MM-AA.
+	Il metodo `main()` è quello principale, dal momento che Ocarina richiama solo
+	ed unicamente quello.
+	Quindi il nostro metodo incapsulerà la chiamata al metodo `addValue()` della superclasse
+	Rendering, in modo da creare un nuovo tag in cui verrà visualizzata la data.
+	
+Il plugin è ora pronto, basterà copiare il tag `{$data}` nella posizione che preferiamo all'interno
+del template per fare in modo che chiunque possa vedere la data odierna.
+
+Insomma, possiamo fare di tutto, dal prelevare dati dal database, a creare nuovi tipi di contenuti.
+Il solo limite è la fantasia.

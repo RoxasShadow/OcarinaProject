@@ -5,9 +5,5 @@
 */
 require_once('class.Rendering.php');
 
-/* Questa classe permette di creare, modificare e cancellare gli annunci dell'amministrazion. */
-class Ocarina extends Rendering {
-	public function hello() {
-		return 'Hello, world!';
-	}
-}
+/* Questa classe permette di creare, modificare e cancellare gli annunci dell'amministrazione. */
+class Ocarina extends Rendering {}

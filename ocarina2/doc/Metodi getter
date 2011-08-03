@@ -1,38 +1,19 @@
 ====== Metodi getter ======
 
-* getPage(), getNews(), getComment(), getUser(), getConfig(), searchPageByTitle(), searchPageByContent(), searchNewsByTitle(), searchNewsByContent() e searchUserByField():
-	Questi metodi ritornano un oggetto iterabile contenete array di record.
+* getPage(), getNews(), getComment(), getUser(), getConfig(), searchPageByTitle(), searchNewsByContent(), searchUserByField()...:
+	Questi metodi ritornano un oggetto iterabile contenete i record.
 	Facciamo un esempio.
 	Vogliamo listare tutti i titoli e i contenuti di tutte le pagine presenti nel database.
 	
 	<?php
 	// [...]
-	if(!$objectPage = $page->getPage()) {
-		echo 'È accaduto un errore.';
+	$objectPage = $ocarina->getPage();
+	if($objectPage == false) {
+		echo 'È accaduto un errore: probabilmente non è presente nessuna pagina.';
 	}
 	else {
 		foreach($objectPage as $result) {
-			echo $result->titolo;
-			echo ' --> ';
-			echo $result->contenuto;
-			echo '<br /><br />';
-		}
-	}
-	?>
-	
-	Vogliamo listare il titolo e il contenuto di una pagina dal minititolo 'questo-e-un-test'.
-	
-	<?php
-	// [...]
-	if(!$objectPage = $page->getPage('questo-e-un-test'))
-		echo 'È accaduto un errore.';
-	}
-	else {
-		foreach($objectPage as $result) {
-			echo $result->titolo;
-			echo ' --> ';
-			echo $result->contenuto;
-			echo '<br /><br />';
+			echo '<b>Titolo:</b>'.$result->titolo.'<br />'.$result->contenuto.'<br /><hr /><br />';
 		}
 	}
 	?>
@@ -41,13 +22,12 @@
 	
 	<?php
 	// [...]
-	if(!$objectPage = $page->getPage()) {
-		echo 'È accaduto un errore.';
+	$objectPage = $ocarina->getPage();
+	if($objectPage == false) {
+		echo 'È accaduto un errore: probabilmente non è presente nessuna pagina.';
 	}
 	else {
-		echo $objectPage[0]->titolo;
-		echo ' --> ';
-		echo $objectPage[0]->contenuto;
+		echo '<b>Titolo:</b>'.$result[0]->titolo.'<br />'.$result[0]->contenuto.'<br /><hr /><br />';
 	}
 	?>
 	
@@ -58,10 +38,14 @@
 	
 	<?php
 	// [...]
-	if(!$categoria = $category->getCategory('news'))
-		echo 'È accaduto un errore.';
+	$categoria = $ocarina->getCategory('news');
+	if($categoria == false) {
+		echo 'È accaduto un errore: probabilmente non è presente nessuna categoria per le news.';
 	}
 	else {
-		echo $categoria;
+		echo '<b>Categorie:</b><br />';
+		foreach($categoria as $v) {
+			$v.'<br />';
+		}
 	}
 	?>

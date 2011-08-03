@@ -1,7 +1,8 @@
-Admin -> Il Dio -> 1
-Moderatore -> Approva news e commenti degli editori -> 2
-Editore -> Scrive news e pagine -> 3
-Grafico ->  4
-SEO -> 5
-Utente -> 6
-Bannato -> Non può accedere al sito -> 7
+GRADO 		DESCRIZIONE					CODICE
+Admin		Accesso a tutte le funzioni del pannello	1
+Moderatore	Approva news e i commenti degli editori		2
+Editore		Scrive news e pagine				3
+Grafico		Installa e rimuove le skin			4
+SEO		Gestisce il file robots.txt			5
+Utente		Funzioni di base di lettura e scrittura		6
+Bannato		L'accesso al sito è negato			7

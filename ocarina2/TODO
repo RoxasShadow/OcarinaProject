@@ -1,5 +1,4 @@
-Protezione alle CSFR tramite token;
+Far interagire i plugin con Smarty;
 Bugfix del /REPORT;
 Skin `mobile`;
-if(have_time())
-	Ereditarietà perfetta, in modo che da un'unica classe hai accesso a tutti i metodi.
+Documentazione per i metodi pubblici sullo stile di javadoc.
