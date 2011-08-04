@@ -18,8 +18,8 @@ class Rendering extends Page {
 		require_once($this->config[0]->root_index.'/etc/class.CSRF.php');
 		$this->time_start = $this->microtime_float(); // Il timer lo avvio qui poichè la classe viene istanziata ad ogni script.
 		$this->smarty = new Smarty;
-		//$csrf = new CSRF();
-		//$csrf->enable();
+		$csrf = new CSRF();
+		$csrf->enable();
 		
 		$path = $this->config[0]->root_rendering;
 		$this->smarty->cache_dir = $path.'/cache';
@@ -96,7 +96,12 @@ class Rendering extends Page {
 			if(Plugin::getMetadata($name, 'enabled', '') == 'true') {
 				try {
 					$plugin = Plugin::loadPlugin($name);
-					$plugin->main();
+					$output = $plugin->main();
+					if(is_array($output))
+						foreach($output as $v => $i)
+							if(($v !== '') && ($i !== ''))
+								$this->addValue($v, $i);
+					unset($output);
 					unset($plugin);
 				}
 				catch(Exception $e) {

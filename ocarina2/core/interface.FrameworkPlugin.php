@@ -4,4 +4,6 @@
 	(C) Giovanni Capuano 2011
 */
 
-interface FrameworkPlugin {}
+interface FrameworkPlugin {
+	public function main();
+}

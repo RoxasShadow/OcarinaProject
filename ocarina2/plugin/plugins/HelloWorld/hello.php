@@ -1,7 +1,9 @@
 <?php
-class Hello extends Rendering implements FrameworkPlugin {
+class Hello implements FrameworkPlugin {
+	private $rendering = array();
+	
 	public function main() {
-		parent::addValue('nomesito', 'LOLMAO');
-		echo "<!-- I'm here, silenty, but i'm here O: -->\n";
+		$this->rendering['hello'] = 'Hello, world!';
+		return $this->rendering;
 	}
 }

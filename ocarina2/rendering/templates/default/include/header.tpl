@@ -4,7 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>{if isset($data)}{$data}{/if}{$titolo}</title>
+<title>{$titolo}</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 {if ((isset($description)) && ($description !== ''))}<meta name="description" content="{$description}" />{/if}
 
@@ -24,7 +24,7 @@ Benvenuto su {$nomesito}! Per usufruire di tutte le funzionalità che ti offriam
 Bentornato {$utente} (<a href="{$url_index}/logout.php">Logout</a> | <a href="{$url_index}/mp.php">{$numeromp}</a> MP | <a href="{$url_index}/inviamp.php">Invia MP</a> | <a href="{$url_index}/profile/{$utente}.html">Profilo</a> | <a href="{$url_index}/modificaprofilo.php">Modifica profilo</a> | <a href="modificapassword.php">Modifica password</a>)
 {/if}
 </div>
-<br />
+{if isset($luckyuser)}<div align="center">L'utente fortunato di oggi è... <a href="{$url_index}/profile/{$luckyuser}.html">{$luckyuser}</a>!</div>{/if}
 <table id="colunica">
 <tr>
 <td>

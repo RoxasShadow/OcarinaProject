@@ -35,28 +35,48 @@ Di seguito un breve tutorial pratico per lo sviluppo e l'installazione.
 	Procediamo con lo scrivere il codice.
 	
 	<?php
-	class Today extends Rendering implements FrameworkPlugin {
+	class Today implements FrameworkPlugin {
+		private $rendering = array();
+	
 		private function getDate() {
 			return date('d-m-y');
 		}
 	
 		public function main() {
-			parent::addValue('data', $this->getDate());
+			$this->rendering['data'] = $this->getDate();
+			return $this->rendering;
 		}
 	}
 	
 	Come possiamo vedere, abbiamo dato alla classe lo stesso nome del plugin.
-	La classe estende Rendering, per darci la possibilità di interagire con il
-	motore di rendering e visualizzare la data.
-	Dichiaramo un metodo privato `getDate()` che ritorna la data odierna in formato
-	GG-MM-AA.
-	Il metodo `main()` è quello principale, dal momento che Ocarina richiama solo
-	ed unicamente quello.
-	Quindi il nostro metodo incapsulerà la chiamata al metodo `addValue()` della superclasse
-	Rendering, in modo da creare un nuovo tag in cui verrà visualizzata la data.
+	Dichiariamo per prima cosa un array vuoto e un metodo `getDate()` che ritorna la data
+	odierna in formato GG-MM-AA.
+	Dopodichè dichiariamo il metodo `main()`, quello principale, che provvederà a creare un nuovo
+	tag per il motore di rendering di nome `data` che conterrà la data prelevata dal metodo che
+	abbiamo creato poco fa.
+	Infine ritorniamo al motore di elaborazione dei plugin l'array, che provvederà all'istanziazione.
 	
 Il plugin è ora pronto, basterà copiare il tag `{$data}` nella posizione che preferiamo all'interno
 del template per fare in modo che chiunque possa vedere la data odierna.
 
+Ma se vogliamo usufruire dei metodi interni di Ocarina, non c'è alcun problema!
+Basterà infatti estendere il nostro plugin mediante una delle classi del core tramite la keyword `extends`.
+Ad esempio, diamo un'occhiata a questo plugin:
+
+<?php
+class ChiTiPensa extends User implements FrameworkPlugin {
+	private $rendering = array();
+	
+	public function main() {
+		$userList = parent::getUser();
+		$this->rendering['luckyuser'] = ($userList) ? $userList[rand(0, parent::countUser()-1)]->nickname : 'Nessuno! Qui non c\'è anima viva D:';
+		return $this->rendering;
+	}
+}
+
+In questo caso, la superclasse a cui facciamo riferimento è `User`, e accediamo ai suoi metodi tramite la parola chiave `parent::`.
+Attenzione però di non esagerare!
+Infatti ogni qual volta utilizziamo l'ereditarietà, le prestazioni globali diminuiscono, dal momento che si viene a creare una nuova istanza della gerarchia di classi, con conseguente overhead.
+
 Insomma, possiamo fare di tutto, dal prelevare dati dal database, a creare nuovi tipi di contenuti.
-Il solo limite è la fantasia.
+L'importante è stare attenti a creare plugin sicuri e veloci, il solo limite è la fantasia!
