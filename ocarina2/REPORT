@@ -1,3 +1,3 @@
-L'implementazione nei BBCode del traduttore non funziona;
-Se in remoto ho la direttiva del file .htaccess `Options All +Indexes`, il CMS non funziona. In locale è il contrario.;
-Quando un utente accede, o effettua il login/logout, la cache viene svuotata perchè vengono aggiunti al database, e su un sito con molti utenti dovrebbe esserci un calo prestazionale.
+--Quando un plugin estende Rendering, per ognuno di essi viene creata una nuova istanza della struttura di classi (da notare che la classe CSRF che lancia un session_start() notifica che ce ne sono già attive di sessioni) e, in caso di creazione di nuovi tag, questi ultimi vengono assegnati alle istanze create, e non a quella principale.
+--L'implementazione nei BBCode del traduttore non funziona;
+--Se in remoto ho la direttiva del file .htaccess `Options All +Indexes`, il CMS non funziona. In locale è il contrario.

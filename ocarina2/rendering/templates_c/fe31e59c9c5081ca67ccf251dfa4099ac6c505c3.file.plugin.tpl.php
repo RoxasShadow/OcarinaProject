@@ -1,0 +1,61 @@
+<?php /* Smarty version Smarty-3.0.8, created on 2011-08-04 12:27:59
+         compiled from "/var/www/htdocs/ocarina2/rendering//templates/admin/plugin.tpl" */ ?>
+<?php /*%%SmartyHeaderCode:20754893924e3a904fe678e7-91189443%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+$_smarty_tpl->decodeProperties(array (
+  'file_dependency' => 
+  array (
+    'fe31e59c9c5081ca67ccf251dfa4099ac6c505c3' => 
+    array (
+      0 => '/var/www/htdocs/ocarina2/rendering//templates/admin/plugin.tpl',
+      1 => 1312460745,
+      2 => 'file',
+    ),
+  ),
+  'nocache_hash' => '20754893924e3a904fe678e7-91189443',
+  'function' => 
+  array (
+  ),
+  'has_nocache_code' => false,
+)); /*/%%SmartyHeaderCode%%*/?>
+
+<?php $_template = new Smarty_Internal_Template(($_smarty_tpl->getVariable('root_rendering')->value)."/templates/".($_smarty_tpl->getVariable('skin')->value)."/include/header.tpl", $_smarty_tpl->smarty, $_smarty_tpl, $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null);
+ echo $_template->getRenderedTemplate(); $_template->rendered_content = null;?><?php unset($_template);?>
+	<?php if ((($_smarty_tpl->getVariable('grado')->value=='')||($_smarty_tpl->getVariable('grado')->value>1))){?>
+		Accesso negato.
+	<?php }elseif(isset($_smarty_tpl->getVariable('plugins',null,true,false)->value)){?>
+		<table>
+		<tr>
+		<td><b>Nome</b></td>
+		<td><b>Autore</b></td>
+		<td><b>Descrizione</b></td>
+		<td><b>Percorso</b></td>
+		<td><b>Abilitato</b></td>
+		</tr>
+		<?php $_smarty_tpl->tpl_vars['var'] = new Smarty_Variable;$_smarty_tpl->tpl_vars['var']->step = 1;$_smarty_tpl->tpl_vars['var']->total = (int)ceil(($_smarty_tpl->tpl_vars['var']->step > 0 ? count($_smarty_tpl->getVariable('plugins')->value['name'])-1+1 - (0) : 0-(count($_smarty_tpl->getVariable('plugins')->value['name'])-1)+1)/abs($_smarty_tpl->tpl_vars['var']->step));
+if ($_smarty_tpl->tpl_vars['var']->total > 0){
+for ($_smarty_tpl->tpl_vars['var']->value = 0, $_smarty_tpl->tpl_vars['var']->iteration = 1;$_smarty_tpl->tpl_vars['var']->iteration <= $_smarty_tpl->tpl_vars['var']->total;$_smarty_tpl->tpl_vars['var']->value += $_smarty_tpl->tpl_vars['var']->step, $_smarty_tpl->tpl_vars['var']->iteration++){
+$_smarty_tpl->tpl_vars['var']->first = $_smarty_tpl->tpl_vars['var']->iteration == 1;$_smarty_tpl->tpl_vars['var']->last = $_smarty_tpl->tpl_vars['var']->iteration == $_smarty_tpl->tpl_vars['var']->total;?>
+			<tr>
+			<td><?php echo $_smarty_tpl->getVariable('plugins')->value['name'][$_smarty_tpl->tpl_vars['var']->value];?>
+ <?php echo $_smarty_tpl->getVariable('plugins')->value['version'][$_smarty_tpl->tpl_vars['var']->value];?>
+</td>
+			<td><a href="http://<?php echo $_smarty_tpl->getVariable('plugins')->value['website'][$_smarty_tpl->tpl_vars['var']->value];?>
+"><?php echo $_smarty_tpl->getVariable('plugins')->value['author'][$_smarty_tpl->tpl_vars['var']->value];?>
+</a></td>
+			<td><?php echo $_smarty_tpl->getVariable('plugins')->value['description'][$_smarty_tpl->tpl_vars['var']->value];?>
+</td>
+			<td><?php echo $_smarty_tpl->getVariable('plugins')->value['path'][$_smarty_tpl->tpl_vars['var']->value];?>
+</td>
+			<?php if ($_smarty_tpl->getVariable('plugins')->value['enabled'][$_smarty_tpl->tpl_vars['var']->value]=='true'){?>
+				<td>Si</td>
+			<?php }elseif($_smarty_tpl->getVariable('plugins')->value['enabled'][$_smarty_tpl->tpl_vars['var']->value]=='false'){?>
+				<td>No</td>
+			<?php }?>
+		<?php }} ?>
+		</table>
+	<?php }else{ ?>
+		<?php echo $_smarty_tpl->getVariable('result')->value;?>
+
+	<?php }?>
+<?php $_template = new Smarty_Internal_Template(($_smarty_tpl->getVariable('root_rendering')->value)."/templates/".($_smarty_tpl->getVariable('skin')->value)."/include/footer.tpl", $_smarty_tpl->smarty, $_smarty_tpl, $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null);
+ echo $_template->getRenderedTemplate(); $_template->rendered_content = null;?><?php unset($_template);?>

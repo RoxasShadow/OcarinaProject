@@ -14,9 +14,11 @@ class MySQL extends Utilities {
 	public $prefix = '';
 	public $caching = true; // `true` -> Caching abilitato; `false` -> Caching disabilitato.
 	private $storage = '/var/www/htdocs/ocarina2/cache/';
+	private $filter = array('visitatori', 'log');
+	private $persistent = false;
 	
 	public function __construct() {
-		if(!mysql_selectdb($this->database, mysql_connect($this->host, $this->username, $this->password)))
+		if(!mysql_selectdb($this->database, ($this->persistent) ? mysql_pconnect($this->host, $this->username, $this->password) : mysql_connect($this->host, $this->username, $this->password)))
 			die('Database connection failed.');
 		elseif($this->caching)
 			if(!is_dir($this->storage))
@@ -26,7 +28,8 @@ class MySQL extends Utilities {
 	}
 	
 	public function __distruct() {
-		mysql_close();
+		if(!$this->persistent)
+			mysql_close();
 	}
 	
 	/* Private methods. */
@@ -45,7 +48,14 @@ class MySQL extends Utilities {
 	}
 	
 	private function is_cachable($query) {
-		return !preg_match('/\s*(INSERT[\s]+|DELETE[\s]+|UPDATE[\s]+|REPLACE[\s]+|CREATE[\s]+|ALTER[\s]+|SET[\s]+|FOUND_ROWS[\s]+|SQL_NO_CACHE[\s]+)/si', $query);
+		return !preg_match('/\s*(INSERT[\s]+|DELETE[\s]+|UPDATE[\s]+|REPLACE[\s]+|CREATE[\s]+|ALTER[\s]+|SET[\s]+|FOUND_ROWS[\s]+|SQL_NO_CACHE[\s]+)/is', $query);
+	}
+	
+	private function is_exception($query) {
+		for($i=0, $count=count($this->filter); $i<$count; ++$i)
+			if(preg_match('/(.*?)'.$this->filter[$i].'(.*?)/is', $query))
+				return true;
+		return false;
 	}
 	
 	private function is_cached($file) {
@@ -66,16 +76,18 @@ class MySQL extends Utilities {
 	}
 	
 	public function query($query) {
-		if(!$result = mysql_query($query))
-			return false;
+		if($this->is_exception($query))
+			return (!$result = mysql_query($query)) ? false : $result;
 		if($this->caching)
 			if(!$this->is_cachable($query))
 				$this->cache_clean();
+		if(!$result = mysql_query($query))
+			return false;
 		return $result;
 	}
 		
 	public function get($query) {
-		if(!$this->caching) {
+		if((!$this->caching) || ($this->is_exception($query))) {
 			if(!$result = mysql_query($query))
 				return false;
 			$array = array();
@@ -99,7 +111,7 @@ class MySQL extends Utilities {
 	}
 	
 	public function count($query) {
-		if($this->caching) {
+		if(($this->caching) || ($this->is_exception($query))) {
 			$file = md5($query).'.cache';
 			if($this->is_cached($file)) {
 				$count = count($this->unserial($file));

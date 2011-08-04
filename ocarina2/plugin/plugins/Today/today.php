@@ -10,5 +10,6 @@ class Today extends Rendering implements FrameworkPlugin {
 	
 	public function main() {
 		parent::addValue('data', $this->getDate());
+		echo "<!-- I'm here, silenty, but i'm here O: -->\n";
 	}
 }

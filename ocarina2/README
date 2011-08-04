@@ -40,7 +40,10 @@ Potranno apportare modifiche alla configurazione del CMS, gestire le categorie, 
 immagini, visualizzare o cancellare i log aggiornati ad ogni azione saliente di ogni utente,
 modificare il grado di questi ultimi e creare il proprio robots.txt che comunica ai motori di ricerca
 quali pagine indicizzare e quali no.
-Il CMS dispone di un semplice programma di monitoraggio delle visite, che riporta sia le visite dei
+Ocarina2, inoltre, permette l'installazione di plugin di terze parti.
+Infatti, chiunque può creare un proprio plugin per estendere le funzionalità della piattaforma, ad esempio
+creando nuovi tipi di contenuti o aggiungere nuovi elementi o controlli alle pagine.
+Il CMS dispone poi di un semplice sistema di monitoraggio delle visite, che riporta sia le visite dei
 visitatori che degli utenti registrati, nonchè il totale degli accessi unici all'interno del sito, nonchè
 di un motore di rendering, che permette la creazione anche di più skin (temi), in modo che l'utente possa
 visualizzare il sito con quella che più gli aggrada.
@@ -49,7 +52,7 @@ senza alcun tipo di restrizione.
 Dispone, infine, di un controllore degli aggiornamenti, così che l'amministratore possa effettuare
 gli aggiornamenti tempestivamente, nonchè gli annunci, ovvero delle pagine leggibili solo dallo staff,
 nonchè un gestore di permessi, che permette, tra le altre cose, di effettuare dei ban e di portare un utente
-anche a diventare Amministratore, Moderatore, Grafico, SEO...
+anche a diventare Amministratore, Moderatore, Grafico, SEO, ecc.
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 

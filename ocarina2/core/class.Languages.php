@@ -69,7 +69,8 @@ class Languages {
 				'Newsletter',
 				'Disinstalla skin',
 				'Installa skin',
-				'Leggi MP'
+				'Leggi MP',
+				'Plugin'
 			),
 			'error' => array(
 				'È accaduto un errore',

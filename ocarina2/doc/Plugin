@@ -8,20 +8,24 @@ Di seguito un breve tutorial pratico per lo sviluppo e l'installazione.
 	Un esempio per il plugin `Today` potrebbe essere il seguente.
 	
 		name = HelloWorld
+		version = 1.0
 		author = Giovanni Capuano
+		website = www.giovannicapuano.net
 		description = Saluta il mondo!
-		path = /var/www/htdocs/ocarina2/plugin/plugins/HelloWorld/hello.php
+		path = ./plugin/plugins/HelloWorld/hello.php
 		enabled = true
 	
 		name = Today
+		version = 1.0
 		author = Your Name
+		website = www.yoursite.me
 		description = Today ti permette di scoprire quale giorno è oggi.
-		path = /var/www/htdocs/ocarina2/plugin/plugins/Today/today.php
+		path = ./plugin/plugins/Today/today.php
 		enabled = true
 		
-	Nella prima riga abbiamo un il nome con cui viene individuato il plugin, l'autore,
-	una breve descrizione delle sue funzionalità, il percorso assoluto e infine lo stato,
-	`true` se attivo, `false` se disattivo.
+	Nella prima riga abbiamo un il nome con cui viene individuato il plugin, la versione, l'autore,
+	il suo sito web (privo della dichiarazione del protocollo), una breve descrizione delle sue
+	funzionalità, il percorso assoluto e infine lo stato, `true` se attivo, `false` se disattivo.
 	
 2. Il plugin
 	Ora procediamo a creare il plugin vero e proprio, che altro non farà che visualizzare

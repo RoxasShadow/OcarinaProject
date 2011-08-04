@@ -18,8 +18,8 @@ class Rendering extends Page {
 		require_once($this->config[0]->root_index.'/etc/class.CSRF.php');
 		$this->time_start = $this->microtime_float(); // Il timer lo avvio qui poichè la classe viene istanziata ad ogni script.
 		$this->smarty = new Smarty;
-		$csrf = new CSRF();
-		$csrf->enable();
+		//$csrf = new CSRF();
+		//$csrf->enable();
 		
 		$path = $this->config[0]->root_rendering;
 		$this->smarty->cache_dir = $path.'/cache';

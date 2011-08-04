@@ -1,4 +1,3 @@
-Far interagire i plugin con Smarty;
-Bugfix del /REPORT;
-Skin `mobile`;
-Documentazione per i metodi pubblici sullo stile di javadoc.
+--Bugfix del /REPORT;
+--Skin `mobile`;
+--Documentazione per i metodi pubblici sullo stile di javadoc.
