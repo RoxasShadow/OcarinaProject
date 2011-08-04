@@ -91,25 +91,25 @@ class Rendering extends Page {
 		$this->addValue('numeromp', parent::countPM());
 		
 		/* Carica e runna ogni plugin attivo. */
-		$plugins = Plugin::listPlugins();
-		foreach($plugins as $name) {
-			if(Plugin::getMetadata($name, 'enabled', '') == 'true') {
-				try {
-					$plugin = Plugin::loadPlugin($name);
-					$output = $plugin->main();
-					if(is_array($output))
-						foreach($output as $v => $i)
-							if(($v !== '') && ($i !== ''))
-								$this->addValue($v, $i);
-					unset($output);
-					unset($plugin);
-				}
-				catch(Exception $e) {
-					echo $e->getMessage();
+		if($this->config[0]->plugin == 1) {
+			$plugins = Plugin::listPlugins();
+			foreach($plugins as $element) {
+				if(Plugin::getMetadata($element, 'enabled', '') == 'true') {
+					try {
+						$plugin = Plugin::loadPlugin($element);
+						$output = $plugin->main();
+						if(is_array($output))
+							foreach($output as $name => $value)
+								if(($name !== '') && ($value !== ''))
+									$this->addValue($name, $value);
+					}
+					catch(Exception $e) {
+						echo $e->getMessage();
+					}
 				}
 			}
+			unset($plugins);
 		}
-		unset($plugins);
 		
 		/* Renderizza il tutto con la skin appropriata. */
 		if($this->skin == 'admin') {

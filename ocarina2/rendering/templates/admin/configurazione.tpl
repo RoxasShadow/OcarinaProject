@@ -22,6 +22,8 @@
 		<input type="text" name="approvacommenti" maxlength="1" {if (isset($approvacommenti_default))}value="{$approvacommenti_default}"{/if} /><br /><br />
 		Registra log automaticamente (0 = No, 1 = Si)<br />
 		<input type="text" name="log" maxlength="1" {if (isset($log_default))}value="{$log_default}"{/if} /><br /><br />
+		Attiva motore plugin (0 = No, 1 = Si)<br />
+		<input type="text" name="plugin" maxlength="1" {if (isset($plugin_default))}value="{$plugin_default}"{/if} /><br /><br />
 		Nome del cookie<br />
 		<input type="text" name="cookie" maxlength="20" {if (isset($cookie_default))}value="{$cookie_default}"{/if} /><br /><br />
 		Durata login in secondi (ex.: 3600 = 1 ora, 1296000 = 15 giorni)<br />

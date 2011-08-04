@@ -11,8 +11,10 @@ class Page extends Comments {
 	/* Ottiene una o più pagine. */
 	public function getPage($minititolo = '', $min = '', $max = '') {
 		if($minititolo !== '')
-			if($this->isPage($minititolo))
+			if($this->isPage($minititolo)) {
+				$this->addVisitPage($minititolo);
 				return ($result = parent::get("SELECT * FROM {$this->prefix}pagine WHERE minititolo='$minititolo' AND approvato='1' LIMIT 1")) ? $result : false;
+			}
 			else
 				return false;
 		else
@@ -32,7 +34,7 @@ class Page extends Comments {
 				return false;
 			$voti = (!$votanti = parent::query("SELECT COUNT(*) FROM {$this->prefix}voti WHERE minititolo='$minititolo' AND tipo='pagine'")) ? 1 : mysql_result($votanti, 0, 0) + 1;
 			$data = date('d-m-y');
-			if((parent::query("INSERT INTO {$this->prefix}voti(minititolo, nickname, tipo, data) VALUES('$minititolo', '$nickname', 'pagine', '$news')")) && (parent::query("UPDATE pagine SET voti='$voti' WHERE minititolo='$minititolo' AND approvato='1'")))
+			if((parent::query("INSERT INTO {$this->prefix}voti(minititolo, data, nickname, tipo) VALUES('$minititolo', '$data', '$nickname', 'pagine')")) && (parent::query("UPDATE pagine SET voti='$voti' WHERE minititolo='$minititolo' AND approvato='1'")))
 				return true;
 		}
 		return false;
@@ -40,16 +42,16 @@ class Page extends Comments {
 	
 	/* Registra una visita in una pagina */
 	public function addVisitPage($minititolo) {
-		$visitatore = (parent::isLogged()) ? $this->username[0]->nickname : $_SERVER['REMOTE_ADDR'];
-		if(!$visitatori = parent::query("SELECT COUNT(*) FROM {$this->prefix}visite WHERE minititolo='$minititolo' AND nickname='$visitatore' AND tipo='pagine' AND approvato='1'"))
+		if(!$visitatori = parent::query("SELECT COUNT(*) FROM {$this->prefix}visite WHERE minititolo='$minititolo' AND ip='{$_SERVER['REMOTE_ADDR']}' AND tipo='pagine'"))
 			return false;
 		if(mysql_result($visitatori, 0, 0) > 0)
 			return false;
-		if(!$visitatori = parent::query("SELECT COUNT(*) FROM {$this->prefix}visite WHERE minititolo='$minititolo' AND tipo='pagine' AND approvato='1'"))
+		if(!$visitatori = parent::query("SELECT COUNT(*) FROM {$this->prefix}visite WHERE minititolo='$minititolo' AND tipo='pagine'"))
 			$visite = 1;
 		else
 			$visite = mysql_result($visitatori, 0, 0) + 1;
-		if((parent::query("INSERT INTO {$this->prefix}visite(minititolo, nickname, tipo) VALUES('$minititolo', '$visitatore', 'pagine')")) && (parent::query("UPDATE pagine SET visite='$visite' WHERE minititolo='$minititolo' AND approvato='1'")))
+		$data = date('d-m-y');
+		if((parent::query("INSERT INTO {$this->prefix}visite(minititolo, data, ip, tipo) VALUES('$minititolo', '$data', '{$_SERVER['REMOTE_ADDR']}', 'pagine')")) && (parent::query("UPDATE pagine SET visite='$visite' WHERE minititolo='$minititolo' AND approvato='1'")))
 				return true;
 		return true;
 	}
@@ -71,10 +73,10 @@ class Page extends Comments {
 	/* Ricerca le pagine da una keyword. */
 	public function searchPage($keyword, $orderById = '') {
 		if($orderById !== '')
-			if(!$result = parent::get("SELECT * FROM {$this->prefix}pagine WHERE (titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%') AND approvato='1' ORDER BY id DESC"))
+			if(!$result = parent::get("SELECT * FROM {$this->prefix}pagine WHERE ((titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%')) AND approvato='1' ORDER BY id DESC"))
 				return false;
 		else
-			if(!$result = parent::get("SELECT * FROM {$this->prefix}pagine WHERE (titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%') AND approvato='1' ORDER BY titolo ASC"))
+			if(!$result = parent::get("SELECT * FROM {$this->prefix}pagine WHERE ((titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%')) AND approvato='1' ORDER BY titolo ASC"))
 				return false;
 		return $result;
 	}

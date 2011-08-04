@@ -13,9 +13,9 @@ class MySQL extends Utilities {
 	private $database = 'ocarina2';
 	public $prefix = '';
 	public $caching = true; // `true` -> Caching abilitato; `false` -> Caching disabilitato.
-	private $storage = '/var/www/htdocs/ocarina2/cache/';
-	private $filter = array('visitatori', 'log');
-	private $persistent = false;
+	public $storage = '/var/www/htdocs/ocarina2/cache/';
+	public $filter = array('visitatori', 'log', 'visite', 'voti', 'personalmessage'); // Tabelle da non cachare
+	public $persistent = false;
 	
 	public function __construct() {
 		if(!mysql_selectdb($this->database, ($this->persistent) ? mysql_pconnect($this->host, $this->username, $this->password) : mysql_connect($this->host, $this->username, $this->password)))
@@ -76,10 +76,10 @@ class MySQL extends Utilities {
 	}
 	
 	public function query($query) {
-		if($this->is_exception($query))
-			return (!$result = mysql_query($query)) ? false : $result;
 		if($this->caching)
-			if(!$this->is_cachable($query))
+			if($this->is_exception($query))
+				return (!$result = mysql_query($query)) ? false : $result;
+			elseif(!$this->is_cachable($query))
 				$this->cache_clean();
 		if(!$result = mysql_query($query))
 			return false;
@@ -87,7 +87,7 @@ class MySQL extends Utilities {
 	}
 		
 	public function get($query) {
-		if((!$this->caching) || ($this->is_exception($query))) {
+		if((!$this->caching) || (!$this->is_exception($query))) {
 			if(!$result = mysql_query($query))
 				return false;
 			$array = array();
@@ -179,6 +179,7 @@ class MySQL extends Utilities {
 			  `commenti` tinyint(1) NOT NULL,
 			  `approvacommenti` tinyint(1) NOT NULL,
 			  `log` tinyint(1) NOT NULL,
+			  `plugin` tinyint(1) NOT NULL,
 			  `cookie` varchar(20) NOT NULL,
 			  `loginexpire` int(10) NOT NULL,
 			  `skin` varchar(50) NOT NULL,
@@ -293,6 +294,7 @@ class MySQL extends Utilities {
 			  `ip` varchar(20) NOT NULL,
 			  `lastaction` varchar(15) NOT NULL,
 			  `giorno` varchar(10) NOT NULL,
+			  `data` varchar(10) NOT NULL,
 			  `nickname` varchar(100) NOT NULL,
 			  PRIMARY KEY (`id`)
 			) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
@@ -300,18 +302,19 @@ class MySQL extends Utilities {
 			"CREATE TABLE IF NOT EXISTS `{$this->prefix}visite` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `minititolo` varchar(100) NOT NULL,
-			  `nickname` varchar(100) NOT NULL,
+			  `data` varchar(10) NOT NULL,
+			  `ip` varchar(100) NOT NULL,
 			  `tipo` enum('pagine','news') NOT NULL DEFAULT 'pagine',
 			  PRIMARY KEY (`id`),
-			  KEY `minititolo` (`minititolo`,`nickname`,`tipo`)
+			  KEY `minititolo` (`minititolo`,`ip`,`tipo`)
 			) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
 
 			"CREATE TABLE IF NOT EXISTS `{$this->prefix}voti` (
 			  `id` int(10) NOT NULL AUTO_INCREMENT,
 			  `minititolo` varchar(100) NOT NULL,
+			  `data` varchar(10) NOT NULL,
 			  `nickname` varchar(100) NOT NULL,
 			  `tipo` enum('pagine','news') NOT NULL DEFAULT 'pagine',
-			  `data` varchar(10) NOT NULL,
 			  PRIMARY KEY (`id`),
 			  KEY `minititolo` (`minititolo`,`nickname`,`tipo`)
 			) ENGINE=MyISAM  DEFAULT CHARSET=latin1;"

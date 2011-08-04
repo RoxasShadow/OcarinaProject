@@ -142,6 +142,7 @@ class User extends Configuration {
 	public function newVisitator($logged) {
 		$lastaction = time();
 		$giorno = date('d');
+		$data = date('d-m-y');
 		if($logged) {
 			$username = $this->searchUserByField('secret', $this->getCookie());
 			$nickname = $username[0]->nickname;
@@ -149,14 +150,14 @@ class User extends Configuration {
 		else
 			$nickname = '';
 		if(!$visitator = $this->getVisitator()) // Mai nessun visitatore
-			return parent::query("INSERT INTO {$this->prefix}visitatori(ip, lastaction, giorno, nickname) VALUES('{$_SERVER['REMOTE_ADDR']}', '$lastaction', '$giorno', '$nickname')") ? true : false;
+			return parent::query("INSERT INTO {$this->prefix}visitatori(ip, lastaction, giorno, data, nickname) VALUES('{$_SERVER['REMOTE_ADDR']}', '$lastaction', '$giorno', '$data', '$nickname')") ? true : false;
 		else {
 			$found = 0;
 			foreach($visitator as $v)
 				if($v->ip == $_SERVER['REMOTE_ADDR'])
 					++$found;
 			if($found == 0)
-				return parent::query("INSERT INTO {$this->prefix}visitatori(ip, lastaction, giorno, nickname) VALUES('{$_SERVER['REMOTE_ADDR']}', '$lastaction', '$giorno', '$nickname')") ? true : false;
+				return parent::query("INSERT INTO {$this->prefix}visitatori(ip, lastaction, giorno, data, nickname) VALUES('{$_SERVER['REMOTE_ADDR']}', '$lastaction', '$giorno', '$data', '$nickname')") ? true : false;
 			elseif((($lastaction - $v->lastaction) > 60 * $this->config[0]->limiteonline) && ($found > 0))
 				return parent::query("UPDATE {$this->prefix}visitatori SET lastaction='$lastaction', giorno='$giorno', nickname='$nickname' WHERE ip='{$_SERVER['REMOTE_ADDR']}'") ? true : false;
 		}

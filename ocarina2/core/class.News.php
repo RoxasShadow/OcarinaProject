@@ -11,8 +11,10 @@ class News extends Category {
 	/* Ottiene una o più news. */
 	public function getNews($minititolo = '', $min = '', $max = '') {
 		if($minititolo !== '')
-			if($this->isNews($minititolo))
+			if($this->isNews($minititolo)) {
+				$this->addVisitNews($minititolo);
 				return ($result = parent::get("SELECT * FROM {$this->prefix}news WHERE minititolo='$minititolo' AND approvato='1' LIMIT 1")) ? $result : false;
+			}
 			else
 				return false;
 		else
@@ -32,7 +34,7 @@ class News extends Category {
 				return false;
 			$voti = (!$votanti = parent::query("SELECT COUNT(*) FROM {$this->prefix}voti WHERE minititolo='$minititolo' AND tipo='news'")) ? 1 : mysql_result($votanti, 0, 0) + 1;
 			$data = date('d-m-y');
-			if((parent::query("INSERT INTO {$this->prefix}voti(minititolo, nickname, tipo, data) VALUES('$minititolo', '$nickname', 'news', '$data')")) && (parent::query("UPDATE news SET voti='$voti' WHERE minititolo='$minititolo' AND approvato='1'")))
+			if((parent::query("INSERT INTO {$this->prefix}voti(minititolo, data, nickname, tipo) VALUES('$minititolo', '$data', '$nickname', 'news')")) && (parent::query("UPDATE news SET voti='$voti' WHERE minititolo='$minititolo' AND approvato='1'")))
 				return true;
 		}
 		return false;
@@ -40,16 +42,16 @@ class News extends Category {
 	
 	/* Registra una visita in una news */
 	public function addVisitNews($minititolo) {
-		$visitatore = (parent::isLogged()) ? $this->username[0]->nickname : $_SERVER['REMOTE_ADDR'];
-		if(!$visitatori = parent::query("SELECT COUNT(*) FROM {$this->prefix}visite WHERE minititolo='$minititolo' AND nickname='$visitatore' AND tipo='news' AND approvato='1'"))
+		if(!$visitatori = parent::query("SELECT COUNT(*) FROM {$this->prefix}visite WHERE minititolo='$minititolo' AND ip='{$_SERVER['REMOTE_ADDR']}' AND tipo='news'"))
 			return false;
 		if(mysql_result($visitatori, 0, 0) > 0)
 			return false;
-		if(!$visitatori = parent::query("SELECT COUNT(*) FROM {$this->prefix}visite WHERE minititolo='$minititolo' AND tipo='news' AND approvato='1'"))
+		if(!$visitatori = parent::query("SELECT COUNT(*) FROM {$this->prefix}visite WHERE minititolo='$minititolo' AND tipo='news'"))
 			$visite = 1;
 		else
 			$visite = mysql_result($visitatori, 0, 0) + 1;
-		if((parent::query("INSERT INTO {$this->prefix}visite(minititolo, nickname, tipo) VALUES('$minititolo', '$visitatore', 'news')")) && (parent::query("UPDATE news SET visite='$visite' WHERE minititolo='$minititolo' AND approvato='1'")))
+		$data = date('d-m-y');
+		if((parent::query("INSERT INTO {$this->prefix}visite(minititolo, data, ip, tipo) VALUES('$minititolo', '$data', '{$_SERVER['REMOTE_ADDR']}', 'news')")) && (parent::query("UPDATE news SET visite='$visite' WHERE minititolo='$minititolo' AND approvato='1'")))
 				return true;
 		return true;
 	}
@@ -70,7 +72,7 @@ class News extends Category {
 	
 	/* Ricerca le news da una keyword. */
 	public function searchNews($keyword) {
-		return ($result = parent::get("SELECT * FROM {$this->prefix}news WHERE (titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%') AND approvato='1' ORDER BY id DESC")) ? $result : false;
+		return ($result = parent::get("SELECT * FROM {$this->prefix}news WHERE ((titolo LIKE '%$keyword%') OR (contenuto LIKE '%$keyword%')) AND approvato='1' ORDER BY id DESC")) ? $result : false;
 	}
 	
 	/* Ricerca le news per categoria. */

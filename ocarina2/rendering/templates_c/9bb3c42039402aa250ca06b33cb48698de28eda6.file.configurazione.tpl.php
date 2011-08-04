@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-08-02 20:57:10
+<?php /* Smarty version Smarty-3.0.8, created on 2011-08-04 17:15:08
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/admin/configurazione.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:6046565684e3864a60688c4-27914314%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:20608724314e3ad39ce61dc2-56108341%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '9bb3c42039402aa250ca06b33cb48698de28eda6' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/admin/configurazione.tpl',
-      1 => 1310856884,
+      1 => 1312477963,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '6046565684e3864a60688c4-27914314',
+  'nocache_hash' => '20608724314e3ad39ce61dc2-56108341',
   'function' => 
   array (
   ),
@@ -48,6 +48,9 @@ $_smarty_tpl->decodeProperties(array (
 "<?php }?> /><br /><br />
 		Registra log automaticamente (0 = No, 1 = Si)<br />
 		<input type="text" name="log" maxlength="1" <?php if ((isset($_smarty_tpl->getVariable('log_default',null,true,false)->value))){?>value="<?php echo $_smarty_tpl->getVariable('log_default')->value;?>
+"<?php }?> /><br /><br />
+		Attiva motore plugin (0 = No, 1 = Si)<br />
+		<input type="text" name="plugin" maxlength="1" <?php if ((isset($_smarty_tpl->getVariable('plugin_default',null,true,false)->value))){?>value="<?php echo $_smarty_tpl->getVariable('plugin_default')->value;?>
 "<?php }?> /><br /><br />
 		Nome del cookie<br />
 		<input type="text" name="cookie" maxlength="20" <?php if ((isset($_smarty_tpl->getVariable('cookie_default',null,true,false)->value))){?>value="<?php echo $_smarty_tpl->getVariable('cookie_default')->value;?>

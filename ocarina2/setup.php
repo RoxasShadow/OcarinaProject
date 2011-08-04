@@ -84,6 +84,7 @@ elseif($submit) {
 	$commenti = ((isset($_POST['commenti'])) && (is_numeric($_POST['commenti'])) && ($_POST['commenti'] !== '')) ? $config->purge((int)$_POST['commenti']) : '';
 	$approvacommenti = ((isset($_POST['approvacommenti'])) && (is_numeric($_POST['approvacommenti'])) && ($_POST['approvacommenti'] !== '')) ? $config->purge((int)$_POST['approvacommenti']) : '';
 	$log = ((isset($_POST['log'])) && (is_numeric($_POST['log'])) && ($_POST['log'] !== '')) ? $config->purge((int)$_POST['log']) : '';
+	$plugin = ((isset($_POST['plugin'])) && (is_numeric($_POST['plugin'])) && ($_POST['plugin'] !== '')) ? $config->purge((int)$_POST['plugin']) : '';
 	$cookie = ((isset($_POST['cookie'])) && ($_POST['cookie'] !== '')) ? $config->purge($_POST['cookie']) : '';
 	$loginexpire = ((isset($_POST['loginexpire'])) && ($_POST['loginexpire'] !== '')) ? $config->purge($_POST['loginexpire']) : '';
 	$skin = ((isset($_POST['skin'])) && ($_POST['skin'] !== '')) ? $config->purge($_POST['skin']) : '';
@@ -195,6 +196,9 @@ else
 
 	<b>Registra log automaticamente (0 = No, 1 = Si)</b><br />
 	<input type="text" name="log" maxlength="1" /><br /><br />
+	
+	<b>Attiva motore plugin (0 = No, 1 = Si)</b><br />
+	<input type="text" name="plugin" maxlength="1" /><br /><br />
 
 	<b>Nome del cookie</b><br />
 	<input type="text" name="cookie" maxlength="20" /><br /><br />
