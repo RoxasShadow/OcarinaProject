@@ -30,7 +30,7 @@ if(($ocarina->isLogged()) && ($ocarina->username[0]->grado < 4))
 			foreach($allPage as $v)
 				$result .= '<option value="'.$v->minititolo.'">'.$v->titolo.'</option>';
 		}
-		$result .= '</select><input type="submit" name="sel_submit" value="'.$ocarina->getLanguage('title', 23).'">';
+		$result .= '</select><input type="submit" name="sel_submit" value="'.$ocarina->getLanguage('title', 23).'" /></form>';
 		$ocarina->addValue('result', $result);
 	}	
 	elseif((!$submit) && ($selected !== '')) {

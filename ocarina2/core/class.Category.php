@@ -35,7 +35,7 @@ class Category extends Ad {
 			}
 			$query = trim($query, ', ');
 			$query .= ')';
-			return (!parent::query($query)) ? false : true;
+			return (parent::query($query)) ? true : false;
 		}
 		return false;
 	}
@@ -53,7 +53,7 @@ class Category extends Ad {
 			}
 			$query = trim($query, ', ');
 			$query .= ')';
-			return (!parent::query($query)) ? false : true;
+			return (parent::query($query)) ? true : false;
 		}
 		return false;
 	}

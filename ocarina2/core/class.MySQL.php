@@ -125,8 +125,7 @@ class MySQL extends Utilities {
 	}
 	
 	public function getEnum($query) {
-		if(!$result = $this->mysql->query($query));
-			return false;
+		$result = $this->mysql->query($query);
 		if(!$rows = $result->fetch_row())
 			return false;
 		$category = explode("','", preg_replace("/(enum|set)\('(.+?)'\)/", "\\2", $rows[1]));

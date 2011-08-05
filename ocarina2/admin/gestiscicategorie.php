@@ -16,7 +16,12 @@ $ocarina->skin = 'admin';
 $ocarina->addValue('titolo', $ocarina->getLanguage('title', 18).$ocarina->getLanguage('title', 2).$ocarina->getLanguage('title', 10).$ocarina->getLanguage('title', 2).$ocarina->config[0]->nomesito);
 
 if(($ocarina->isLogged()) && ($ocarina->username[0]->grado <= 3))
-	if(!$submit) {
+	if(($ocarina_news_rimuovi == 'Senza categoria') || ($ocarina_pagina_rimuovi == 'Senza categoria')) {
+		$ocarina->addValue('result', $ocarina->getLanguage('managecategory', 4));
+		if($ocarina->config[0]->log == 1)
+			$ocarina->log($ocarina->username[0]->nickname, 'Category '.$ocarina_news_rimuovi.' deletion denied.');
+	}
+	elseif(!$submit) {
 		$ocarina->addValue('categorie_news', $ocarina->getCategory('news'));
 		$ocarina->addValue('categorie_pagine', $ocarina->getCategory('pagine'));
 	}
@@ -44,16 +49,10 @@ if(($ocarina->isLogged()) && ($ocarina->username[0]->grado <= 3))
 					$ocarina->log($ocarina->username[0]->nickname, 'Category '.$ocarina_pagina.' creation failed.');
 			}
 		elseif($ocarina_news_rimuovi !== '') {
-			$ocarina = new News();
-			$getNews = $ocarina->searchNewsByCategory($ocarina_news_rimuovi);
-			foreach($getNews as $v)
-				$ocarina->editNews('categoria', 'Senza categoria', $v->minititolo);
-			if($ocarina_news_rimuovi) {
-				$ocarina->addValue('result', $ocarina->getLanguage('managecategory', 8));
-				if($ocarina->config[0]->log == 1)
-					$ocarina->log($ocarina->username[0]->nickname, 'Category '.$ocarina_news_rimuovi.' deletion failed.');
-			}
-			elseif($ocarina->deleteCategory('news', $ocarina_news_rimuovi)) {
+			if($getNews = $ocarina->searchNewsByCategory($ocarina_news_rimuovi))
+				foreach($getNews as $v)
+					$ocarina->editNews('categoria', 'Senza categoria', $v->minititolo);
+			if($ocarina->deleteCategory('news', $ocarina_news_rimuovi)) {
 				$ocarina->addValue('result', $ocarina->getLanguage('managecategory', 2));
 				if($ocarina->config[0]->log == 1)
 					$ocarina->log($ocarina->username[0]->nickname, 'Category '.$ocarina_news_rimuovi.' deleted.');
@@ -65,19 +64,13 @@ if(($ocarina->isLogged()) && ($ocarina->username[0]->grado <= 3))
 			}
 		}
 		elseif($ocarina_pagina_rimuovi !== '') {
-			$ocarina = new Page();
-			$getPage = $ocarina->searchPageByCategory($ocarina_pagina_rimuovi);
-			foreach($getPage as $v)
-				$ocarina->editPage('categoria', 'Senza categoria', $v->minititolo);
+			if($getPage = $ocarina->searchPageByCategory($ocarina_pagina_rimuovi))
+				foreach($getPage as $v)
+					$ocarina->editPage('categoria', 'Senza categoria', $v->minititolo);
 			if($ocarina_pagina_rimuovi) {
-				$ocarina->addValue('result', $ocarina->getLanguage('managecategory', 8));
+				$ocarina->addValue('result', $ocarina->getLanguage('managecategory', 3));
 				if($ocarina->config[0]->log == 1)
 					$ocarina->log($ocarina->username[0]->nickname, 'Category '.$ocarina_news_rimuovi.' deletion failed.');
-			}
-			elseif($ocarina->deleteCategory('pagine', $ocarina_pagina_rimuovi)) {
-				$ocarina->addValue('result', $ocarina->getLanguage('managecategory', 2));
-				if($ocarina->config[0]->log == 1)
-					$ocarina->log($ocarina->username[0]->nickname, 'Category '.$ocarina_pagina_rimuovi.' deletion failed.');
 			}
 			else {
 				$ocarina->addValue('result', $ocarina->getLanguage('managecategory', 3));

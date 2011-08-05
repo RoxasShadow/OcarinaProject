@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-08-02 20:52:05
+<?php /* Smarty version Smarty-3.0.8, created on 2011-08-05 18:14:43
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/admin/gestiscicategorie.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:21379758854e386375827cd4-30960884%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:19721578304e3c33132c8367-25877340%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '4c252ec31f4dc3846c2475dcece6a268568ed29d' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/admin/gestiscicategorie.tpl',
-      1 => 1310856884,
+      1 => 1312567971,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '21379758854e386375827cd4-30960884',
+  'nocache_hash' => '19721578304e3c33132c8367-25877340',
   'function' => 
   array (
   ),
