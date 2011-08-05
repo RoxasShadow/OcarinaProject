@@ -19,9 +19,7 @@ class Ad extends PersonalMessage {
 	
 	/* Controlla se l'annuncio esiste. */
 	public function isAd($minititolo) {
-		if(!$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}annunci WHERE minititolo='$minititolo'"))
-			return false;
-		return mysql_result($query, 0, 0) > 0 ? true : false;
+		return parent::resultCountQuery("SELECT COUNT(*) FROM {$this->prefix}annunci WHERE minititolo='$minititolo'") > 0 ? true : false;
 	}
 	
 	/* Crea un annuncio. */

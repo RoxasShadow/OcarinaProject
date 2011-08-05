@@ -23,9 +23,7 @@ class PersonalMessage extends User {
 	
 	/* Controlla se l'MP esiste. */
 	public function isPM($id) {
-		if(!$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}personalmessage WHERE id='$id'"))
-			return false;
-		return mysql_result($query, 0, 0) > 0 ? true : false;
+		return parent::resultCountQuery("SELECT COUNT(*) FROM {$this->prefix}personalmessage WHERE id='$id'") > 0 ? true : false;
 	}
 	
 	/* Conta quanti pm sono presenti nel database. */
@@ -33,9 +31,7 @@ class PersonalMessage extends User {
 		if(!parent::isLogged())
 			return false;
 		$nickname = $this->username[0]->nickname;
-		if(!$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}personalmessage WHERE destinatario='$nickname' AND letto='0'"))
-				return 0;
-		return mysql_result($query, 0, 0);
+		return parent::resultCountQuery("SELECT COUNT(*) FROM {$this->prefix}personalmessage WHERE destinatario='$nickname' AND letto='0'");
 	}
 
 	/* Crea un mp. */

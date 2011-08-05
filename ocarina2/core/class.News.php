@@ -28,11 +28,10 @@ class News extends Category {
 	public function voteNews($minititolo) {
 		if(parent::isLogged()) {
 			$nickname = $this->username[0]->nickname;
-			if(!$votanti = parent::query("SELECT COUNT(*) FROM {$this->prefix}voti WHERE minititolo='$minititolo' AND nickname='$nickname' AND tipo='news'"))
+			if(parent::resultCountQuery("SELECT COUNT(*) FROM {$this->prefix}voti WHERE minititolo='$minititolo' AND nickname='$nickname' AND tipo='news'") > 0)
 				return false;
-			if(mysql_result($votanti, 0, 0) > 0)
-				return false;
-			$voti = (!$votanti = parent::query("SELECT COUNT(*) FROM {$this->prefix}voti WHERE minititolo='$minititolo' AND tipo='news'")) ? 1 : mysql_result($votanti, 0, 0) + 1;
+			$voti = parent::resultCountQuery("SELECT COUNT(*) FROM {$this->prefix}voti WHERE minititolo='$minititolo' AND tipo='news'");
+			$voti = (!$voti) ? 1 : $voti + 1;
 			$data = date('d-m-y');
 			if((parent::query("INSERT INTO {$this->prefix}voti(minititolo, data, nickname, tipo) VALUES('$minititolo', '$data', '$nickname', 'news')")) && (parent::query("UPDATE news SET voti='$voti' WHERE minititolo='$minititolo' AND approvato='1'")))
 				return true;
@@ -42,32 +41,24 @@ class News extends Category {
 	
 	/* Registra una visita in una news */
 	public function addVisitNews($minititolo) {
-		if(!$visitatori = parent::query("SELECT COUNT(*) FROM {$this->prefix}visite WHERE minititolo='$minititolo' AND ip='{$_SERVER['REMOTE_ADDR']}' AND tipo='news'"))
+		if(parent::resultCountQuery("SELECT COUNT(*) FROM {$this->prefix}visite WHERE minititolo='$minititolo' AND ip='{$_SERVER['REMOTE_ADDR']}' AND tipo='news'") > 0)
 			return false;
-		if(mysql_result($visitatori, 0, 0) > 0)
-			return false;
-		if(!$visitatori = parent::query("SELECT COUNT(*) FROM {$this->prefix}visite WHERE minititolo='$minititolo' AND tipo='news'"))
-			$visite = 1;
-		else
-			$visite = mysql_result($visitatori, 0, 0) + 1;
+		$visitatori = parent::resultCountQuery("SELECT COUNT(*) FROM {$this->prefix}visite WHERE minititolo='$minititolo' AND tipo='news'");
+		$visitatori = (!$visitatori) ? 1 : $visitatori + 1;
 		$data = date('d-m-y');
-		if((parent::query("INSERT INTO {$this->prefix}visite(minititolo, data, ip, tipo) VALUES('$minititolo', '$data', '{$_SERVER['REMOTE_ADDR']}', 'news')")) && (parent::query("UPDATE news SET visite='$visite' WHERE minititolo='$minititolo' AND approvato='1'")))
+		if((parent::query("INSERT INTO {$this->prefix}visite(minititolo, data, ip, tipo) VALUES('$minititolo', '$data', '{$_SERVER['REMOTE_ADDR']}', 'news')")) && (parent::query("UPDATE news SET visite='$visitatori' WHERE minititolo='$minititolo' AND approvato='1'")))
 				return true;
 		return true;
 	}
 	
 	/* Controlla se la news esiste. */
 	public function isNews($minititolo) {
-		if(!$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}news WHERE minititolo='$minititolo' AND approvato='1' LIMIT 1"))
-			return false;
-		return mysql_result($query, 0, 0) > 0 ? true : false;
+		return parent::resultCountQuery("SELECT COUNT(*) FROM {$this->prefix}news WHERE minititolo='$minititolo' AND approvato='1' LIMIT 1") > 0 ? true : false;
 	}
 	
 	/* Conta quante news sono presenti nel database. */
 	public function countNews() {
-		if(!$query = parent::query('SELECT COUNT(*) FROM '.$this->prefix.'news WHERE approvato=\'1\''))
-			return false;
-		return mysql_result($query, 0, 0);
+		return parent::resultCountQuery('SELECT COUNT(*) FROM '.$this->prefix.'news WHERE approvato=\'1\'');
 	}
 	
 	/* Ricerca le news da una keyword. */

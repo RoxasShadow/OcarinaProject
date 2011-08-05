@@ -14,12 +14,13 @@ class MySQL extends Utilities {
 	public $prefix = '';
 	public $caching = true; // `true` -> Caching abilitato; `false` -> Caching disabilitato.
 	public $storage = '/var/www/htdocs/ocarina2/cache/';
-	public $filter = array('visitatori', 'log', 'visite', 'voti', 'personalmessage'); // Tabelle da non cachare
-	public $persistent = false;
+	public $filter = array('visitatori', 'log', 'visite', 'voti', 'personalmessage'); // Tabelle da non cachare.
+	public $mysql = NULL;
 	
 	public function __construct() {
-		if(!mysql_selectdb($this->database, ($this->persistent) ? mysql_pconnect($this->host, $this->username, $this->password) : mysql_connect($this->host, $this->username, $this->password)))
-			die('Database connection failed.');
+		$this->mysql = new mysqli($this->host, $this->username, $this->password, $this->database);
+		if(mysqli_connect_errno())
+			die('Database connection failed. Error number: '.mysqli_connect_errno().'.');
 		elseif($this->caching)
 			if(!is_dir($this->storage))
 				die('The cache directory not exists.');
@@ -28,8 +29,7 @@ class MySQL extends Utilities {
 	}
 	
 	public function __distruct() {
-		if(!$this->persistent)
-			mysql_close();
+		$this->mysql->close();
 	}
 	
 	/* Private methods. */
@@ -40,7 +40,6 @@ class MySQL extends Utilities {
 	}
 	
 	private function unserial($file) {
-		$filetime = filemtime($this->storage.$file);
 		$f = fopen($this->storage.$file, 'r');
 		$content = fread($f, filesize($this->storage.$file));
 		fclose($f);
@@ -76,72 +75,75 @@ class MySQL extends Utilities {
 	}
 	
 	public function query($query) {
-		if($this->caching)
-			if($this->is_exception($query))
-				return (!$result = mysql_query($query)) ? false : $result;
-			elseif(!$this->is_cachable($query))
-				$this->cache_clean();
-		if(!$result = mysql_query($query))
-			return false;
-		return $result;
+		if(($this->caching) && (!$this->is_cachable($query)))
+			$this->cache_clean();
+		return (!$result = $this->mysql->query($query)) ? false : $result;
 	}
 		
 	public function get($query) {
-		if((!$this->caching) || (!$this->is_exception($query))) {
-			if(!$result = mysql_query($query))
-				return false;
-			$array = array();
-			while($fetch = mysql_fetch_object($result))
-				array_push($array, $fetch);
-			mysql_free_result($result);
-			return empty($array) ? false : $array;
-		}
+		$get = array();
 		$file = md5($query).'.cache';
-		if($this->is_cached($file))
+		if(!$this->caching) {
+			if(!$result = $this->mysql->query($query))
+				return false;
+			while($fetch = $result->fetch_object())
+				array_push($get, $fetch);
+			$result->close();
+			return empty($get) ? false : $get;
+		}
+		if(($this->caching) && ($this->is_cached($file)))
 			return $this->unserial($file);
-		if(!$result = mysql_query($query))
+		if(!$result = $this->mysql->query($query))
 			return false;
-		$array = array();
-		while($fetch = mysql_fetch_object($result))
-			array_push($array, $fetch);
-		mysql_free_result($result);
-		if(!$this->is_cached($file))
-			$this->serial($file, $array);
-		return empty($array) ? false : $array;
+		while($fetch = $result->fetch_object())
+			array_push($get, $fetch);
+		$result->close();
+		if(($this->caching) && (!$this->is_cached($file)))
+			$this->serial($file, $get);
+		return empty($get) ? false : $get;
 	}
 	
 	public function count($query) {
-		if(($this->caching) || ($this->is_exception($query))) {
-			$file = md5($query).'.cache';
-			if($this->is_cached($file)) {
-				$count = count($this->unserial($file));
-				return ((!$count) || (!is_numeric($count)) || ((int)$count <= 0)) ? 0 : (int)$count;
-			}
+		if(!$this->caching) {
+			if(!$result = $this->mysql->query($query))
+				return 0;
+			$count = count($result->fetch_row());
+			return ((!$count) || (!is_numeric($count)) || ((int)$count <= 0)) ? 0 : (int)$count;
 		}
-		if(!$result = mysql_query($query))
-			return false;
-		$count = mysql_num_rows($result);
-		return ((!$count) || (!is_numeric($count)) || ((int)$count <= 0)) ? 0 : (int)$count;
+		$file = md5($query).'.cache';
+		if(($this->caching) && ($this->is_cached($file))) {
+			$count = count($this->unserial($file));
+			return ((!$count) || (!is_numeric($count)) || ((int)$count <= 0)) ? 0 : (int)$count;
+		}
+	}
+	
+	public function resultCountQuery($query) {
+		if(!$result = $this->mysql->query($query))
+			return 0;
+		$count = $result->fetch_row();
+		return ((!$count[0]) || (!is_numeric($count[0])) || ((int)$count[0] <= 0)) ? 0 : (int)$count[0];
 	}
 	
 	public function getEnum($query) {
-		if(!$result = mysql_query($query));
+		if(!$result = $this->mysql->query($query));
 			return false;
-		if(!$rows = mysql_fetch_row($result))
+		if(!$rows = $result->fetch_row())
 			return false;
 		$category = explode("','", preg_replace("/(enum|set)\('(.+?)'\)/", "\\2", $rows[1]));
 		return (empty($category)) ? false : $category;
 	}
 	
 	public function getColumns($query) {
-		if(!$result = mysql_query($query))
+		if(!$result = $this->mysql->query($query))
 			return false;
-		$array = array();
-		if(!$columns = mysql_num_fields($result))
-			return false;
-		for($i=0; $i<$columns; $i++)
-			$array[$i] = mysql_field_name($result, $i);
-		return (empty($array)) ? false : $array;
+		$fields = $result->fetch_fields();
+		$fieldsList = array();
+		$columns = array();
+		foreach($fields as $v)
+			$fieldsList[] = $v->name;
+		for($i=0, $numColumns=count($result->fetch_row()); $i<$numColumns; ++$i)
+			$columns[$i] = $fieldsList[$i];
+		return (empty($columns)) ? false : $columns;
 	}
 	
 	/* Crea le tabelle per il database. */
@@ -322,5 +324,46 @@ class MySQL extends Utilities {
 		for($i=0, $count=count($array); $i<$count; ++$i)
 			if(!$this->query($array[$i]))
 				die(mysql_error());
+	}
+	
+	/* Filtra una stringa o un array multidimensionale.
+	   ATTENZIONE: Non usare per la creazione di news e le pagine, altrimenti l'HTML non sarà parsato! */
+	public function purge($var) {
+		if(is_array($var))
+			foreach($var as $key => $value) {
+				if(is_array($var[$key]))
+					$var[$key] = $this->purge($var[$key]);
+				if((is_string($var[$key])) && (!is_numeric($var[$key]))) {
+					if(get_magic_quotes_gpc())
+						$var[$key] = stripslashes($var[$key]);
+					$var[$key] = trim($this->mysql->real_escape_string(htmlentities(parent::purgeByXSS($var[$key]))));
+				}
+			}
+		if((is_string($var)) && (!is_numeric($var))) {
+			if(get_magic_quotes_gpc())
+				$var = stripslashes($var);
+			$var = trim($this->mysql->real_escape_string(htmlentities(parent::purgeByXSS($var))));
+		}
+		return $var;
+	}
+	
+	/* Inserisce gli slahes o meno a seconda dei magic_quotes_gpc. */
+	public function purgeSlashes($var) {
+		if(is_array($var))
+			foreach($var as $key => $value) {
+				if(is_array($var[$key]))
+					$var[$key] = $this->purgeSlashes($var[$key]);
+				if((is_string($var[$key])) && (!is_numeric($var[$key]))) {
+					if(get_magic_quotes_gpc())
+						$var[$key] = stripslashes($var[$key]);
+					$var[$key] = $this->mysql->real_escape_string($var[$key]);
+				}
+			}
+		if((is_string($var)) && (!is_numeric($var))) {
+			if(get_magic_quotes_gpc())
+				$var = stripslashes($var);
+			$var = $this->mysql->real_escape_string($var);
+		}
+		return $var;
 	}
 }

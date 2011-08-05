@@ -28,11 +28,10 @@ class Page extends Comments {
 	public function votePage($minititolo) {
 		if(parent::isLogged()) {
 			$nickname = $this->username[0]->nickname;
-			if(!$votanti = parent::query("SELECT COUNT(*) FROM {$this->prefix}voti WHERE minititolo='$minititolo' AND nickname='$nickname' AND tipo='pagine'"))
+			if(parent::resultCountQuery("SELECT COUNT(*) FROM {$this->prefix}voti WHERE minititolo='$minititolo' AND nickname='$nickname' AND tipo='pagine'") > 0)
 				return false;
-			if(mysql_result($votanti, 0, 0) > 0)
-				return false;
-			$voti = (!$votanti = parent::query("SELECT COUNT(*) FROM {$this->prefix}voti WHERE minititolo='$minititolo' AND tipo='pagine'")) ? 1 : mysql_result($votanti, 0, 0) + 1;
+			$voti = parent::resultCountQuery("SELECT COUNT(*) FROM {$this->prefix}voti WHERE minititolo='$minititolo' AND tipo='pagine'");
+			$voti = (!$voti) ? 1 : $voti + 1;
 			$data = date('d-m-y');
 			if((parent::query("INSERT INTO {$this->prefix}voti(minititolo, data, nickname, tipo) VALUES('$minititolo', '$data', '$nickname', 'pagine')")) && (parent::query("UPDATE pagine SET voti='$voti' WHERE minititolo='$minititolo' AND approvato='1'")))
 				return true;
@@ -42,32 +41,24 @@ class Page extends Comments {
 	
 	/* Registra una visita in una pagina */
 	public function addVisitPage($minititolo) {
-		if(!$visitatori = parent::query("SELECT COUNT(*) FROM {$this->prefix}visite WHERE minititolo='$minititolo' AND ip='{$_SERVER['REMOTE_ADDR']}' AND tipo='pagine'"))
+		if(parent::resultCountQuery("SELECT COUNT(*) FROM {$this->prefix}visite WHERE minititolo='$minititolo' AND ip='{$_SERVER['REMOTE_ADDR']}' AND tipo='pagine'") > 0)
 			return false;
-		if(mysql_result($visitatori, 0, 0) > 0)
-			return false;
-		if(!$visitatori = parent::query("SELECT COUNT(*) FROM {$this->prefix}visite WHERE minititolo='$minititolo' AND tipo='pagine'"))
-			$visite = 1;
-		else
-			$visite = mysql_result($visitatori, 0, 0) + 1;
+		$visitatori = parent::resultCountQuery("SELECT COUNT(*) FROM {$this->prefix}visite WHERE minititolo='$minititolo' AND tipo='pagine'");
+		$visitatori = (!$visitatori) ? 1 : $visitatori + 1;
 		$data = date('d-m-y');
-		if((parent::query("INSERT INTO {$this->prefix}visite(minititolo, data, ip, tipo) VALUES('$minititolo', '$data', '{$_SERVER['REMOTE_ADDR']}', 'pagine')")) && (parent::query("UPDATE pagine SET visite='$visite' WHERE minititolo='$minititolo' AND approvato='1'")))
+		if((parent::query("INSERT INTO {$this->prefix}visite(minititolo, data, ip, tipo) VALUES('$minititolo', '$data', '{$_SERVER['REMOTE_ADDR']}', 'pagine')")) && (parent::query("UPDATE pagine SET visite='$visitatori' WHERE minititolo='$minititolo' AND approvato='1'")))
 				return true;
 		return true;
 	}
 	
 	/* Controlla se la pagina esiste. */
 	public function isPage($minititolo) {
-		if(!$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}pagine WHERE minititolo='$minititolo' AND approvato='1'"))
-			return false;
-		return mysql_result($query, 0, 0) > 0 ? true : false;
+		return parent::resultCountQuery("SELECT COUNT(*) FROM {$this->prefix}pagine WHERE minititolo='$minititolo' AND approvato='1'") > 0 ? true : false;
 	}
 	
 	/* Conta quante pagine sono presenti nel database. */
 	public function countPage() {
-		if(!$query = parent::query('SELECT COUNT(*) FROM '.$this->prefix.'pagine WHERE approvato=\'1\''))
-			return false;
-		return mysql_result($query, 0, 0);
+		return parent::resultCountQuery('SELECT COUNT(*) FROM '.$this->prefix.'pagine WHERE approvato=\'1\'');
 	}
 	
 	/* Ricerca le pagine da una keyword. */

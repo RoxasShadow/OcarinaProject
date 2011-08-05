@@ -35,23 +35,17 @@ class User extends Configuration {
 	
 	/* Controlla se l'utente esiste. */
 	public function isUser($nickname) {
-		if(!$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}utenti WHERE nickname='$nickname'"))
-			return false;
-		return mysql_result($query, 0, 0) > 0 ? true : false;
+		return parent::resultCountQuery("SELECT COUNT(*) FROM {$this->prefix}utenti WHERE nickname='$nickname'") > 0 ? true : false;
 	}
 	
 	/* Controlla se l'email è già usata da un altro utente. */
 	public function isEmailUsed($nickname, $email) {
-		if(!$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}utenti WHERE email='$email' AND nickname<>'$nickname'"))
-			return false;
-		return mysql_result($query, 0, 0) > 0 ? true : false;
+		return parent::resultCountQuery("SELECT COUNT(*) FROM {$this->prefix}utenti WHERE email='$email' AND nickname<>'$nickname'") > 0 ? true : false;
 	}
 	
 	/* Conta quanti utenti sono presenti nel database. */
 	public function countUser() {
-		if(!$query = parent::query('SELECT COUNT(*) FROM '.$this->prefix.'utenti'))
-			return false;
-		return mysql_result($query, 0, 0);
+		return parent::resultCountQuery('SELECT COUNT(*) FROM '.$this->prefix.'utenti');
 	}
 	
 	/* Controlla se l'utente è loggato. */
@@ -60,11 +54,11 @@ class User extends Configuration {
 			$this->newVisitator(false);
 			return false;
 		}
-		if(!$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}utenti WHERE secret='$cookie'")) {
+		if(parent::resultCountQuery("SELECT COUNT(*) FROM {$this->prefix}utenti WHERE secret='$cookie'") <= 0) {
 			$this->newVisitator(false);
 			return false;
 		}
-		if(mysql_result($query, 0, 0) > 0) {
+		if(parent::resultCountQuery("SELECT COUNT(*) FROM {$this->prefix}utenti WHERE secret='$cookie'") > 0) {
 			$this->newVisitator(true);
 			return true;
 		}
@@ -100,9 +94,7 @@ class User extends Configuration {
 	
 	/* Ritorna il numero totale di visite. */
 	public function getTotalVisits() {
-		if(!$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}visitatori"))
-			return false;
-		return mysql_result($query, 0, 0);
+		return parent::resultCountQuery("SELECT COUNT(*) FROM {$this->prefix}visitatori");
 	}
 	
 	/* Ricerca gli utenti per un campo specifico. */
@@ -169,15 +161,15 @@ class User extends Configuration {
 		return parent::query("DELETE FROM {$this->prefix}utenti WHERE nickname='$nickname'") ? true : false;
 	}
 	
-	/* Crea e ritorna un secret code. */
+	/* Crea e ritorna un secret code. */	
 	public function getCode() {
 		$code = parent::rng(12);
-		if(!$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}utenti WHERE secret='$code'"))
+		if(parent::resultCountQuery("SELECT COUNT(*) FROM {$this->prefix}utenti WHERE secret='$code'") <= 0)
 			return $code;
-		if(mysql_result($query, 0, 0) > 0)
-			while(mysql_result($query, 0, 0) > 0) {
+		if(parent::resultCountQuery("SELECT COUNT(*) FROM {$this->prefix}utenti WHERE secret='$code'") > 0)
+			while(parent::resultCountQuery("SELECT COUNT(*) FROM {$this->prefix}utenti WHERE secret='$code'") > 0) {
 				$code = parent::rng(12);
-				if(!$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}utenti WHERE secret='$code'"))
+				if(parent::resultCountQuery("SELECT COUNT(*) FROM {$this->prefix}utenti WHERE secret='$code'") > 0)
 					return $code;
 			}
 		return $code;
@@ -203,9 +195,7 @@ class User extends Configuration {
 		if(!$this->isUser($nickname))
 			return false;
 		$password = md5($this->salt.$password);
-		if(!$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}utenti WHERE nickname='$nickname' AND password='$password' AND codiceregistrazione=''"))
-			return false;
-		if(mysql_result($query, 0, 0) > 0) {
+		if(parent::resultCountQuery("SELECT COUNT(*) FROM {$this->prefix}utenti WHERE nickname='$nickname' AND password='$password' AND codiceregistrazione=''") > 0) {
 			$code = $this->getCode();
 			$client = parent::getClient();
 			parent::query("UPDATE {$this->prefix}utenti SET secret='$code', ip='{$_SERVER['REMOTE_ADDR']}', browsername='{$client['browser']}', browserversion='{$client['version']}', platform='{$client['platform']}' WHERE nickname='$nickname'");
@@ -218,9 +208,7 @@ class User extends Configuration {
 	
 	/* Effettua il logout dell'utente. */
 	public function logout() {
-		if(!$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}utenti WHERE secret='{$this->getCookie()}'"))
-			$this->unSetCookie();
-		elseif(mysql_result($query, 0, 0) > 0) {
+		if(parent::resultCountQuery("SELECT COUNT(*) FROM {$this->prefix}utenti WHERE secret='{$this->getCookie()}'") > 0) {
 			parent::query("UPDATE {$this->prefix}utenti SET secret='', lastlogout='".date('d-m-y')."' WHERE secret='{$this->getCookie()}'");
 			$this->unSetCookie();
 		}

@@ -21,23 +21,17 @@ class Comments extends News {
 	
 	/* Controlla se il commento esiste. */
 	public function isComment($news) {
-		if(!$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}commenti WHERE news='$news' AND approvato='1'"))
-			return false;
-		return mysql_result($query, 0, 0) > 0 ? true : false;
+		return parent::resultCountQuery("SELECT COUNT(*) FROM {$this->prefix}commenti WHERE news='$news' AND approvato='1'") > 0 ? true : false;
 	}
 	
 	/* Conta quanti commenti sono presenti nel database. */
 	public function countComments() {
-		if(!$query = parent::query('SELECT COUNT(*) FROM '.$this->prefix.'commenti WHERE approvato=\'1\''))
-			return false;
-		return mysql_result($query, 0, 0);
+		return parent::resultCountQuery('SELECT COUNT(*) FROM '.$this->prefix.'commenti WHERE approvato=\'1\'');
 	}
 	
 	/* Conta quanti commenti collegati ad una news sono presenti nel database. */
 	public function countCommentByNews($news) {
-		if(!$query = parent::query("SELECT COUNT(*) FROM {$this->prefix}commenti WHERE news='$news' AND approvato='1'"))
-			return false;
-		return mysql_result($query, 0, 0);
+		return parent::resultCountQuery("SELECT COUNT(*) FROM {$this->prefix}commenti WHERE news='$news' AND approvato='1'");
 	}
 	
 	/* Ricerca i commenti da una keyword. */

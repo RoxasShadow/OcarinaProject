@@ -7,47 +7,8 @@ require_once('class.Languages.php');
 
 /* Questa classe include di tutto: dai metodi per la sicurezza alle convalide degli url, fino alla gestione delle stringhe. */
 class Utilities extends Languages {
-	
-	/* Filtra una stringa o un array multidimensionale.
-	   ATTENZIONE: Non usare per la creazione di news e le pagine, altrimenti l'HTML non sarà parsato! */
-	public function purge($var) {
-		if(is_array($var))
-			foreach($var as $key => $value) {
-				if(is_array($var[$key]))
-					$var[$key] = $this->purge($var[$key]);
-				if((is_string($var[$key])) && (!is_numeric($var[$key]))) {
-					if(get_magic_quotes_gpc())
-						$var[$key] = stripslashes($var[$key]);
-					$var[$key] = trim(mysql_real_escape_string(htmlentities($this->purgeByXSS($var[$key]))));
-				}
-			}
-		if((is_string($var)) && (!is_numeric($var))) {
-			if(get_magic_quotes_gpc())
-				$var = stripslashes($var);
-			$var = trim(mysql_real_escape_string(htmlentities($this->purgeByXSS($var))));
-		}
-		return $var;
-	}
-	
-	/* Inserisce gli slahes o meno a seconda dei magic_quotes_gpc. */
-	public function purgeSlashes($var) {
-		if(is_array($var))
-			foreach($var as $key => $value) {
-				if(is_array($var[$key]))
-					$var[$key] = $this->purgeSlashes($var[$key]);
-				if((is_string($var[$key])) && (!is_numeric($var[$key]))) {
-					if(get_magic_quotes_gpc())
-						$var[$key] = stripslashes($var[$key]);
-					$var[$key] = mysql_real_escape_string($var[$key]);
-				}
-			}
-		if((is_string($var)) && (!is_numeric($var))) {
-			if(get_magic_quotes_gpc())
-				$var = stripslashes($var);
-			$var = mysql_real_escape_string($var);
-		}
-		return $var;
-	}
+
+	/* Purge e unPurge si trovano in class.MySQL.php. */
 	
 	/* Elimina gli slashes per le SQL Injection. */
 	public function unPurge($var) {
