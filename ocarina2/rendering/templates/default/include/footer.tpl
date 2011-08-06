@@ -8,6 +8,7 @@
 </tr>
 </table>
 <div align="center">
+{$stats}
 <p><font color="white">Pagina generata in {$time} secondi.<br />
 {if ((isset($useronline)) && (!empty($useronline)))}
 	Utenti online: 
@@ -34,5 +35,6 @@
 <a href="http://jigsaw.w3.org/css-validator/check/referer"><img src="{$url_rendering}/templates/{$skin}/resources/images/vcss-blue.png" alt="CSS Valido!" height="31" width="88" /></a>
 <a href="http://feed2.w3.org/check.cgi?url={$url_index}/feed.php"><img src="{$url_rendering}/templates/{$skin}/resources/images/valid-rss-blue.gif" alt="[Valid RSS]" height="31" width="88" /></a>
 </div>
+{$footer}
 </body>
 </html>

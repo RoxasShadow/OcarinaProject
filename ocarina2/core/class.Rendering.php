@@ -65,8 +65,6 @@ class Rendering extends Page {
 
 	/* Il motore di rendering effettua il rendering del template in input e lo visualizza. */
 	public function renderize($filename) {
-		require_once($this->config[0]->root_index.'/etc/mobile_device_detect.php');
-		require_once('class.Plugin.php');
 		$this->addValue('versione', $this->config[0]->versione);
 		$this->addValue('nomesito', $this->config[0]->nomesito);
 		$this->addValue('url', $this->config[0]->url);
@@ -86,15 +84,24 @@ class Rendering extends Page {
 		$this->addValue('visitatoronline', parent::getVisitatorOnline());
 		$this->addValue('totaleaccessi', parent::getTotalVisits());
 		$this->addValue('numeromp', parent::countPM());
+		/* Per i plugin. */
+		$this->addValue('head', '');
+		$this->addValue('body', '');
+		$this->addValue('menu', '');
+		$this->addValue('postmenu', '');
+		$this->addValue('stats', '');
+		$this->addValue('footer', '');
 		
 		/* Carica e runna ogni plugin attivo. */
+		require_once('class.Plugin.php');
 		if($this->config[0]->plugin == 1) {
 			$plugins = Plugin::listPlugins();
+			$varList = $this->getValues();
 			foreach($plugins as $element) {
 				if(Plugin::getMetadata($element, 'enabled', '') == 'true') {
 					try {
 						$plugin = Plugin::loadPlugin($element);
-						$output = $plugin->main();
+						$output = $plugin->main($varList);
 						if(is_array($output))
 							foreach($output as $name => $value)
 								if(($name !== '') && ($value !== ''))
@@ -109,6 +116,7 @@ class Rendering extends Page {
 		}
 		
 		/* Renderizza il tutto con la skin appropriata. */
+		require_once($this->config[0]->root_index.'/etc/mobile_device_detect.php');
 		if($this->skin == 'admin') {
 			if($filename == 'index.tpl')
 				$this->addValue('lastversion', file_get_contents('http://www.giovannicapuano.net/ocarina2/lastversion.php'));

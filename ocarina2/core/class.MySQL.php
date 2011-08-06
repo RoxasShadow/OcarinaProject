@@ -33,12 +33,14 @@ class MySQL extends Utilities {
 	}
 	
 	/* Private methods. */
+	/* Oggetto -> cache. */
 	private function serial($file, $obj) {
 		$f = fopen($this->storage.$file, 'w');
 		fwrite($f, serialize($obj));
 		fclose($f);
 	}
 	
+	/* Cache -> oggetto. */
 	private function unserial($file) {
 		$f = fopen($this->storage.$file, 'r');
 		$content = fread($f, filesize($this->storage.$file));
@@ -46,10 +48,12 @@ class MySQL extends Utilities {
 		return unserialize($content);
 	}
 	
+	/* Controlla se la query aggiorna dei dati. */
 	private function is_cachable($query) {
 		return !preg_match('/\s*(INSERT[\s]+|DELETE[\s]+|UPDATE[\s]+|REPLACE[\s]+|CREATE[\s]+|ALTER[\s]+|SET[\s]+|FOUND_ROWS[\s]+|SQL_NO_CACHE[\s]+)/is', $query);
 	}
 	
+	/* Controlla se la query rientra nelle eccezioni da non cachare. */
 	private function is_exception($query) {
 		for($i=0, $count=count($this->filter); $i<$count; ++$i)
 			if(preg_match('/(.*?)'.$this->filter[$i].'(.*?)/is', $query))
@@ -57,16 +61,19 @@ class MySQL extends Utilities {
 		return false;
 	}
 	
+	/* Controlla se un file di cache esiste. */
 	private function is_cached($file) {
 		return file_exists($this->storage.$file) ? true : false;
 	}
 	
+	/* Rimuove un file di cache. */
 	private function cache_remove($file) {
 		if($this->is_cached($file))
 			unlink($this->storage.$file);
 	}
 	
 	/* Public methods. */
+	/* Rimuove tutti i file di cache. */
 	public function cache_clean() {
 		$dir = opendir($this->storage);
 		while($file = readdir($dir))
@@ -74,12 +81,14 @@ class MySQL extends Utilities {
 				$this->cache_remove($file);
 	}
 	
+	/* Esegue una query SQL. */
 	public function query($query) {
 		if(($this->caching) && (!$this->is_cachable($query)))
 			$this->cache_clean();
 		return (!$result = $this->mysql->query($query)) ? false : $result;
 	}
-		
+	
+	/* Ottiene un oggetto con i record di una tabella. */
 	public function get($query) {
 		$get = array();
 		$file = md5($query).'.cache';
@@ -103,6 +112,7 @@ class MySQL extends Utilities {
 		return empty($get) ? false : $get;
 	}
 	
+	/* Ritorna il numero di righe di una query. */
 	public function count($query) {
 		if(!$this->caching) {
 			if(!$result = $this->mysql->query($query))
@@ -117,6 +127,7 @@ class MySQL extends Utilities {
 		}
 	}
 	
+	/* Ritorna il valore di una query COUNT. */
 	public function resultCountQuery($query) {
 		if(!$result = $this->mysql->query($query))
 			return 0;
@@ -124,6 +135,7 @@ class MySQL extends Utilities {
 		return ((!$count[0]) || (!is_numeric($count[0])) || ((int)$count[0] <= 0)) ? 0 : (int)$count[0];
 	}
 	
+	/* Ottiene un array con i valori enum di una colonna. */
 	public function getEnum($query) {
 		$result = $this->mysql->query($query);
 		if(!$rows = $result->fetch_row())
@@ -132,6 +144,7 @@ class MySQL extends Utilities {
 		return (empty($category)) ? false : $category;
 	}
 	
+	/* Ottiene un array con le colonne di una tabella. */
 	public function getColumns($query) {
 		if(!$result = $this->mysql->query($query))
 			return false;
@@ -145,7 +158,7 @@ class MySQL extends Utilities {
 		return (empty($columns)) ? false : $columns;
 	}
 	
-	/* Crea le tabelle per il database. */
+	/* Crea le tabelle per il database nel setup. */
 	public function createDatabase() {
 		$array = array(
 			"CREATE TABLE IF NOT EXISTS `{$this->prefix}annunci` (

@@ -13,7 +13,7 @@ class CSRF implements FrameworkPlugin {
 		session_start();
 	}
 	
-	public function main() {
+	public function main($templateVarList) {
 		$csrf_token = $this->generate_token();
 		if(!empty($_POST)) {
 			if(empty($_POST[$this->csrf_form_field])) {

@@ -5,5 +5,5 @@
 */
 
 interface FrameworkPlugin {
-	public function main();
+	public function main($templateVarList);
 }

@@ -11,6 +11,7 @@
 <!--[if IE 6]><link rel="stylesheet" type="text/css" href="{$url_rendering}/templates/{$skin}/resources/ie6.css" /><![endif]-->
 <!--[if IE 7]><link rel="stylesheet" type="text/css" href="{$url_rendering}/templates/{$skin}/resources/ie7.css" /><![endif]-->
 <script type="text/javascript" src="{$url_index}/etc/loadJavascript.js.php"></script>
+{$head}
 </head>
 <body>
 {if ((isset($grado)) && ($grado == 1) && isset($lastversion) && isset($versione) && ($lastversion > $versione))}
@@ -22,6 +23,7 @@
 <div id="container">
 <div id="sidebar">
 <ul class="sideNav">
+{$menu}
 {if ((!isset($grado)) || ($grado == ''))}
 <li><a class="active">{$nomesito}</a></li>
 <li><a href="{$url_index}/login.php">Login</a></li>
@@ -123,9 +125,11 @@
 <li><a class="active">Webdesign</a></li>
 <li><a href="{$url_admin}/installaskin.php">Installa skin</a></li>
 <li><a href="{$url_admin}/disinstallaskin.php">Disinstalla skin</a></li>
+{$postmenu}
 {/if}
 </ul>
 </div>
 <h2><a class="active">{$titolo}</a></h2>
 <div id="main">
 <br /><br />
+{$body}

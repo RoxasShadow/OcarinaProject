@@ -2,8 +2,8 @@
 class Hello implements FrameworkPlugin {
 	private $rendering = array();
 	
-	public function main() {
-		$this->rendering['hello'] = 'Hello, world!';
+	public function main($templateVarList) {
+		$this->rendering['nomesito'] = 'Hello, world!';
 		return $this->rendering;
 	}
 }
