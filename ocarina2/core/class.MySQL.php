@@ -7,6 +7,7 @@ require_once('class.Utilities.php');
 
 /* Questa classe mette a disposizione dei metodi per gestire il database. */
 class MySQL extends Utilities {
+	/* Edit here... */
 	private $host = 'localhost';
 	private $username = 'root';
 	private $password = 'kronos';
@@ -15,7 +16,10 @@ class MySQL extends Utilities {
 	public $caching = true; // `true` -> Caching abilitato; `false` -> Caching disabilitato.
 	public $storage = '/var/www/htdocs/ocarina2/cache/';
 	public $filter = array('visitatori', 'log', 'visite', 'voti', 'personalmessage'); // Tabelle da non cachare.
+	/* Stop, g'day :) */
 	public $mysql = NULL;
+	public $countQuery = 0;
+	public $countCache = 0;
 	
 	public function __construct() {
 		$this->mysql = new mysqli($this->host, $this->username, $this->password, $this->database);
@@ -23,9 +27,9 @@ class MySQL extends Utilities {
 			die('Database connection failed. Error number: '.mysqli_connect_errno().'.');
 		elseif($this->caching)
 			if(!is_dir($this->storage))
-				die('The cache directory not exists.');
+				die('Cache directory not exists.');
 			elseif(!is_writable($this->storage))
-				die('The cache directory is not writable. You should fix the permissions.'); 
+				die('Cache directory is not writable. You should to fix the permissions.'); 
 	}
 	
 	public function __distruct() {
@@ -93,6 +97,7 @@ class MySQL extends Utilities {
 		$get = array();
 		$file = md5($query).'.cache';
 		if(!$this->caching) {
+			++$this->countQuery;
 			if(!$result = $this->mysql->query($query))
 				return false;
 			while($fetch = $result->fetch_object())
@@ -100,8 +105,11 @@ class MySQL extends Utilities {
 			$result->close();
 			return empty($get) ? false : $get;
 		}
-		if(($this->caching) && ($this->is_cached($file)))
+		if(($this->caching) && ($this->is_cached($file))) {
+			++$this->countCache;
 			return $this->unserial($file);
+		}
+		++$this->countQuery;
 		if(!$result = $this->mysql->query($query))
 			return false;
 		while($fetch = $result->fetch_object())
@@ -115,11 +123,13 @@ class MySQL extends Utilities {
 	/* Ritorna il numero di righe di una query. */
 	public function count($query) {
 		if(!$this->caching) {
+			++$this->countQuery;
 			if(!$result = $this->mysql->query($query))
 				return 0;
 			$count = count($result->fetch_row());
 			return ((!$count) || (!is_numeric($count)) || ((int)$count <= 0)) ? 0 : (int)$count;
 		}
+		++$this->countCache;
 		$file = md5($query).'.cache';
 		if(($this->caching) && ($this->is_cached($file))) {
 			$count = count($this->unserial($file));
@@ -129,6 +139,7 @@ class MySQL extends Utilities {
 	
 	/* Ritorna il valore di una query COUNT. */
 	public function resultCountQuery($query) {
+		++$this->countQuery;
 		if(!$result = $this->mysql->query($query))
 			return 0;
 		$count = $result->fetch_row();
@@ -137,6 +148,7 @@ class MySQL extends Utilities {
 	
 	/* Ottiene un array con i valori enum di una colonna. */
 	public function getEnum($query) {
+		++$this->countQuery;
 		$result = $this->mysql->query($query);
 		if(!$rows = $result->fetch_row())
 			return false;
@@ -146,6 +158,7 @@ class MySQL extends Utilities {
 	
 	/* Ottiene un array con le colonne di una tabella. */
 	public function getColumns($query) {
+		++$this->countQuery;
 		if(!$result = $this->mysql->query($query))
 			return false;
 		$fields = $result->fetch_fields();

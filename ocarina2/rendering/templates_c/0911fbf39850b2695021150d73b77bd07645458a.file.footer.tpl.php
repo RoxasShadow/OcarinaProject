@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-08-04 12:56:39
+<?php /* Smarty version Smarty-3.0.8, created on 2011-08-06 19:19:49
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/include/footer.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:7047057114e3a97075d9fb0-19667872%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:967594024e3d93d59f6c21-49778658%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '0911fbf39850b2695021150d73b77bd07645458a' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/default/include/footer.tpl',
-      1 => 1312462582,
+      1 => 1312658326,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '7047057114e3a97075d9fb0-19667872',
+  'nocache_hash' => '967594024e3d93d59f6c21-49778658',
   'function' => 
   array (
   ),
@@ -25,8 +25,12 @@ $_smarty_tpl->decodeProperties(array (
 </tr>
 </table>
 <div align="center">
+<?php echo $_smarty_tpl->getVariable('stats')->value;?>
+
 <p><font color="white">Pagina generata in <?php echo $_smarty_tpl->getVariable('time')->value;?>
- secondi.<br />
+ secondi, con <?php echo $_smarty_tpl->getVariable('numQuery')->value;?>
+ query e <?php echo $_smarty_tpl->getVariable('numCache')->value;?>
+ accessi alla cache.<br />
 <?php if (((isset($_smarty_tpl->getVariable('useronline',null,true,false)->value))&&(!empty($_smarty_tpl->getVariable('useronline',null,true,false)->value)))){?>
 	Utenti online: 
 	<?php  $_smarty_tpl->tpl_vars['user'] = new Smarty_Variable;
@@ -75,5 +79,7 @@ if ($_smarty_tpl->tpl_vars['user']->total > 0){
 /templates/<?php echo $_smarty_tpl->getVariable('skin')->value;?>
 /resources/images/valid-rss-blue.gif" alt="[Valid RSS]" height="31" width="88" /></a>
 </div>
+<?php echo $_smarty_tpl->getVariable('footer')->value;?>
+
 </body>
 </html>

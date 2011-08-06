@@ -23,7 +23,7 @@ final class Plugin {
 		$plugin = NULL;
 		foreach(file($this->configFileName) as $line) {
 			$line = trim($line);
-			if((preg_match('/#/is', $line)) || (preg_match('/\/\//is', $line)) || (preg_match('/\'/is', $line)) || (preg_match('/--/is', $line)) || (strlen($line) == 0))
+			if((preg_match('/##/is', $line)) || (preg_match('/\/\//is', $line)) || (preg_match('/\'\'/is', $line)) || (preg_match('/--/is', $line)) || (strlen($line) == 0))
 				continue;
 			list($attr, $value) = array_map('trim', explode('=', $line));
 			if($attr == 'name') {

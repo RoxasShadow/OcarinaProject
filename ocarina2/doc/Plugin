@@ -15,17 +15,27 @@ Di seguito un breve tutorial pratico per lo sviluppo e l'installazione.
 		path = ./plugin/plugins/HelloWorld/hello.php
 		enabled = true
 	
-		name = Today
+		name = ChiTiPensa
 		version = 1.0
-		author = Your Name
-		website = www.yoursite.me
-		description = Today ti permette di scoprire quale giorno è oggi.
-		path = ./plugin/plugins/Today/today.php
+		author = Giovanni Capuano
+		website = www.giovannicapuano.net
+		description = Chi ti sta pensando in questo momento? O:
+		path = ChiTiPensa/chitipensa.php
 		enabled = true
 		
 	Nella prima riga abbiamo un il nome con cui viene individuato il plugin, la versione, l'autore,
 	il suo sito web (privo della dichiarazione del protocollo), una breve descrizione delle sue
 	funzionalità, il percorso assoluto e infine lo stato, `true` se attivo, `false` se disattivo.
+	Volendo, possiamo anche utilizzare i commenti nel file di configurazione.
+	Basta iniziare una nuova riga anteponendoci uno dei seguenti caratteri:
+		//
+		''
+		##
+		--
+	È da notare il fatto che i commenti devono essere su singola riga, per esempio:
+		`// Hello, world!` -> Questo è un commento
+		`name = ChiTiPensa // Hello, world!` -> Questo è un commento
+		`name = ChiTiPensa` -> Questo non è un commento
 	
 2. Il plugin
 	Ora procediamo a creare il plugin vero e proprio, che altro non farà che visualizzare
@@ -59,17 +69,18 @@ Di seguito un breve tutorial pratico per lo sviluppo e l'installazione.
 	Infine ritorniamo al motore di elaborazione dei plugin l'array puntante a `postmenu`, che provvederà
 	alla modifica del tag e alla renderizzazione.
 	
-In questo caso, la superclasse a cui facciamo riferimento è `User`, e accediamo ai suoi metodi tramite la parola chiave `parent::`.
-Attenzione però di non esagerare!
-Infatti ogni qual volta utilizziamo l'ereditarietà, le prestazioni globali diminuiscono, dal momento che si viene a creare una nuova istanza della gerarchia di classi, con conseguente overhead.
-Inoltre sono a disposizione dei plugin dei specifici tag nei template, dove inserire eventuali righe HTML.
-Questi tag sono:
-	`head` -> Prima della chisura del tag head
-	`body` -> Subito prima dei contenuti
-	`menu` -> Subito prima del menù
-	`postmenu` -> Subito dopo il menù
-	`stats` -> Le statistiche del sito
-	`footer` -> Prima della chiusura del tag body
+3. Note
+	In questo caso, la superclasse a cui facciamo riferimento è `User`, e accediamo ai suoi metodi tramite la parola chiave `parent::`.
+	Attenzione però di non esagerare!
+	Infatti ogni qual volta utilizziamo l'ereditarietà, le prestazioni globali diminuiscono, dal momento che si viene a creare una nuova istanza della gerarchia di classi, con conseguente overhead.
+	Inoltre sono a disposizione dei plugin dei specifici tag nei template, dove inserire eventuali righe HTML.
+	Questi tag sono:
+		`head` -> Prima della chisura del tag head
+		`body` -> Subito prima dei contenuti
+		`menu` -> Subito prima del menù
+		`postmenu` -> Subito dopo il menù
+		`stats` -> Le statistiche del sito
+		`footer` -> Prima della chiusura del tag body
 
 Insomma, possiamo fare di tutto, dal prelevare dati dal database, a creare nuovi tipi di contenuti.
 L'importante è stare attenti a creare plugin sicuri e veloci, il solo limite è la fantasia!

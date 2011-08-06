@@ -3,7 +3,7 @@ class Hello implements FrameworkPlugin {
 	private $rendering = array();
 	
 	public function main($templateVarList) {
-		$this->rendering['nomesito'] = 'Hello, world!';
+		$this->rendering['footer'] = '<p align="center">Hello, world!</p>';
 		return $this->rendering;
 	}
 }

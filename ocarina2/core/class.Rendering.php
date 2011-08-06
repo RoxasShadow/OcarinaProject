@@ -83,6 +83,8 @@ class Rendering extends Page {
 		$this->addValue('useronline', parent::getUserOnline());
 		$this->addValue('visitatoronline', parent::getVisitatorOnline());
 		$this->addValue('totaleaccessi', parent::getTotalVisits());
+		$this->addValue('numQuery', $this->countQuery);
+		$this->addValue('numCache', $this->countCache);
 		$this->addValue('numeromp', parent::countPM());
 		/* Per i plugin. */
 		$this->addValue('head', '');

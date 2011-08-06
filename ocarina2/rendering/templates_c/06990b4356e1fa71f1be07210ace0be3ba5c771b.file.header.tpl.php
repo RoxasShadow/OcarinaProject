@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-08-04 12:28:00
+<?php /* Smarty version Smarty-3.0.8, created on 2011-08-06 19:27:37
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/admin/include/header.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:21139932504e3a9050df2d32-70502624%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:74003414e3d95a967d3c0-81459532%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '06990b4356e1fa71f1be07210ace0be3ba5c771b' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/admin/include/header.tpl',
-      1 => 1311542184,
+      1 => 1312637485,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '21139932504e3a9050df2d32-70502624',
+  'nocache_hash' => '74003414e3d95a967d3c0-81459532',
   'function' => 
   array (
   ),
@@ -38,6 +38,8 @@ $_smarty_tpl->decodeProperties(array (
 /resources/ie7.css" /><![endif]-->
 <script type="text/javascript" src="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /etc/loadJavascript.js.php"></script>
+<?php echo $_smarty_tpl->getVariable('head')->value;?>
+
 </head>
 <body>
 <?php if (((isset($_smarty_tpl->getVariable('grado',null,true,false)->value))&&($_smarty_tpl->getVariable('grado')->value==1)&&isset($_smarty_tpl->getVariable('lastversion',null,true,false)->value)&&isset($_smarty_tpl->getVariable('versione',null,true,false)->value)&&($_smarty_tpl->getVariable('lastversion')->value>$_smarty_tpl->getVariable('versione')->value))){?>
@@ -50,6 +52,8 @@ $_smarty_tpl->decodeProperties(array (
 <div id="container">
 <div id="sidebar">
 <ul class="sideNav">
+<?php echo $_smarty_tpl->getVariable('menu')->value;?>
+
 <?php if (((!isset($_smarty_tpl->getVariable('grado',null,true,false)->value))||($_smarty_tpl->getVariable('grado')->value==''))){?>
 <li><a class="active"><?php echo $_smarty_tpl->getVariable('nomesito')->value;?>
 </a></li>
@@ -225,6 +229,8 @@ $_smarty_tpl->decodeProperties(array (
 /installaskin.php">Installa skin</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /disinstallaskin.php">Disinstalla skin</a></li>
+<?php echo $_smarty_tpl->getVariable('postmenu')->value;?>
+
 <?php }?>
 </ul>
 </div>
@@ -232,3 +238,5 @@ $_smarty_tpl->decodeProperties(array (
 </a></h2>
 <div id="main">
 <br /><br />
+<?php echo $_smarty_tpl->getVariable('body')->value;?>
+

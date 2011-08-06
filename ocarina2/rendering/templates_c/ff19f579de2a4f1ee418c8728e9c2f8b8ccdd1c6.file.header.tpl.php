@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-08-04 16:04:45
+<?php /* Smarty version Smarty-3.0.8, created on 2011-08-06 14:43:02
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/include/header.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:11563023354e3ac31d6241d3-87882965%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:2147941424e3d52f6529244-14409408%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'ff19f579de2a4f1ee418c8728e9c2f8b8ccdd1c6' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/default/include/header.tpl',
-      1 => 1312473884,
+      1 => 1312637937,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '11563023354e3ac31d6241d3-87882965',
+  'nocache_hash' => '2147941424e3d52f6529244-14409408',
   'function' => 
   array (
   ),
@@ -37,11 +37,15 @@ $_smarty_tpl->decodeProperties(array (
 <link rel="alternate" type="application/rss+xml" title="Feed RSS Pagine" href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /feed/page.html" />
 <meta name="robots" content="index,follow" />
+<?php echo $_smarty_tpl->getVariable('head')->value;?>
+
 </head>
 <body>
 <div id="header"><?php echo $_smarty_tpl->getVariable('titolo')->value;?>
 </div>
 <div id="menu" align="center">
+<?php echo $_smarty_tpl->getVariable('menu')->value;?>
+
 <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /index.php">News</a> | <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /archivio.php">Archivio</a> | <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
@@ -64,14 +68,14 @@ Bentornato <?php echo $_smarty_tpl->getVariable('utente')->value;?>
 .html">Profilo</a> | <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /modificaprofilo.php">Modifica profilo</a> | <a href="modificapassword.php">Modifica password</a>)
 <?php }?>
+<?php echo $_smarty_tpl->getVariable('postmenu')->value;?>
+
 </div>
-<?php if (isset($_smarty_tpl->getVariable('luckyuser',null,true,false)->value)){?><div align="center">L'utente fortunato di oggi è... <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
-/profile/<?php echo $_smarty_tpl->getVariable('luckyuser')->value;?>
-.html"><?php echo $_smarty_tpl->getVariable('luckyuser')->value;?>
-</a>!</div><?php }?>
 <table id="colunica">
 <tr>
 <td>
 <table style="width:50%; margin-left:auto; margin-right:auto;">
 <tr>
 <td style="width:50%">
+<?php echo $_smarty_tpl->getVariable('body')->value;?>
+

@@ -9,7 +9,7 @@
 </table>
 <div align="center">
 {$stats}
-<p><font color="white">Pagina generata in {$time} secondi.<br />
+<p><font color="white">Pagina generata in {$time} secondi, con {$numQuery} query e {$numCache} accessi alla cache.<br />
 {if ((isset($useronline)) && (!empty($useronline)))}
 	Utenti online: 
 	{foreach $useronline as $user}
