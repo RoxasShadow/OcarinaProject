@@ -420,6 +420,8 @@ class osh:
 					self.cookieValue = ''
 			elif action == 'lastversion':
 				self.parseLastVersion(self.lastVersion())
+			elif action.strip() == '':
+				continue;
 			else:
 				print 'Action not avaible.'
 shell = osh()
