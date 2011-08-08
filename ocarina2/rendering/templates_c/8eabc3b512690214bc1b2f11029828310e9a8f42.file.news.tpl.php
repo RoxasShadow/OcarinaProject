@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-08-08 16:26:16
-         compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/news.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:14708193614e400e28464eb6-29888371%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /* Smarty version Smarty-3.0.8, created on 2011-08-08 14:40:18
+         compiled from "/var/www/htdocs/ocarina2/rendering//templates/default-ajax/news.tpl" */ ?>
+<?php /*%%SmartyHeaderCode:5616960944e3ff5524680e6-25603221%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
-    '27182b59aacf39946fd552a3d1fff0f04232f2ce' => 
+    '8eabc3b512690214bc1b2f11029828310e9a8f42' => 
     array (
-      0 => '/var/www/htdocs/ocarina2/rendering//templates/default/news.tpl',
-      1 => 1312820773,
+      0 => '/var/www/htdocs/ocarina2/rendering//templates/default-ajax/news.tpl',
+      1 => 1312814417,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '14708193614e400e28464eb6-29888371',
+  'nocache_hash' => '5616960944e3ff5524680e6-25603221',
   'function' => 
   array (
   ),
@@ -49,7 +49,7 @@ $_smarty_tpl->decodeProperties(array (
 /api.php?action=votenews&title=<?php echo $_smarty_tpl->getVariable('news')->value[0]->minititolo;?>
 ', 'voteresponse', undefined, 'true', Array(9, 'Votato.'), 'Hai già votato questa news.'); setTimeout('sendGet(\'<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /api.php?action=news&title=<?php echo $_smarty_tpl->getVariable('news')->value[0]->minititolo;?>
-\', \'voto\', undefined, \'true\', undefined, undefined, \'votes\');', 200);">Vota questa news</a>
+\', \'voto\', undefined, \'true\', undefined, undefined, \'votes\');', 1000);">Vota questa news</a>
 			<?php if ($_smarty_tpl->getVariable('news')->value[0]->voti==1){?>
 				(<a id="voto" class="no-prop">1</a> voto)
 			<?php }else{ ?>
@@ -61,6 +61,7 @@ $_smarty_tpl->decodeProperties(array (
 /registrazione.php">Registrati</a> o <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /login.php">accedi</a> per votare questa news.
 		<?php }?>
+		
 		<?php if (!is_array($_smarty_tpl->getVariable('commenti')->value)){?>
 			<br /><hr /><br />
 			<div class="news"><?php echo $_smarty_tpl->getVariable('commenti')->value;?>
@@ -114,12 +115,14 @@ if ($_smarty_tpl->_count($_from) > 0){
 				<a onclick="requestuser();"><b>Utente</b></a>
 				<a onclick="requesttranslate();"><b>Traduci</b></a><br />
 			<?php }?>
-			<form action="" method="post">
 			<textarea name="comment" cols="59" rows="10" id="targetForm"></textarea><br />
-			<input type="submit" value="Invia commento" /><input type="button" onclick="return sendSinglePost('<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
+			<input type="submit" value="Invia commento" onclick="sendGet('<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/api.php?action=createcomment&title=<?php echo $_smarty_tpl->getVariable('news')->value[0]->minititolo;?>
+&nickname=<?php echo $_smarty_tpl->getVariable('utente')->value;?>
+&content=', 'previewBox', 'targetForm', 'true', Array(13, 'Commento inviato.'), 'È accaduto un errore.'); setTimeout('document.location.reload();', 1000);" /><input type="button" onclick="sendSinglePost('<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /preview.php?type=comment', 'previewBox', 'text', 'targetForm');" value="Anteprima" /><br />
 			<div id="previewBox"></div>
-			</form>
+			<div id="commenti">1</div>
 		<?php }?>
 	<?php }?>
 <?php $_template = new Smarty_Internal_Template(($_smarty_tpl->getVariable('root_rendering')->value)."/templates/".($_smarty_tpl->getVariable('skin')->value)."/include/footer.tpl", $_smarty_tpl->smarty, $_smarty_tpl, $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null);

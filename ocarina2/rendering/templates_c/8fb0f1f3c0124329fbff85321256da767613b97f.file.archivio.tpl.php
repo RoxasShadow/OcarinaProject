@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-08-07 20:17:33
-         compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/archivio.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:19568481514e3ef2ddd1cad4-04937721%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /* Smarty version Smarty-3.0.8, created on 2011-08-07 20:23:44
+         compiled from "/var/www/htdocs/ocarina2/rendering//templates/default-ajax/archivio.tpl" */ ?>
+<?php /*%%SmartyHeaderCode:6009936264e3ef451002e11-56067078%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
-    '3d663334c66d48e658bcc01e778725dbf98d0885' => 
+    '8fb0f1f3c0124329fbff85321256da767613b97f' => 
     array (
-      0 => '/var/www/htdocs/ocarina2/rendering//templates/default/archivio.tpl',
+      0 => '/var/www/htdocs/ocarina2/rendering//templates/default-ajax/archivio.tpl',
       1 => 1311527918,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '19568481514e3ef2ddd1cad4-04937721',
+  'nocache_hash' => '6009936264e3ef451002e11-56067078',
   'function' => 
   array (
   ),

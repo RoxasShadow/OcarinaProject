@@ -4,12 +4,12 @@
 	(C) Giovanni Capuano 2011
 */
 require_once('core/class.Ocarina.php');
-require_once('etc/class.NewsPager.php');
+require_once('etc/class.Pager.php');
 require_once('etc/class.BBCode.php');
 
 $ocarina = new Ocarina();
 $bbcode = new BBCode();
-$pager = new NewsPager($ocarina->config[0]->impaginazionenews);
+$pager = new Pager($ocarina->countNews(), $ocarina->config[0]->impaginazionenews);
 $welcome = ((isset($_GET['welcome'])) && ($_GET['welcome'] == 'true')) ? true : false;
 
 $ocarina->skin = $ocarina->isLogged() ? $ocarina->username[0]->skin : $ocarina->config[0]->skin;

@@ -1,6 +1,6 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-08-02 18:49:46
+<?php /* Smarty version Smarty-3.0.8, created on 2011-08-07 20:19:13
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/modificapassword.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:2431064584e3846ca3a0c97-69184507%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:21176918774e3ef341a06f40-40664307%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
@@ -11,7 +11,7 @@ $_smarty_tpl->decodeProperties(array (
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '2431064584e3846ca3a0c97-69184507',
+  'nocache_hash' => '21176918774e3ef341a06f40-40664307',
   'function' => 
   array (
   ),

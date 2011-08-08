@@ -1,2 +1,3 @@
 --Bugfix del /REPORT;
---Skin `mobile`.
+--Skin `mobile`;
+--Scaricare il plugin di jQuery `lazyloading` e provarlo.

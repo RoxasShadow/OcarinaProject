@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-08-04 17:16:31
+<?php /* Smarty version Smarty-3.0.8, created on 2011-08-08 16:53:02
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/admin/log.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:14454700664e3ad3ef6e0f89-20449936%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:19521086954e40146e69dbb6-93403741%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '13ea0142f7ce7513ab1cd7e7cfc6eac83d8d3621' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/admin/log.tpl',
-      1 => 1310856884,
+      1 => 1312822380,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '14454700664e3ad3ef6e0f89-20449936',
+  'nocache_hash' => '19521086954e40146e69dbb6-93403741',
   'function' => 
   array (
   ),
@@ -22,6 +22,9 @@ $_smarty_tpl->decodeProperties(array (
  echo $_template->getRenderedTemplate(); $_template->rendered_content = null;?><?php unset($_template);?>
 	<?php if ((($_smarty_tpl->getVariable('grado')->value=='')||($_smarty_tpl->getVariable('grado')->value>=6))){?>
 		Accesso negato.
+	<?php }elseif(isset($_smarty_tpl->getVariable('error',null,true,false)->value)){?>
+		<?php echo $_smarty_tpl->getVariable('error')->value;?>
+
 	<?php }elseif(!$_smarty_tpl->getVariable('submit')->value){?>
 		<table>
 		<tr>
@@ -69,6 +72,27 @@ if ($_smarty_tpl->_count($_from) > 0){
 			<input type="submit" name="submit" value="Pulisci i log" />
 			</form>
 		<?php }?>
+		<div align="center"><?php  $_smarty_tpl->tpl_vars['pagina'] = new Smarty_Variable;
+ $_from = $_smarty_tpl->getVariable('navigatore')->value; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
+ $_smarty_tpl->tpl_vars['pagina']->total= $_smarty_tpl->_count($_from);
+ $_smarty_tpl->tpl_vars['pagina']->iteration=0;
+if ($_smarty_tpl->tpl_vars['pagina']->total > 0){
+    foreach ($_from as $_smarty_tpl->tpl_vars['pagina']->key => $_smarty_tpl->tpl_vars['pagina']->value){
+ $_smarty_tpl->tpl_vars['pagina']->iteration++;
+ $_smarty_tpl->tpl_vars['pagina']->last = $_smarty_tpl->tpl_vars['pagina']->iteration === $_smarty_tpl->tpl_vars['pagina']->total;
+?><?php if ($_smarty_tpl->tpl_vars['pagina']->value==$_smarty_tpl->getVariable('currentPage')->value&&!$_smarty_tpl->tpl_vars['pagina']->last){?><b><a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/admin/log/<?php echo $_smarty_tpl->tpl_vars['pagina']->value;?>
+.html"><?php echo $_smarty_tpl->tpl_vars['pagina']->value;?>
+</a></b> | <?php }elseif($_smarty_tpl->tpl_vars['pagina']->value!==$_smarty_tpl->getVariable('currentPage')->value&&$_smarty_tpl->tpl_vars['pagina']->last){?><a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/admin/log/<?php echo $_smarty_tpl->tpl_vars['pagina']->value;?>
+.html"><?php echo $_smarty_tpl->tpl_vars['pagina']->value;?>
+</a><?php }elseif($_smarty_tpl->tpl_vars['pagina']->value==$_smarty_tpl->getVariable('currentPage')->value&&$_smarty_tpl->tpl_vars['pagina']->last){?><b><a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/admin/log/<?php echo $_smarty_tpl->tpl_vars['pagina']->value;?>
+.html"><?php echo $_smarty_tpl->tpl_vars['pagina']->value;?>
+</a></b><?php }else{ ?><a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/admin/log/<?php echo $_smarty_tpl->tpl_vars['pagina']->value;?>
+.html"><?php echo $_smarty_tpl->tpl_vars['pagina']->value;?>
+</a> | <?php }?><?php }} ?></div>
 	<?php }elseif($_smarty_tpl->getVariable('grado')->value==1&&$_smarty_tpl->getVariable('submit')->value){?>
 		<?php echo $_smarty_tpl->getVariable('result')->value;?>
 

@@ -73,7 +73,7 @@ class Languages {
 				'Plugin'
 			),
 			'error' => array(
-				'È accaduto un errore',
+				'È accaduto un errore.',
 				'Non è stata selezionata nessuna categoria.',
 				'Nessuna news è associata alla categoria `{$cat}`.',
 				'Nessuna pagina è associata alla categoria `{$cat}`.',

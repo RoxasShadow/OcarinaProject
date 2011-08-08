@@ -231,14 +231,16 @@ class User extends Configuration {
 	}
 
 	/* Visualizza i log. */
-	public function getLog($nickname = '') {
-		if($nickname !== '') {
-			if($this->isUser($nickname))
-				return ($result = parent::get("SELECT * FROM {$this->prefix}log WHERE nickname='$nickname' ORDER BY id DESC")) ? $result : false;
-			return false;
-		}
-		else
+	public function getLog($min = '', $max = '') {
+		if(($min == '') && ($max == ''))
 			return ($result = parent::get('SELECT * FROM '.$this->prefix.'log ORDER BY id DESC')) ? $result : false;
+		else
+			return ($result = parent::get("SELECT * FROM {$this->prefix}log ORDER BY id DESC LIMIT $min, $max")) ? $result : false;
+	}
+
+	/* Conta i log. */
+	public function countLog() {
+		return parent::resultCountQuery('SELECT COUNT(*) FROM '.$this->prefix.'log');
 	}
 	
 	/* Elimina i log. */

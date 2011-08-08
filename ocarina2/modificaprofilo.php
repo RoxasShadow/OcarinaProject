@@ -10,7 +10,7 @@ $email = ((isset($_POST['email'])) && ($_POST['email'] !== '')) ? $ocarina->purg
 $skin = ((isset($_POST['skin'])) && ($_POST['skin'] !== '')) ? $ocarina->purge($_POST['skin']) : '';
 $bio = ((isset($_POST['bio'])) && ($_POST['bio'] !== '')) ? $ocarina->purge($_POST['bio']) : '';
 $avatar = ((isset($_POST['avatar'])) && ($_POST['avatar'] !== '')) ? $ocarina->purge($_POST['avatar']) : '';
-$password = ((isset($_POST['password'])) && ($_POST['password'] !== '')) ? $ocarina->purge($_POST['password']) : '';
+$password = ((isset($_POST['password'])) && ($_POST['password'] !== '')) ? $ocarina->salt.$ocarina->purge($_POST['password']) : '';
 $submit = isset($_POST['submit']) ? true : false;
 
 $ocarina->skin = $ocarina->isLogged() ? $ocarina->username[0]->skin : $ocarina->config[0]->skin;

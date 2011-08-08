@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-08-08 16:26:39
-         compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/pagina.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:3000576084e400e3f356a48-47380656%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /* Smarty version Smarty-3.0.8, created on 2011-08-08 13:01:59
+         compiled from "/var/www/htdocs/ocarina2/rendering//templates/default-ajax/pagina.tpl" */ ?>
+<?php /*%%SmartyHeaderCode:17211462854e3fde47e24cd8-18855434%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
-    '5e4dbb30b000fc5eafcacd297214d09499e73968' => 
+    '4abdddf732c147d420e2ed000cb98e93dcfb05c5' => 
     array (
-      0 => '/var/www/htdocs/ocarina2/rendering//templates/default/pagina.tpl',
-      1 => 1312820793,
+      0 => '/var/www/htdocs/ocarina2/rendering//templates/default-ajax/pagina.tpl',
+      1 => 1312808518,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '3000576084e400e3f356a48-47380656',
+  'nocache_hash' => '17211462854e3fde47e24cd8-18855434',
   'function' => 
   array (
   ),
@@ -47,17 +47,17 @@ $_smarty_tpl->decodeProperties(array (
 /api.php?action=votepage&title=<?php echo $_smarty_tpl->getVariable('pagina')->value[0]->minititolo;?>
 ', 'voteresponse', undefined, 'true', Array(9, 'Votato.'), 'Hai già votato questa pagina.'); setTimeout('sendGet(\'<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /api.php?action=page&title=<?php echo $_smarty_tpl->getVariable('pagina')->value[0]->minititolo;?>
-\', \'voto\', undefined, \'true\', undefined, undefined, \'votes\');', 200);">Vota questa pagina</a>
+\', \'voto\', undefined, \'true\', undefined, undefined, \'votes\');', 1000);">Vota questa pagina</a>
 				<?php if ($_smarty_tpl->getVariable('pagina')->value[0]->voti==1){?>
 					(<a id="voto" class="no-prop">1</a> voto)
 				<?php }else{ ?>
-					(<a id="voto" class="no-prop"><?php echo $_smarty_tpl->getVariable('news')->value[0]->voti;?>
+					(<a id="voto" class="no-prop"><?php echo $_smarty_tpl->getVariable('pagina')->value[0]->voti;?>
 </a> voti)
 					<?php }?>
 			<?php }else{ ?>
 				<a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /registrazione.php">Registrati</a> o <a href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
-/login.php">accedi</a> per votare questa news.
+/login.php">accedi</a> per votare questa pagina.
 			<?php }?>
 		<?php }?>
 	<?php }?>

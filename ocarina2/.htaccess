@@ -19,7 +19,7 @@ SetEnv TZ Europe/Rome
 <IfModule mod_expires.c>
 <IfModule mod_headers.c>
 <FilesMatch "\.(jpg|jpeg|png|bmp|gif|swf|js|css|js.php)$"> # Estensioni che verranno messe in cache per 15 giorni (1296000 secondi)
-Header set Cache-Control "max-age=1296000, public"
+#Header set Cache-Control "max-age=1296000, public"
 </FilesMatch>
 </IfModule>
 </IfModule>
@@ -54,4 +54,6 @@ RewriteRule ^profile/([^/]+).html$ profilo.php?nickname=$1 [L]
 RewriteRule ^feed/([^/]+).html$ feed.php?content=$1 [L]
 RewriteRule ^sitemap/([^/]+).xml$ sitemap.php?content=$1 [L]
 RewriteRule ^(.*).cache$ error/404.html [L]
+
+RewriteRule ^admin/log/([0-9]+).html$ admin/log.php?p=$1 [L]
 </IfModule>

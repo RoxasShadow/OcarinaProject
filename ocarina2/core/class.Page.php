@@ -9,7 +9,7 @@ require_once('class.Comments.php');
 class Page extends Comments {
 
 	/* Ottiene una o più pagine. */
-	public function getPage($minititolo = '', $min = '', $max = '') {
+	public function getPage($minititolo = '') {
 		if($minititolo !== '')
 			if($this->isPage($minititolo)) {
 				$this->addVisitPage($minititolo);
@@ -18,10 +18,7 @@ class Page extends Comments {
 			else
 				return false;
 		else
-			if(($min == '') && ($max == ''))
-				return ($result = parent::get('SELECT * FROM '.$this->prefix.'pagine WHERE approvato=\'1\' ORDER BY titolo ASC')) ? $result : false;
-			else
-				return ($result = parent::get("SELECT * FROM {$this->prefix}pagine WHERE approvato='1' ORDER BY titolo ASC LIMIT $min, $max")) ? $result : false;
+			return ($result = parent::get('SELECT * FROM '.$this->prefix.'pagine WHERE approvato=\'1\' ORDER BY titolo ASC')) ? $result : false;
 	}
 	
 	/* Permette di votare una pagina. */

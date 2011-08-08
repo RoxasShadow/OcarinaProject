@@ -1,5 +1,5 @@
 /* Url dove inviare il get, div dove stampare il responso, id dell'elemento da cui prendere il testo. */
-function sendGet(url, div, sourceForm) {
+function sendGet(url, div, sourceForm, json, jsonResponseOk, jsonResponseNot, jsonValue) {
 	if(typeof(sourceForm) != 'undefined') {
 		if($('#'+sourceForm).val() == '') {
 			$('#'+div).html('Text not found.');
@@ -14,17 +14,36 @@ function sendGet(url, div, sourceForm) {
 			$('#'+div).html('Loading...');
 		},
 		error: function(e, xhr, settings, exception) {
-			$('#'+div).html('Sorry, failed request. Error '+e.status+' '+settings);
+			$('#'+div).html('Sorry, failed request. Error '+e.status+' '+settings+'.');
 		},
 		success: function(response) {
 			$('#'+div).html('')
 			.hide()
 			.slideToggle('fast', function() {
-				$('#'+div).append(response);
+				var jsonResponse = $.parseJSON(response).response;
+				if((typeof(jsonResponseOk) != 'undefined') && (typeof(jsonResponseNot) != 'undefined') && (typeof(json) != 'undefined'))
+					(jsonResponse == jsonResponseOk[0]) ? $('#'+div).append(jsonResponseOk[1]) : $('#'+div).append(jsonResponseNot);
+				else if((typeof(jsonResponseOk) == 'undefined') && (typeof(jsonResponseNot) == 'undefined') && (typeof(json) != 'undefined') && (typeof(jsonValue) != 'undefined')) {
+					if(isInt(jsonResponse))
+						$('#'+div).append('Error '+jsonResponse);
+					else {
+						var jsonValues = new Array();
+						$.each(jsonResponse, function(key, value) {
+							jsonValues[key] = value;
+						});
+						$('#'+div).append(jsonValues[jsonValue]);
+					}
+				}
+				else
+					$('#'+div).append(response);
 			});
 		}
 
 	});
+}
+
+function isInt(num) {
+	return typeof(num) == 'number' && parseInt(num) == num;
 }
 
 /* Url dove inviare il post, div dove stampare il responso, nome del tag post, id dell'elemento da cui prendere il testo. */

@@ -4,6 +4,7 @@
 	(C) Giovanni Capuano 2011
 */
 require_once('../core/class.Ocarina.php');
+require_once('../etc/class.Pager.php');
 
 $ocarina = new Ocarina();
 $submit = isset($_POST['submit']) ? true : false;
@@ -13,9 +14,13 @@ $ocarina->addValue('titolo', $ocarina->getLanguage('title', 20).$ocarina->getLan
 
 if(($ocarina->isLogged()) && ($ocarina->username[0]->grado < 6))
 	if(!$submit) {
-		if($ocarina->config[0]->log == 1)
-			$ocarina->log($ocarina->username[0]->nickname, 'Logs readed.');
-		$ocarina->addValue('log', $ocarina->getLog());
+		$pager = new Pager($ocarina->countLog(), 10);
+		$ocarina->addValue('navigatore', $pager->getNav());
+		$ocarina->addValue('currentPage', $pager->currentPage);
+		if(!$getLog = $ocarina->getLog($pager->min, $pager->max))
+			$ocarina->addValue('error', $ocarina->getLanguage('error', 0));
+		else
+			$ocarina->addValue('log', $getLog);
 	}
 	else
 		if($ocarina->username[0]->grado == 1)

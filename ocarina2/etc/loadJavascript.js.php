@@ -14,10 +14,9 @@ $f = array();
 while($script = readdir($apri))
 	if((is_file($config->config[0]->root_index.'/etc/js/'.$script)) && (substr($script, -3) == '.js'))
 		$f[] = $script;
-
+sort($f);
 for($i=0, $count=count($f), $content=''; $i<$count; ++$i)
 	$content .= 'var element=document.createElement(\'script\');element.src=\''.$config->config[0]->url_index.'/etc/js/'.$f[$i].'\';document.body.appendChild(element);
 	';
-
 echo 'function downloadJSAtOnload(){'.$content.'}if(window.addEventListener)window.addEventListener(\'load\',downloadJSAtOnload,false);else if(window.attachEvent)window.attachEvent(\'onload\',downloadJSAtOnload);else window.onload=downloadJSAtOnload;';
 unset($config);

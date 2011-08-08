@@ -4,6 +4,8 @@
 {include file="$root_rendering/templates/$skin/include/header.tpl"}
 	{if (($grado == '') || ($grado >= 6))}
 		Accesso negato.
+	{elseif isset($error)}
+		{$error}
 	{elseif !$submit}
 		<table>
 		<tr>
@@ -35,6 +37,7 @@
 			<input type="submit" name="submit" value="Pulisci i log" />
 			</form>
 		{/if}
+		<div align="center">{foreach from=$navigatore item=pagina}{if $pagina == $currentPage && !$pagina@last}<b><a href="{$url_index}/admin/log/{$pagina}.html">{$pagina}</a></b> | {else if $pagina !== $currentPage && $pagina@last}<a href="{$url_index}/admin/log/{$pagina}.html">{$pagina}</a>{else if $pagina == $currentPage && $pagina@last}<b><a href="{$url_index}/admin/log/{$pagina}.html">{$pagina}</a></b>{else}<a href="{$url_index}/admin/log/{$pagina}.html">{$pagina}</a> | {/if}{/foreach}</div>
 	{elseif $grado == 1 && $submit}
 		{$result}
 	{else}

@@ -10,12 +10,13 @@
 		<div class="titolo">{$news[0]->titolo}</div>
 		<div class="newsheader" align="center">Scritto da <a href="{$url_index}/profile/{$news[0]->autore}.html">{$news[0]->autore}</a> il giorno {$news[0]->data} alle ore {$news[0]->ora} nella categoria <a href="{$url_index}/category/{$news[0]->categoria}.html">{$news[0]->categoria}</a>. {if $news[0]->oraultimamodifica == $news[0]->ora}Ultima modifica {if $news[0]->dataultimamodifica == $news[0]->data}oggi{else} il giorno {$news[0]->dataultimamodifica}{/if} alle ore {$news[0]->ora} {if $news[0]->autoreultimamodifica !== $news[0]->autore}da parte di {$news[0]->autoreultimamodifica}.{/if}{/if}</div><br />
 		<div class="news"><p>{$news[0]->contenuto}</p></div><br />
+		<div id="voteresponse"></div>
 		{if $utente !== ''}
-			<a href="{$url_index}/vote.php?action=news&titolo={$news[0]->minititolo}">Vota questa news</a>
+			<a href="#" onclick="sendGet('{$url_index}/api.php?action=votenews&title={$news[0]->minititolo}', 'voteresponse', undefined, 'true', Array(9, 'Votato.'), 'Hai già votato questa news.'); setTimeout('sendGet(\'{$url_index}/api.php?action=news&title={$news[0]->minititolo}\', \'voto\', undefined, \'true\', undefined, undefined, \'votes\');', 200);">Vota questa news</a>
 			{if $news[0]->voti == 1}
-				(1 voto)
+				(<a id="voto" class="no-prop">1</a> voto)
 			{else}
-				({$news[0]->voti} voti)
+				(<a id="voto" class="no-prop">{$news[0]->voti}</a> voti)
 				{/if}
 		{else}
 			<a href="{$url_index}/registrazione.php">Registrati</a> o <a href="{$url_index}/login.php">accedi</a> per votare questa news.

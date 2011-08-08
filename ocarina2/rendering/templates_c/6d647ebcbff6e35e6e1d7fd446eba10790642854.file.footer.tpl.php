@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-08-07 20:16:44
-         compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/include/footer.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:12310960164e3ef2ac77fc60-74211727%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /* Smarty version Smarty-3.0.8, created on 2011-08-07 20:23:46
+         compiled from "/var/www/htdocs/ocarina2/rendering//templates/default-ajax/include/footer.tpl" */ ?>
+<?php /*%%SmartyHeaderCode:6385337344e3ef452590060-22034061%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
-    '0911fbf39850b2695021150d73b77bd07645458a' => 
+    '6d647ebcbff6e35e6e1d7fd446eba10790642854' => 
     array (
-      0 => '/var/www/htdocs/ocarina2/rendering//templates/default/include/footer.tpl',
+      0 => '/var/www/htdocs/ocarina2/rendering//templates/default-ajax/include/footer.tpl',
       1 => 1312732869,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '12310960164e3ef2ac77fc60-74211727',
+  'nocache_hash' => '6385337344e3ef452590060-22034061',
   'function' => 
   array (
   ),

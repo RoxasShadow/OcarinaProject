@@ -9,7 +9,7 @@ require_once('etc/class.BBCode.php');
 $ocarina = new Ocarina();
 $bbcode = new BBCode();
 $titolo = isset($_GET['titolo']) ? $ocarina->purge($_GET['titolo']) : '';
-$ocarinao = isset($_POST['comment']) ? $ocarina->purge($_POST['comment']) : '';
+$comment = isset($_POST['comment']) ? $ocarina->purge($_POST['comment']) : '';
 
 $ocarina->skin = $ocarina->isLogged() ? $ocarina->username[0]->skin : $ocarina->config[0]->skin;
 
@@ -37,8 +37,8 @@ else {
 					$getComment[$i]->contenuto = $bbcode->bbcodecommenti($getComment[$i]->contenuto);
 			$ocarina->addValue('commenti', $getComment);
 		}
-		if(($ocarinao !== '') && ($ocarina->isLogged())) {
-			$array = ($ocarina->config[0]->approvacommenti == 0) ? array($ocarina->username[0]->nickname, $ocarinao, $news[0]->minititolo, date('d-m-y'), date('G:m:s'), 1) : array($ocarina->username[0]->nickname, $ocarinao, $news[0]->minititolo, date('d-m-y'), date('G:m:s'), 0);
+		if(($comment !== '') && ($ocarina->isLogged())) {
+			$array = ($ocarina->config[0]->approvacommenti == 0) ? array($ocarina->username[0]->nickname, $comment, $news[0]->minititolo, date('d-m-y'), date('G:m:s'), 1) : array($ocarina->username[0]->nickname, $comment, $news[0]->minititolo, date('d-m-y'), date('G:m:s'), 0);
 			if($ocarina->config[0]->commenti == 0)
 				$ocarina->addValue('commentSended', $ocarina->getLanguage('news', 4).header('Refresh: 2; URL='.$ocarina->config[0]->url_index.'/news/'.$titolo.'.html'));
 			elseif($ocarina->createComment($array)) {
@@ -52,7 +52,7 @@ else {
 				$ocarina->addValue('commentSended', $ocarina->getLanguage('news', 7).header('Refresh: 2; URL='.$ocarina->config[0]->url_index.'/news/'.$titolo.'.html'));
 			}
 		}
-		elseif(($ocarinao !== '') && (!$ocarina->isLogged()))
+		elseif(($comment !== '') && (!$ocarina->isLogged()))
 			$ocarina->addValue('commentSended', $ocarina->getLanguage('news', 8).header('Refresh: 2; URL='.$ocarina->config[0]->url_index.'/login.php'));
 	}
 }

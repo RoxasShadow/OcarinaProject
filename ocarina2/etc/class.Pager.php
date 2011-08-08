@@ -2,15 +2,13 @@
 /**
 	/etc/class.Pager.php
 	(C) Giovanni Capuano 2011
-*/
 
-/* Questa classe permette di creare un navigatore per le news. */
-class Pager extends News {
+/* Questa classe permette di creare un navigatore per le pagine. */
+class Pager {
 	public $totale, $max, $currentPage, $numPages, $min = NULL;
 	
-	public function __construct($max) {
-		parent::__construct();
-		$this->totale = parent::countNews();
+	public function __construct($count, $max) {
+		$this->totale = $count;
 		$this->max = $max;
 		$this->currentPage = ((!isset($_GET['p'])) || (isset($_GET['p']) && intval($_GET['p']) <= 1)) ? 1 : intval($_GET['p']);
 		$this->numPages = ceil($this->totale / $this->max);
