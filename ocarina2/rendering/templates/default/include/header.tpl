@@ -9,6 +9,7 @@
 {if ((isset($description)) && ($description !== ''))}<meta name="description" content="{$description}" />{/if}
 
 <link rel="stylesheet" type="text/css" href="{$url_rendering}/templates/{$skin}/resources/style.css" />
+<link rel="stylesheet" type="text/css" href="{$url_index}/etc/js/jquery.jgrowl.css" />
 <script type="text/javascript" src="{$url_index}/etc/loadJavascript.js.php"></script>
 <link rel="alternate" type="application/rss+xml" title="Feed RSS News" href="{$url_index}/feed/news.html" />
 <link rel="alternate" type="application/rss+xml" title="Feed RSS Pagine" href="{$url_index}/feed/page.html" />

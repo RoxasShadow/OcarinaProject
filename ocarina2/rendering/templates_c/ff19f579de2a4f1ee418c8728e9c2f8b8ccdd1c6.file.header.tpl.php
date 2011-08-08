@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-08-06 14:43:02
+<?php /* Smarty version Smarty-3.0.8, created on 2011-08-08 18:22:12
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/include/header.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:2147941424e3d52f6529244-14409408%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:13741779724e40295403e6d0-33893245%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'ff19f579de2a4f1ee418c8728e9c2f8b8ccdd1c6' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/default/include/header.tpl',
-      1 => 1312637937,
+      1 => 1312827681,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '2147941424e3d52f6529244-14409408',
+  'nocache_hash' => '13741779724e40295403e6d0-33893245',
   'function' => 
   array (
   ),
@@ -30,6 +30,8 @@ $_smarty_tpl->decodeProperties(array (
 <link rel="stylesheet" type="text/css" href="<?php echo $_smarty_tpl->getVariable('url_rendering')->value;?>
 /templates/<?php echo $_smarty_tpl->getVariable('skin')->value;?>
 /resources/style.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
+/etc/js/jquery.jgrowl.css" />
 <script type="text/javascript" src="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>
 /etc/loadJavascript.js.php"></script>
 <link rel="alternate" type="application/rss+xml" title="Feed RSS News" href="<?php echo $_smarty_tpl->getVariable('url_index')->value;?>

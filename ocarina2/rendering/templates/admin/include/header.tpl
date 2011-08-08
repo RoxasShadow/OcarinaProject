@@ -6,6 +6,7 @@
 <head>
 <title>{$titolo}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="{$url_index}/etc/js/jquery.jgrowl.css" />
 <link rel="stylesheet" type="text/css" href="{$url_rendering}/templates/{$skin}/resources/reset.css" />
 <link rel="stylesheet" type="text/css" href="{$url_rendering}/templates/{$skin}/resources/layout.css" />
 <!--[if IE 6]><link rel="stylesheet" type="text/css" href="{$url_rendering}/templates/{$skin}/resources/ie6.css" /><![endif]-->
