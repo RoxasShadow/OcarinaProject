@@ -6,4 +6,12 @@ class Hello implements FrameworkPlugin {
 		$this->rendering['footer'] = '<p align="center">Hello, world!</p>';
 		return $this->rendering;
 	}
+	
+	public function install() {
+		return true;
+	}
+	
+	public function disinstall() {
+		return true;
+	}
 }

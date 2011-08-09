@@ -21,12 +21,12 @@ if(($ocarina->isLogged()) && ($ocarina->username[0]->grado < 4)) {
 				$ocarina->addValue('image', $_FILES['image']['name']);
 		else
 			if(!$upload = $ocarina->uploadMultipleImage($ocarina->config[0]->root_immagini.'/', $image))
-				$ocarina->addValue('result', $ocarina->getLanguage('upload', 1));
+				$ocarina->addValue('result', $ocarina->getLanguage('upload', 0));
 			else {
 				$ocarina->addValue('image', $_FILES['image']['name']);
 			}
 	else
-		$ocarina->addValue('result', $ocarina->getLanguage('upload', 1));
+		$ocarina->addValue('result', $ocarina->getLanguage('upload', 0));
 }
 else
 	$ocarina->addValue('result', $ocarina->getLanguage('error', 4));

@@ -20,4 +20,12 @@ class ChiTiPensa extends User implements FrameworkPlugin {
 		$this->rendering['postmenu'] = $templateVarList['postmenu'].'<div align="center">'.$language['presentation'].$chitipensa.'</div>';
 		return $this->rendering;
 	}
+	
+	public function install() {
+		return true;
+	}
+	
+	public function disinstall() {
+		return true;
+	}
 }

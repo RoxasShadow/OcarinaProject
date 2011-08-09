@@ -234,7 +234,9 @@ class Languages {
 			),
 			'upload' => array(
 				'È accaduto un errore durante il caricamento del file nel server.',
-				'È accaduto un errore durante il caricamento dei file nel server.'
+				'È accaduto un errore durante l\'installazione del plugin nel server.',
+				'Il plugin è stato installato correttamente.',
+				'Il plugin risulta già installato.'
 			),
 			'createad' => array(
 				'È accaduto un errore durante la creazione dell\'annuncio. Esiste già un annuncio con lo stesso titolo, prova a sceglierne un altro.',
@@ -263,6 +265,11 @@ class Languages {
 				'La skin è stata disinstallata.',
 				'È accaduto un errore durante la disinstallazione della skin. Controlla che la skin selezionata esiste.'
 			),
+			'disinstallplugin' => array(
+				'Il plugin non esiste, e pertanto non può essere disinstallato.',
+				'È accaduto un errore durante la disinstallazione del plugin.',
+				'Il plugin è stato disinstallato correttamente.'
+			),				
 			'installskin' => array(
 				'La skin è stata installata.',
 				'È accaduto un errore durante l\'installazione della skin.'

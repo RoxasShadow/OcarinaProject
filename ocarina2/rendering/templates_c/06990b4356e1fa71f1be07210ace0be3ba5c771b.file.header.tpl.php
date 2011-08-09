@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-08-06 19:27:37
+<?php /* Smarty version Smarty-3.0.8, created on 2011-08-09 15:34:47
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/admin/include/header.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:74003414e3d95a967d3c0-81459532%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:17660110604e415397920684-51142206%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '06990b4356e1fa71f1be07210ace0be3ba5c771b' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/admin/include/header.tpl',
-      1 => 1312637485,
+      1 => 1312904086,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '74003414e3d95a967d3c0-81459532',
+  'nocache_hash' => '17660110604e415397920684-51142206',
   'function' => 
   array (
   ),
@@ -179,6 +179,8 @@ $_smarty_tpl->decodeProperties(array (
 /log.php">Logs</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /configurazione.php">Configurazione</a></li>
+<li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
+/plugin.php">Plugin</a></li>
 <li><a class="active">SEO</a></li>
 <li><a href="<?php echo $_smarty_tpl->getVariable('url_admin')->value;?>
 /robots.php">Robots</a></li>

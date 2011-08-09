@@ -100,7 +100,7 @@ class Rendering extends Page {
 			$plugins = Plugin::listPlugins();
 			$varList = $this->getValues();
 			foreach($plugins as $element) {
-				if(Plugin::getMetadata($element, 'enabled', '') == 'true') {
+				if((Plugin::getMetadata($element, 'enabled', '') == 'true') && (!file_exists($this->config[0]->root_index.'/plugin/plugins/'.$element.'/plugin.cfg'))) {
 					try {
 						$plugin = Plugin::loadPlugin($element);
 						$output = $plugin->main($varList);

@@ -6,4 +6,6 @@
 
 interface FrameworkPlugin {
 	public function main($templateVarList);
+	public function install();
+	public function disinstall();
 }

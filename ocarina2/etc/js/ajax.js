@@ -11,22 +11,21 @@ function sendGet(url, div, sourceForm, json, jsonResponseOk, jsonResponseNot, js
 		type: 'GET',
 		url: url,
 		beforeSend: function() {
-			jQuery.jGrowl('Loading...');
+			$('#'+div).html('Loading...');
 		},
 		error: function(e, xhr, settings, exception) {
-			jQuery.jGrowl('Sorry, failed request. Error '+e.status+' '+settings+'.');
+			$('#'+div).html('Sorry, failed request. Error '+e.status+' '+settings+'.');
 		},
 		success: function(response) {
-			jQuery.jGrowl('Done.');
 			$('#'+div).html('')
 			.hide()
 			.slideToggle('fast', function() {
 				var jsonResponse = $.parseJSON(response).response;
 				if((typeof(jsonResponseOk) != 'undefined') && (typeof(jsonResponseNot) != 'undefined') && (typeof(json) != 'undefined'))
-					(jsonResponse == jsonResponseOk[0]) ? jQuery.jGrowl(jsonResponseOk[1]) : jQuery.jGrowl(jsonResponseNot);
+					(jsonResponse == jsonResponseOk[0]) ? $('#'+div).append(jsonResponseOk[1]) : $('#'+div).append(jsonResponseNot);
 				else if((typeof(jsonResponseOk) == 'undefined') && (typeof(jsonResponseNot) == 'undefined') && (typeof(json) != 'undefined') && (typeof(jsonValue) != 'undefined')) {
 					if(isInt(jsonResponse))
-						jQuery.jGrowl('Error '+jsonResponse);
+						$('#'+div).append('Error '+jsonResponse);
 					else {
 						var jsonValues = new Array();
 						$.each(jsonResponse, function(key, value) {
@@ -61,10 +60,10 @@ function sendSinglePost(url, div, elemname, sourceForm) {
 		url: url,
 		data: query,
 		beforeSend: function() {
-			jQuery.jGrowl('Loading...');
+			$('#'+div).html('Loading...');
 		},
 		error: function(e, xhr, settings, exception) {
-			jQuery.jGrowl('Sorry, failed request. Error '+e.status+' '+settings);
+			$('#'+div).html('Sorry, failed request. Error '+e.status+' '+settings);
 		},
 		success: function(response) {
 			$('#'+div).html('')
@@ -93,7 +92,7 @@ function sendPost(url, div, formname, send) {
 		 	qstr = $('#'+elemName).val();
 		 	if(qstr == '') {
 		 		$('#'+elemName).focus();
-				$.jGrowl('Sorry, '+elemName+' not found.');
+				$('#'+div).html('Sorry, '+elemName+' not found.');
 				return false;
 			}
 		}
@@ -106,10 +105,10 @@ function sendPost(url, div, formname, send) {
 		url: url,
 		data: dataString,
 		beforeSend: function() {
-			jQuery.jGrowl('Loading...');
+			$('#'+div).html('Loading...');
 		},
 		error: function(e, xhr, settings, exception) {
-			jQuery.jGrowl('Sorry, failed request. Error '+e.status+' '+settings);
+			$('#'+div).html('Sorry, failed request. Error '+e.status+' '+settings);
 		},
 		success: function(response) {
 			$('#'+div).html('')
