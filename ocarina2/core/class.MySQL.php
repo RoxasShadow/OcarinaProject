@@ -15,7 +15,7 @@ class MySQL extends Utilities {
 	public $prefix = '';
 	public $caching = true; // `true` -> Caching abilitato; `false` -> Caching disabilitato.
 	public $storage = '/var/www/htdocs/ocarina2/cache/';
-	public $filter = array('visitatori', 'log', 'visite', 'voti', 'personalmessage'); // Tabelle da non cachare.
+	public $filter = array('visitatori', 'log', 'visite', 'voti', 'personalmessage', 'utenti'); // Tabelle da non cachare.
 	/* Stop, g'day :) */
 	public $mysql = NULL;
 	public $countQuery = 0;
@@ -24,12 +24,12 @@ class MySQL extends Utilities {
 	public function __construct() {
 		$this->mysql = new mysqli($this->host, $this->username, $this->password, $this->database);
 		if(mysqli_connect_errno())
-			die('Database connection failed. Error number: '.mysqli_connect_errno().'.');
+			die(parent::getLanguage('database', 0).mysqli_connect_errno().'.');
 		elseif($this->caching)
 			if(!is_dir($this->storage))
-				die('Cache directory not exists.');
+				die(parent::getLanguage('database', 1));
 			elseif(!is_writable($this->storage))
-				die('Cache directory is not writable. You should to fix the permissions.'); 
+				die(parent::getLanguage('database', 2)); 
 	}
 	
 	public function __distruct() {
@@ -237,7 +237,7 @@ class MySQL extends Utilities {
 			  `data` varchar(10) NOT NULL,
 			  `ora` varchar(10) NOT NULL,
 			  `useragent` varchar(100) NOT NULL,
-			  `referer` varchar(100) NOT NULL,
+			  `referer` text NOT NULL,
 			  PRIMARY KEY (`id`)
 			) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
 

@@ -1,29 +1,51 @@
 <?php
-/**
-	etc/class.CSRF.php
-	(C) Giovanni Capuano 2011
-*/
-
-/* Questa classe permette di difendersi dagli attacchi di tipo CSRF, inserendo un campo hidden all'interno di ogni form contenente un token, che viene validato al momento dell'invio. */
 class CSRF implements FrameworkPlugin {
 	private $csrf_form_field = 'token';
 	private $lifetime = 3600; // Tempo per cui un token è valido.
 	
+	private function getSentences() {
+		$language = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+		$array = array();
+		if($language == 'it') {
+			$array['invalid'] = 'Token invalido.';
+			$array['blocked'] = 'Attacco CSRF bloccato.';
+		}
+		else {
+			$array['invalid'] = 'Invalid token.';
+			$array['blocked'] = 'CSRF attack blocked.';
+		}
+		return $array;
+	}
+	
 	public function main($templateVarList) {
-		session_start();
+		if(session_id() == '')
+			session_start();
+		$language = $this->getSentences();
 		$csrf_token = $this->generate_token();
 		if(!empty($_POST)) {
 			if(empty($_POST[$this->csrf_form_field])) {
-				$this->error('Token not valid.');
+				$this->error($language['invalid']);
 				return;
 			}
 			$form_token = $_POST[$this->csrf_form_field];
 			if($form_token !== $csrf_token) {
-				$this->error('CSRF attack detected and blocked.');
+				$this->error($language['blocked']);
+				return;
+			}
+		}
+		if((substr($_SERVER['REQUEST_URI'], -5) !== '.html') && (!empty($_GET))) { // Mod_rewrited .html don't need it
+			if(empty($_GET[$this->csrf_form_field])) {
+				$this->error($language['invalid']);
+				return;
+			}
+			$form_token = $_GET[$this->csrf_form_field];
+			if($form_token !== $csrf_token) {
+				$this->error($language['blocked']);
 				return;
 			}
 		}
 		ob_start(array($this, 'ob_callback'));
+		ob_start(array($this, 'ob_callback2'));
 	}
 	
 	public function install() {
@@ -34,15 +56,22 @@ class CSRF implements FrameworkPlugin {
 		return true;
 	}
 	
-	public function ob_callback($html) {
+	public function ob_callback($html) { // POST
 		if(!$this->is_html_file($html))
 			return $html;
 		$token = $this->generate_token();
 		$hidden = '<input type="hidden" name="'.$this->csrf_form_field.'" value="'.$token.'"'.($this->is_xhtml($html) ? ' />' : '>');
 		// return preg_replace('/(<form\W[^>]*\bmethod=(\'|"|)POST(\'|"|)\b[^>]*>)/i', '\\1'.$hidden, $html);
-		/* La riga qui sopra inserisce il campo per il token subito dopo l'apertura di un form di tipo POST.
-		Il seguente risulta essere più veloce, ed inserisce il campo subito prima la chiusura di un qualsiasi tipo di campo. */
+		/* The rows above adds the token field after the opener of the POST tag.
+		   The follow results to be faster adding the field just before of the closure of the form. */
 		return str_replace('</form>', "$hidden\n</form>", $html);
+	}
+	
+	public function ob_callback2($html) { // GET
+		if(!$this->is_html_file($html))
+			return $html;
+		$token = $this->generate_token();
+		return preg_replace('/<a href="(.*?)\?(.*?)"/i', '<a href="\\1?\\2&token='.$token.'"', $html); // I need it now :P
 	}
 	
 	private function generate_token() {
@@ -55,7 +84,7 @@ class CSRF implements FrameworkPlugin {
 			$array[$i] = chr(rand(97, 122));
 		for($i=0; $i<$num; $i++)
 			$str .= $array[$i];
-		$str = md5(md5((isset($_SESSION['token-id'])) ? $_SESSION['token-id'].$str : $str)); // Se c'è ancora il vecchio token, lo utilizzo come salt :)
+		$str = md5(md5((isset($_SESSION['token-id'])) ? $_SESSION['token-id'].$str : $str)); // If there is the old token, I use that as a salt, because all is gold :)
 		$_SESSION['token-id'] = $str;
 		$_SESSION['token-time'] = time();
 		return $str;

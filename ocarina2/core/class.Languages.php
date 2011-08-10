@@ -79,6 +79,11 @@ class Languages {
 				'Nessuna pagina è associata alla categoria `{$cat}`.',
 				'Accesso negato'
 			),
+			'database' => array(
+				'Connessione al database fallita. Errore numero ',
+				'La cartella contenente i file di cache non esiste.',
+				'La cartella contenente i file di cache non è scrivibile.<br />Dovresti provare a correggere i permessi.'
+			),
 			'news' => array(
 				'Leggi altro...',
 				'Non è stata selezionata nessuna news.',

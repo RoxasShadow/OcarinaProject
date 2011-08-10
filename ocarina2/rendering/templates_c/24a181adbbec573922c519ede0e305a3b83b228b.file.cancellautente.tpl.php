@@ -1,6 +1,6 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-08-02 21:04:05
+<?php /* Smarty version Smarty-3.0.8, created on 2011-08-09 22:48:26
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/admin/cancellautente.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:15751088324e3866453ff907-83982534%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:13151380234e41b93ac67823-93398430%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
@@ -11,7 +11,7 @@ $_smarty_tpl->decodeProperties(array (
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '15751088324e3866453ff907-83982534',
+  'nocache_hash' => '13151380234e41b93ac67823-93398430',
   'function' => 
   array (
   ),

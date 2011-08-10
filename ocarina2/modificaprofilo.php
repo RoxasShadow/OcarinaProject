@@ -26,7 +26,7 @@ if($ocarina->isLogged())
 		$ocarina->addValue('skinattuale', $ocarina->skin);
 	}
 	else {
-		if(($ocarina->isEmail($email)) && ($ocarina->isImage($avatar)) && ($email !== '') && ($bio !== '') && ($skin !== '') && ($avatar !== '') && ($password !== ''))
+		if(($ocarina->isEmail($email)) && ($email !== '') && ($bio !== '') && ($skin !== '') && ($avatar !== '') && ($password !== ''))
 			if(($ocarina->isEmailUsed($ocarina->username[0]->nickname, $email)) || (md5($password) !== $ocarina->username[0]->password)) {
 				if($ocarina->config[0]->log == 1)
 						$ocarina->log($ocarina->username[0]->nickname, 'Profile modification failed.');

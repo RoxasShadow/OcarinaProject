@@ -5,27 +5,23 @@ Di seguito un breve tutorial pratico per lo sviluppo e l'installazione.
 	Il file plugins.cfg (/plugin/plugins.cfg) consente di monitorare i plugin attivi
 	e di ottenere eventuali informazioni su ognuno di essi.
 	Quando si installa un nuovo plugin, bisogna aggiungere una nuova sezione al file.
-	Un esempio per il plugin `Today` potrebbe essere il seguente.
-	
-		name = HelloWorld
-		version = 1.0
-		author = Giovanni Capuano
-		website = www.giovannicapuano.net
-		description = Saluta il mondo!
-		path = ./plugin/plugins/HelloWorld/hello.php
-		enabled = true
+	Un esempio per il plugin `HelloWorld` potrebbe essere il seguente.
 	
 		name = ChiTiPensa
 		version = 1.0
 		author = Giovanni Capuano
 		website = www.giovannicapuano.net
-		description = Chi ti sta pensando in questo momento? O:
+		description = Who is thinking you right now?
+		description[it] = Chi ti sta pensando in questo momento?
 		path = ChiTiPensa/chitipensa.php
 		enabled = true
 		
+		
 	Nella prima riga abbiamo un il nome con cui viene individuato il plugin, la versione, l'autore,
 	il suo sito web (privo della dichiarazione del protocollo), una breve descrizione delle sue
-	funzionalità, il percorso assoluto e infine lo stato, `true` se attivo, `false` se disattivo.
+	funzionalità (una per tutti, e una localizzata in italiano), il percorso, lo stato
+	(`true` se attivo, `false` se disattivo) e infine uno spazio vuoto, obbligatorio.
+	
 	Volendo, possiamo anche utilizzare i commenti nel file di configurazione.
 	Basta iniziare una nuova riga anteponendoci uno dei seguenti caratteri:
 		//
@@ -44,30 +40,56 @@ Di seguito un breve tutorial pratico per lo sviluppo e l'installazione.
 	file vuoto chiamato `chitipensa.php`.
 	Procediamo con lo scrivere il codice.
 	
-	<?php
-	class ChiTiPensa extends User implements FrameworkPlugin {
-		private $rendering = array();
+		<?php
+		class ChiTiPensa extends User implements FrameworkPlugin {
+			private function getSentences() {
+				$language = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+				$array = array();
+				if($language == 'it') {
+					$array['notfound'] = 'Nessuno! Qui non c\'è anima viva D:';
+					$array['presentation'] = 'In questo momento ti sta pensando molto intensamente... ';
+				}
+				else {
+					$array['notfound'] = 'Nobody! There is not a soul here D:';
+					$array['presentation'] = 'Right now thinking you very deeply...';
+				}
+				return $array;
+			}
+				
+			public function main($templateVarList) {
+				$rendering = array();
+				$language = $this->getSentences();
+				$userList = parent::getUser();
+				$nickname = ($userList) ? $userList[rand(0, parent::countUser()-1)]->nickname : '';
+				$chitipensa = ($nickname !== '') ? '<a href="'.$this->config[0]->url_index.'/profile/'.$nickname.'.html">'.$nickname.'</a>!' : $language['notfound'];
+				$rendering['postmenu'] = $templateVarList['postmenu'].'<div align="center">'.$language['presentation'].$chitipensa.'</div>';
+				return $rendering;
+			}
 	
-		public function main($templateVarList) {
-			$userList = parent::getUser();
-			$nickname = ($userList) ? $userList[rand(0, parent::countUser()-1)]->nickname : '';
-			$chitipensa = ($nickname !== '') ? '<a href="'.$this->config[0]->url_index.'/profile/'.$nickname.'.html">'.$nickname.'</a>!' : 'Nessuno! Qui non c\'è anima viva D:';
-			$this->rendering['postmenu'] = $templateVarList['postmenu'].'<div align="center">L\'utente fortunato di oggi è... '.$chitipensa.'</div>';
-			return $this->rendering;
+			public function install() {
+				return true;
+			}
+	
+			public function disinstall() {
+				return true;
+			}
 		}
-	}
 	
 	Come possiamo vedere, abbiamo dato alla classe lo stesso nome del plugin.
-	Dichiariamo per prima cosa un array vuoto e il metodo `main()`, quello principale,
-	con argomento un array associativo contenente i nomi dei tag creati e il loro valore.
-	Utilizziamo il metodo della classe User `getUser()` per ottenere un oggetto contenente gli utenti registrati.
-	Controlliamo se l'oggetto è vuoto.
-	In caso contrario, creiamo la variabile `$nickname` dove con un numero casuale tra 0 e il numero
-	di utenti, otteniamo un nickname, che poi incorporiamo in un link, altrimenti comunichiamo che
-	non c'è alcun utente registrato.
-	Creiamo poi un nuovo elemento dell'array `rendering`, in cui appendiamo al tag `postmenu` il messaggio da inviare.
-	Infine ritorniamo al motore di elaborazione dei plugin l'array puntante a `postmenu`, che provvederà
-	alla modifica del tag e alla renderizzazione.
+	Essa estende User (opzionale), in modo tale da usufruire dei suoi metodi, e implementa l'interfaccia
+	FrameworkPlugin (obbligatorio).
+	Dichiariamo per prima cosa un array vuoto e un metodo privato getSentences() che provvederà alla localizzazione.
+	Quindi rileviamo la lingua del client, e creiamo un array dove definiamo i vari testi, che poi diamo in output.
+	Ora è il momento del metodo principale `main()`, che cattura l'array del metodo sopra definito e ottiene un oggetto
+	contenente gli utenti dal metodo `getUser()` della classe ereditata User.
+	Creiamo una variabile `$nickname`, dove generiamo un numero pseudocasuale di range 0-MAX, che diamo come valore
+	al nostro oggetto, nel quale estraiamo il relativo valore `nickname`, ma non dopo un controllo su un eventuale errore
+	di `getUser()`.
+	Incapsuliamo quindi il nickname in un tag a, che inseriamo alla fine del menù (tramite il tag template predefinito `postmenu`).
+	Ritorniamo quindi l'array `$rendering`.
+	Per concludere, dichiariamo due metodi pubblici `install()` e `disinstall()`, che provvedono ad un'eventuale
+	procedura prima dell'installazione o rimozione automatica del plugin (ad esempio creando/rimuovendo una tabella del database).
+	Ma dal momento che, nel nostro caso, non abbiamo bisogno di alcuna particolare procedura, ritorniamo un booleano true.
 	
 3. Note
 	In questo caso, la superclasse a cui facciamo riferimento è `User`, e accediamo ai suoi metodi tramite la parola chiave `parent::`.
@@ -81,6 +103,7 @@ Di seguito un breve tutorial pratico per lo sviluppo e l'installazione.
 		`postmenu` -> Subito dopo il menù
 		`stats` -> Le statistiche del sito
 		`footer` -> Prima della chiusura del tag body
+	Una piccola nota tecnica per concludere la sezione: i plugin vengono caricati appena la classe principale Ocarina viene istanziata,
+	in modo da agire su qualsiasi parametro prima di un'eventuale elaborazione.
 
-Insomma, possiamo fare di tutto, dal prelevare dati dal database, a creare nuovi tipi di contenuti.
-L'importante è stare attenti a creare plugin sicuri e veloci, il solo limite è la fantasia!
+Insomma, possiamo fare di tutto, l'importante è stare attenti a creare plugin sicuri, corretti e veloci :D

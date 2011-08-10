@@ -27,6 +27,35 @@ class Rendering extends Page {
 		$this->smarty->allow_php_tag = true; // Serve per leggere il numero di commenti di ogni news dalla index :(
 		$this->smarty->force_compile = false; // Permette di non recompilare ogni volta il template
 		$this->smarty->loadFilter('output', 'trimwhitespace'); // Plugin che comprime l'HTML velocizzando la renderizzazione da parte del browser
+		/* Per i plugin. */
+		$this->addValue('head', '');
+		$this->addValue('body', '');
+		$this->addValue('menu', '');
+		$this->addValue('postmenu', '');
+		$this->addValue('stats', '');
+		$this->addValue('footer', '');
+		/* Per tutto il resto :D */
+		$this->addValue('versione', $this->config[0]->versione);
+		$this->addValue('nomesito', $this->config[0]->nomesito);
+		$this->addValue('url', $this->config[0]->url);
+		$this->addValue('url_index', $this->config[0]->url_index);
+		$this->addValue('url_admin', $this->config[0]->url_admin);
+		$this->addValue('url_rendering', $this->config[0]->url_rendering);
+		$this->addValue('url_immagini', $this->config[0]->url_immagini);
+		$this->addValue('root', $this->config[0]->root);
+		$this->addValue('root_index', $this->config[0]->root_index);
+		$this->addValue('root_admin', $this->config[0]->root_admin);
+		$this->addValue('root_rendering', $this->config[0]->root_rendering);
+		$this->addValue('root_immagini', $this->config[0]->root_immagini);
+		$this->addValue('time', $this->microtime_float() - $this->time_start);
+		$this->addValue('utente', parent::isLogged() ? $this->username[0]->nickname : '');
+		$this->addValue('grado', parent::isLogged() ? $this->username[0]->grado : '');
+		$this->addValue('useronline', parent::getUserOnline());
+		$this->addValue('visitatoronline', parent::getVisitatorOnline());
+		$this->addValue('totaleaccessi', parent::getTotalVisits());
+		$this->addValue('numQuery', $this->countQuery);
+		$this->addValue('numCache', $this->countCache);
+		$this->addValue('numeromp', parent::countPM());
 	}
 
 	/* Quando la classe viene distrutta, il distruttore provvede a distruggere l'oggetto Smarty liberando memoria. */
@@ -65,58 +94,6 @@ class Rendering extends Page {
 
 	/* Il motore di rendering effettua il rendering del template in input e lo visualizza. */
 	public function renderize($filename) {
-		$this->addValue('versione', $this->config[0]->versione);
-		$this->addValue('nomesito', $this->config[0]->nomesito);
-		$this->addValue('url', $this->config[0]->url);
-		$this->addValue('url_index', $this->config[0]->url_index);
-		$this->addValue('url_admin', $this->config[0]->url_admin);
-		$this->addValue('url_rendering', $this->config[0]->url_rendering);
-		$this->addValue('url_immagini', $this->config[0]->url_immagini);
-		$this->addValue('root', $this->config[0]->root);
-		$this->addValue('root_index', $this->config[0]->root_index);
-		$this->addValue('root_admin', $this->config[0]->root_admin);
-		$this->addValue('root_rendering', $this->config[0]->root_rendering);
-		$this->addValue('root_immagini', $this->config[0]->root_immagini);
-		$this->addValue('time', $this->microtime_float() - $this->time_start);
-		$this->addValue('utente', parent::isLogged() ? $this->username[0]->nickname : '');
-		$this->addValue('grado', parent::isLogged() ? $this->username[0]->grado : '');
-		$this->addValue('useronline', parent::getUserOnline());
-		$this->addValue('visitatoronline', parent::getVisitatorOnline());
-		$this->addValue('totaleaccessi', parent::getTotalVisits());
-		$this->addValue('numQuery', $this->countQuery);
-		$this->addValue('numCache', $this->countCache);
-		$this->addValue('numeromp', parent::countPM());
-		/* Per i plugin. */
-		$this->addValue('head', '');
-		$this->addValue('body', '');
-		$this->addValue('menu', '');
-		$this->addValue('postmenu', '');
-		$this->addValue('stats', '');
-		$this->addValue('footer', '');
-		
-		/* Carica e runna ogni plugin attivo. */
-		require_once('class.Plugin.php');
-		if($this->config[0]->plugin == 1) {
-			$plugins = Plugin::listPlugins();
-			$varList = $this->getValues();
-			foreach($plugins as $element) {
-				if((Plugin::getMetadata($element, 'enabled', '') == 'true') && (!file_exists($this->config[0]->root_index.'/plugin/plugins/'.$element.'/plugin.cfg'))) {
-					try {
-						$plugin = Plugin::loadPlugin($element);
-						$output = $plugin->main($varList);
-						if(is_array($output))
-							foreach($output as $name => $value)
-								if(($name !== '') && ($value !== ''))
-									$this->addValue($name, $value);
-					}
-					catch(Exception $e) {
-						echo $e->getMessage();
-					}
-				}
-			}
-			unset($plugins);
-		}
-		
 		/* Renderizza il tutto con la skin appropriata. */
 		require_once($this->config[0]->root_index.'/etc/mobile_device_detect.php');
 		if($this->skin == 'admin') {

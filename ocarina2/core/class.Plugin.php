@@ -39,7 +39,6 @@ final class Plugin {
 		}
 		if(!is_null($plugin) && array_key_exists('name', $plugin))
 			$this->plugins[$plugin['name']] = $plugin;
-		sort($this->plugins); // Ordine alfabetico va :D
 		unset($plugin);
 	}
 	
@@ -137,6 +136,8 @@ final class Plugin {
 		if(!is_dir(Plugin::$root_index.'/plugin/plugins/'.$name.'/'))
 			return false;
 		$plugin = Plugin::loadPlugin($name, true);
-		return $plugin->disinstall() ? true : false;
+		$disinstall = $plugin->disinstall();
+		unset($plugin);
+		return $disinstall;
 	}
 }
