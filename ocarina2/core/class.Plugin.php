@@ -42,6 +42,10 @@ final class Plugin {
 		unset($plugin);
 	}
 	
+	private function __distruct() {
+		unset(self::$instance, $this->plugins);
+	}
+	
 	public static function loadPlugin($name, $force = false) {
 		$repository = Plugin::getInstance();
 		if(!array_key_exists($name, $repository->plugins))

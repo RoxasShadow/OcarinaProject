@@ -1,3 +1,7 @@
+/**
+	/etc/js/ajax.js
+	(C) Giovanni Capuano 2011
+*/
 function quota(id){document.getElementById('targetForm').value=document.getElementById('targetForm').value+'[quote]'+document.getElementById(id).innerHTML+'[/quote]';}
 function requestcolor(){add('[color='+prompt('Digita il nome del colore (esempio: red, black, white)')+'][/color]');}
 function requesturl(){add('[url='+prompt('URL')+']'+prompt('Testo')+'[/url]');}

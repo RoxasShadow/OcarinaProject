@@ -1,3 +1,8 @@
+/**
+	/etc/js/ajax.js
+	(C) Giovanni Capuano 2011
+*/
+
 /* Url dove inviare il get, div dove stampare il responso, id dell'elemento da cui prendere il testo. */
 function sendGet(url, div, sourceForm, json, jsonResponseOk, jsonResponseNot, jsonValue) {
 	if(typeof(sourceForm) != 'undefined') {

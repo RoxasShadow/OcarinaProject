@@ -34,6 +34,7 @@ class MySQL extends Utilities {
 	
 	public function __distruct() {
 		$this->mysql->close();
+		unset($this->mysql);
 	}
 	
 	/* Private methods. */

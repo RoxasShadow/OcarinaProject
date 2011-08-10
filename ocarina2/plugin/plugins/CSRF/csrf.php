@@ -1,7 +1,7 @@
 <?php
 class CSRF implements FrameworkPlugin {
 	private $csrf_form_field = 'token';
-	private $lifetime = 3600; // Tempo per cui un token è valido.
+	private $lifetime = 3600; // Life time of the token.
 	
 	private function getSentences() {
 		$language = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
@@ -33,7 +33,13 @@ class CSRF implements FrameworkPlugin {
 				return;
 			}
 		}
-		if((substr($_SERVER['REQUEST_URI'], -5) !== '.html') && (!empty($_GET))) { // Mod_rewrited .html don't need it
+		/* Checks the HTTP response for eventually error pages. */
+		$f = fsockopen($_SERVER['HTTP_HOST'], 80, $errno, $errstr, 30);
+		fwrite($f, "GET /{$_SERVER['REQUEST_URI']} HTTP/1.1\r\nHost: http://{$_SERVER['HTTP_HOST']}\r\nConnection: Close\r\n\r\n");
+		$response = explode(' ', fgets($f));
+		fclose($f);
+		
+		if((substr($_SERVER['REQUEST_URI'], -5) !== '.html') && ($response[1] == 200) && (!empty($_GET))) { // Mod_rewrited .html don't need it
 			if(empty($_GET[$this->csrf_form_field])) {
 				$this->error($language['invalid']);
 				return;

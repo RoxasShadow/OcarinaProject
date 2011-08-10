@@ -6,10 +6,11 @@ deny from all
 </Files>
 Options All +Indexes
 
-ErrorDocument 301 /ocarina2/errorpage.php?id=301
+ErrorDocument 400 /ocarina2/errorpage.php?id=400
 ErrorDocument 403 /ocarina2/errorpage.php?id=403
 ErrorDocument 404 /ocarina2/errorpage.php?id=404
 ErrorDocument 500 /ocarina2/errorpage.php?id=500
+ErrorDocument 503 /ocarina2/errorpage.php?id=503
 
 AddType text/html php htm html
 AddDefaultCharset UTF-8
@@ -25,11 +26,6 @@ Header set Cache-Control "max-age=1296000, public"
 </IfModule>
 
 <IfModule mod_rewrite.c>
-ErrorDocument 301 /ocarina2/error/301.html
-ErrorDocument 403 /ocarina2/error/403.html
-ErrorDocument 404 /ocarina2/error/404.html
-ErrorDocument 500 /ocarina2/error/500.html
-
 RewriteEngine On
 RewriteBase /ocarina2/
 
@@ -47,13 +43,18 @@ RewriteRule ^p/([0-9]+).html$ index.php?p=$1 [L]
 RewriteRule ^category/([^/]+).html$ categoria.php?cat=$1 [L]
 RewriteRule ^comment/([0-9]+).html$ commento.php?id=$1 [L]
 RewriteRule ^mp/([0-9]+).html$ mp.php?id=$1 [L]
-RewriteRule ^error/([0-9]+).html$ errorpage.php?id=$1 [L]
 RewriteRule ^news/([^/]+).html$ news.php?titolo=$1 [L]
 RewriteRule ^page/([^/]+).html$ pagina.php?titolo=$1 [L]
 RewriteRule ^profile/([^/]+).html$ profilo.php?nickname=$1 [L]
 RewriteRule ^feed/([^/]+).html$ feed.php?content=$1 [L]
 RewriteRule ^sitemap/([^/]+).xml$ sitemap.php?content=$1 [L]
-RewriteRule ^(.*).cache$ error/404.html [L]
-
+RewriteRule ^error/([0-9]+).html$ errorpage.php?id=$1 [L]
 RewriteRule ^admin/log/([0-9]+).html$ admin/log.php?p=$1 [L]
+RewriteRule ^(.*).cache$ errorpage/403.html [L]
+
+ErrorDocument 400 /ocarina2/error/400.html
+ErrorDocument 403 /ocarina2/error/403.html
+ErrorDocument 404 /ocarina2/error/404.html
+ErrorDocument 500 /ocarina2/error/500.html
+ErrorDocument 503 /ocarina2/error/503.html
 </IfModule>

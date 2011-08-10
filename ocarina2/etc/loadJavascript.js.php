@@ -3,6 +3,7 @@
 	/etc/loadJavascript.php
 	(C) Giovanni Capuano 2011
 */
+
 /* Questa classe permette di ottimizzare il caricamento di tutti gli script javascript che si trovano in /etc/js/.
    È possibile includerlo direttamente nel file di template come fosse un semplice script. */
 header('Content-type: text/javascript');
@@ -14,7 +15,7 @@ $f = array();
 while($script = readdir($apri))
 	if((is_file($config->config[0]->root_index.'/etc/js/'.$script)) && (substr($script, -3) == '.js'))
 		$f[] = $script;
-sort($f);
+sort($f); // Ordine alfabetico
 for($i=0, $count=count($f), $content=''; $i<$count; ++$i)
 	$content .= 'var element=document.createElement(\'script\');element.src=\''.$config->config[0]->url_index.'/etc/js/'.$f[$i].'\';document.body.appendChild(element);
 	';

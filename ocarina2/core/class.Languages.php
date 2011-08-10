@@ -4,18 +4,15 @@
 	(C) Giovanni Capuano 2011
 */
 
-/* Questa è la classe di base, quindi disattivo l'error reporting qui. */
-//error_reporting(0);
-
 /* Questa classe include le lingue per il core. */
 class Languages {
 
 	/* Ritorna una stringa nella lingua usata dall'utente. */
 	public function getLanguage($category, $val) {
-		$language = substr($this->purge($_SERVER['HTTP_ACCEPT_LANGUAGE']), 0, 2);
+		$language = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
 		if($language == 'it')
 			$language = $this->getItalianStrings();
-		return ((!isset($language[$category])) || (!is_array($language[$category])) || (empty($language[$category])) || ((count($language[$category])) < $val)) ? 'Description not found.' : $language[$category][$val];
+		return ((!isset($language[$category])) || (!is_array($language[$category])) || (empty($language[$category])) || ((count($language[$category])) < $val)) ? false : $language[$category][$val];
 	}
 	
 	public function getItalianStrings() {
@@ -65,12 +62,12 @@ class Languages {
 				'Crea annuncio',
 				'Cancella annuncio',
 				'Modifica annuncio',
-				'Annunci', // 29
+				'Annunci',
 				'Newsletter',
 				'Disinstalla skin',
 				'Installa skin',
 				'Leggi MP',
-				'Plugin'
+				'Plugin' // 34
 			),
 			'error' => array(
 				'È accaduto un errore.',
@@ -283,6 +280,31 @@ class Languages {
 				'PM sended.',
 				'È accaduto un errore durante l\'invio dell\'MP.',
 				'È accaduto un errore durante l\'invio dell\'MP. Controlla di non aver lasciato alcun campo vuoto.'
+			),
+			400 => array(
+				'400',
+				'Bad Request',
+				'Il tuo browser ha inviato una richiesta che questo server potrebbe non comprendere.'
+			),
+			403 => array(
+				'403',
+				'Forbidden',
+				'Non hai permessi sufficienti per accedere in questa pagina.'
+			),
+			404 => array(
+				'404',
+				'Not Found',
+				'La pagina richiesta non è stata trovata.'
+			),
+			500 => array(
+				'500',
+				'Internal Server Error',
+				'È accaduto un errore interno al server.'
+			),
+			503 => array(
+				'503',
+				'Service Temporarily Unavailable',
+				'Il server non può al momento elaborare la tua richiesta.'
 			)
 		);
 	}

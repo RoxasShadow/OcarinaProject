@@ -1,4 +1,8 @@
-/* Require lazyloading the jQuery plugin. */
+/**
+	/etc/js/ajax.js
+	(C) Giovanni Capuano 2011
+*/
+
 /*
 $("img").lazyload(
 	{
