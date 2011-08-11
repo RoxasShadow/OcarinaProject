@@ -27,7 +27,12 @@ final class Plugin {
 		}
 		foreach(file(self::$root_index.'/plugin/plugins.cfg') as $line) {
 			$line = trim($line);
-			if((preg_match('/##/is', $line)) || (preg_match('/\/\//is', $line)) || (preg_match('/\'\'/is', $line)) || (preg_match('/--/is', $line)) || (strlen($line) == 0))
+			$line = preg_replace('/\/\\*[\\s\S]*?\\*\//', '', $line); // /*cmt*/ /(*^n)cmt(*^m)/
+			$line = preg_replace('/\/\/[\\s\S]/', '', $line); // //cmt (:D)
+			$line = preg_replace('/##[\\s\S]/', '', $line); // ##cmt
+			$line = preg_replace('/;;[\\s\S]/', '', $line); // ;;cmt
+			$line = preg_replace('/\'\'[\\s\S]/', '', $line); // ''cmt
+			if(strlen($line) == 0)
 				continue;
 			list($attr, $value) = array_map('trim', explode('=', $line));
 			if($attr == 'name') {

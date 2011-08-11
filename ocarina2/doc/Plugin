@@ -23,15 +23,13 @@ Di seguito un breve tutorial pratico per lo sviluppo e l'installazione.
 	(`true` se attivo, `false` se disattivo) e infine uno spazio vuoto, obbligatorio.
 	
 	Volendo, possiamo anche utilizzare i commenti nel file di configurazione.
-	Basta iniziare una nuova riga anteponendoci uno dei seguenti caratteri:
-		//
-		''
-		##
-		--
-	È da notare il fatto che i commenti devono essere su singola riga, per esempio:
-		`// Hello, world!` -> Questo è un commento
-		`name = ChiTiPensa // Hello, world!` -> Questo è un commento
-		`name = ChiTiPensa` -> Questo non è un commento
+	Possiamo scrivere dove vogliamo nel nostro file di configurazione, basta anteporre al commento
+	uno dei seguenti caratteri:
+		/* */ -> Commento multilinea stile C (il numero di asterischi e indifferente, ex.: /***** **/)
+		// -> Commento a singola linea stile C
+		'' -> Commento a singola linea stile Visual Basic
+		## -> Commento a singola linea stile Perl
+		;; -> Commento a singola linea stile ASM
 	
 2. Il plugin
 	Ora procediamo a creare il plugin vero e proprio, che altro non farà che visualizzare
