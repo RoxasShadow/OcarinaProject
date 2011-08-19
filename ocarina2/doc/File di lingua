@@ -1,0 +1,6 @@
+La localizzazione di Ocarina è suddivisa in due parti.
+La prima è contenuta nel codice HTML del template, la seconda nei file di lingua contenuti in /core/languages/.
+Se vuoi creare un file di lingua, crea un file chiamato con le iniziali inglesi della lingua che desideri tradurre e l'estensione PHP (ad esempio: Italian -> `it.php`, English -> `en.php`, French -> `fr.php`).
+Nella prima riga dovrà esserci il tag di apertura `<?php` e nella seconda (non obbligatorio ma consigliato) un commento in stile multiline, con le informazioni sul file e sull'autore. 
+Nella la terza riga si dovrà dichiarare la funzione `getLanguage_LINGUA`, e nella successiva si dovrà ritornare un array con la localizzazione.
+Se vuoi scrivere il tuo file di lingua, apri e basati su /core/languages/it.php, dopodichè, se vuoi, inviamelo a <webmaster@giovannicapuano.net>.
