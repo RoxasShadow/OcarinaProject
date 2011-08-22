@@ -1,10 +1,8 @@
 Un plugin consente di estendere le funzionalità di Ocarina, implementando nuove funzioni.
 Di seguito un breve tutorial pratico per lo sviluppo e l'installazione.
 
-1. Il file plugins.cfg
-	Il file plugins.cfg (/plugin/plugins.cfg) consente di monitorare i plugin attivi
-	e di ottenere eventuali informazioni su ognuno di essi.
-	Quando si installa un nuovo plugin, bisogna aggiungere una nuova sezione al file.
+1. Il file plugin.cfg
+	Il file plugin.cfg, contenuto in ogni plugin, consente di ottenere importanti informazioni su ognuno di essi.
 	Un esempio per il plugin `HelloWorld` potrebbe essere il seguente.
 	
 		name = ChiTiPensa
@@ -16,11 +14,10 @@ Di seguito un breve tutorial pratico per lo sviluppo e l'installazione.
 		path = ChiTiPensa/chitipensa.php
 		enabled = true
 		
-		
 	Nella prima riga abbiamo un il nome con cui viene individuato il plugin, la versione, l'autore,
 	il suo sito web (privo della dichiarazione del protocollo), una breve descrizione delle sue
-	funzionalità (una per tutti, e una localizzata in italiano), il percorso, lo stato
-	(`true` se attivo, `false` se disattivo) e infine uno spazio vuoto, obbligatorio.
+	funzionalità (una per tutti, e una localizzata, nel suo casom in italiano), il percorso e lo stato
+	(`true` se attivo, `false` se disattivo).
 	
 	Volendo, possiamo anche utilizzare i commenti nel file di configurazione.
 	Possiamo scrivere dove vogliamo nel nostro file di configurazione, basta anteporre al commento
@@ -35,7 +32,7 @@ Di seguito un breve tutorial pratico per lo sviluppo e l'installazione.
 	Ora procediamo a creare il plugin vero e proprio, che altro non farà che visualizzare
 	un utente a caso al visitatore.
 	Creiamo quindi una cartella chiamata `ChiTiPensa` in /plugin/plugins/, nel quale creiamo un
-	file vuoto chiamato `chitipensa.php`.
+	file vuoto chiamato `chitipensa.php` e copiamo il file di configurazione creato poc'anzi.
 	Procediamo con lo scrivere il codice.
 	
 		<?php

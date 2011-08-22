@@ -20,28 +20,29 @@ final class Plugin {
 	
 	private function __construct() {
 		$plugin = NULL;
-		if(!file_exists(self::$root_index.'/plugin/plugins.cfg')) {
-			$f = fopen(self::$root_index.'/plugin/plugins.cfg', 'w');
-			fwrite($f, '');
-			fclose($f);
-		}
-		foreach(file(self::$root_index.'/plugin/plugins.cfg') as $line) {
-			$line = trim($line);
-			$line = preg_replace('/\/\\*[\\s\S]*?\\*\//', '', $line); // /*cmt*/ /(*^n)cmt(*^m)/
-			$line = preg_replace('/\/\/[\\s\S]/', '', $line); // //cmt (:D)
-			$line = preg_replace('/##[\\s\S]/', '', $line); // ##cmt
-			$line = preg_replace('/;;[\\s\S]/', '', $line); // ;;cmt
-			$line = preg_replace('/\'\'[\\s\S]/', '', $line); // ''cmt
-			if(strlen($line) == 0)
-				continue;
-			list($attr, $value) = array_map('trim', explode('=', $line));
-			if($attr == 'name') {
-				if(!is_null($plugin))
-					$this->plugins[$plugin['name']] = $plugin;
-				$plugin = array();
+		$dir = opendir(self::$root_index.'/plugin/plugins/');
+		$f = array();
+		while($cfg = readdir($dir))
+			if(($cfg !== '.') && ($cfg !== '..'))
+				$f[] = self::$root_index.'/plugin/plugins/'.$cfg.'/plugin.cfg';
+		foreach($f as $v)
+			foreach(file($v) as $line) {
+				$line = trim($line);
+				$line = preg_replace('/\/\\*[\\s\S]*?\\*\//', '', $line); // /*cmt*/ /(*^n)cmt(*^m)/
+				$line = preg_replace('/\/\/[\\s\S]/', '', $line); // //cmt (:D)
+				$line = preg_replace('/##[\\s\S]/', '', $line); // ##cmt
+				$line = preg_replace('/;;[\\s\S]/', '', $line); // ;;cmt
+				$line = preg_replace('/\'\'[\\s\S]/', '', $line); // ''cmt
+				if(strlen($line) == 0)
+					continue;
+				list($attr, $value) = array_map('trim', explode('=', $line));
+				if($attr == 'name') {
+					if(!is_null($plugin))
+						$this->plugins[$plugin['name']] = $plugin;
+					$plugin = array();
+				}
+				$plugin[$attr] = $value;
 			}
-			$plugin[$attr] = $value;
-		}
 		if(!is_null($plugin) && array_key_exists('name', $plugin))
 			$this->plugins[$plugin['name']] = $plugin;
 		unset($plugin);
@@ -54,14 +55,14 @@ final class Plugin {
 	public static function loadPlugin($name, $force = false) {
 		$repository = Plugin::getInstance();
 		if(!array_key_exists($name, $repository->plugins))
-			throw new Exception('Il plugin '.$name.' non esiste.');
+			throw new Exception("<b>Plugin system's log:</b> `$name` not exists.");
 		$plugin = $repository->plugins[$name];
 		if(($plugin['enabled'] == 'false') && (!$force))
-			throw new Exception('Il plugin '.$name.' non è attivo.');
+			throw new Exception("<b>Plugin system's log:</b> `$name` not enabled.");
 		if(!array_key_exists('__class__', $plugin)) {
 			$plugin['path'] = self::$root_index.'/plugin/plugins/'.$plugin['path'];
 			if(!file_exists($plugin['path']))
-				throw new Exception('Impossibile caricare il plugin '.$name.'.');
+				throw new Exception("<b>Plugin system's log:</b> Impossible to load `$name`");
 			require_once($plugin['path']);
 			$class_name = basename($plugin['path'], '.php');
 			$reflection = new ReflectionClass($class_name);
@@ -70,7 +71,7 @@ final class Plugin {
 			foreach($reflection->getInterfaces() as $interfaces)
 				$found = $interfaces->getName() == 'FrameworkPlugin';
 			if(!$found)
-				throw new Exception('Il plugin non può essere caricato.');
+				throw new Exception("<b>Plugin system's log:</b> Impossible to load `$name`");
 			$plugin['__class__'] = $class_name;
 		}
 		unset($repository);
@@ -80,7 +81,7 @@ final class Plugin {
 	public static function getMetadata($name, $meta, $default = NULL) {
 		$repository = Plugin::getInstance();
 		if(!array_key_exists($name, $repository->plugins))
-			throw new Exception('Il plugin '.$name.' non esiste.');
+			throw new Exception("<b>Plugin system's log:</b> `$name` not exists.");
 		$plugin = $repository->plugins[$name];
 		unset($repository);
 		return array_key_exists($meta, $plugin) ? $plugin[$meta] : $default;
@@ -124,19 +125,10 @@ final class Plugin {
 		} while(false);
 		$config = '';
 		
-		$f = fopen($path.substr($_FILES['plugin']['name'], 0, -4).'/plugin.cfg', 'r');
-		$config = fread($f, filesize($path.substr($_FILES['plugin']['name'], 0, -4).'/plugin.cfg'));
-		fclose($f);
-		
-		$f = fopen(Plugin::$root_index.'/plugin/plugins.cfg', 'a+');
-		fwrite($f, $config);
-		fclose($f);
-		
 		self::$instance = new Plugin(); // Nuova istanza
 		$plugin = Plugin::loadPlugin(substr($_FILES['plugin']['name'], 0, -4), true);
 		if(Plugin::pluginExists(substr($_FILES['plugin']['name'], 0, -4)))
 			$config = $plugin->install();
-		unlink($path.substr($_FILES['plugin']['name'], 0, -4).'/plugin.cfg');
 		return $config;
 	}
 	

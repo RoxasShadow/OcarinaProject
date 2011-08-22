@@ -1,4 +1,4 @@
---Disinstallando un plugin, viene rimossa anche la sua configurazione;
+--Attivazione e disattivazione dei plugin via pannello;
 --Bugfix del /REPORT;
 --Skin `mobile`;
 --Scaricare il plugin di jQuery `lazyloading` e provarlo.
