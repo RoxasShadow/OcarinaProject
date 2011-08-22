@@ -12,12 +12,14 @@ Di seguito un breve tutorial pratico per lo sviluppo e l'installazione.
 		description = Who is thinking you right now?
 		description[it] = Chi ti sta pensando in questo momento?
 		path = ChiTiPensa/chitipensa.php
+		working = first
 		enabled = true
 		
 	Nella prima riga abbiamo un il nome con cui viene individuato il plugin, la versione, l'autore,
 	il suo sito web (privo della dichiarazione del protocollo), una breve descrizione delle sue
-	funzionalità (una per tutti, e una localizzata, nel suo casom in italiano), il percorso e lo stato
-	(`true` se attivo, `false` se disattivo).
+	funzionalità (una per tutti, e una localizzata, nel suo caso in italiano) e il percorso.
+	Subito dopo definiamo quando deve essere attivato (`first` all'inizializzazione del CMS e `after` subito
+	prima del rendering) e lo stato (`true` se attivo, `false` se disattivo).
 	
 	Volendo, possiamo anche utilizzare i commenti nel file di configurazione.
 	Possiamo scrivere dove vogliamo nel nostro file di configurazione, basta anteporre al commento
@@ -98,7 +100,6 @@ Di seguito un breve tutorial pratico per lo sviluppo e l'installazione.
 		`postmenu` -> Subito dopo il menù
 		`stats` -> Le statistiche del sito
 		`footer` -> Prima della chiusura del tag body
-	Una piccola nota tecnica per concludere la sezione: i plugin vengono caricati appena la classe principale Ocarina viene istanziata,
-	in modo da agire su qualsiasi parametro prima di un'eventuale elaborazione.
+	Una piccola nota tecnica per concludere la sezione: impostiamo il working ad `after` quando abbiamo bisogno di agire su tag del motore di rendering già istanziati e pronti ad essere utilizzati (come ad esempio è stato fatto per il plugin NoSpam), mentre `first` dovrebbe andare bene in tutti gli altri casi.  
 
 Insomma, possiamo fare di tutto, l'importante è stare attenti a creare plugin sicuri, corretti e veloci :D

@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-08-10 14:39:32
+<?php /* Smarty version Smarty-3.0.8, created on 2011-08-22 22:57:07
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/ricerca.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:18256544874e429824962915-10815409%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:16938123274e52dec3cf9975-91418742%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'a671e611ae7f3d59f55487015a156eeeb7c4935d' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/default/ricerca.tpl',
-      1 => 1311967659,
+      1 => 1314053799,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '18256544874e429824962915-10815409',
+  'nocache_hash' => '16938123274e52dec3cf9975-91418742',
   'function' => 
   array (
   ),
@@ -23,18 +23,18 @@ $_smarty_tpl->decodeProperties(array (
 	<div id="post-0" class="post">
 	<?php if ($_smarty_tpl->getVariable('cerca')->value){?>
 		Cerca tra le news:<br />
-		<form action="" method="post">
-		<input type="text" name="news" /><input type="submit" value="Cerca" name="submitNews" />
+		<form action="" method="get">
+		<input type="text" name="news" /><input type="submit" value="Cerca" />
 		</form>
 		<br />
 		Cerca tra le pagine:<br />
-		<form action="" method="post">
-		<input type="text" name="pagine" /><input type="submit" value="Cerca" name="submitPage" />
+		<form action="" method="get">
+		<input type="text" name="pagine" /><input type="submit" value="Cerca" />
 		</form>
 		<br />
 		Cerca tra i commenti:<br />
-		<form action="" method="post">
-		<input type="text" name="commenti" /><input type="submit" value="Cerca" name="submitComment" />
+		<form action="" method="get">
+		<input type="text" name="commenti" /><input type="submit" value="Cerca" />
 		</form>
 	<?php }else{ ?>
 	

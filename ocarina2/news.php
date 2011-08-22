@@ -13,8 +13,10 @@ $comment = isset($_POST['comment']) ? $ocarina->purge($_POST['comment']) : '';
 
 $ocarina->skin = $ocarina->isLogged() ? $ocarina->username[0]->skin : $ocarina->config[0]->skin;
 
-if($titolo == '')
+if($titolo == '') {
+	$ocarina->addValue('titolo', $ocarina->config[0]->nomesito);
 	$ocarina->addValue('error', $ocarina->getLanguage('news', 1));
+}
 else {
 	if(!$news = $ocarina->getNews($titolo)) {
 		$ocarina->addValue('error', $ocarina->getLanguage('news', 2));

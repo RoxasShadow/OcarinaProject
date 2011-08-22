@@ -15,7 +15,7 @@ class Ocarina extends Rendering {
 			$plugins = Plugin::listPlugins();
 			$varList = parent::getValues();
 			foreach($plugins as $element)
-				if((Plugin::getMetadata($element, 'enabled', '') == 'true') && (file_exists($this->config[0]->root_index.'/plugin/plugins/'.Plugin::getMetadata($element, 'path', ''))))
+				if((Plugin::getMetadata($element, 'enabled', '') == 'true') && (Plugin::getMetadata($element, 'working', '') == 'first') && (file_exists($this->config[0]->root_index.'/plugin/plugins/'.Plugin::getMetadata($element, 'path', ''))))
 					try {
 						$plugin = Plugin::loadPlugin($element);
 						$output = $plugin->main($varList);

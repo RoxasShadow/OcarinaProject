@@ -12,11 +12,15 @@ $titolo = ((isset($_GET['titolo'])) && ($_GET['titolo'] !== '')) ? $ocarina->pur
 
 $ocarina->skin = $ocarina->isLogged() ? $ocarina->username[0]->skin : $ocarina->config[0]->skin;
 
-if($titolo == '')
+if($titolo == '') {
 	$ocarina->addValue('error', $ocarina->getLanguage('page', 0));
+	$ocarina->addValue('titolo', $ocarina->config[0]->nomesito);
+}
 else {
-	if(!$getPage = $ocarina->getPage($titolo))
+	if(!$getPage = $ocarina->getPage($titolo)) {
 		$ocarina->addValue('error', $ocarina->getLanguage('page', 1));
+		$ocarina->addValue('titolo', $ocarina->config[0]->nomesito);
+	}
 	else {
 		if($ocarina->config[0]->bbcode == 1)
 			for($i=0, $count=count($getPage); $i<$count; ++$i)

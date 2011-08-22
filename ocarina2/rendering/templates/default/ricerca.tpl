@@ -5,18 +5,18 @@
 	<div id="post-0" class="post">
 	{if $cerca}
 		Cerca tra le news:<br />
-		<form action="" method="post">
-		<input type="text" name="news" /><input type="submit" value="Cerca" name="submitNews" />
+		<form action="" method="get">
+		<input type="text" name="news" /><input type="submit" value="Cerca" />
 		</form>
 		<br />
 		Cerca tra le pagine:<br />
-		<form action="" method="post">
-		<input type="text" name="pagine" /><input type="submit" value="Cerca" name="submitPage" />
+		<form action="" method="get">
+		<input type="text" name="pagine" /><input type="submit" value="Cerca" />
 		</form>
 		<br />
 		Cerca tra i commenti:<br />
-		<form action="" method="post">
-		<input type="text" name="commenti" /><input type="submit" value="Cerca" name="submitComment" />
+		<form action="" method="get">
+		<input type="text" name="commenti" /><input type="submit" value="Cerca" />
 		</form>
 	{else}
 	

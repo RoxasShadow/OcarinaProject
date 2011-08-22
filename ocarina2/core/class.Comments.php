@@ -36,9 +36,7 @@ class Comments extends News {
 	
 	/* Ricerca i commenti da una keyword. */
 	public function searchComment($keyword) {
-		if(!$result = parent::get("SELECT * FROM {$this->prefix}commenti WHERE contenuto LIKE '%$keyword%' AND approvato='1' ORDER BY id DESC"))
-			return false;
-		return $result;
+		return ($result = parent::get("SELECT * FROM {$this->prefix}commenti WHERE contenuto LIKE '%$keyword%' AND approvato='1' ORDER BY id DESC")) ? $result : false;
 	}
 	
 	/* Ricerca il commento da un id. */

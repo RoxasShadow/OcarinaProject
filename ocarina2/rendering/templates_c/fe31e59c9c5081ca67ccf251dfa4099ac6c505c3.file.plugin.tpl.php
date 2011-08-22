@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-08-09 21:14:00
+<?php /* Smarty version Smarty-3.0.8, created on 2011-08-22 20:04:04
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/admin/plugin.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:1167518354e41a3186ba8b0-40039259%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:9885796234e52b634dcd845-74827815%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'fe31e59c9c5081ca67ccf251dfa4099ac6c505c3' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/admin/plugin.tpl',
-      1 => 1312924372,
+      1 => 1314023126,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '1167518354e41a3186ba8b0-40039259',
+  'nocache_hash' => '9885796234e52b634dcd845-74827815',
   'function' => 
   array (
   ),
@@ -57,9 +57,11 @@ $_smarty_tpl->tpl_vars['var']->first = $_smarty_tpl->tpl_vars['var']->iteration 
 				<td><?php echo $_smarty_tpl->getVariable('plugins')->value['path'][$_smarty_tpl->tpl_vars['var']->value];?>
 </td>
 				<?php if ($_smarty_tpl->getVariable('plugins')->value['enabled'][$_smarty_tpl->tpl_vars['var']->value]=='true'){?>
-					<td>Si</td>
+					<td><a href="?deactive=<?php echo $_smarty_tpl->getVariable('plugins')->value['name'][$_smarty_tpl->tpl_vars['var']->value];?>
+">Si</a></td>
 				<?php }elseif($_smarty_tpl->getVariable('plugins')->value['enabled'][$_smarty_tpl->tpl_vars['var']->value]=='false'){?>
-					<td>No</td>
+					<td><a href="?active=<?php echo $_smarty_tpl->getVariable('plugins')->value['name'][$_smarty_tpl->tpl_vars['var']->value];?>
+">No</a></td>
 				<?php }?>
 			<?php }} ?>
 			</table>

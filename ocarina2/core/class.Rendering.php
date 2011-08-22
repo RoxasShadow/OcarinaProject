@@ -94,6 +94,27 @@ class Rendering extends Page {
 
 	/* Il motore di rendering effettua il rendering del template in input e lo visualizza. */
 	public function renderize($filename) {
+		require_once('class.Plugin.php');
+		if($this->config[0]->plugin == 1) {
+			$plugins = Plugin::listPlugins();
+			$varList = $this->getValues();
+			foreach($plugins as $element)
+				if((Plugin::getMetadata($element, 'enabled', '') == 'true') && (Plugin::getMetadata($element, 'working', '') == 'after') && (file_exists($this->config[0]->root_index.'/plugin/plugins/'.Plugin::getMetadata($element, 'path', ''))))
+					try {
+						$plugin = Plugin::loadPlugin($element);
+						$output = $plugin->main($varList);
+						if(is_array($output))
+							foreach($output as $name => $value)
+								if(($name !== '') && ($value !== ''))
+									$this->addValue($name, $value);
+					}
+					catch(Exception $e) {
+						echo $e->getMessage();
+					}
+			unset($plugins);
+		}
+		
+		
 		/* Renderizza il tutto con la skin appropriata. */
 		require_once($this->config[0]->root_index.'/etc/mobile_device_detect.php');
 		if($this->skin == 'admin') {

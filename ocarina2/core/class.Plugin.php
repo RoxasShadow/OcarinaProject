@@ -99,10 +99,8 @@ final class Plugin {
 	public static function pluginActive($name) {
 		if(!Plugin::pluginExists($name))
 			return false;
-		$f = fopen(self::$root_index.'/plugin/plugins/'.$name.'/plugin.cfg', 'r');
+		$f = fopen(self::$root_index.'/plugin/plugins/'.$name.'/plugin.cfg', 'r+');
 		$cfg = str_replace('enabled = false', 'enabled = true', fread($f, filesize(self::$root_index.'/plugin/plugins/'.$name.'/plugin.cfg')));
-		fclose($f);
-		$f = fopen(self::$root_index.'/plugin/plugins/'.$name.'/plugin.cfg', 'w');
 		fwrite($f, $cfg);
 		fclose($f);
 		self::$instance = new Plugin();
@@ -112,7 +110,7 @@ final class Plugin {
 	public static function pluginDeactive($name) {
 		if(!Plugin::pluginExists($name))
 			return false;
-		$f = fopen(self::$root_index.'/plugin/plugins/'.$name.'/plugin.cfg', 'a+');
+		$f = fopen(self::$root_index.'/plugin/plugins/'.$name.'/plugin.cfg', 'r+');
 		$cfg = str_replace('enabled = true', 'enabled = false', fread($f, filesize(self::$root_index.'/plugin/plugins/'.$name.'/plugin.cfg')));
 		fwrite($f, $cfg);
 		fclose($f);
