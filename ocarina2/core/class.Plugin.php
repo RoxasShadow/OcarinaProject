@@ -23,7 +23,7 @@ final class Plugin {
 		$dir = opendir(self::$root_index.'/plugin/plugins/');
 		$f = array();
 		while($cfg = readdir($dir))
-			if(($cfg !== '.') && ($cfg !== '..'))
+			if(($cfg !== '.') && ($cfg !== '..') && (is_dir(self::$root_index.'/plugin/plugins/'.$cfg)))
 				$f[] = self::$root_index.'/plugin/plugins/'.$cfg.'/plugin.cfg';
 		foreach($f as $v)
 			foreach(file($v) as $line) {
@@ -94,6 +94,30 @@ final class Plugin {
 		$exists = array_key_exists($name, $repository->plugins);
 		unset($repository);
 		return $exists;
+	}
+	
+	public static function pluginActive($name) {
+		if(!Plugin::pluginExists($name))
+			return false;
+		$f = fopen(self::$root_index.'/plugin/plugins/'.$name.'/plugin.cfg', 'r');
+		$cfg = str_replace('enabled = false', 'enabled = true', fread($f, filesize(self::$root_index.'/plugin/plugins/'.$name.'/plugin.cfg')));
+		fclose($f);
+		$f = fopen(self::$root_index.'/plugin/plugins/'.$name.'/plugin.cfg', 'w');
+		fwrite($f, $cfg);
+		fclose($f);
+		self::$instance = new Plugin();
+		return (Plugin::getMetadata($name, 'enabled', '') == 'true') ? true : false;
+	}
+	
+	public static function pluginDeactive($name) {
+		if(!Plugin::pluginExists($name))
+			return false;
+		$f = fopen(self::$root_index.'/plugin/plugins/'.$name.'/plugin.cfg', 'a+');
+		$cfg = str_replace('enabled = true', 'enabled = false', fread($f, filesize(self::$root_index.'/plugin/plugins/'.$name.'/plugin.cfg')));
+		fwrite($f, $cfg);
+		fclose($f);
+		self::$instance = new Plugin();
+		return (Plugin::getMetadata($name, 'enabled', '') == 'false') ? true : false;
 	}
 	
 	public static function listPlugins() {

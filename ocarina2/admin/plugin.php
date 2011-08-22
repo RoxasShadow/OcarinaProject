@@ -8,6 +8,8 @@ require_once('../core/class.Plugin.php');
 $ocarina = new Ocarina();
 $plugin = ((isset($_FILES['plugin'])) && ($_FILES['plugin'] !== '')) ? $_FILES['plugin'] : '';
 $disinstall = ((isset($_GET['disinstall'])) && ($_GET['disinstall'] !== '')) ? $ocarina->purge($_GET['disinstall']) : '';
+$active = ((isset($_GET['active'])) && ($_GET['active'] !== '')) ? $ocarina->purge($_GET['active']) : '';
+$deactive = ((isset($_GET['deactive'])) && ($_GET['deactive'] !== '')) ? $ocarina->purge($_GET['deactive']) : '';
 $submit = ($plugin !== '') ? true : false;
 
 $ocarina->skin = 'admin';
@@ -24,6 +26,20 @@ if(($ocarina->isLogged()) && ($ocarina->username[0]->grado == 1)) {
 			if($ocarina->config[0]->log == 1)
 				$ocarina->log($ocarina->username[0]->nickname, 'Plugin `'.$disinstall.'` disinstalled.');
 		}
+	elseif($active !== '')
+		if(!Plugin::pluginExists($active))
+			$ocarina->addValue('result', $ocarina->getLanguage('activeplugin', 0));
+		elseif(!Plugin::pluginActive($active))
+			$ocarina->addValue('result', $ocarina->getLanguage('activeplugin', 1));
+		else
+			$ocarina->addValue('result', $ocarina->getLanguage('activeplugin', 2));
+	elseif($deactive !== '')
+		if(!Plugin::pluginExists($deactive))
+			$ocarina->addValue('result', $ocarina->getLanguage('deactiveplugin', 0));
+		elseif(!Plugin::pluginDeactive($deactive))
+			$ocarina->addValue('result', $ocarina->getLanguage('deactiveplugin', 1));
+		else
+			$ocarina->addValue('result', $ocarina->getLanguage('deactiveplugin', 2));
 	elseif($submit)
 		if($plugin !== '')
 			if(Plugin::pluginExists(substr($plugin['name'], 0, -4)))

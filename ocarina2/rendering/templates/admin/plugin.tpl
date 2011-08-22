@@ -28,9 +28,9 @@
 				<td>{$plugins['description'][$var]}</td>
 				<td>{$plugins['path'][$var]}</td>
 				{if $plugins['enabled'][$var] == 'true'}
-					<td>Si</td>
+					<td><a href="?deactive={$plugins['name'][$var]}">Si</a></td>
 				{elseif $plugins['enabled'][$var] == 'false'}
-					<td>No</td>
+					<td><a href="?active={$plugins['name'][$var]}">No</a></td>
 				{/if}
 			{/for}
 			</table>

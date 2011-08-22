@@ -292,6 +292,18 @@ function getLanguage_it() {
 				'Il plugin è stato disinstallato correttamente.'
 		),
 		
+		'activeplugin' => array(
+				'Il plugin non esiste, e pertanto non può essere attivato.',
+				'È accaduto un errore durante l\'attivazione del plugin.',
+				'Il plugin è stato attivato correttamente.'
+		),
+		
+		'deactiveplugin' => array(
+				'Il plugin non esiste, e pertanto non può essere disattivato.',
+				'È accaduto un errore durante la disattivazione del plugin.',
+				'Il plugin è stato disattivato correttamente.'
+		),
+		
 		'installskin' => array(
 			'La skin è stata installata.',
 			'È accaduto un errore durante l\'installazione della skin.'
