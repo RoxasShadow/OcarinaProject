@@ -15,12 +15,11 @@ che sono stati inviati dagli utenti.
 Ogni news ha una singola pagina dedicata che permette di visualizzarla per tutta la sua
 interezza, di votarla, di commentarla, di leggere gli altri commenti e di raggiungerli
 tramite una pagina dedicata.
-Per le pagine vale lo stesso, ma non permettono di essere commentate e non sono visualizzate nella index.
+Per le pagine vale lo stesso detto sopra, ma non permettono di essere commentate e non sono visualizzate nella index.
 Ogni pagina o news è indicata nell'URL con un minititolo (o permalink), ovvero un titolo ottimizzato per
 i motori di ricerca.
-L'archivio raggruppa tutte le pagine e le news che sono state create,
-indistintamente, e mostra, inoltre, anche le visite di ciascuna, mentre le categorie mostrano le news e
-le pagine che sono raggruppate in essa.
+L'archivio raggruppa tutte le pagine e le news che sono state create, indistintamente, e mostra, inoltre,
+anche le visite di ciascuna, mentre le categorie mostrano le news e le pagine che sono raggruppate in essa.
 Tramite il motore di ricerca integrato, è possibile cercare pagine, news e commenti digitando
 una parola chiave.
 Ogni utente, dopo la registrazione, può commentare, votare, personalizzare il proprio profilo e perfino
@@ -163,6 +162,16 @@ Per entrare in modalità debug, basta caricare il template omonimo nella cartell
 In /doc/ è possibile trovare un template ed uno script che possono dare degli esempi per la creazione di nuovi
 template.
 Ricordate che potete modificare la classe per essere compatibile anche con altri motori di rendering.
+
+-class.Plugin.php
+La suddetta classe rappresenta il motore di elaborazione dei Plugin.
+Il costruttore carica tutti i file di configurazione dei plugin all'interno delle relative cartelle, dopodichè
+per ciascun file parsa ogni riga conservando i dati nell'array apposito.
+Per quanto riguarda i metodi statici:
+	loadPlugin() prende come argomento il nome di un plugin, esegue dei controlli e ritorna la sua istanza;
+	getMetadata() prende come argomento il nome di un plugin e un metadato (ovvero i tag che usiamo nel file di
+		      configurazione) e ritorna il suo valore.
+Altri 3 metodi statici che, rispettivamente, verificano la presenza di un plugin tra quelli caricati e attivano e disattivano un plugin agendo sul relativo file di configurazione, vengono accompagnati da listPlugin() che ritorna la lista dei plugin caricati e gli ultimi due, installPlugin() che prendono come argomento un archivio zip da un form multipart-data, li estrae, elimina l'archivio, carica il plugin e attiva il suo metodo install(), e disinstallPlugin(), che attiva il metodo disinstall() del plugin in questione e ne cancella la cartella.
 
 /etc/
 

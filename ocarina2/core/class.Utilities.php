@@ -431,4 +431,13 @@ class Utilities extends Languages {
 	  		$success = true;
 		return $success; 
 	}
+	
+	/* Evidenzia le parole in un oggetto contenente un contenuto (news, pagine, commenti...) */
+	public function highlightContent($content, $highlight) {
+		if(empty($content))
+			return false;
+		for($i=0, $count=count($content); $i<$count; ++$i)
+			$content[$i]->contenuto = str_ireplace($highlight, '<font color="yellow">'.$highlight.'</font>', $content[$i]->contenuto);
+		return $content;
+	}
 }

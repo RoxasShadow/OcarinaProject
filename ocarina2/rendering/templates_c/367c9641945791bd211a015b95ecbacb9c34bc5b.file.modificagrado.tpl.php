@@ -1,6 +1,6 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-08-09 23:25:47
+<?php /* Smarty version Smarty-3.0.8, created on 2011-08-23 16:44:53
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/admin/modificagrado.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:16507312934e41c1fb50c053-66010275%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:5999815444e53d9058c3e74-40747749%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
@@ -11,7 +11,7 @@ $_smarty_tpl->decodeProperties(array (
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '16507312934e41c1fb50c053-66010275',
+  'nocache_hash' => '5999815444e53d9058c3e74-40747749',
   'function' => 
   array (
   ),

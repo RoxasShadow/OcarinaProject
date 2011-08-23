@@ -52,18 +52,14 @@
 		useronline()
 		visitatoronline()
 */
-require_once('core/class.Comments.php');
-require_once('core/class.Page.php');
-require_once('core/class.User.php');
-$comment = new Comments();
-$pagina = new Page();
-$user = new User();
-$action = isset($_GET['action']) ? $comment->purge($_GET['action']) : '';
-$titolo = isset($_GET['title']) ? $comment->purge($_GET['title']) : '';
-$nickname = isset($_GET['nickname']) ? $comment->purge($_GET['nickname']) : '';
-$password = isset($_GET['password']) ? $comment->purge($_GET['password']) : '';
-$email = isset($_GET['email']) ? $comment->purge($_GET['email']) : '';
-$contenuto = isset($_GET['content']) ? $comment->purge($_GET['content']) : '';
+require_once('core/class.Ocarina.php');
+$ocarina = new Ocarina();
+$action = isset($_GET['action']) ? $ocarina->purge($_GET['action']) : '';
+$titolo = isset($_GET['title']) ? $ocarina->purge($_GET['title']) : '';
+$nickname = isset($_GET['nickname']) ? $ocarina->purge($_GET['nickname']) : '';
+$password = isset($_GET['password']) ? $ocarina->purge($_GET['password']) : '';
+$email = isset($_GET['email']) ? $ocarina->purge($_GET['email']) : '';
+$contenuto = isset($_GET['content']) ? $ocarina->purge($_GET['content']) : '';
 $id = ((isset($_GET['id'])) && is_numeric($_GET['id'])) ? (int)$_GET['id'] : '';
 $actionPermitted = array(
 	'news',
@@ -92,34 +88,34 @@ $actionPermitted = array(
 );
 
 if(($action == 'news') && ($titolo !== '')) {
-	if(!$comment = $comment->getNews($titolo))
+	if(!$ocarina = $ocarina->getNews($titolo))
 		echo '{"response":"1"}';
 	else {
 		echo '{';
 			echo '"response": {';
-				echo '"id":'.json_encode($comment[0]->id).',';
-				echo '"author":'.json_encode($comment[0]->autore).',';
-				echo '"title":'.json_encode($comment[0]->titolo).',';
-				echo '"minititle":'.json_encode($comment[0]->minititolo).',';
-				echo '"content":'.json_encode($comment[0]->contenuto).',';
-				echo '"category":'.json_encode($comment[0]->categoria).',';
-				echo '"date":'.json_encode($comment[0]->data).',';
-				echo '"hour":'.json_encode($comment[0]->ora).',';
-				echo '"lastmoddate":'.json_encode($comment[0]->dataultimamodifica).',';
-				echo '"lastmodhour":'.json_encode($comment[0]->oraultimamodifica).',';
-				echo '"lastmodauthor":'.json_encode($comment[0]->autoreultimamodifica).',';
-				echo '"visits":'.json_encode($comment[0]->visite).',';
-				echo '"votes":'.json_encode($comment[0]->voti);
+				echo '"id":'.json_encode($ocarina[0]->id).',';
+				echo '"author":'.json_encode($ocarina[0]->autore).',';
+				echo '"title":'.json_encode($ocarina[0]->titolo).',';
+				echo '"minititle":'.json_encode($ocarina[0]->minititolo).',';
+				echo '"content":'.json_encode($ocarina[0]->contenuto).',';
+				echo '"category":'.json_encode($ocarina[0]->categoria).',';
+				echo '"date":'.json_encode($ocarina[0]->data).',';
+				echo '"hour":'.json_encode($ocarina[0]->ora).',';
+				echo '"lastmoddate":'.json_encode($ocarina[0]->dataultimamodifica).',';
+				echo '"lastmodhour":'.json_encode($ocarina[0]->oraultimamodifica).',';
+				echo '"lastmodauthor":'.json_encode($ocarina[0]->autoreultimamodifica).',';
+				echo '"visits":'.json_encode($ocarina[0]->visite).',';
+				echo '"votes":'.json_encode($ocarina[0]->voti);
 			echo '}';
 		echo '}';
 	}
 }
 elseif(($action == 'news') && ($titolo == '')) {
-	if(!$comment = $comment->getNews())
+	if(!$ocarina = $ocarina->getNews())
 		echo '{"response":"1"}';
 	else {
 		$json = '{"response": [';
-		foreach($comment as $v) {
+		foreach($ocarina as $v) {
 			$json .= '{';
 				$json .= '"id":'.json_encode($v->id).',';
 				$json .= '"author":'.json_encode($v->autore).',';
@@ -140,11 +136,11 @@ elseif(($action == 'news') && ($titolo == '')) {
 	}
 }
 elseif($action == 'lastnews') {
-	if(!$comment = $comment->getNews('', 0, 10))
+	if(!$ocarina = $ocarina->getNews('', 0, 10))
 		echo '{"response":"1"}';
 	else {
 		$json = '{"response": [';
-		foreach($comment as $v) {
+		foreach($ocarina as $v) {
 			$json .= '{';
 				$json .= '"id":'.json_encode($v->id).',';
 				$json .= '"author":'.json_encode($v->autore).',';
@@ -165,14 +161,14 @@ elseif($action == 'lastnews') {
 	}
 }
 elseif($action == 'countnews') {
-	echo '{"response":'.json_encode($comment->countNews()).'}';
+	echo '{"response":'.json_encode($ocarina->countNews()).'}';
 }
 elseif(($action == 'searchnews') && ($contenuto !== '')) {
-	if(!$comment = $comment->searchNews($contenuto))
+	if(!$ocarina = $ocarina->searchNews($contenuto))
 		echo '{"response":"1"}';
 	else {
 		$json = '{"response": [';
-		foreach($comment as $v) {
+		foreach($ocarina as $v) {
 			$json .= '{';
 				$json .= '"id":'.json_encode($v->id).',';
 				$json .= '"author":'.json_encode($v->autore).',';
@@ -193,19 +189,19 @@ elseif(($action == 'searchnews') && ($contenuto !== '')) {
 	}
 }
 elseif(($action == 'votenews') && ($titolo !== '')) {
-	if(!$comment->isLogged())
+	if(!$ocarina->isLogged())
 		echo '{"response":"2"}';
-	elseif(!$comment->voteNews($titolo))
+	elseif(!$ocarina->voteNews($titolo))
 		echo '{"response":"1"}';
 	else
 		echo '{"response":"9"}';
 }
 elseif(($action == 'comment') && ($titolo == '') && ($id == '')) {
-	if(!$comment = $comment->getComment())
+	if(!$ocarina = $ocarina->getComment())
 		echo '{"response":"1"}';
 	else {
 		$json = '{"response": [';
-		foreach($comment as $v) {
+		foreach($ocarina as $v) {
 			$json .= '{';
 				$json .= '"id":'.json_encode($v->id).',';
 				$json .= '"author":'.json_encode($v->autore).',';
@@ -219,27 +215,27 @@ elseif(($action == 'comment') && ($titolo == '') && ($id == '')) {
 	}
 }
 elseif(($action == 'comment') && ($id !== '')) {
-	if(!$comment = $comment->searchCommentById($id))
+	if(!$ocarina = $ocarina->searchCommentById($id))
 		echo '{"response":"1"}';
 	else {
 		echo '{';
 			echo '"response": {';
-				echo '"id":'.json_encode($comment[0]->id).',';
-				echo '"author":'.json_encode($comment[0]->autore).',';
-				echo '"content":'.json_encode($comment[0]->contenuto).',';
-				echo '"news":'.json_encode($comment[0]->news).',';
-				echo '"date":'.json_encode($comment[0]->data).',';
-				echo '"hour":'.json_encode($comment[0]->ora);
+				echo '"id":'.json_encode($ocarina[0]->id).',';
+				echo '"author":'.json_encode($ocarina[0]->autore).',';
+				echo '"content":'.json_encode($ocarina[0]->contenuto).',';
+				echo '"news":'.json_encode($ocarina[0]->news).',';
+				echo '"date":'.json_encode($ocarina[0]->data).',';
+				echo '"hour":'.json_encode($ocarina[0]->ora);
 			echo '}';
 		echo '}';
 	}
 }
 elseif(($action == 'comment') && ($titolo !== '')) {
-	if(!$comment = $comment->getComment($titolo))
+	if(!$ocarina = $ocarina->getComment($titolo))
 		echo '{"response":"1"}';
 	else {
 		$json = '{"response": [';
-		foreach($comment as $v) {
+		foreach($ocarina as $v) {
 			$json .= '{';
 				$json .= '"id":'.json_encode($v->id).',';
 				$json .= '"author":'.json_encode($v->autore).',';
@@ -253,11 +249,11 @@ elseif(($action == 'comment') && ($titolo !== '')) {
 	}
 }
 elseif(($action == 'searchcomment') && ($contenuto !== '')) {
-	if(!$comment = $comment->searchComment($contenuto))
+	if(!$ocarina = $ocarina->searchComment($contenuto))
 		echo '{"response":"1"}';
 	else {
 		$json = '{"response": [';
-		foreach($comment as $v) {
+		foreach($ocarina as $v) {
 			$json .= '{';
 				$json .= '"id":'.json_encode($v->id).',';
 				$json .= '"author":'.json_encode($v->autore).',';
@@ -272,17 +268,17 @@ elseif(($action == 'searchcomment') && ($contenuto !== '')) {
 }
 elseif(($action == 'createcomment') && ($titolo !== '') && ($contenuto !== '') && ($nickname !== '')) {
 	if($user->isLogged()) {
-		$array = ($comment->config[0]->approvacommenti == 0) ? array($nickname, $contenuto, $titolo, date('d-m-y'), date('G:m:s'), 1) : array($nickname, $contenuto, $titolo, date('d-m-y'), date('G:m:s'), 0);
-		if($comment->config[0]->commenti == 0)
+		$array = ($ocarina->config[0]->approvacommenti == 0) ? array($nickname, $contenuto, $titolo, date('d-m-y'), date('G:m:s'), 1) : array($nickname, $contenuto, $titolo, date('d-m-y'), date('G:m:s'), 0);
+		if($ocarina->config[0]->commenti == 0)
 			echo '{"response":"11"}';
-		elseif($comment->createComment($array)) {
-			if($comment->config[0]->log == 1)
-				$comment->log($nickname, 'Comment sended.');
-			echo ($comment->config[0]->approvacommenti == 0) ? '{"response":"13"}' : '{"response":"14"}';
+		elseif($ocarina->createComment($array)) {
+			if($ocarina->config[0]->log == 1)
+				$ocarina->log($nickname, 'Comment sended.');
+			echo ($ocarina->config[0]->approvacommenti == 0) ? '{"response":"13"}' : '{"response":"14"}';
 		}
 		else {
-			if($comment->config[0]->log == 1)
-				$comment->log($nickname, 'Comment was not sended.');
+			if($ocarina->config[0]->log == 1)
+				$ocarina->log($nickname, 'Comment was not sended.');
 			echo '{"response":"12"}';
 		}
 	}
@@ -290,11 +286,11 @@ elseif(($action == 'createcomment') && ($titolo !== '') && ($contenuto !== '') &
 		echo '{"response":"2"}';
 }
 elseif(($action == 'mycomment') && ($nickname !== '')) {
-	if(!$comment = $comment->searchCommentByUser($nickname))
+	if(!$ocarina = $ocarina->searchCommentByUser($nickname))
 		echo '{"response":"1"}';
 	else {
 		$json = '{"response": [';
-		foreach($comment as $v) {
+		foreach($ocarina as $v) {
 			$json .= '{';
 				$json .= '"id":'.json_encode($v->id).',';
 				$json .= '"author":'.json_encode($v->autore).',';
@@ -308,37 +304,37 @@ elseif(($action == 'mycomment') && ($nickname !== '')) {
 	}
 }
 elseif(($action == 'countcomment') && ($titolo !== '')) {
-	echo '{"response":'.json_encode($comment->countCommentByNews($titolo)).'}';
+	echo '{"response":'.json_encode($ocarina->countCommentByNews($titolo)).'}';
 }
 elseif(($action == 'page') && ($titolo !== '')) {
-	if(!$pagina = $pagina->getPage($titolo))
+	if(!$ocarina = $ocarina->getPage($titolo))
 		echo '{"response":"1"}';
 	else {
 		echo '{';
 			echo '"response": {';
-				echo '"id":'.json_encode($pagina[0]->id).',';
-				echo '"author":'.json_encode($pagina[0]->autore).',';
-				echo '"title":'.json_encode($pagina[0]->titolo).',';
-				echo '"minititle":'.json_encode($pagina[0]->minititolo).',';
-				echo '"content":'.json_encode($pagina[0]->contenuto).',';
-				echo '"category":'.json_encode($pagina[0]->categoria).',';
-				echo '"date":'.json_encode($pagina[0]->data).',';
-				echo '"hour":'.json_encode($pagina[0]->ora).',';
-				echo '"lastmoddate":'.json_encode($pagina[0]->dataultimamodifica).',';
-				echo '"lastmodhour":'.json_encode($pagina[0]->oraultimamodifica).',';
-				echo '"lastmodauthor":'.json_encode($pagina[0]->autoreultimamodifica).',';
-				echo '"visits":'.json_encode($pagina[0]->visite).',';
-				echo '"votes":'.json_encode($pagina[0]->voti);				
+				echo '"id":'.json_encode($ocarina[0]->id).',';
+				echo '"author":'.json_encode($ocarina[0]->autore).',';
+				echo '"title":'.json_encode($ocarina[0]->titolo).',';
+				echo '"minititle":'.json_encode($ocarina[0]->minititolo).',';
+				echo '"content":'.json_encode($ocarina[0]->contenuto).',';
+				echo '"category":'.json_encode($ocarina[0]->categoria).',';
+				echo '"date":'.json_encode($ocarina[0]->data).',';
+				echo '"hour":'.json_encode($ocarina[0]->ora).',';
+				echo '"lastmoddate":'.json_encode($ocarina[0]->dataultimamodifica).',';
+				echo '"lastmodhour":'.json_encode($ocarina[0]->oraultimamodifica).',';
+				echo '"lastmodauthor":'.json_encode($ocarina[0]->autoreultimamodifica).',';
+				echo '"visits":'.json_encode($ocarina[0]->visite).',';
+				echo '"votes":'.json_encode($ocarina[0]->voti);				
 			echo '}';
 		echo '}';
 	}
 }
 elseif(($action == 'page') && ($titolo == '')) {
-	if(!$pagina = $pagina->getPage())
+	if(!$ocarina = $ocarina->getPage())
 		echo '{"response":"1"}';
 	else {
 		$json = '{"response": [';
-		foreach($pagina as $v) {
+		foreach($ocarina as $v) {
 			$json .= '{';
 				$json .= '"id":'.json_encode($v->id).',';
 				$json .= '"author":'.json_encode($v->autore).',';
@@ -359,14 +355,14 @@ elseif(($action == 'page') && ($titolo == '')) {
 	}
 }
 elseif($action == 'countpage') {
-	echo '{"response":'.json_encode($pagina->countPage()).'}';
+	echo '{"response":'.json_encode($ocarina->countPage()).'}';
 }
 elseif(($action == 'searchpage') && ($contenuto !== '')) {
-	if(!$pagina = $pagina->searchPage($contenuto))
+	if(!$ocarina = $ocarina->searchPage($contenuto))
 		echo '{"response":"1"}';
 	else {
 		$json = '{"response": [';
-		foreach($pagina as $v) {
+		foreach($ocarina as $v) {
 			$json .= '{';
 				$json .= '"id":'.json_encode($v->id).',';
 				$json .= '"author":'.json_encode($v->autore).',';
@@ -387,9 +383,9 @@ elseif(($action == 'searchpage') && ($contenuto !== '')) {
 	}
 }
 elseif(($action == 'votepage') && ($titolo !== '')) {
-	if(!$pagina->isLogged())
+	if(!$ocarina->isLogged())
 		echo '{"response":"2"}';
-	elseif(!$pagina->votePage($titolo))
+	elseif(!$ocarina->votePage($titolo))
 		echo '{"response":"1"}';
 	else
 		echo '{"response":"9"}';

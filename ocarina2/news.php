@@ -4,10 +4,8 @@
 	(C) Giovanni Capuano 2011
 */
 require_once('core/class.Ocarina.php');
-require_once('etc/class.BBCode.php');
 
 $ocarina = new Ocarina();
-$bbcode = new BBCode();
 $titolo = isset($_GET['titolo']) ? $ocarina->purge($_GET['titolo']) : '';
 $comment = isset($_POST['comment']) ? $ocarina->purge($_POST['comment']) : '';
 
@@ -23,22 +21,14 @@ else {
 		$ocarina->addValue('titolo', $ocarina->config[0]->nomesito);
 	}
 	else {
-		if($ocarina->config[0]->bbcode == 1) {
-			$news[0]->contenuto = $bbcode->bbcode($news[0]->contenuto);
-			$ocarina->addValue('bbcode', $ocarina->config[0]->bbcode);
-		}
 		$ocarina->addValue('description', $ocarina->getDescription($news[0]->contenuto));
 		$ocarina->addValue('news', $news);
 		$ocarina->addValue('titolo', $news[0]->titolo.$ocarina->getLanguage('title', 2).$ocarina->config[0]->nomesito);
 		
 		if(!$getComment = $ocarina->getComment($news[0]->minititolo))
 			$ocarina->addValue('commenti', $ocarina->getLanguage('news', 3));
-		else {
-			if($ocarina->config[0]->bbcode == 1)
-				for($i=0, $count=count($getComment); $i<$count; ++$i)
-					$getComment[$i]->contenuto = $bbcode->bbcodecommenti($getComment[$i]->contenuto);
+		else
 			$ocarina->addValue('commenti', $getComment);
-		}
 		if(($comment !== '') && ($ocarina->isLogged())) {
 			$array = ($ocarina->config[0]->approvacommenti == 0) ? array($ocarina->username[0]->nickname, $comment, $news[0]->minititolo, date('d-m-y'), date('G:m:s'), 1) : array($ocarina->username[0]->nickname, $comment, $news[0]->minititolo, date('d-m-y'), date('G:m:s'), 0);
 			if($ocarina->config[0]->commenti == 0)

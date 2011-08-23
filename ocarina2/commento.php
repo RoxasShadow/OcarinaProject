@@ -4,7 +4,6 @@
 	(C) Giovanni Capuano 2011
 */
 require_once('core/class.Ocarina.php');
-require_once('etc/class.BBCode.php');
 
 $ocarina = new Ocarina();
 $bbcode = new BBCode();
@@ -19,8 +18,6 @@ else {
 	if(!$getComment = $ocarina->searchCommentById($id))
 		$ocarina->addValue('error', $ocarina->getLanguage('comment', 1));
 	else {
-		if($ocarina->config[0]->bbcode == 1)
-			$getComment[0]->contenuto = $bbcode->bbcodecommenti($getComment[0]->contenuto);
 		$ocarina->addValue('description', $ocarina->getDescription('description', $getComment[0]->contenuto));
 		$ocarina->addValue('commento', $getComment);
 	}

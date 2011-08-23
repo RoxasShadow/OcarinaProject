@@ -13,6 +13,8 @@ class Ad extends PersonalMessage {
 		if($minititolo !== '')
 			if($this->isAd($minititolo))
 				return ($result = parent::get("SELECT * FROM {$this->prefix}annunci WHERE minititolo='$minititolo' LIMIT 1")) ? $result : false;
+			else
+				return false;
 		else
 			return ($result = parent::get('SELECT * FROM '.$this->prefix.'annunci ORDER BY id DESC')) ? $result : false;
 	}

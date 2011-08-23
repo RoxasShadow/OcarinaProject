@@ -1,0 +1,140 @@
+<?php
+class BBCode extends Configuration implements FrameworkPlugin {
+	public function main($templateVarList) {
+		$rendering = array();
+		if($this->config[0]->bbcode == 1)
+			if(isset($templateVarList['news'])) {
+				for($i=0, $count=count($templateVarList['news']); $i<$count; ++$i)
+					$templateVarList['news'][$i]->contenuto = $this->textToBBCode($templateVarList['news'][$i]->contenuto);
+				$rendering['news'] = $templateVarList['news'];
+			}
+			elseif(isset($templateVarList['pagine'])) {
+				for($i=0, $count=count($templateVarList['pagine']); $i<$count; ++$i)
+					$templateVarList['pagine'][$i]->contenuto = $this->textToBBCode($templateVarList['pagine'][$i]->contenuto);
+				$rendering['pagine'] = $templateVarList['pagine'];
+			}
+			elseif(isset($templateVarList['pagina'])) {
+				for($i=0, $count=count($templateVarList['pagina']); $i<$count; ++$i)
+					$templateVarList['pagina'][$i]->contenuto = $this->textToBBCode($templateVarList['pagina'][$i]->contenuto);
+				$rendering['pagina'] = $templateVarList['pagina'];
+			}
+			elseif(isset($templateVarList['commenti'])) {
+				for($i=0, $count=count($templateVarList['commenti']); $i<$count; ++$i)
+					$templateVarList['commenti'][$i]->contenuto = $this->commentToBBCode($templateVarList['commenti'][$i]->contenuto);
+				$rendering['commenti'] = $templateVarList['commenti'];
+			}
+			elseif(isset($templateVarList['commento'])) {
+				for($i=0, $count=count($templateVarList['commento']); $i<$count; ++$i)
+					$templateVarList['commento'][$i]->contenuto = $this->commentToBBCode($templateVarList['commento'][$i]->contenuto);
+				$rendering['commento'] = $templateVarList['commento'];
+			}
+		if(!isset($templateVarList['bbcode']))
+			$rendering['bbcode'] = $this->config[0]->bbcode;
+		return $rendering;
+	}
+	
+	private function textToBBCode($text) {
+		$pattern = array(
+			'/\[b\](.*?)\[\/b\]/is',
+			'/\[i\](.*?)\[\/i\]/is',
+			'/\[u\](.*?)\[\/u\]/is',
+			'/\[s\](.*?)\[\/s\]/is',
+			'/\[color\=(.*?)\](.*?)\[\/color\]/is',
+			'/\[url\=(.*?)\](.*?)\[\/url\]/is',
+			'/\[spoiler\](.*?)\[\/spoiler\]/is',
+			'/\[img\](.*?)\[\/img\]/is',
+			'/\[img width\=(.*?) height\=(.*?)\](.*?)\[\/img\]/is',
+			'/\[center](.*?)\[\/center\]/is',
+			'/\[right](.*?)\[\/right\]/is',
+			'/\[left](.*?)\[\/left\]/is',
+			'/\[summary](.*?)\[\/summary\]/is',
+			'/\[code\](.*?)\[\/code\]/is',
+			'/\[quote](.*?)\[\/quote\]/is',
+			'/\[youtube\](.*)youtube.com\/watch\?v=(.*)\[\/youtube\]/is',
+			'/\[user\](.*?)\[\/user\]/is',
+			'/&lt;3/',
+			'/:3/',
+			'/\(C\)/is',
+			'/\(R\)/is'
+		);
+		$replace = array(
+			'<strong>$1</strong>',
+			'<em>$1</em>',
+			'<u>$1</u>',
+			'<s>$1</s>',
+			'<font color="$1">$2</font>',
+			'<a href="$1">$2</a>',
+			'<input type="submit" class="buttonSpoiler" value="Mostra/Nascondi" /><div class="spoiler">$1</div>',
+			'<img src="$1" alt="$1" />',
+			'<img src="$3" width="$1" height="$2" alt="$3" />',
+			'<div align="center">$1</div>',
+			'<div align="right">$1</div>',
+			'<div align="left">$1</div>',
+			'<h2>$1</h2>',
+			'<textarea style="border: 0px; overflow: auto; width:100%;" rows="8">$1</textarea>',
+			'<blockquote><span>$1</span></blockquote>',
+			'<iframe width="560" height="349" src="http://www.youtube.com/embed/\\2" frameborder="0"></iframe>',
+			'<a href="'.$this->config[0]->url_index.'/profile/$1.html">$1</a>',
+			'♥',
+			'☻',
+			'&copy;',
+			'&reg;'
+		);
+		return nl2br(preg_replace($pattern, $replace, $text));
+	}
+	
+	private function commentToBBCode($text) {
+		$pattern = array(
+			'/\[b\](.*?)\[\/b\]/is',
+			'/\[i\](.*?)\[\/i\]/is',
+			'/\[u\](.*?)\[\/u\]/is',
+			'/\[s\](.*?)\[\/s\]/is',
+			'/\[color\=(.*?)\](.*?)\[\/color\]/is',
+			'/\[url\=(.*?)\](.*?)\[\/url\]/is',
+			'/\[spoiler\](.*?)\[\/spoiler\]/is',
+			'/\[center](.*?)\[\/center\]/is',
+			'/\[right](.*?)\[\/right\]/is',
+			'/\[left](.*?)\[\/left\]/is',
+			'/\[code\](.*?)\[\/code\]/is',
+			'/\[quote](.*?)\[\/quote\]/is',
+			'/\[user\](.*?)\[\/user\]/is',
+			'/\[translate from\=(.*?) to\=(.*?)\](.*?)\[\/translate\]/is',
+			'/&lt;3/',
+			'/:3/',
+			'/\(C\)/is',
+			'/\(R\)/is',
+			'/\$([A-Za-z0-9]+)(?=)/'
+		);
+		$replace = array(
+			'<strong>$1</strong>',
+			'<em>$1</>$>',
+			'<u>$1</u>',
+			'<s>$1</s>',
+			'<font color="$1">$2</font>',
+			'<a href="$1" target="_blank">$2</a>',
+			'<input type="submit" class="buttonSpoiler" value="Mostra/Nascondi" /><div class="spoiler">$1</div>',
+			'<div align="center">$1</div>',
+			'<div align="right">$1</div>',
+			'<div align="left">$1</div>',
+			'<textarea style="border: 0px; overflow: auto; width:100%;" rows="8">$1</textarea>',
+			'<blockquote><span>$1</span></blockquote>',
+			'<a href="'.$this->config[0]->url_index.'/profile/$1.html">$1</a>',
+			//$this->translator->translate('$3', '$1', '$2'),
+			'',
+			'♥',
+			'☻',
+			'&copy;',
+			'&reg;',
+			'<a href="'.$this->config[0]->url_index.'/ricerca.php?commenti=$\\1">$\\1</a>'
+		);
+		return nl2br(preg_replace($pattern, $replace, $text));
+	}
+	
+	public function install() {
+		return true;
+	}
+	
+	public function disinstall() {
+		return true;
+	}
+}

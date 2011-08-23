@@ -1,6 +1,6 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-08-09 22:47:47
+<?php /* Smarty version Smarty-3.0.8, created on 2011-08-23 16:44:51
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/admin/annunci.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:1181351104e41b913b4fe42-33701294%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:12594033744e53d9033d9f51-50859680%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
@@ -11,7 +11,7 @@ $_smarty_tpl->decodeProperties(array (
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '1181351104e41b913b4fe42-33701294',
+  'nocache_hash' => '12594033744e53d9033d9f51-50859680',
   'function' => 
   array (
   ),
