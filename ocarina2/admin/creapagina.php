@@ -15,10 +15,8 @@ $ocarina->skin = 'admin';
 $ocarina->addValue('titolo', $ocarina->getLanguage('title', 17).$ocarina->getLanguage('title', 2).$ocarina->getLanguage('title', 10).$ocarina->getLanguage('title', 2).$ocarina->config[0]->nomesito);
 
 if(($ocarina->isLogged()) && ($ocarina->username[0]->grado <= 3))
-	if(!$submit) {
-		$ocarina->addValue('bbcode', $ocarina->config[0]->bbcode);
+	if(!$submit)
 		$ocarina->addValue('categorie', $ocarina->getCategory('news'));
-	}
 	else {
 		if(($titolo_pagina !== '') && ($categoria_pagina !== '') && ($testo_pagina !== '')) {
 			if($ocarina->username[0]->grado == 3)

@@ -1,2 +1,3 @@
+--Il plugin Traductor non funziona;
 --In locale in plugin CSRF non protegge dagli attacchi sui GET poichè $response[1] dà sempre 400;
 --Se in remoto ho la direttiva del file .htaccess `Options All +Indexes`, il CMS non funziona. In locale è il contrario.

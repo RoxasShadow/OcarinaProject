@@ -6,7 +6,6 @@
 require_once('core/class.Ocarina.php');
 
 $ocarina = new Ocarina();
-$bbcode = new BBCode();
 $id = ((isset($_GET['id'])) && is_numeric($_GET['id'])) ? (int)$_GET['id'] : '';
 
 $ocarina->skin = $ocarina->isLogged() ? $ocarina->username[0]->skin : $ocarina->config[0]->skin;

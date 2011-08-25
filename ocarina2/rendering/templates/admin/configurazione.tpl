@@ -10,8 +10,6 @@
 		<input type="text" name="nomesito" maxlength="100" {if (isset($nomesito_default))}value="{$nomesito_default}"{/if} /><br /><br />
 		Email<br />
 		<input type="text" name="email" maxlength="100" {if (isset($email_default))}value="{$email_default}"{/if} /><br /><br />
-		Attiva BBCode (0 = No, 1 = Si)<br />
-		<input type="text" name="bbcode" maxlength="1" {if (isset($bbcode_default))}value="{$bbcode_default}"{/if} /><br /><br />
 		Permetti registrazioni (0 = No, 1 = Si)<br />
 		<input type="text" name="registrazioni" maxlength="1" {if (isset($registrazioni_default))}value="{$registrazioni_default}"{/if} /><br /><br />
 		Validazione account con conferma email (0 = No, 1 = Si)<br />

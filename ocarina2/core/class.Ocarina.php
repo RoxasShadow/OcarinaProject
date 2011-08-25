@@ -10,6 +10,7 @@ require_once('class.Rendering.php');
 class Ocarina extends Rendering {
 	public function __construct() {
 		parent::__construct();
+		/* Attivazione plugin `first`. */
 		require_once('class.Plugin.php');
 		if($this->config[0]->plugin == 1) {
 			$plugins = Plugin::listPlugins();
@@ -25,7 +26,9 @@ class Ocarina extends Rendering {
 									parent::addValue($name, $value);
 					}
 					catch(Exception $e) {
-						echo $e->getMessage();
+						if($ocarina->config[0]->log == 1)
+							$ocarina->log($element, $e->getMessage());
+						echo '<!-- '.$e->getMessage().' -->';
 					}
 			unset($plugins);
 		}

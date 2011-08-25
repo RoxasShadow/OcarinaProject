@@ -78,7 +78,6 @@ if($reg) {
 elseif($submit) {
 	$nomesito = ((isset($_POST['nomesito'])) && ($_POST['nomesito'] !== '')) ? $config->purge($_POST['nomesito']) : '';
 	$email = ((isset($_POST['email'])) && ($_POST['email'] !== '')) ? $config->purge($_POST['email']) : '';
-	$bbcode = ((isset($_POST['bbcode'])) && (is_numeric($_POST['bbcode'])) && ($_POST['bbcode'] !== '')) ? $config->purge((int)$_POST['bbcode']) : '';
 	$registrazioni = ((isset($_POST['registrazioni'])) && (is_numeric($_POST['registrazioni'])) && ($_POST['registrazioni'] !== '')) ? $config->purge((int)$_POST['registrazioni']) : '';
 	$validazioneaccount = ((isset($_POST['validazioneaccount'])) && (is_numeric($_POST['validazioneaccount'])) && ($_POST['validazioneaccount'] !== '')) ? $config->purge((int)$_POST['validazioneaccount']) : '';
 	$commenti = ((isset($_POST['commenti'])) && (is_numeric($_POST['commenti'])) && ($_POST['commenti'] !== '')) ? $config->purge((int)$_POST['commenti']) : '';
@@ -179,9 +178,6 @@ else
 
 	<b>Email</b><br />
 	<input type="text" name="email" maxlength="100" /><br /><br />
-
-	<b>Attiva BBCode (0 = No, 1 = Si)</b><br />
-	<input type="text" name="bbcode" maxlength="1" /><br /><br />
 
 	<b>Permetti registrazioni (0 = No, 1 = Si)</b><br />
 	<input type="text" name="registrazioni" maxlength="1" /><br /><br />

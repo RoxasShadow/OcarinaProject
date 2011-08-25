@@ -94,7 +94,9 @@ class Rendering extends Page {
 
 	/* Il motore di rendering effettua il rendering del template in input e lo visualizza. */
 	public function renderize($filename) {
+		/* Attivazione plugin `first`. */
 		require_once('class.Plugin.php');
+		$bbcode = 0;
 		if($this->config[0]->plugin == 1) {
 			$plugins = Plugin::listPlugins();
 			$varList = $this->getValues();
@@ -107,13 +109,17 @@ class Rendering extends Page {
 							foreach($output as $name => $value)
 								if(($name !== '') && ($value !== ''))
 									$this->addValue($name, $value);
+						if($element == 'BBCode')
+							$bbcode = 1;
 					}
 					catch(Exception $e) {
-						echo $e->getMessage();
+						if($ocarina->config[0]->log == 1)
+							$ocarina->log($element, $e->getMessage());
+						echo '<!-- '.$e->getMessage().' -->';
 					}
 			unset($plugins);
 		}
-		
+		$this->addValue('bbcode', $bbcode);
 		
 		/* Renderizza il tutto con la skin appropriata. */
 		require_once($this->config[0]->root_index.'/etc/mobile_device_detect.php');
@@ -138,19 +144,24 @@ class Rendering extends Page {
 	}
 
 	/* Visualizza le skin attualmente presenti. */
-	public function getSkinList() {
+	public function getSkinList($all = false) {
 		$dir = $this->config[0]->root_rendering.'/templates/';
 		$apri = opendir($dir);
 		$f = array();
 		while($skin = readdir($apri))
-			if(($skin !== '.') && ($skin !== '..') && ($skin !== 'admin') && ($skin !== 'mobile') && (is_dir($dir.$skin)))
-				$f[] = $skin;
+			if($all) {
+				if(($skin !== '.') && ($skin !== '..') && (is_dir($dir.$skin)))
+					$f[] = $skin;
+			}
+			else
+				if(($skin !== '.') && ($skin !== '..') && ($skin !== 'admin') && ($skin !== 'mobile') && (is_dir($dir.$skin)))
+					$f[] = $skin;
 		return $f;
 	}
 
 	/* Visualizza se la skin selezionata esiste. */
 	public function skinExists($skin) {
-		$skinList = $this->getSkinList();
+		$skinList = $this->getSkinList(true);
 		foreach($skinList as $v)
 			if($v == $skin)
 				return true;

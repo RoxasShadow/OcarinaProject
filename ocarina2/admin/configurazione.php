@@ -5,10 +5,10 @@
 */
 require_once('../core/class.Ocarina.php');
 
+/* Sono lieto di mostrarvi la peggior disgrazia, dopo avere me come autore, di Ocarina :) */
 $ocarina = new Ocarina();
 $nomesito = ((isset($_POST['nomesito'])) && ($_POST['nomesito'] !== '')) ? $ocarina->purge($_POST['nomesito']) : '';
 $email = ((isset($_POST['email'])) && ($_POST['email'] !== '')) ? $ocarina->purge($_POST['email']) : '';
-$bbcode = ((isset($_POST['bbcode'])) && (is_numeric($_POST['bbcode'])) && ($_POST['bbcode'] !== '')) ? $ocarina->purge((int)$_POST['bbcode']) : '';
 $registrazioni = ((isset($_POST['registrazioni'])) && (is_numeric($_POST['registrazioni'])) && ($_POST['registrazioni'] !== '')) ? $ocarina->purge((int)$_POST['registrazioni']) : '';
 $validazioneaccount = ((isset($_POST['validazioneaccount'])) && (is_numeric($_POST['validazioneaccount'])) && ($_POST['validazioneaccount'] !== '')) ? $ocarina->purge((int)$_POST['validazioneaccount']) : '';
 $commenti = ((isset($_POST['commenti'])) && (is_numeric($_POST['commenti'])) && ($_POST['commenti'] !== '')) ? $ocarina->purge((int)$_POST['commenti']) : '';
@@ -42,7 +42,6 @@ if(($ocarina->isLogged()) && ($ocarina->username[0]->grado == 1))
 	if(!$submit) {
 		$ocarina->addValue('nomesito_default', $ocarina->config[0]->nomesito);
 		$ocarina->addValue('email_default', $ocarina->config[0]->email);
-		$ocarina->addValue('bbcode_default', $ocarina->config[0]->bbcode);
 		$ocarina->addValue('registrazioni_default', $ocarina->config[0]->registrazioni);
 		$ocarina->addValue('validazioneaccount_default', $ocarina->config[0]->validazioneaccount);
 		$ocarina->addValue('commenti_default', $ocarina->config[0]->commenti);
@@ -70,7 +69,7 @@ if(($ocarina->isLogged()) && ($ocarina->username[0]->grado == 1))
 		$ocarina->addValue('root_immagini_default', $ocarina->config[0]->root_immagini);
 	}
 	else
-		if(($ocarina->editConfig('nomesito', $nomesito)) && ($ocarina->editConfig('email', $email)) && ($ocarina->editConfig('bbcode', $bbcode)) && ($ocarina->editConfig('registrazioni', $registrazioni)) && ($ocarina->editConfig('validazioneaccount', $validazioneaccount)) && ($ocarina->editConfig('commenti', $commenti)) && ($ocarina->editConfig('approvacommenti', $approvacommenti)) && ($ocarina->editConfig('log', $log)) && ($ocarina->editConfig('plugin', $plugin)) && ($ocarina->editConfig('cookie', $cookie)) && ($ocarina->editConfig('loginexpire', $loginexpire)) && ($ocarina->editConfig('skin', $skin)) && ($ocarina->editConfig('description', $description)) && ($ocarina->editConfig('limitenews', $limitenews)) && ($ocarina->editConfig('impaginazionenews', $impaginazionenews)) && ($ocarina->editConfig('permettivoto', $permettivoto)) && ($ocarina->editConfig('limiteonline', $limiteonline)) && ($ocarina->editConfig('url', $url)) && ($ocarina->editConfig('url_index', $url_index)) && ($ocarina->editConfig('url_admin', $url_admin)) && ($ocarina->editConfig('url_rendering', $url_rendering)) && ($ocarina->editConfig('url_immagini', $url_immagini)) && ($ocarina->editConfig('root', $root)) && ($ocarina->editConfig('root_index', $root_index)) && ($ocarina->editConfig('root_admin', $root_admin)) && ($ocarina->editConfig('root_rendering', $root_rendering)) && ($ocarina->editConfig('root_immagini', $root_immagini)))
+		if(($ocarina->editConfig('nomesito', $nomesito)) && ($ocarina->editConfig('email', $email)) && ($ocarina->editConfig('registrazioni', $registrazioni)) && ($ocarina->editConfig('validazioneaccount', $validazioneaccount)) && ($ocarina->editConfig('commenti', $commenti)) && ($ocarina->editConfig('approvacommenti', $approvacommenti)) && ($ocarina->editConfig('log', $log)) && ($ocarina->editConfig('plugin', $plugin)) && ($ocarina->editConfig('cookie', $cookie)) && ($ocarina->editConfig('loginexpire', $loginexpire)) && ($ocarina->editConfig('skin', $skin)) && ($ocarina->editConfig('description', $description)) && ($ocarina->editConfig('limitenews', $limitenews)) && ($ocarina->editConfig('impaginazionenews', $impaginazionenews)) && ($ocarina->editConfig('permettivoto', $permettivoto)) && ($ocarina->editConfig('limiteonline', $limiteonline)) && ($ocarina->editConfig('url', $url)) && ($ocarina->editConfig('url_index', $url_index)) && ($ocarina->editConfig('url_admin', $url_admin)) && ($ocarina->editConfig('url_rendering', $url_rendering)) && ($ocarina->editConfig('url_immagini', $url_immagini)) && ($ocarina->editConfig('root', $root)) && ($ocarina->editConfig('root_index', $root_index)) && ($ocarina->editConfig('root_admin', $root_admin)) && ($ocarina->editConfig('root_rendering', $root_rendering)) && ($ocarina->editConfig('root_immagini', $root_immagini)))
 			$ocarina->addValue('result', $ocarina->getLanguage('configuration', 0));
 		else
 			$ocarina->addValue('result', $ocarina->getLanguage('configuration', 0));

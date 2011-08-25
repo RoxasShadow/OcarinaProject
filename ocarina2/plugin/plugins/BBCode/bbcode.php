@@ -2,35 +2,36 @@
 class BBCode extends Configuration implements FrameworkPlugin {
 	public function main($templateVarList) {
 		$rendering = array();
-		if($this->config[0]->bbcode == 1)
-			if(isset($templateVarList['news'])) {
-				for($i=0, $count=count($templateVarList['news']); $i<$count; ++$i)
-					$templateVarList['news'][$i]->contenuto = $this->textToBBCode($templateVarList['news'][$i]->contenuto);
-				$rendering['news'] = $templateVarList['news'];
-			}
-			elseif(isset($templateVarList['pagine'])) {
-				for($i=0, $count=count($templateVarList['pagine']); $i<$count; ++$i)
-					$templateVarList['pagine'][$i]->contenuto = $this->textToBBCode($templateVarList['pagine'][$i]->contenuto);
-				$rendering['pagine'] = $templateVarList['pagine'];
-			}
-			elseif(isset($templateVarList['pagina'])) {
-				for($i=0, $count=count($templateVarList['pagina']); $i<$count; ++$i)
-					$templateVarList['pagina'][$i]->contenuto = $this->textToBBCode($templateVarList['pagina'][$i]->contenuto);
-				$rendering['pagina'] = $templateVarList['pagina'];
-			}
-			elseif(isset($templateVarList['commenti'])) {
-				for($i=0, $count=count($templateVarList['commenti']); $i<$count; ++$i)
-					$templateVarList['commenti'][$i]->contenuto = $this->commentToBBCode($templateVarList['commenti'][$i]->contenuto);
-				$rendering['commenti'] = $templateVarList['commenti'];
-			}
-			elseif(isset($templateVarList['commento'])) {
-				for($i=0, $count=count($templateVarList['commento']); $i<$count; ++$i)
-					$templateVarList['commento'][$i]->contenuto = $this->commentToBBCode($templateVarList['commento'][$i]->contenuto);
-				$rendering['commento'] = $templateVarList['commento'];
-			}
-		if(!isset($templateVarList['bbcode']))
-			$rendering['bbcode'] = $this->config[0]->bbcode;
+		if(isset($templateVarList['news'])) {
+			for($i=0, $count=count($templateVarList['news']); $i<$count; ++$i)
+				$templateVarList['news'][$i]->contenuto = $this->textToBBCode($templateVarList['news'][$i]->contenuto);
+			$rendering['news'] = $templateVarList['news'];
+		}
+		if(isset($templateVarList['pagine'])) {
+			for($i=0, $count=count($templateVarList['pagine']); $i<$count; ++$i)
+				$templateVarList['pagine'][$i]->contenuto = $this->textToBBCode($templateVarList['pagine'][$i]->contenuto);
+			$rendering['pagine'] = $templateVarList['pagine'];
+		}
+		if(isset($templateVarList['pagina'])) {
+			for($i=0, $count=count($templateVarList['pagina']); $i<$count; ++$i)
+				$templateVarList['pagina'][$i]->contenuto = $this->textToBBCode($templateVarList['pagina'][$i]->contenuto);
+			$rendering['pagina'] = $templateVarList['pagina'];
+		}
+		if(isset($templateVarList['commenti'])) {
+			for($i=0, $count=count($templateVarList['commenti']); $i<$count; ++$i)
+				$templateVarList['commenti'][$i]->contenuto = $this->commentToBBCode($templateVarList['commenti'][$i]->contenuto);
+			$rendering['commenti'] = $templateVarList['commenti'];
+		}
+		if(isset($templateVarList['commento'])) {
+			for($i=0, $count=count($templateVarList['commento']); $i<$count; ++$i)
+				$templateVarList['commento'][$i]->contenuto = $this->commentToBBCode($templateVarList['commento'][$i]->contenuto);
+			$rendering['commento'] = $templateVarList['commento'];
+		}
 		return $rendering;
+	}
+	
+	public function manipulate($type, $text) {
+		return ($type == 'comment') ? $this->commentToBBCode($text) : $this->textToBBCode($text);
 	}
 	
 	private function textToBBCode($text) {
@@ -98,7 +99,6 @@ class BBCode extends Configuration implements FrameworkPlugin {
 			'/\[code\](.*?)\[\/code\]/is',
 			'/\[quote](.*?)\[\/quote\]/is',
 			'/\[user\](.*?)\[\/user\]/is',
-			'/\[translate from\=(.*?) to\=(.*?)\](.*?)\[\/translate\]/is',
 			'/&lt;3/',
 			'/:3/',
 			'/\(C\)/is',
@@ -119,7 +119,6 @@ class BBCode extends Configuration implements FrameworkPlugin {
 			'<textarea style="border: 0px; overflow: auto; width:100%;" rows="8">$1</textarea>',
 			'<blockquote><span>$1</span></blockquote>',
 			'<a href="'.$this->config[0]->url_index.'/profile/$1.html">$1</a>',
-			//$this->translator->translate('$3', '$1', '$2'),
 			'',
 			'♥',
 			'☻',

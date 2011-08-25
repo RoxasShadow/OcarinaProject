@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-08-09 22:52:20
+<?php /* Smarty version Smarty-3.0.8, created on 2011-08-25 18:22:06
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/admin/configurazione.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:19874015484e41ba24639273-65406095%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:5113334974e5692ceb994b0-39426871%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '9bb3c42039402aa250ca06b33cb48698de28eda6' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/admin/configurazione.tpl',
-      1 => 1312477963,
+      1 => 1314295175,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '19874015484e41ba24639273-65406095',
+  'nocache_hash' => '5113334974e5692ceb994b0-39426871',
   'function' => 
   array (
   ),
@@ -30,9 +30,6 @@ $_smarty_tpl->decodeProperties(array (
 "<?php }?> /><br /><br />
 		Email<br />
 		<input type="text" name="email" maxlength="100" <?php if ((isset($_smarty_tpl->getVariable('email_default',null,true,false)->value))){?>value="<?php echo $_smarty_tpl->getVariable('email_default')->value;?>
-"<?php }?> /><br /><br />
-		Attiva BBCode (0 = No, 1 = Si)<br />
-		<input type="text" name="bbcode" maxlength="1" <?php if ((isset($_smarty_tpl->getVariable('bbcode_default',null,true,false)->value))){?>value="<?php echo $_smarty_tpl->getVariable('bbcode_default')->value;?>
 "<?php }?> /><br /><br />
 		Permetti registrazioni (0 = No, 1 = Si)<br />
 		<input type="text" name="registrazioni" maxlength="1" <?php if ((isset($_smarty_tpl->getVariable('registrazioni_default',null,true,false)->value))){?>value="<?php echo $_smarty_tpl->getVariable('registrazioni_default')->value;?>

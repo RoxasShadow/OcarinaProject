@@ -34,7 +34,6 @@ if(($ocarina->isLogged()) && ($ocarina->username[0]->grado < 4))
 		$ocarina->addValue('result', $result);
 	}	
 	elseif((!$submit) && ($selected !== '')) {
-		$ocarina->addValue('bbcode', $ocarina->config[0]->bbcode);
 		$ocarina->addValue('categorie', $ocarina->getCategory('pagine'));
 		if($this_pagina = $ocarina->getPage($selected)) {
 			$ocarina->addValue('titolo_default', $this_pagina[0]->titolo);

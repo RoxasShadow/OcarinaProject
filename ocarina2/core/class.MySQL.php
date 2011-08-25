@@ -201,7 +201,6 @@ class MySQL extends Utilities {
 			"CREATE TABLE IF NOT EXISTS `{$this->prefix}configurazione` (
 			  `nomesito` varchar(100) NOT NULL,
 			  `email` varchar(100) NOT NULL,
-			  `bbcode` tinyint(1) NOT NULL,
 			  `registrazioni` tinyint(1) NOT NULL,
 			  `validazioneaccount` tinyint(1) NOT NULL,
 			  `commenti` tinyint(1) NOT NULL,

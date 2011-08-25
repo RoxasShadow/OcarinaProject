@@ -100,6 +100,10 @@ Di seguito un breve tutorial pratico per lo sviluppo e l'installazione.
 		`postmenu` -> Subito dopo il menù
 		`stats` -> Le statistiche del sito
 		`footer` -> Prima della chiusura del tag body
-	Una piccola nota tecnica per concludere la sezione: impostiamo il working ad `after` quando abbiamo bisogno di agire su tag del motore di rendering già istanziati e pronti ad essere utilizzati (come ad esempio è stato fatto per il plugin NoSpam), mentre `first` dovrebbe andare bene in tutti gli altri casi.  
+	Una piccola nota tecnica per concludere la sezione: impostiamo il working ad `after` quando abbiamo bisogno di agire su tag del motore di rendering già istanziati e pronti ad essere utilizzati (come ad esempio è stato fatto per il plugin NoSpam), mentre `first` dovrebbe andare bene in tutti gli altri casi.
+
+4. Tips and Tricks
+	Aggiungi alla fine del tuo plugin.cfg un tag `textmanipulation` con valore `true` se stai lavorando ad un plugin che manipola il testo (BBCode prima di tutto).
+	Questo ti permetterà di farlo funzionare anche nello script che gestisce le anteprime del testo.
 
 Insomma, possiamo fare di tutto, l'importante è stare attenti a creare plugin sicuri, corretti e veloci :D
