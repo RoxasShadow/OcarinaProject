@@ -1,3 +1,3 @@
---Bugfix del /REPORT;
 --Skin `mobile`;
---Scaricare il plugin di jQuery `lazyloading` e provarlo.
+--CSRF 1.0;
+--Minify js just-in-time.

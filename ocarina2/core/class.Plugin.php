@@ -99,10 +99,15 @@ final class Plugin {
 	public static function pluginActive($name) {
 		if(!Plugin::pluginExists($name))
 			return false;
-		$f = fopen(self::$root_index.'/plugin/plugins/'.$name.'/plugin.cfg', 'r+');
-		$cfg = str_replace('enabled = false', 'enabled = true', fread($f, filesize(self::$root_index.'/plugin/plugins/'.$name.'/plugin.cfg')));
-		fwrite($f, $cfg);
+		$f = fopen(self::$root_index.'/plugin/plugins/'.$name.'/plugin.cfg', 'r');
+		$text = fread($f, filesize(self::$root_index.'/plugin/plugins/'.$name.'/plugin.cfg'));
 		fclose($f);
+		
+		$f = fopen(self::$root_index.'/plugin/plugins/'.$name.'/plugin.cfg', 'w');
+		$text = str_replace('enabled = false', 'enabled = true', $text);
+		fwrite($f, $text);
+		fclose($f);
+		
 		self::$instance = new Plugin();
 		return (Plugin::getMetadata($name, 'enabled', '') == 'true') ? true : false;
 	}
@@ -110,10 +115,15 @@ final class Plugin {
 	public static function pluginDeactive($name) {
 		if(!Plugin::pluginExists($name))
 			return false;
-		$f = fopen(self::$root_index.'/plugin/plugins/'.$name.'/plugin.cfg', 'r+');
-		$cfg = str_replace('enabled = true', 'enabled = false', fread($f, filesize(self::$root_index.'/plugin/plugins/'.$name.'/plugin.cfg')));
-		fwrite($f, $cfg);
+		$f = fopen(self::$root_index.'/plugin/plugins/'.$name.'/plugin.cfg', 'r');
+		$text = fread($f, filesize(self::$root_index.'/plugin/plugins/'.$name.'/plugin.cfg'));
 		fclose($f);
+		
+		$f = fopen(self::$root_index.'/plugin/plugins/'.$name.'/plugin.cfg', 'w');
+		$text = str_replace('enabled = true', 'enabled = false', $text);
+		fwrite($f, $text);
+		fclose($f);
+		
 		self::$instance = new Plugin();
 		return (Plugin::getMetadata($name, 'enabled', '') == 'false') ? true : false;
 	}

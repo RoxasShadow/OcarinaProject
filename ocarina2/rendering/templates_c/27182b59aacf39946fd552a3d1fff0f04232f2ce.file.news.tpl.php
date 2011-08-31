@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2011-08-25 17:36:23
+<?php /* Smarty version Smarty-3.0.8, created on 2011-08-31 10:31:10
          compiled from "/var/www/htdocs/ocarina2/rendering//templates/default/news.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:18155659024e56881771aea7-48037330%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:16177914124e5e0d6e6f78a3-94368349%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '27182b59aacf39946fd552a3d1fff0f04232f2ce' => 
     array (
       0 => '/var/www/htdocs/ocarina2/rendering//templates/default/news.tpl',
-      1 => 1314293715,
+      1 => 1314786655,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '18155659024e56881771aea7-48037330',
+  'nocache_hash' => '16177914124e5e0d6e6f78a3-94368349',
   'function' => 
   array (
   ),
@@ -99,20 +99,8 @@ if ($_smarty_tpl->_count($_from) > 0){
 /login.php">accedi</a> per commentare questa news.
 		<?php }else{ ?>
 			<?php if ($_smarty_tpl->getVariable('bbcode')->value==1){?>
-				<a onclick="request('b');"><b>Grassetto</b></a>
-				<a onclick="request('i');"><b>Corsivo</b></a>
-				<a onclick="request('u');"><b>Sottolineato</b></a>
-				<a onclick="request('s');"><b>Barrato</b></a>
-				<a onclick="requestcolor();"><b>Colore</b></a>
-				<a onclick="requesturl();"><b>URL</b></a>
-				<a onclick="request('spoiler');"><b>Spoiler</b></a>
-				<a onclick="request('left');"><b>Allineato a sinistra</b></a>
-				<a onclick="request('center');"><b>Allineato a centro</b></a>
-				<a onclick="request('right');"><b>Allineato a destra</b></a>
-				<a onclick="request('code');"><b>Codice</b></a>
-				<a onclick="request('quote');"><b>Citazione</b></a>
-				<a onclick="requestuser();"><b>Utente</b></a>
-				<a onclick="requesttranslate();"><b>Traduci</b></a><br />
+				<?php $_template = new Smarty_Internal_Template(($_smarty_tpl->getVariable('root_rendering')->value)."/templates/".($_smarty_tpl->getVariable('skin')->value)."/include/bbcode.tpl", $_smarty_tpl->smarty, $_smarty_tpl, $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null);
+ echo $_template->getRenderedTemplate(); $_template->rendered_content = null;?><?php unset($_template);?>
 			<?php }?>
 			<form action="" method="post">
 			<textarea name="comment" cols="59" rows="10" id="targetForm"></textarea><br />
