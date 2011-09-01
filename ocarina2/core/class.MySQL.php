@@ -8,13 +8,13 @@ require_once('class.Utilities.php');
 /* Questa classe mette a disposizione dei metodi per gestire il database. */
 class MySQL extends Utilities {
 	/* Edit here... */
-	private $host = 'localhost';
-	private $username = 'root';
-	private $password = 'kronos';
-	private $database = 'ocarina2';
-	public $prefix = '';
+	private $host = 'HOST';
+	private $username = 'USERNAME';
+	private $password = 'PASSWORD';
+	private $database = 'DATABASE';
+	public $prefix = 'PREFIX_';
 	public $caching = true; // `true` -> Caching abilitato; `false` -> Caching disabilitato.
-	public $storage = '/var/www/htdocs/ocarina2/cache/';
+	public $storage = '/PATH/ocarina2/cache/';
 	public $filter = array('visitatori', 'log', 'visite', 'voti', 'personalmessage', 'utenti'); // Tabelle da non cachare.
 	/* Stop, g'day :) */
 	public $mysql = NULL;

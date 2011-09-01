@@ -15,12 +15,12 @@ $ocarina->addValue('titolo', $ocarina->getLanguage('title', 25).$ocarina->getLan
 if(($ocarina->isLogged()) && ($ocarina->username[0]->grado < 4)) {
 	if($image !== '')
 		if(count($image)-1 < 2)
-			if(!$upload = $ocarina->uploadImage($ocarina->config[0]->root_immagini.'/', $image))
+			if(!$upload = $ocarina->uploadImage($ocarina->config[0]->root_immagini.'/', 'image'))
 				$ocarina->addValue('result', $ocarina->getLanguage('upload', 0));
 			else
 				$ocarina->addValue('image', $_FILES['image']['name']);
 		else
-			if(!$upload = $ocarina->uploadMultipleImage($ocarina->config[0]->root_immagini.'/', $image))
+			if(!$upload = $ocarina->uploadMultipleImage($ocarina->config[0]->root_immagini.'/', 'image'))
 				$ocarina->addValue('result', $ocarina->getLanguage('upload', 0));
 			else {
 				$ocarina->addValue('image', $_FILES['image']['name']);

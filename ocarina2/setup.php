@@ -7,6 +7,7 @@ require_once('core/class.Configuration.php');
 $config = new Configuration();
 $submit = isset($_POST['submit']) ? true : false;
 $reg = isset($_POST['reg']) ? true : false;
+$versione = '0.9';
 
 if($reg) {
 	unset($config);
@@ -104,7 +105,7 @@ elseif($submit) {
 	$root_immagini = ((isset($_POST['root_immagini'])) && ($_POST['root_immagini'] !== '')) ? $config->purge($_POST['root_immagini']) : '';
 	
 	$config->createDatabase();
-	$array = array($nomesito, $email, $bbcode, $registrazioni, $validazioneaccount, $commenti, $approvacommenti, $log, $cookie, $loginexpire, $skin, $description, $limitenews, $impaginazionenews, $limitenews, $permettivoto, $url, $url_index, $url_admin, $url_rendering, $url_immagini, $root, $root_index, $root_admin, $root_rendering, $root_immagini, '2.0', '0');
+	$array = array($nomesito, $email, $bbcode, $registrazioni, $validazioneaccount, $commenti, $approvacommenti, $log, $cookie, $loginexpire, $skin, $description, $limitenews, $impaginazionenews, $limitenews, $permettivoto, $url, $url_index, $url_admin, $url_rendering, $url_immagini, $root, $root_index, $root_admin, $root_rendering, $root_immagini, $versione, '0');
 	if($config->createConfig($array))
 	echo '
 	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -170,7 +171,7 @@ else
 	In caso la directory di installazione non sia /ocarina2, modificala correttamente nelle righe 9-12, 28-31 e 34 del file <i>.htaccess</i>.<br />
 	Subito dopo l\'invio della configurazione, ti verrà presentato un form per registrarti come amministratore, dopodichè ti basterà eliminare questo file (<i>setup.php</i>).
 	<p align="right">Buon proseguimento con Ocarina,<br />
-	<i>Giovanni Capuano</i></p><br />
+	<i>Giovanni `Roxas Shadow` Capuano</i></p><br />
 	
 	<form action="" method="post">
 	<b>Nome del sito</b><br />

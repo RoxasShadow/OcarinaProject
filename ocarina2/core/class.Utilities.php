@@ -287,43 +287,43 @@ class Utilities extends Languages {
 	}
 	
 	/* Carica un'immagine. */
-	function uploadImage($path, $FILES) {
-		if((empty($FILES)) || (!is_array($FILES)))
+	function uploadImage($path, $name) {
+		if((empty($_FILES[$name])) || (!is_array($_FILES[$name])))
 			return false;
 		do {
-			if(is_uploaded_file($_FILES['image']['tmp_name'])) {
-				list($width, $height, $type) = getimagesize($_FILES['image']['tmp_name']);
+			if(is_uploaded_file($_FILES[$name]['tmp_name'])) {
+				list($width, $height, $type) = getimagesize($_FILES[$name]['tmp_name']);
 				if(($type !== 1) && ($type !== 2) && ($type !== 3)) // gif, jpg, png
 					return false;
-				if(file_exists($path.$_FILES['image']['name']))
-					$_FILES['image']['name'] = rand(1,100).'_'.$_FILES['image']['name'];
-				if(!move_uploaded_file($_FILES['image']['tmp_name'], $path.$_FILES['image']['name']))
+				if(file_exists($path.$_FILES[$name]['name']))
+					$_FILES[$name]['name'] = rand(1,100).'_'.$_FILES[$name]['name'];
+				if(!move_uploaded_file($_FILES[$name]['tmp_name'], $path.$_FILES[$name]['name']))
 					return false;
 			}
 		} while(false);
-		return $_FILES['image']['name'];
+		return $_FILES[$name]['name'];
 	}
 	
 	/* Carica più immagini.*/
-	function uploadMultipleImage($path, $FILES) {
-		if((empty($FILES)) || (!is_array($FILES)))
+	function uploadMultipleImage($path, $name) {
+		if((empty($_FILES[$name])) || (!is_array($_FILES[$name])))
 			return false;
-		$name = array();
-		for($i=0, $count=count($_FILES['image']['name']); $i<$count; ++$i) {
+		$filename = array();
+		for($i=0, $count=count($_FILES[$name]['name']); $i<$count; ++$i) {
 			do {
-				if(is_uploaded_file($_FILES['image']['tmp_name'][$i])) {
-					list($width, $height, $type) = getimagesize($_FILES['image']['tmp_name'][$i]);
+				if(is_uploaded_file($_FILES[$name]['tmp_name'][$i])) {
+					list($width, $height, $type) = getimagesize($_FILES[$name]['tmp_name'][$i]);
 					if(($type !== 1) && ($type !== 2) && ($type !== 3)) // gif, jpg, png
 						return false;
-					if(file_exists($path.$_FILES['image']['name'][$i]))
-						$_FILES['image']['name'][$i] = rand(1,100).'_'.$_FILES['image']['name'][$i];
-					if(!move_uploaded_file($_FILES['image']['tmp_name'][$i], $path.$_FILES['image']['name'][$i]))
+					if(file_exists($path.$_FILES[$name]['name'][$i]))
+						$_FILES[$name]['name'][$i] = rand(1,100).'_'.$_FILES[$name]['name'][$i];
+					if(!move_uploaded_file($_FILES[$name]['tmp_name'][$i], $path.$_FILES[$name]['name'][$i]))
 						return false;
 				}
 			} while(false);
-			$name[$i] = $_FILES['image']['name'][$i];
+			$filename[$i] = $_FILES[$name]['name'][$i];
 		}
-		return $name;
+		return $filename;
 	}
 	
 	/* Carica un'immagine da remoto. Richiede allow_url_fopen. */
