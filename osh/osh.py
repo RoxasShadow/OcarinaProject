@@ -25,10 +25,12 @@ from sys import argv
 
 class osh:
 	def __init__(self):
+		' EDIT FROM HERE '
+		self.url = 'http://www.website.com/ocarina2/api.php'
+		' STOP, ENJOY IT :) '
 		self.version = 1.0
-		self.urlLastVersion = 'http://www.giovannicapuano.net/osh/lastversion.php'
-		self.urlNewVersion = 'http://www.giovannicapuano.net/osh/index.php'
-		self.url = 'http://localhost/ocarina2/api.php'
+		self.urlLastVersion = 'http://www.giovannicapuano.net/ocarina/lastversion.php?w=osh'
+		self.urlNewVersion = 'http://www.giovannicapuano.net/ocarina/'
 		self.cookieName = ''
 		self.cookieValue = ''
 		self.error = {

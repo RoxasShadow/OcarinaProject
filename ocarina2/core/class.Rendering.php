@@ -34,6 +34,7 @@ class Rendering extends Page {
 		$this->addValue('postmenu', '');
 		$this->addValue('stats', '');
 		$this->addValue('footer', '');
+		
 		/* Per tutto il resto :D */
 		$this->addValue('versione', $this->config[0]->versione);
 		$this->addValue('nomesito', $this->config[0]->nomesito);
@@ -124,8 +125,10 @@ class Rendering extends Page {
 		/* Renderizza il tutto con la skin appropriata. */
 		require_once($this->config[0]->root_index.'/etc/mobile_device_detect.php');
 		if($this->skin == 'admin') {
-			if($filename == 'index.tpl')
-				$this->addValue('lastversion', file_get_contents('http://www.giovannicapuano.net/ocarina2/lastversion.php'));
+			if($filename == 'index.tpl') {
+				$lastversion = json_decode(file_get_contents('http://www.giovannicapuano.net/ocarina/lastversion.php?w=ocarina2'));
+				$this->addValue('lastversion', $lastversion->{'foo-bar'});
+			}
 			$this->addValue('skin','admin');
 			$this->smarty->display('admin/'.$filename);
 		}

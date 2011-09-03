@@ -4,7 +4,7 @@
 	(C) Giovanni Capuano 2011
 */
 require_once('class.Rendering.php');
-//error_reporting(0);
+error_reporting(0);
 header('Content-Type: text/html; charset=UTF-8');
 
 /* Istanziando questa classe, è possibile usufruire di tutti i metodi e attributi delle sottoclassi facenti parte del core. */

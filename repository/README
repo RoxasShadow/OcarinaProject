@@ -1,0 +1,11 @@
+Ti trovi nel repository ufficiale di Ocarina2.
+
+--I file di lingua, che si trovano in languages/, possono essere installati in Ocarina2 semplicemente copiandoli in /core/languages.
+La loro attivazione sarà automatica.
+
+--I plugin, che si trovano in plugins/, possono essere installati in Ocarina2 semplicemente caricandoli mediante l'apposita pagina Plugins dell'amministrazione.
+Prima di installarli, potrai leggere una breve descrizione visualizzando il file plugin.cfg al loro interno.
+Successivamente, nella pagina dell'amministrazione precedentemente citata.
+
+Per maggiori informazioni visita <http://www.giovannicapuano.net/ocarina/>.
+(C) 2011 - Giovanni Capuano
