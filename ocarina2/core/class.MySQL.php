@@ -8,13 +8,13 @@ require_once('class.Utilities.php');
 /* Questa classe mette a disposizione dei metodi per gestire il database. */
 class MySQL extends Utilities {
 	/* Edit here... */
-	private $host = 'HOST';
-	private $username = 'USERNAME';
-	private $password = 'PASSWORD';
-	private $database = 'DATABASE';
-	public $prefix = 'PREFIX_';
+	private $host = 'sql.modificareps3.net';
+	private $username = 'modifica99238';
+	private $password = 'modi58004';
+	private $database = 'modifica99238';
+	public $prefix = 'ocarinamod_';
 	public $caching = true; // `true` -> Caching abilitato; `false` -> Caching disabilitato.
-	public $storage = '/PATH/ocarina2/cache/';
+	public $storage = '/home/mhd/www.modificareps3.net/htdocs/ocarina2/cache/';
 	public $filter = array('visitatori', 'log', 'visite', 'voti', 'personalmessage', 'utenti'); // Tabelle da non cachare.
 	/* Stop, g'day :) */
 	public $mysql = NULL;
@@ -348,7 +348,29 @@ class MySQL extends Utilities {
 		);
 		for($i=0, $count=count($array); $i<$count; ++$i)
 			if(!$this->query($array[$i]))
-				die(mysql_error());
+				return false;
+		return true;
+	}
+	
+	/* Creo una nuova configurazione. */
+	public function createInitConfig($config) {
+		$query = "INSERT INTO {$this->prefix}configurazione(nomesito, email, registrazioni, validazioneaccount, commenti, approvacommenti, log, plugin, cookie, loginexpire, skin, description, limitenews, impaginazionenews, limiteonline, permettivoto, url, url_index, url_admin, url_rendering, url_immagini, root, root_index, root_admin, root_rendering, root_immagini, versione, totalevisitatori) VALUES(";
+		foreach($config as $var)
+			$query .= "'$var', ";
+		$query = trim($query, ', ');
+		$query .= ')';
+		return $this->query($query) ? true : false;
+	}
+	
+	/* Crea un nuovo utente. */
+	public function createInitUser($user) {
+		$user[1] = md5('njhbijk2gfcvgjiu8yt6'.$user[0]);
+		$query = "INSERT INTO {$this->prefix}utenti(nickname, password, email, grado, data, ora, codiceregistrazione, skin) VALUES(";
+		foreach($user as $var)
+			$query .= "'$var', ";
+		$query = trim($query, ', ');
+		$query .= ')';
+		return $this->query($query) ? true : false;
 	}
 	
 	/* Filtra una stringa o un array multidimensionale.

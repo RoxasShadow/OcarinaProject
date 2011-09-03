@@ -102,7 +102,7 @@ class User extends Configuration {
 		return ($result = parent::get("SELECT * FROM {$this->prefix}utenti WHERE $campo='$valore' ORDER BY nickname ASC")) ? $result : false;
 	}
 	
-	/* Crea un commento. */
+	/* Crea un nuovo utente. */
 	public function createUser($array) {
 		if(empty($array))
 			return false;

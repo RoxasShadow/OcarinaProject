@@ -3,14 +3,11 @@
 	/setup.php
 	(C) Giovanni Capuano 2011
 */
-require_once('core/class.Configuration.php');
-$config = new Configuration();
 $submit = isset($_POST['submit']) ? true : false;
 $reg = isset($_POST['reg']) ? true : false;
 $versione = '0.9';
 
 if($reg) {
-	unset($config);
 	require_once('core/class.User.php');
 	$config = new User();
 	$nickname = ((isset($_POST['nickname'])) && ($_POST['nickname'] !== '')) ? $config->purge($_POST['nickname']) : '';
@@ -18,8 +15,10 @@ if($reg) {
 	$confPassword = ((isset($_POST['confPassword'])) && ($_POST['confPassword'] !== '')) ? $config->purge($_POST['confPassword']) : '';
 	$email = ((isset($_POST['email'])) && ($_POST['email'] !== '')) ? $config->purge($_POST['email']) : '';
 	
-	if(($password == $confPassword) && (strlen($password) > 4) && (strlen($nickname) > 4))
-		if(($config->config[0]->validazioneaccount == 1) && ($config->createUser(array($nickname, $password, $email, 1, date('d-m-y'), date('G:m:s'), $config->getCode(), $config->config[0]->skin)))) {
+	if(($password == $confPassword) && (strlen($password) > 4) && (strlen($nickname) > 4)) {
+		$codice = $config->getCode();
+		$u = $config->createInitUser(array($nickname, $password, $email, 1, date('d-m-y'), date('G:m:s'), ($config->config[0]->validazioneaccount == 1) ? $codice : '', $config->config[0]->skin));
+		if(($config->config[0]->validazioneaccount == 1) && ($u)) {
 			$config->sendMail($email, $config->config[0]->nomesito.' @ Validazione account per '.$nickname.'.', 'Ciao '.$nickname.',
 			dal momento che ti sei registrato, il sistema ha bisogno di essere sicuro che la tua email sia valida.
 			Per validarla ti basta cliccare il seguente link: '.$config->config[0]->url_index.'/registrazione.php?codice='.$codice.'
@@ -35,11 +34,11 @@ if($reg) {
 			<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 			</head>
 			<body>
-			<div align="center"><h1>Registrazione completata.<br />Hai bisogno però di confermare l\'email.</h1></div>
+			<div align="center"><h1>Registrazione completata.<br />Ora conferma l\'email ed elimina il file <b>'.$config->config[0]->root_index.'/setup.php</h1></div>
 			</body>
 			</html>';
 		}
-		elseif(($config->config[0]->validazioneaccount == 0) && ($config->createUser(array($nickname, $password, $email, 1, date('d-m-y'), date('G:m:s'), '', $config->config[0]->skin))))
+		elseif(($config->config[0]->validazioneaccount == 0) && ($u))
 			echo '
 			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 			<html xmlns="http://www.w3.org/1999/xhtml">
@@ -48,7 +47,7 @@ if($reg) {
 			<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 			</head>
 			<body>
-			<div align="center"><h1>Registrazione completata.</h1></div>
+			<div align="center"><h1>Registrazione completata.<br />Ora elimina il file <b>'.$config->config[0]->root_index.'/setup.php</h1></div>
 			</body>
 			</html>';
 		else
@@ -63,6 +62,7 @@ if($reg) {
 			<div align="center"><h1>Registrazione fallita.</h1></div>
 			</body>
 			</html>';
+	}
 	else
 		echo '
 		<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -77,6 +77,8 @@ if($reg) {
 		</html>';
 }
 elseif($submit) {
+	require_once('core/class.Configuration.php');
+	$config = new MySQL();
 	$nomesito = ((isset($_POST['nomesito'])) && ($_POST['nomesito'] !== '')) ? $config->purge($_POST['nomesito']) : '';
 	$email = ((isset($_POST['email'])) && ($_POST['email'] !== '')) ? $config->purge($_POST['email']) : '';
 	$registrazioni = ((isset($_POST['registrazioni'])) && (is_numeric($_POST['registrazioni'])) && ($_POST['registrazioni'] !== '')) ? $config->purge((int)$_POST['registrazioni']) : '';
@@ -104,9 +106,24 @@ elseif($submit) {
 	$root_rendering = ((isset($_POST['root_rendering'])) && ($_POST['root_rendering'] !== '')) ? $config->purge($_POST['root_rendering']) : '';
 	$root_immagini = ((isset($_POST['root_immagini'])) && ($_POST['root_immagini'] !== '')) ? $config->purge($_POST['root_immagini']) : '';
 	
-	$config->createDatabase();
+	$cb = $config->createDatabase();
+	if($cb !== true) {
+	echo '
+	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+	<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+	<title>Setup &raquo; Ocarina2 CMS</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	</head>
+	<body>
+	<div align="center"><h1>È accaduto un errore durante la creazione delle tabelle: controlla che i dati del database siano corretti.</h1>'.$cb.'</div>
+	</body>
+	</html>';
+	unset($config);
+	die();
+	}
 	$array = array($nomesito, $email, $bbcode, $registrazioni, $validazioneaccount, $commenti, $approvacommenti, $log, $cookie, $loginexpire, $skin, $description, $limitenews, $impaginazionenews, $limitenews, $permettivoto, $url, $url_index, $url_admin, $url_rendering, $url_immagini, $root, $root_index, $root_admin, $root_rendering, $root_immagini, $versione, '0');
-	if($config->createConfig($array))
+	if($config->createInitConfig($array))
 	echo '
 	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 	<html xmlns="http://www.w3.org/1999/xhtml">
@@ -152,7 +169,8 @@ elseif($submit) {
 	<body>
 	<div align="center"><h1>È accaduto un errore durante il setup.</h1></div>
 	</body>
-	</html>';	
+	</html>';
+	unset($config);	
 }
 else
 	echo  '
@@ -219,8 +237,8 @@ else
 	<b>Minuti per i quali un utente è considerato online finchè non compie un\'azione</b><br />
 	<input type="text" name="limiteonline" maxlength="10" /><br /><br />
 
-	<b>Permetti di votare news e pagine</b><br />
-	<input type="text" name="permettivoto" maxlength="10" /><br /><br />
+	<b>Permetti di votare news e pagine (0 = No, 1 = Si)</b><br />
+	<input type="text" name="permettivoto" maxlength="1" /><br /><br />
 
 	<b>URL (ex.: http://www.tuosito.com)</b><br />
 	<input type="text" name="url" maxlength="100" /><br /><br />

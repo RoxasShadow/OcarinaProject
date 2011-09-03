@@ -4,7 +4,6 @@
 order allow,deny
 deny from all
 </Files>
-Options All +Indexes
 
 ErrorDocument 400 /ocarina2/errorpage.php?id=400
 ErrorDocument 403 /ocarina2/errorpage.php?id=403
