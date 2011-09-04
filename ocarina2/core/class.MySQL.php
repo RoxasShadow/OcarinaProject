@@ -8,13 +8,13 @@ require_once('class.Utilities.php');
 /* Questa classe mette a disposizione dei metodi per gestire il database. */
 class MySQL extends Utilities {
 	/* Edit here... */
-	private $host = 'sql.modificareps3.net';
-	private $username = 'modifica99238';
-	private $password = 'modi58004';
-	private $database = 'modifica99238';
-	public $prefix = 'ocarinamod_';
+	private $host = 'HOST';
+	private $username = 'USERNAME';
+	private $password = 'PASSWORD';
+	private $database = 'DATABASE';
+	public $prefix = 'PREFIX_';
 	public $caching = true; // `true` -> Caching abilitato; `false` -> Caching disabilitato.
-	public $storage = '/home/mhd/www.modificareps3.net/htdocs/ocarina2/cache/';
+	public $storage = '/PATH/ocarina2/cache/';
 	public $filter = array('visitatori', 'log', 'visite', 'voti', 'personalmessage', 'utenti'); // Tabelle da non cachare.
 	/* Stop, g'day :) */
 	public $mysql = NULL;
