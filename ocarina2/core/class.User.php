@@ -177,7 +177,7 @@ class User extends Configuration {
 	
 	/* Crea un cookie. */
 	protected function setCookie($value) {
-		setcookie($this->config[0]->cookie, $value, time()+$this->config[0]->loginexpire);
+		setcookie($this->config[0]->cookie, $value, time()+$this->config[0]->loginexpire, '/');
 	}
 	
 	/* Distrugge un cookie. */
