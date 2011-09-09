@@ -440,4 +440,31 @@ class Utilities extends Languages {
 			$content[$i]->contenuto = str_ireplace($highlight, '<font color="yellow">'.$highlight.'</font>', $content[$i]->contenuto);
 		return $content;
 	}
+	
+	/* Effettua una conversione byte->Megabyte. */
+	public function byteToMega($byte) {
+		return number_format($byte/1048576, 6); // In questo modo prendo pure i byte :)
+	}
+	
+	/* Avvia il download di un file in modalità binaria. */
+	public function downloadFile($file, $filename) {
+		header("Cache-Control: public");
+		header("Content-Description: File Transfer");
+		header('Content-Length: '.filesize($file));
+		header('Content-type: '.finfo_file(finfo_open(FILEINFO_MIME), $file));
+		header('Content-Disposition: attachment; filename='.$filename);
+		header("Content-Transfer-Encoding: binary");
+		readfile($file);
+	}
+
+	/* Converte la formattazione della data italiana in quella inglese. */
+	public function dataToDate($data) {
+		$date = explode('-', $data);
+		return $date[1].'-'.$date[0].'-'.$date[2];
+	}
+
+	/* Ritorna true se è un file di testo. */
+	public function is_text($file) {
+		return substr(finfo_file(finfo_open(FILEINFO_MIME), $file), 0, 4) == 'text';
+	}
 }
