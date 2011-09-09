@@ -463,8 +463,20 @@ class Utilities extends Languages {
 		return $date[1].'-'.$date[0].'-'.$date[2];
 	}
 
-	/* Ritorna true se è un file di testo. */
+	/* Ritorna il MIME type di un file.. */
+	public function getMime($file) {
+		$info = finfo_file(finfo_open(FILEINFO_MIME), $file);
+		$array = explode(';', $info);
+		return $array[0];
+	}
+
+	/* Ritorna true se è un file locale è di testo. */
 	public function is_text($file) {
 		return substr(finfo_file(finfo_open(FILEINFO_MIME), $file), 0, 4) == 'text';
+	}
+
+	/* Ritorna true se è un file locale è un'immagine. */
+	public function is_image($file) {
+		return substr(finfo_file(finfo_open(FILEINFO_MIME), $file), 0, 5) == 'image';
 	}
 }
