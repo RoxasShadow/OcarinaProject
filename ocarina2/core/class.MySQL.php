@@ -97,7 +97,7 @@ class MySQL extends Utilities {
 	public function get($query) {
 		$get = array();
 		$file = md5($query).'.cache';
-		if(!$this->caching) {
+		if((!$this->caching) || ($this->is_exception($query))) {
 			++$this->countQuery;
 			if(!$result = $this->mysql->query($query))
 				return false;
@@ -123,7 +123,7 @@ class MySQL extends Utilities {
 	
 	/* Ritorna il numero di righe di una query. */
 	public function count($query) {
-		if(!$this->caching) {
+		if((!$this->caching) || ($this->is_exception($query))) {
 			++$this->countQuery;
 			if(!$result = $this->mysql->query($query))
 				return 0;
