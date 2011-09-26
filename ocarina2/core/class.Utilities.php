@@ -295,6 +295,8 @@ class Utilities extends Languages {
 				list($width, $height, $type) = getimagesize($_FILES[$name]['tmp_name']);
 				if(($type !== 1) && ($type !== 2) && ($type !== 3)) // gif, jpg, png
 					return false;
+				if(!$this->is_image($_FILES[$name]['tmp_name']))
+					return false;
 				if(file_exists($path.$_FILES[$name]['name']))
 					$_FILES[$name]['name'] = rand(1,100).'_'.$_FILES[$name]['name'];
 				if(!move_uploaded_file($_FILES[$name]['tmp_name'], $path.$_FILES[$name]['name']))
@@ -314,6 +316,8 @@ class Utilities extends Languages {
 				if(is_uploaded_file($_FILES[$name]['tmp_name'][$i])) {
 					list($width, $height, $type) = getimagesize($_FILES[$name]['tmp_name'][$i]);
 					if(($type !== 1) && ($type !== 2) && ($type !== 3)) // gif, jpg, png
+						return false;
+					if(!$this->is_image($_FILES[$name]['tmp_name']))
 						return false;
 					if(file_exists($path.$_FILES[$name]['name'][$i]))
 						$_FILES[$name]['name'][$i] = rand(1,100).'_'.$_FILES[$name]['name'][$i];
@@ -341,7 +345,7 @@ class Utilities extends Languages {
 			imagepng(imagecreatefrompng($link), $path.$name);
 		else
 			return false;
-		return $name;
+		return (!$this->is_image($path.$name)) ? false : $name;
 	}
 	
 	/* Carica un'immagine da remoto per chi ha allow_url_fopen disabilitato. Richiede cURL. */
@@ -359,7 +363,7 @@ class Utilities extends Languages {
 		$f = fopen($path.$name, 'w');
 		fwrite($f, $rawdata);
 		fclose($f);
-		return $name;
+		return (!$this->is_image($f)) ? false : $name;
 	}
 	
 	/* Ridimensiona un'immagine. */
