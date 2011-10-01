@@ -1,1 +1,3 @@
---Il contatore degli accessi totali *NON* è attendibile. È consigliato usare il contatore interno solo per conoscere il numero e il nome degli utenti o visitatori loggati. Se vuoi avere un monitoraggio completo, utilizza software o servizi come PHP-Stats o Google Analytics.
+--Il contatore degli accessi totali non puù essere considerato attendibile a causa dei pochi test effettuati.
+  È consigliato utilizzare il suddetto solo per conoscere il numero e il nickname degli utenti o dei visitatori al momento loggati.
+  Se vuoi avere un monitoraggio completo, utilizza software come PHP-Stats o servizi come Google Analytics.
