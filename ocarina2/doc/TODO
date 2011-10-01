@@ -1,4 +1,3 @@
---Quando controlli se una variabile get-post è vuota, facci prima un trim;
 --Effettua un closedir() quando usi opendir();
 --Eliminare le pagine di caricament?
 --Dai un'occhiata a <http://elbertf.com/2010/01/store-passwords-safely-with-php-and-mysql/>;

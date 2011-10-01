@@ -6,9 +6,9 @@
 require_once('../core/class.Ocarina.php');
 
 $ocarina = new Ocarina();
-$titolo_annuncio = ((isset($_POST['titolo'])) && ($_POST['titolo'] !== '')) ? $ocarina->purge($_POST['titolo']) : '';
-$testo_annuncio = ((isset($_POST['testo'])) && ($_POST['testo'] !== '')) ? $news->purgeSlashes($news->purgeByXSS($_POST['testo'])) : '';
-$selected = ((isset($_POST['selected'])) && ($_POST['selected'] !== '')) ? $ocarina->purge($_POST['selected']) : '';
+$titolo_annuncio = ((isset($_POST['titolo'])) && (trim($_POST['titolo']) !== '')) ? $ocarina->purge($_POST['titolo']) : '';
+$testo_annuncio = ((isset($_POST['testo'])) && (trim($_POST['testo']) !== '')) ? $news->purgeSlashes($news->purgeByXSS($_POST['testo'])) : '';
+$selected = ((isset($_POST['selected'])) && (trim($_POST['selected']) !== '')) ? $ocarina->purge($_POST['selected']) : '';
 $submit = isset($_POST['submit']) ? true : false;
 
 $ocarina->skin = 'admin';

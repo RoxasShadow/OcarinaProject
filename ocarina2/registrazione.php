@@ -8,12 +8,12 @@ require_once('etc/class.ReCaptcha.php');
 
 $ocarina = new Ocarina();
 $captcha = new ReCaptcha();
-$nickname = ((isset($_POST['nickname'])) && ($_POST['nickname'] !== '')) ? $ocarina->purge($_POST['nickname']) : '';
-$password = ((isset($_POST['password'])) && ($_POST['password'] !== '')) ? $ocarina->purge($_POST['password']) : '';
-$confPassword = ((isset($_POST['confPassword'])) && ($_POST['confPassword'] !== '')) ? $ocarina->purge($_POST['confPassword']) : '';
-$email = ((isset($_POST['email'])) && ($_POST['email'] !== '')) ? $ocarina->purge($_POST['email']) : '';
+$nickname = ((isset($_POST['nickname'])) && (trim($_POST['nickname']) !== '')) ? $ocarina->purge($_POST['nickname']) : '';
+$password = ((isset($_POST['password'])) && (trim($_POST['password']) !== '')) ? $ocarina->purge($_POST['password']) : '';
+$confPassword = ((isset($_POST['confPassword'])) && (trim($_POST['confPassword']) !== '')) ? $ocarina->purge($_POST['confPassword']) : '';
+$email = ((isset($_POST['email'])) && (trim($_POST['email']) !== '')) ? $ocarina->purge($_POST['email']) : '';
 $submit = isset($_POST['submit']) ? true : false;
-$codiceRegistrazione = ((isset($_GET['codice'])) && ($_GET['codice'] !== '')) ? $ocarina->purge($_GET['codice']) : '';
+$codiceRegistrazione = ((isset($_GET['codice'])) && (trim($_GET['codice']) !== '')) ? $ocarina->purge($_GET['codice']) : '';
 
 $ocarina->skin = $ocarina->isLogged() ? $ocarina->username[0]->skin : $ocarina->config[0]->skin;
 $ocarina->addValue('titolo', $ocarina->getLanguage('title', 8).$ocarina->getLanguage('title', 2).$ocarina->config[0]->nomesito);

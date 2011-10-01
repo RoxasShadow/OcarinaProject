@@ -4,9 +4,9 @@
 	(C) Giovanni Capuano 2011
 */
 require_once('../core/class.Ocarina.php');
-$image = ((isset($_FILES['image'])) && ($_FILES['image'] !== '')) ? $_FILES['image'] : '';
+$image = ((isset($_FILES['image'])) && (trim($_FILES['image']) !== '')) ? $_FILES['image'] : '';
 $submit = ($image !== '') ? true : false;
-$multiple = ((isset($_GET['multiple'])) && ($_GET['multiple'] !== '') && (is_numeric($_GET['multiple']))) ? (int)$_GET['multiple'] : 1;
+$multiple = ((isset($_GET['multiple'])) && (trim($_GET['multiple']) !== '') && (is_numeric($_GET['multiple']))) ? (int)$_GET['multiple'] : 1;
 
 $ocarina = new Ocarina();
 $ocarina->skin = 'admin';

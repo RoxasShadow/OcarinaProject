@@ -8,9 +8,9 @@ require_once('etc/class.ReCaptcha.php');
 
 $ocarina = new Ocarina();
 $captcha = new ReCaptcha();
-$destinatario = ((isset($_POST['destinatario'])) && ($_POST['destinatario'] !== '')) ? $ocarina->purge($_POST['destinatario']) : '';
-$oggetto = ((isset($_POST['oggetto'])) && ($_POST['oggetto'] !== '')) ? $ocarina->purge($_POST['oggetto']) : '';
-$contenuto = ((isset($_POST['contenuto'])) && ($_POST['contenuto'] !== '')) ? $ocarina->purge($_POST['contenuto']) : '';
+$destinatario = ((isset($_POST['destinatario'])) && (trim($_POST['destinatario']) !== '')) ? $ocarina->purge($_POST['destinatario']) : '';
+$oggetto = ((isset($_POST['oggetto'])) && (trim($_POST['oggetto']) !== '')) ? $ocarina->purge($_POST['oggetto']) : '';
+$contenuto = ((isset($_POST['contenuto'])) && (trim($_POST['contenuto']) !== '')) ? $ocarina->purge($_POST['contenuto']) : '';
 $submit = isset($_POST['submit']) ? true : false;
 
 $ocarina->skin = $ocarina->isLogged() ? $ocarina->username[0]->skin : $ocarina->config[0]->skin;

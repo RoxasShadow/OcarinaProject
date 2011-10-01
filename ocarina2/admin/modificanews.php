@@ -6,10 +6,10 @@
 require_once('../core/class.Ocarina.php');
 
 $ocarina = new Ocarina();
-$titolo_news = ((isset($_POST['titolo'])) && ($_POST['titolo'] !== '')) ? $ocarina->purgeSlashes($ocarina->purgeByXSS($_POST['titolo'])) : '';
-$categoria_news = ((isset($_POST['categoria'])) && ($_POST['categoria'] !== '')) ? $ocarina->purge($_POST['categoria']) : '';
-$testo_news = ((isset($_POST['testo'])) && ($_POST['testo'] !== '')) ? $ocarina->purgeSlashes($ocarina->purgeByXSS($_POST['testo'])) : '';
-$selected = ((isset($_POST['selected'])) && ($_POST['selected'] !== '')) ? $ocarina->purgeSlashes($ocarina->purgeByXSS($_POST['selected'])) : '';
+$titolo_news = ((isset($_POST['titolo'])) && (trim($_POST['titolo']) !== '')) ? $ocarina->purgeSlashes($ocarina->purgeByXSS($_POST['titolo'])) : '';
+$categoria_news = ((isset($_POST['categoria'])) && (trim($_POST['categoria']) !== '')) ? $ocarina->purge($_POST['categoria']) : '';
+$testo_news = ((isset($_POST['testo'])) && (trim($_POST['testo']) !== '')) ? $ocarina->purgeSlashes($ocarina->purgeByXSS($_POST['testo'])) : '';
+$selected = ((isset($_POST['selected'])) && (trim($_POST['selected']) !== '')) ? $ocarina->purgeSlashes($ocarina->purgeByXSS($_POST['selected'])) : '';
 $submit = isset($_POST['submit']) ? true : false;
 
 $ocarina->skin = 'admin';

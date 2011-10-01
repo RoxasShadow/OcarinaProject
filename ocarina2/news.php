@@ -6,8 +6,8 @@
 require_once('core/class.Ocarina.php');
 
 $ocarina = new Ocarina();
-$titolo = isset($_GET['titolo']) ? $ocarina->purge($_GET['titolo']) : '';
-$comment = isset($_POST['comment']) ? $ocarina->purge($_POST['comment']) : '';
+$titolo = ((isset($_GET['titolo'])) && (trim($_GET['titolo']) !== '')) ? $ocarina->purge($_GET['titolo']) : '';
+$comment = ((isset($_GET['comment'])) && (trim($_GET['comment']) !== '')) ? $ocarina->purge($_GET['comment']) : '';
 
 $ocarina->skin = $ocarina->isLogged() ? $ocarina->username[0]->skin : $ocarina->config[0]->skin;
 

@@ -6,8 +6,8 @@
 require_once('../core/class.Ocarina.php');
 
 $ocarina = new Ocarina();
-$nickname = ((isset($_POST['nickname'])) && ($_POST['nickname'] !== '')) ? $ocarina->purgeByXSS($_POST['nickname']) : '';
-$grado = ((isset($_POST['grado'])) && ($_POST['grado'] !== '') && (is_numeric($_POST['grado']))) ? (int)$_POST['grado'] : '';
+$nickname = ((isset($_POST['nickname'])) && (trim($_POST['nickname']) !== '')) ? $ocarina->purgeByXSS($_POST['nickname']) : '';
+$grado = ((isset($_POST['grado'])) && (trim($_POST['grado']) !== '') && (is_numeric($_POST['grado']))) ? (int)$_POST['grado'] : '';
 $submit = isset($_POST['submit']) ? true : false;
 
 $ocarina->skin = 'admin';

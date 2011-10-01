@@ -6,11 +6,11 @@
 require_once('core/class.Ocarina.php');
 
 $ocarina = new Ocarina();
-$email = ((isset($_POST['email'])) && ($_POST['email'] !== '')) ? $ocarina->purge($_POST['email']) : '';
-$skin = ((isset($_POST['skin'])) && ($_POST['skin'] !== '')) ? $ocarina->purge($_POST['skin']) : '';
-$bio = ((isset($_POST['bio'])) && ($_POST['bio'] !== '')) ? $ocarina->purge($_POST['bio']) : '';
-$avatar = ((isset($_POST['avatar'])) && ($_POST['avatar'] !== '')) ? $ocarina->purge($_POST['avatar']) : '';
-$password = ((isset($_POST['password'])) && ($_POST['password'] !== '')) ? $ocarina->salt.$ocarina->purge($_POST['password']) : '';
+$email = ((isset($_POST['email'])) && (trim($_POST['email']) !== '')) ? $ocarina->purge($_POST['email']) : '';
+$skin = ((isset($_POST['skin'])) && (trim($_POST['skin']) !== '')) ? $ocarina->purge($_POST['skin']) : '';
+$bio = ((isset($_POST['bio'])) && (trim($_POST['bio']) !== '')) ? $ocarina->purge($_POST['bio']) : '';
+$avatar = ((isset($_POST['avatar'])) && (trim($_POST['avatar']) !== '')) ? $ocarina->purge($_POST['avatar']) : '';
+$password = ((isset($_POST['password'])) && (trim($_POST['password']) !== '')) ? $ocarina->salt.$ocarina->purge($_POST['password']) : '';
 $submit = isset($_POST['submit']) ? true : false;
 
 $ocarina->skin = $ocarina->isLogged() ? $ocarina->username[0]->skin : $ocarina->config[0]->skin;

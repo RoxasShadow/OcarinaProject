@@ -6,7 +6,7 @@
 require_once('../core/class.Ocarina.php');
 
 $ocarina = new Ocarina();
-$nickname = ((isset($_POST['nickname'])) && ($_POST['nickname'] !== '')) ? $ocarina->purgeByXSS($_POST['nickname']) : '';
+$nickname = ((isset($_POST['nickname'])) && (trim($_POST['nickname']) !== '')) ? $ocarina->purgeByXSS($_POST['nickname']) : '';
 $all = isset($_POST['all']) ? true : false;
 $submit = isset($_POST['submit']) ? true : false;
 

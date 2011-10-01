@@ -5,8 +5,8 @@
 */
 require_once('../core/class.Ocarina.php');
 $ocarina = new Ocarina();
-$type = ((isset($_GET['type'])) && ($_GET['type'] !== '')) ? $ocarina->purgeByXSS($_GET['type']) : '';
-$text = ((isset($_POST['text'])) && ($_POST['text'] !== '')) ? $ocarina->purgeByXSS($_POST['text']) : die('Text not found.');
+$type = ((isset($_GET['type'])) && (trim($_GET['type']) !== '')) ? $ocarina->purgeByXSS($_GET['type']) : '';
+$text = ((isset($_POST['text'])) && (trim($_POST['text']) !== '')) ? $ocarina->purgeByXSS($_POST['text']) : die('Text not found.');
 
 if($ocarina->config[0]->plugin == 1) {
 	$plugins = Plugin::listPlugins();

@@ -6,7 +6,7 @@
 require_once('../core/class.Ocarina.php');
 $ocarina = new Ocarina();
 
-$skin = ((isset($_FILES['skin'])) && ($_FILES['skin'] !== '')) ? $_FILES['skin'] : '';
+$skin = ((isset($_FILES['skin'])) && (trim($_FILES['skin']) !== '')) ? $_FILES['skin'] : '';
 $submit = ($skin !== '') ? true : false;
 
 $ocarina->skin = 'admin';

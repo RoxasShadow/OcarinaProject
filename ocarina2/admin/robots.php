@@ -6,7 +6,7 @@
 require_once('../core/class.Ocarina.php');
 
 $ocarina = new Ocarina();
-$robots = ((isset($_POST['robots'])) && ($_POST['robots'] !== '')) ? $ocarina->purgeByXSS($_POST['robots']) : '';
+$robots = ((isset($_POST['robots'])) && (trim($_POST['robots']) !== '')) ? $ocarina->purgeByXSS($_POST['robots']) : '';
 $submit = isset($_POST['submit']) ? true : false;
 
 $ocarina->skin = 'admin';

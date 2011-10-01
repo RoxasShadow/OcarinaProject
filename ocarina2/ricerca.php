@@ -6,9 +6,9 @@
 require_once('core/class.Ocarina.php');
 
 $ocarina = new Ocarina();
-$cercaNews = (isset($_GET['news'])) ? $ocarina->purge($_GET['news']) : '';
-$cercaPagine = (isset($_GET['pagine'])) ? $ocarina->purge($_GET['pagine']) : '';
-$cercaCommenti = (isset($_GET['commenti'])) ? $ocarina->purge($_GET['commenti']) : '';
+$cercaNews = ((isset($_GET['news'])) && (trim($_GET['news']) !== '')) ? $ocarina->purge($_GET['news']) : '';
+$cercaPagine = ((isset($_GET['pagine'])) && (trim($_GET['pagine']) !== '')) ? $ocarina->purge($_GET['pagine']) : '';
+$cercaCommenti = ((isset($_GET['commenti'])) && (trim($_GET['commenti']) !== '')) ? $ocarina->purge($_GET['commenti']) : '';
 $cerca = true;
 
 $ocarina->skin = $ocarina->isLogged() ? $ocarina->username[0]->skin : $ocarina->config[0]->skin;

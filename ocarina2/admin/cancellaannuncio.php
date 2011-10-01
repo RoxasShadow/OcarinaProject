@@ -6,7 +6,7 @@
 require_once('../core/class.Ocarina.php');
 
 $ocarina = new Ocarina();
-$minititolo_annuncio = ((isset($_POST['content'])) && ($_POST['content'] !== '')) ? $ocarina->purge($_POST['content']) : '';
+$minititolo_annuncio = ((isset($_POST['content'])) && (trim($_POST['content']) !== '')) ? $ocarina->purge($_POST['content']) : '';
 $submit = isset($_POST['submit']) ? true : false;
 
 $ocarina->skin = 'admin';

@@ -6,8 +6,8 @@
 require_once('../core/class.Ocarina.php');
 
 $ocarina = new Ocarina();
-$testo_email = ((isset($_POST['testo'])) && ($_POST['testo'] !== '')) ? $_POST['testo'] : '';
-$oggetto_email = ((isset($_POST['oggetto'])) && ($_POST['oggetto'] !== '')) ? $_POST['oggetto'] : '';
+$testo_email = ((isset($_POST['testo'])) && (trim($_POST['testo']) !== '')) ? $_POST['testo'] : '';
+$oggetto_email = ((isset($_POST['oggetto'])) && (trim($_POST['oggetto']) !== '')) ? $_POST['oggetto'] : '';
 $submit = isset($_POST['submit']) ? true : false;
 
 $ocarina->skin = 'admin';

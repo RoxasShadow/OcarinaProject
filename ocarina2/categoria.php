@@ -5,7 +5,7 @@
 */
 require_once('core/class.Ocarina.php');
 $ocarina = new Ocarina();
-$categoria = isset($_GET['cat']) ? $ocarina->purge($_GET['cat']) : '';
+$categoria = ((isset($_GET['cat'])) && (trim($_GET['cat']) !== '')) ? $ocarina->purge($_GET['cat']) : '';
 
 $ocarina->skin = $ocarina->isLogged() ? $ocarina->username[0]->skin : $ocarina->config[0]->skin;
 $ocarina->addValue('titolo', $categoria !== '' ? $ocarina->getLanguage('title', 0).$categoria.$ocarina->getLanguage('title', 2).$ocarina->config[0]->nomesito : $ocarina->config[0]->nomesito);

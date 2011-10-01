@@ -6,7 +6,7 @@
 header('Content-Type:text/xml');
 require_once('core/class.Ocarina.php');
 $ocarina = new Ocarina();
-$content = ((isset($_GET['content'])) && ($_GET['content'] !== '')) ? $ocarina->purge($_GET['content']) : '';
+$content = ((isset($_GET['content'])) && (trim($_GET['content']) !== '')) ? $ocarina->purge($_GET['content']) : '';
 
 if($content == 'page')
 	echo $ocarina->sitemapPage();
