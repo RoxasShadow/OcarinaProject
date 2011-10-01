@@ -1,1 +1,8 @@
---Next.
+--Quando controlli se una variabile get-post è vuota, facci prima un trim;
+--Effettua un closedir() quando usi opendir();
+--Eliminare le pagine di caricament?
+--Dai un'occhiata a <http://elbertf.com/2010/01/store-passwords-safely-with-php-and-mysql/>;
+--Stable release.
+
+*Next.
+--Controllo aggiornamento dei plugin via json verso il proprio url inserito nel file di configuraione ed avvertimento nella pagina dei plugin su un eventuale aggiornamento di uno di essi.
