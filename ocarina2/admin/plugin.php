@@ -6,10 +6,10 @@
 require_once('../core/class.Ocarina.php');
 require_once('../core/class.Plugin.php');
 $ocarina = new Ocarina();
-$plugin = ((isset($_FILES['plugin'])) && (trim($_FILES['plugin']) !== '')) ? $_FILES['plugin'] : '';
-$disinstall = ((isset($_GET['disinstall'])) && (trim($_GET['disinstall']) !== '')) ? $ocarina->purge($_GET['disinstall']) : '';
-$active = ((isset($_GET['active'])) && (trim($_GET['active']) !== '')) ? $ocarina->purge($_GET['active']) : '';
-$deactive = ((isset($_GET['deactive'])) && (trim($_GET['deactive']) !== '')) ? $ocarina->purge($_GET['deactive']) : '';
+$plugin = ((isset($_FILES['plugin'])) && ($_FILES['plugin'] !== '')) ? $_FILES['plugin'] : '';
+$disinstall = ((isset($_GET['disinstall'])) && ($_GET['disinstall'] !== '')) ? $ocarina->purge($_GET['disinstall']) : '';
+$active = ((isset($_GET['active'])) && ($_GET['active'] !== '')) ? $ocarina->purge($_GET['active']) : '';
+$deactive = ((isset($_GET['deactive'])) && ($_GET['deactive'] !== '')) ? $ocarina->purge($_GET['deactive']) : '';
 $submit = ($plugin !== '') ? true : false;
 
 $ocarina->skin = 'admin';

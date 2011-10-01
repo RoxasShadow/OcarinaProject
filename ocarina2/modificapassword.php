@@ -7,9 +7,9 @@ require_once('core/class.Ocarina.php');
 
 $ocarina = new Ocarina();
 $config = $ocarina->getConfig();
-$oldPassword = ((isset($_POST['oldPassword'])) && (trim($_POST['oldPassword']) !== '')) ? $ocarina->purge($_POST['oldPassword']) : '';
-$password = ((isset($_POST['password'])) && (trim($_POST['password']) !== '')) ? $ocarina->purge($_POST['password']) : '';
-$confPassword = ((isset($_POST['confPassword'])) && (trim($_POST['confPassword']) !== '')) ? $ocarina->purge($_POST['confPassword']) : '';
+$oldPassword = ((isset($_POST['oldPassword'])) && ($_POST['oldPassword'] !== '')) ? $ocarina->purge($_POST['oldPassword']) : '';
+$password = ((isset($_POST['password'])) && ($_POST['password'] !== '')) ? $ocarina->purge($_POST['password']) : '';
+$confPassword = ((isset($_POST['confPassword'])) && ($_POST['confPassword'] !== '')) ? $ocarina->purge($_POST['confPassword']) : '';
 $submit = isset($_POST['submit']) ? true : false;
 
 $ocarina->skin = $ocarina->isLogged() ? $ocarina->username[0]->skin : $ocarina->config[0]->skin;

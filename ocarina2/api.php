@@ -54,12 +54,12 @@
 */
 require_once('core/class.Ocarina.php');
 $ocarina = new Ocarina();
-$action = ((isset($_GET['action'])) && (trim($_GET['action']) !== '')) ? $ocarina->purge($_GET['action']) : '';
-$titolo = ((isset($_GET['title'])) && (trim($_GET['title']) !== '')) ? $ocarina->purge($_GET['title']) : '';
-$nickname = ((isset($_GET['nickname'])) && (trim($_GET['nickname']) !== '')) ? $ocarina->purge($_GET['nickname']) : '';
-$password = ((isset($_GET['password'])) && (trim($_GET['password']) !== '')) ? $ocarina->purge($_GET['password']) : '';
-$email = ((isset($_GET['email'])) && (trim($_GET['email']) !== '')) ? $ocarina->purge($_GET['email']) : '';
-$contenuto = ((isset($_GET['content'])) && (trim($_GET['content']) !== '')) ? $ocarina->purge($_GET['content']) : '';
+$action = isset($_GET['action']) ? $ocarina->purge($_GET['action']) : '';
+$titolo = isset($_GET['title']) ? $ocarina->purge($_GET['title']) : '';
+$nickname = isset($_GET['nickname']) ? $ocarina->purge($_GET['nickname']) : '';
+$password = isset($_GET['password']) ? $ocarina->purge($_GET['password']) : '';
+$email = isset($_GET['email']) ? $ocarina->purge($_GET['email']) : '';
+$contenuto = isset($_GET['content']) ? $ocarina->purge($_GET['content']) : '';
 $id = ((isset($_GET['id'])) && is_numeric($_GET['id'])) ? (int)$_GET['id'] : '';
 $actionPermitted = array(
 	'news',

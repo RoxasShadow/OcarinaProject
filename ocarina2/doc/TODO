@@ -1,6 +1,4 @@
---Effettua un closedir() quando usi opendir();
---Eliminare le pagine di caricament?
---Dai un'occhiata a <http://elbertf.com/2010/01/store-passwords-safely-with-php-and-mysql/>;
+--Varie ed eventuali;
 --Stable release.
 
 *Next.

@@ -6,9 +6,9 @@
 require_once('../core/class.Ocarina.php');
 
 $ocarina = new Ocarina();
-$titolo_news = ((isset($_POST['titolo'])) && (trim($_POST['titolo']) !== '')) ? $ocarina->purgeSlashes($ocarina->purgeByXSS($_POST['titolo'])) : '';
-$categoria_news = ((isset($_POST['categoria'])) && (trim($_POST['categoria']) !== '')) ? $ocarina->purge($_POST['categoria']) : '';
-$testo_news = ((isset($_POST['testo'])) && (trim($_POST['testo']) !== '')) ? $ocarina->purgeSlashes($ocarina->purgeByXSS($_POST['testo'])) : '';
+$titolo_news = ((isset($_POST['titolo'])) && ($_POST['titolo'] !== '')) ? $ocarina->purgeSlashes($ocarina->purgeByXSS($_POST['titolo'])) : '';
+$categoria_news = ((isset($_POST['categoria'])) && ($_POST['categoria'] !== '')) ? $ocarina->purge($_POST['categoria']) : '';
+$testo_news = ((isset($_POST['testo'])) && ($_POST['testo'] !== '')) ? $ocarina->purgeSlashes($ocarina->purgeByXSS($_POST['testo'])) : '';
 $submit = isset($_POST['submit']) ? true : false;
 
 $ocarina->skin = 'admin';

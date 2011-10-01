@@ -159,6 +159,7 @@ class Rendering extends Page {
 			else
 				if(($skin !== '.') && ($skin !== '..') && ($skin !== 'admin') && ($skin !== 'mobile') && (is_dir($dir.$skin)))
 					$f[] = $skin;
+		closedir($apri);
 		return $f;
 	}
 

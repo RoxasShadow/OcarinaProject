@@ -6,8 +6,8 @@
 require_once('core/class.Ocarina.php');
 
 $ocarina = new Ocarina();
-$nickname = ((isset($_POST['nickname'])) && (trim($_POST['nickname']) !== '')) ? $ocarina->purge($_POST['nickname']) : '';
-$password = ((isset($_POST['password'])) && (trim($_POST['password']) !== '')) ? $ocarina->purge($_POST['password']) : '';
+$nickname = ((isset($_POST['nickname'])) && ($_POST['nickname'] !== '')) ? $ocarina->purge($_POST['nickname']) : '';
+$password = ((isset($_POST['password'])) && ($_POST['password'] !== '')) ? $ocarina->purge($_POST['password']) : '';
 $submit = isset($_POST['submit']) ? true : false;
 
 $ocarina->skin = $ocarina->isLogged() ? $ocarina->username[0]->skin : $ocarina->config[0]->skin;

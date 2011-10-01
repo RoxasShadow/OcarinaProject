@@ -45,6 +45,7 @@ final class Plugin {
 			}
 		if(!is_null($plugin) && array_key_exists('name', $plugin))
 			$this->plugins[$plugin['name']] = $plugin;
+		closedir($dir);
 		unset($plugin);
 	}
 	

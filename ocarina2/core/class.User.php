@@ -9,14 +9,23 @@ require_once('class.Configuration.php');
 class User extends Configuration {
 	public $logged = NULL;
 	public $username = NULL;
-	public $salt = 'njhbijk2gfcvgjiu8yt6';
 	
 	public function __construct() {
 		parent::__construct();
 		$this->logged = $this->isLogged();
 		$this->username = $this->logged ? $this->searchUserByField('secret', $this->getCookie()) : false;
 	}
-
+	
+	/* Crea un hash di una password. */
+	public function createPassword($password) {
+		return parent::generateHash($password, '');
+	}
+	
+	/* Controlla se la password è corretta confrontando l'hash presente nel database con una generata ex-novo. */
+	public function checkPassword($hash, $password) {
+		return (parent::generateHash($password, $hash) == $hash) ? true : false;
+	}
+	
 	/* Ottiene uno o più utenti. */
 	public function getUser($nickname = '') {
 		if($nickname !== '')
@@ -109,7 +118,7 @@ class User extends Configuration {
 		if((!$this->isUser($array[0])) && (parent::isEmail($array[2]))) {
 			if(!$campi = parent::getColumns('SELECT * FROM '.$this->prefix.'utenti LIMIT 1'))
 				return false;
-			$array[1] = md5($this->salt.$array[1]);
+			$array[1] = $this->createPassword($array[1]);
 			$query = 'INSERT INTO '.$this->prefix.'utenti(';
 			foreach($campi as $var)
 				if(($var !== 'id') && ($var !== 'secret') && ($var !== 'bio') && ($var !== 'avatar') && ($var !== 'lastlogout') && ($var !== 'ip') && ($var !== 'browsername') && ($var !== 'browserversion') && ($var !== 'platform') && ($var !== 'codicerecupero'))
@@ -194,11 +203,12 @@ class User extends Configuration {
 	public function login($nickname, $password) {
 		if(!$this->isUser($nickname))
 			return false;
-		$password = md5($this->salt.$password);
-		if(parent::resultCountQuery("SELECT COUNT(*) FROM {$this->prefix}utenti WHERE nickname='$nickname' AND password='$password' AND codiceregistrazione=''") > 0) {
+		if(($user = parent::get("SELECT * FROM {$this->prefix}utenti WHERE nickname='$nickname' AND codiceregistrazione='' LIMIT 1")) !== false) {
+			if(!$this->checkPassword($user[0]->password, $password))
+				return false;
 			$code = $this->getCode();
 			$client = parent::getClient();
-			parent::query("UPDATE {$this->prefix}utenti SET secret='$code', ip='{$_SERVER['REMOTE_ADDR']}', browsername='{$client['browser']}', browserversion='{$client['version']}', platform='{$client['platform']}' WHERE nickname='$nickname'");
+			parent::query("UPDATE {$this->prefix}utenti SET secret='$code', ip='{$_SERVER['REMOTE_ADDR']}', browsername='{$client['browser']}', browserversion='{$client['version']}', platform='{$client['platform']}' WHERE nickname='$nickname' LIMIT 1");
 			$this->setCookie($code);
 			return true;
 		}
