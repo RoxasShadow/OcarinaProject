@@ -86,14 +86,7 @@ class News extends Category {
 		if(empty($array))
 			return false;
 		if((!$this->isNews($array[2])) && (parent::isCategory('news', $array[4])) && (parent::isUser($array[0]))) {
-			if(!$campi = parent::getColumns('SELECT * FROM '.$this->prefix.'news WHERE approvato=\'1\' ORDER BY id DESC LIMIT 1'))
-				return false;
-			$query = 'INSERT INTO '.$this->prefix.'news(';
-			foreach($campi as $var)
-				if(($var !== 'id') && ($var !== 'dataultimamodifica') && ($var !== 'oraultimamodifica') && ($var !== 'autoreultimamodifica') && ($var !== 'visite') && ($var !== 'visitatori') && ($var !== 'voti') && ($var !== 'votanti'))
-				$query .= $var.', ';
-			$query = trim($query, ', ');
-			$query .= ') VALUES(';
+			$query = 'INSERT INTO '.$this->prefix.'news(autore, titolo, minititolo, contenuto, categoria, data, ora, approvato) VALUES(';
 			foreach($array as $var)
 				$query .= "'$var', ";
 			$query = trim($query, ', ');

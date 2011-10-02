@@ -116,15 +116,8 @@ class User extends Configuration {
 		if(empty($array))
 			return false;
 		if((!$this->isUser($array[0])) && (parent::isEmail($array[2]))) {
-			if(!$campi = parent::getColumns('SELECT * FROM '.$this->prefix.'utenti LIMIT 1'))
-				return false;
 			$array[1] = $this->createPassword($array[1]);
-			$query = 'INSERT INTO '.$this->prefix.'utenti(';
-			foreach($campi as $var)
-				if(($var !== 'id') && ($var !== 'secret') && ($var !== 'bio') && ($var !== 'avatar') && ($var !== 'lastlogout') && ($var !== 'ip') && ($var !== 'browsername') && ($var !== 'browserversion') && ($var !== 'platform') && ($var !== 'codicerecupero'))
-					$query .= $var.', ';
-			$query = trim($query, ', ');
-			$query .= ') VALUES(';
+			$query = 'INSERT INTO '.$this->prefix.'utenti(nickname, password, email, grado, data, ora, codiceregistrazione, skin) VALUES(';
 			foreach($array as $var)
 				$query .= "'$var', ";
 			$query = trim($query, ', ');

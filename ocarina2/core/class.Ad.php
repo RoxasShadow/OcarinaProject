@@ -29,14 +29,7 @@ class Ad extends PersonalMessage {
 		if(empty($array))
 			return false;
 		if((!$this->isAd($array[2])) && (parent::isUser($array[0]))) {
-			if(!$campi = parent::getColumns('SELECT * FROM '.$this->prefix.'annunci LIMIT 1'))
-				return false;
-			$query = 'INSERT INTO '.$this->prefix.'annunci(';
-			foreach($campi as $var)
-				if($var !== 'id')
-					$query .= $var.', ';
-			$query = trim($query, ', ');
-			$query .= ') VALUES(';
+			$query = 'INSERT INTO '.$this->prefix.'annunci(autore, titolo, minititolo, contenuto, data, ora) VALUES(';
 			foreach($array as $var)
 				$query .= "'$var', ";
 			$query = trim($query, ', ');

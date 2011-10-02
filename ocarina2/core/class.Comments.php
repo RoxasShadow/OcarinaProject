@@ -59,14 +59,7 @@ class Comments extends News {
 		if(empty($array))
 			return false;
 		if((parent::isNews($array[2])) && (parent::isUser($array[0]))) {
-			if(!$campi = parent::getColumns('SELECT * FROM '.$this->prefix.'commenti WHERE approvato=\'1\' LIMIT 1'))
-				return false;
-			$query = 'INSERT INTO '.$this->prefix.'commenti(';
-			foreach($campi as $var)
-				if($var !== 'id')
-					$query .= $var.', ';
-			$query = trim($query, ', ');
-			$query .= ') VALUES(';
+			$query = 'INSERT INTO '.$this->prefix.'commenti(autore, contenuto, news, data, ora, approvato) VALUES(';
 			foreach($array as $var)
 				$query .= "'$var', ";
 			$query = trim($query, ', ');

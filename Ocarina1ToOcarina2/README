@@ -1,8 +1,9 @@
 There are two script that aim to upgrade your Ocarina1 at Ocarina2 without losing your news and pages.
-First, copy `ocarina1.php` in your Ocarina1's directory and run it.
+First, copy `ocarina1.php` in your Ocarina1 directory and run it.
 You should will find in this directory two files, `news.sql` and `pages.sql`.
-Copy both files and `ocarina2.php` in your Ocarina2's directory, and run this last file.
+Copy both files and `ocarina2.php` in your Ocarina2 directory, and run this last file.
 After you receive your success message, delete from both Ocarina1 and Ocarina2 the files `news.sql`, `pages.sql`, `ocarina1.php` and `ocarina2.php`.
+You can now both delete Ocarina1 directory and database.
 
 Good luck my boy/girl :D
 (C) Giovanni Capuano <webmaster@giovannicapuano.net>

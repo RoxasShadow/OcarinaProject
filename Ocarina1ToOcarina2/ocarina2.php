@@ -1,17 +1,24 @@
 <?php
-/* AVVIA QUESTO FILE NELLA CARTELLA DI OCARINA2 *DOPO* AVERCI COPIATO IL FILE news.sql E pages.sql */
+/**
+	/ocarina2.php
+	(C) Giovanni Capuano 2011
+*/
 require_once('core/class.Ocarina.php');
 $ocarina = new Ocarina();
-
 if((!file_exists('news.sql')) || (!file_exists('pages.sql')))
 	die('`news.sql` and/or `pages.sql` have not been found or are not accessible.'); 
+	
+/* News */
 $handler = fopen('news.sql', 'r');
 $news = fread($handler, filesize('news.sql')); 
 fclose($handler);
+
+/* Pagine */
 $handler = fopen('pages.sql', 'r');
 $page = fread($handler, filesize('pages.sql')); 
 fclose($handler);
 
+/* Elaborazione */
 $news = unserialize($news);
 $page = unserialize($page);
 $news_fail = 0;
@@ -20,7 +27,8 @@ $page_fail = 0;
 $page_ok = 0;
 foreach($news as $v) {
 	$array = array($v->autore, $v->titolo, $v->minititolo, $v->news, $v->categoria, $v->data, $v->ora, 1);
-	$ocarina->createCategory('news', $v->categoria);
+	if(!$ocarina->isCategory('news', $v->categoria))
+		$ocarina->createCategory('news', $v->categoria);
 	if($ocarina->isNews($v->minititolo))
 		++$news_fail;
 	else
@@ -30,8 +38,9 @@ foreach($news as $v) {
 			++$news_fail;
 }
 foreach($page as $v) {
-	$array = array($v->autore, $v->titolo, $v->minititolo, $v->contenuto, $v->categoria, $v->datacreazione, '00:00', 1);
-	$ocarina->createCategory('pagine', $v->categoria);
+	$array = array((($v->autore == '') ? $v->autoreultimamodifica : $v->autore), $v->titolo, $v->minititolo, $v->contenuto, $v->categoria, $v->datacreazione, '00:00', 1);
+	if(!$ocarina->isCategory('pagine', $v->categoria))
+		$ocarina->createCategory('pagine', $v->categoria);
 	if($ocarina->isPage($v->minititolo))
 		++$page_fail;
 	else

@@ -39,14 +39,7 @@ class PersonalMessage extends User {
 		if(empty($array))
 			return false;
 		if((parent::isUser($array[0])) && (parent::isUser($array[1]))) {
-			if(!$campi = parent::getColumns('SELECT * FROM '.$this->prefix.'personalmessage LIMIT 1'))
-				return false;
-			$query = 'INSERT INTO '.$this->prefix.'personalmessage(';
-			foreach($campi as $var)
-				if($var !== 'id')
-					$query .= $var.', ';
-			$query = trim($query, ', ');
-			$query .= ') VALUES(';
+			$query = 'INSERT INTO '.$this->prefix.'personalmessage(mittente, destinatario, data, ora, oggetto, contenuto, letto) VALUES(';
 			foreach($array as $var)
 				$query .= "'$var', ";
 			$query = trim($query, ', ');

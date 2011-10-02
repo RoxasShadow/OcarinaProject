@@ -89,14 +89,7 @@ class Page extends Comments {
 		if(empty($array))
 			return false;
 		if((!$this->isPage($array[2])) && (parent::isCategory('pagine', $array[4])) && (parent::isUser($array[0]))) {
-			if(!$campi = parent::getColumns('SELECT * FROM '.$this->prefix.'pagine WHERE approvato=\'1\' LIMIT 1'))
-				return false;
-			$query = 'INSERT INTO '.$this->prefix.'pagine(';
-			foreach($campi as $var)
-				if(($var !== 'id') && ($var !== 'dataultimamodifica') && ($var !== 'oraultimamodifica') && ($var !== 'autoreultimamodifica') && ($var !== 'visite') && ($var !== 'visitatori') && ($var !== 'voti') && ($var !== 'votanti'))
-				$query .= $var.', ';
-			$query = trim($query, ', ');
-			$query .= ') VALUES(';
+			$query = 'INSERT INTO '.$this->prefix.'pagine(autore, titolo, minititolo, contenuto, categoria, data, ora, approvato) VALUES(';
 			foreach($array as $var)
 				$query .= "'$var', ";
 			$query = trim($query, ', ');

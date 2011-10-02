@@ -10,7 +10,7 @@ require_once('interface.FrameworkPlugin.php');
 final class Plugin {
 	private static $instance = NULL;
 	private $plugins = array();
-	private static $root_index = '/PATH/ocarina2';
+	private static $root_index = '/var/www/htdocs/ocarina2';
 	
 	private static function getInstance() {
 		if(self::$instance == NULL)
