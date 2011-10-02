@@ -23,7 +23,7 @@
 {if $utente == ''}
 Benvenuto su {$nomesito}! Per usufruire di tutte le funzionalità che ti offriamo <a href="{$url_index}/login.php">accedi</a> oppure <a href="{$url_index}/registrazione.php">registrati</a>. (<a href="{$url_index}/recuperapassword.php">Password persa?</a>)
 {else}
-Bentornato {$utente} (<a href="{$url_index}/logout.php">Logout</a> | <a href="{$url_index}/mp.php">{$numeromp}</a> MP | <a href="{$url_index}/inviamp.php">Invia MP</a> | <a href="{$url_index}/profile/{$utente}.html">Profilo</a> | <a href="{$url_index}/modificaprofilo.php">Modifica profilo</a> | <a href="modificapassword.php">Modifica password</a>)
+Bentornato {$utente} (<a href="{$url_index}/logout.php">Logout</a> | <a href="{$url_index}/mp.php">{$numeromp}</a> MP | <a href="{$url_index}/inviamp.php">Invia MP</a> | <a href="{$url_index}/profile/{$utente}.html">Profilo</a> | <a href="{$url_index}/modificaprofilo.php">Modifica profilo</a> | <a href="{$url_index}/modificapassword.php">Modifica password</a>)
 {/if}
 {$postmenu}
 </div>

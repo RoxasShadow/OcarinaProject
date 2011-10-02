@@ -27,7 +27,7 @@ if($ocarina->isLogged())
 	}
 	else {
 		if(($ocarina->isEmail($email)) && ($email !== '') && ($bio !== '') && ($skin !== '') && ($avatar !== '') && ($password !== ''))
-			if(($ocarina->isEmailUsed($ocarina->username[0]->nickname, $email)) || (md5($password) !== $ocarina->username[0]->password)) {
+			if(($ocarina->isEmailUsed($ocarina->username[0]->nickname, $email)) || (!$ocarina->checkPassword($ocarina->username[0]->password, $password))) {
 				if($ocarina->config[0]->log == 1)
 						$ocarina->log($ocarina->username[0]->nickname, 'Profile modification failed.');
 				$ocarina->addValue('result', $ocarina->getLanguage('editprofile', 0));

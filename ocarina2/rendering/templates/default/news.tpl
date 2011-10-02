@@ -27,7 +27,7 @@
 		{else}
 			<br /><hr /><br />
 			{foreach from=$commenti key=key item=item}
-				<fieldset><legend><a href="{$url_index}/comment/{$commenti[$key]->id}.html">#{$item@iteration}</a> Commento inviato il giorno {$commenti[$key]->data} alle ore {$commenti[$key]->ora} da <a href="{$url_index}/profile/{$commenti[$key]->autore}.html">{$commenti[$key]->autore}</a>. {if ((isset($grado)) && (is_numeric($grado)) && ($grado < 3))}<a href="{$url_index}/admin/cancellacommento.php?id={$commenti[$key]->id}">(X)</a>{/if} <a onclick="quota('{$item@iteration}');">Quota</a></legend><div id="{$item@iteration}">{$commenti[$key]->contenuto}</div></fieldset><br />
+				<fieldset><legend><a href="{$url_index}/comment/{$commenti[$key]->id}.html">#{$item@iteration}</a> Commento inviato il giorno {$commenti[$key]->data} alle ore {$commenti[$key]->ora} da {if $commenti[$key]->autore !== ''}<a href="{$url_index}/profile/{$commenti[$key]->autore}.html">{$commenti[$key]->autore}</a>{else}Unknow{/if}. {if ((isset($grado)) && (is_numeric($grado)) && ($grado < 3))}<a href="{$url_index}/admin/cancellacommento.php?id={$commenti[$key]->id}">(X)</a>{/if} <a onclick="quota('{$item@iteration}');">Quota</a></legend><div id="{$item@iteration}">{$commenti[$key]->contenuto}</div></fieldset><br />
 			{/foreach}
 		{/if}
 		<br />

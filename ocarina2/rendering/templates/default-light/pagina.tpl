@@ -15,7 +15,7 @@
 				{if $pagina[0]->voti == 1}
 					(<a id="voto" class="no-prop">1</a> voto)
 				{else}
-					(<a id="voto" class="no-prop">{$news[0]->voti}</a> voti)
+					(<a id="voto" class="no-prop">{$pagina[0]->voti}</a> voti)
 					{/if}
 			{else}
 				<a href="{$url_index}/registrazione.php">Registrati</a> o <a href="{$url_index}/login.php">accedi</a> per votare questa news.

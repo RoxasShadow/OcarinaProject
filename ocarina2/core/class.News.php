@@ -33,7 +33,7 @@ class News extends Category {
 			$voti = parent::resultCountQuery("SELECT COUNT(*) FROM {$this->prefix}voti WHERE minititolo='$minititolo' AND tipo='news'");
 			$voti = (!$voti) ? 1 : $voti + 1;
 			$data = date('d-m-y');
-			if((parent::query("INSERT INTO {$this->prefix}voti(minititolo, data, nickname, tipo) VALUES('$minititolo', '$data', '$nickname', 'news')")) && (parent::query("UPDATE news SET voti='$voti' WHERE minititolo='$minititolo' AND approvato='1'")))
+			if((parent::query("INSERT INTO {$this->prefix}voti(minititolo, data, nickname, tipo) VALUES('$minititolo', '$data', '$nickname', 'news')")) && (parent::query("UPDATE {$this->prefix}news SET voti='$voti' WHERE minititolo='$minititolo' AND approvato='1'")))
 				return true;
 		}
 		return false;
@@ -46,7 +46,7 @@ class News extends Category {
 		$visitatori = parent::resultCountQuery("SELECT COUNT(*) FROM {$this->prefix}visite WHERE minititolo='$minititolo' AND tipo='news'");
 		$visitatori = (!$visitatori) ? 1 : $visitatori + 1;
 		$data = date('d-m-y');
-		if((parent::query("INSERT INTO {$this->prefix}visite(minititolo, data, ip, tipo) VALUES('$minititolo', '$data', '{$_SERVER['REMOTE_ADDR']}', 'news')")) && (parent::query("UPDATE news SET visite='$visitatori' WHERE minititolo='$minititolo' AND approvato='1'")))
+		if((parent::query("INSERT INTO {$this->prefix}visite(minititolo, data, ip, tipo) VALUES('$minititolo', '$data', '{$_SERVER['REMOTE_ADDR']}', 'news')")) && (parent::query("UPDATE {$this->prefix}news SET visite='$visitatori' WHERE minititolo='$minititolo' AND approvato='1'")))
 				return true;
 		return true;
 	}
