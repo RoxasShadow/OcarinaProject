@@ -20,7 +20,7 @@
 		{/if}
 	{/foreach}
 {else}
-	Nessun utente online.
+	Utenti online: 0
 {/if}
 {if ((isset($visitatoronline)) && (is_numeric($visitatoronline)) && ($visitatoronline > 0))}
 	<br />Visitatori online: {$visitatoronline}
@@ -30,6 +30,7 @@
 {if ((isset($totaleaccessi)) && (is_numeric($totaleaccessi)))}
 	<br />Totale accessi: {$totaleaccessi}
 {/if}
+<br />News: {$countnews}, Pagine: {$countpages}, Utenti: {$countusers} (<a href="{$url_index}/profile/{$lastuser}.html">{$lastuser}</a>)
 </font></p>
 <a href="http://validator.w3.org/check?uri=referer"><img src="{$url_rendering}/templates/{$skin}/resources/images/valid-xhtml10-blue.png" alt="Valid XHTML 1.0 Transitional" height="31" width="88" /></a>
 <a href="http://jigsaw.w3.org/css-validator/check/referer"><img src="{$url_rendering}/templates/{$skin}/resources/images/vcss-blue.png" alt="CSS Valido!" height="31" width="88" /></a>
