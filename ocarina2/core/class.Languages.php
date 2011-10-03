@@ -9,6 +9,8 @@ class Languages {
 	/* Ritorna una stringa nella lingua usata dall'utente. */
 	public function getLanguage($category, $val) {
 		$language = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+		if(!file_exists('languages/'.$language.'.php'))
+			$language = 'it';
 		require_once('languages/'.$language.'.php');
 		if(!$language = call_user_func('getLanguage_'.$language))
 			die('Language filenot found.<br />Take your own on <a href="http://www.giovannicapuano.net">http://www.giovannicapuano.net</a>.');
