@@ -60,8 +60,8 @@ class MySQL extends Utilities {
 	
 	/* Controlla se la query rientra nelle eccezioni da non cachare. */
 	private function is_exception($query) {
-		for($i=0, $count=count($this->filter); $i<$count; ++$i)
-			if(preg_match('/(.*?)'.$this->filter[$i].'(.*?)/is', $query))
+		foreach($this->filter as $v)
+			if(stristr($query, $v) !== false)
 				return true;
 		return false;
 	}
