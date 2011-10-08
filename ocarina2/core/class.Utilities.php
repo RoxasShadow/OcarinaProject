@@ -446,4 +446,43 @@ class Utilities extends Languages {
 		$salt = ($salt == '') ? substr(md5(uniqid(rand(), true)), 0, 32) : substr($salt, 0, 32);
 		return $salt.sha1($salt.$password);
 	}
+	
+	/* Effettua una conversione byte->Megabyte. */
+	public function byteToMega($byte) {
+		return number_format($byte/1048576, 6); // In questo modo prendo pure i byte :)
+	}
+	
+	/* Avvia il download di un file in modalità binaria. */
+	public function downloadFile($file, $filename) {
+		header("Cache-Control: public");
+		header("Content-Description: File Transfer");
+		header('Content-Length: '.filesize($file));
+		header('Content-type: '.finfo_file(finfo_open(FILEINFO_MIME), $file));
+		header('Content-Disposition: attachment; filename='.$filename);
+		header("Content-Transfer-Encoding: binary");
+		readfile($file);
+	}
+
+	/* Converte la formattazione della data italiana in quella inglese. */
+	public function dataToDate($data) {
+		$date = explode('-', $data);
+		return $date[1].'-'.$date[0].'-'.$date[2];
+	}
+
+	/* Ritorna il MIME type di un file.. */
+	public function getMime($file) {
+		$info = finfo_file(finfo_open(FILEINFO_MIME), $file);
+		$array = explode(';', $info);
+		return $array[0];
+	}
+
+	/* Ritorna true se è un file locale è di testo. */
+	public function is_text($file) {
+		return substr(finfo_file(finfo_open(FILEINFO_MIME), $file), 0, 4) == 'text';
+	}
+
+	/* Ritorna true se è un file locale è un'immagine. */
+	public function is_image($file) {
+		return substr(finfo_file(finfo_open(FILEINFO_MIME), $file), 0, 5) == 'image';
+	}
 }

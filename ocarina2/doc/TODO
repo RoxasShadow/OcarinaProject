@@ -1,4 +1,5 @@
 --Fix cache;
+--Se curl non è attivo, al momento della registrazione il reCaptcha dà pagina bianca in caso di error_reporting=0 o l'errore per E_ALL;
 --Riscrittura setup.php;
 --Stable release.
 

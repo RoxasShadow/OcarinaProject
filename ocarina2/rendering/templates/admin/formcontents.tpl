@@ -20,7 +20,6 @@
 			{/foreach}
 			</select><br /><br />
 		{/if}
-		{include file="$root_rendering/templates/$skin/include/editor.tpl"}
 		{if $bbcode == 1}
 			{include file="$root_rendering/templates/$skin/include/bbcode.tpl"}
 		{else}

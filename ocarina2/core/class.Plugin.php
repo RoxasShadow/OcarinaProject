@@ -143,7 +143,7 @@ final class Plugin {
 		do {
 			/* Upload */
 			if($_FILES['plugin']['error'] == 0) {
-				if($_FILES['plugin']['type'] !== 'application/zip')
+				if(($_FILES['plugin']['type'] !== 'application/zip') || ($_FILES['plugin']['type'] !== 'application/x-zip-compressed'))
 					return false;
 				if(!copy($_FILES['plugin']['tmp_name'], $path.$_FILES['plugin']['name']))
 					return false;

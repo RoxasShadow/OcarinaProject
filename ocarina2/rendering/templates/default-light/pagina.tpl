@@ -11,7 +11,7 @@
 			<div class="news"><p>{$pagina[0]->contenuto}</p></div><br />
 			<div id="voteresponse"></div>
 			{if $utente !== ''}
-				<a href="#" onclick="sendGet('{$url_index}/api.php?action=votepage&title={$pagina[0]->minititolo}', 'voteresponse', undefined, 'true', Array(9, 'Votato.'), 'Hai già votato questa pagina.'); setTimeout('sendGet(\'{$url_index}/api.php?action=page&title={$pagina[0]->minititolo}\', \'voto\', undefined, \'true\', undefined, undefined, \'votes\');', 200);">Vota questa pagina</a>
+				<a class="pointer" onclick="sendGet('{$url_index}/api.php?action=votepage&title={$pagina[0]->minititolo}', 'voteresponse', undefined, 'true', Array(9, 'Votato.'), 'Hai già votato questa pagina.'); setTimeout('sendGet(\'{$url_index}/api.php?action=page&title={$pagina[0]->minititolo}\', \'voto\', undefined, \'true\', undefined, undefined, \'votes\');', 200);">Vota questa pagina</a>
 				{if $pagina[0]->voti == 1}
 					(<a id="voto" class="no-prop">1</a> voto)
 				{else}
