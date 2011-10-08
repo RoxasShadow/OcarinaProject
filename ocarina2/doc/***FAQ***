@@ -1,0 +1,30 @@
+FAQ PROVVISORIA
+	
+***Quali plugin di prima necessità mi consigli?
+	CSRF, BBCode e HelloWorld.
+
+***Il contatore non funziona come dovrebbe.
+	Il contatore degli accessi totali non puù essere considerato attendibile a causa dei pochi test effettuati.
+	È consigliato utilizzare il suddetto solo per conoscere il numero e il nickname degli utenti o dei visitatori al momento loggati.
+	Se vuoi avere un monitoraggio completo, utilizza software come PHP-Stats o servizi come Google Analytics.
+	
+***In qualsiasi pagina in cui vado, ottengo vari errori relativi ai templates, che non mi permettono di visualizzare la pagina.
+	Probabilmente la cartella /rendering/templates_c non possiede i permessi di scrittura.
+	Correggi i permessi e vedrai che tutto funzionerà a dovere.
+
+***Non conosco la mia root
+	Crea un file chiamato "root.php" e caricalo nel tuo sito web.
+	Scrivi al suo interno il seguente codice:
+		<?php die($_SERVER["DOCUMENT_ROOT"]); ?>
+	Esegui lo script recandoti con il browser al suo indirizzo, in modo da visualizzare a schermo la tua root.
+	Infine, ricordati di cancellare il file "root.php".
+	
+***Quando procedo per la registrazione ottengo una pagina bianca.
+	Lo script utilizzato per la protezione contro i bot (software che effettuano registrazioni multiple/fasulle) è reCaptcha.
+	Esso fa uso della libreria cURL.
+	Attivala nel tuo file di configurazione "php.ini" o dal pannello del tuo sito web, oppure contatta un dipendente del tuo hosting per procedere all'attivazione.
+
+***Il mio hosting non supporta/possiede uno o più dei seguenti servizi/software: "htaccess", "url_rewriting", "PHP 5", "Apache", "Linux", "MySQL".
+	Mi spiace, ma non puoi usufruire di Ocarina.
+	
+Altri problemi? Contattami all'indirizzo email <webmaster@giovannicapuano.net>.

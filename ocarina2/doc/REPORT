@@ -1,3 +1,1 @@
---Il contatore degli accessi totali non puù essere considerato attendibile a causa dei pochi test effettuati.
-  È consigliato utilizzare il suddetto solo per conoscere il numero e il nickname degli utenti o dei visitatori al momento loggati.
-  Se vuoi avere un monitoraggio completo, utilizza software come PHP-Stats o servizi come Google Analytics.
+--Il caching non funziona.

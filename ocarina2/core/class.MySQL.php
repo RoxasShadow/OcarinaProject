@@ -352,27 +352,6 @@ class MySQL extends Utilities {
 		return true;
 	}
 	
-	/* Creo una nuova configurazione. */
-	public function createInitConfig($config) {
-		$query = "INSERT INTO {$this->prefix}configurazione(nomesito, email, registrazioni, validazioneaccount, commenti, approvacommenti, log, plugin, cookie, loginexpire, skin, description, limitenews, impaginazionenews, limiteonline, permettivoto, url, url_index, url_admin, url_rendering, url_immagini, root, root_index, root_admin, root_rendering, root_immagini, versione, totalevisitatori) VALUES(";
-		foreach($config as $var)
-			$query .= "'$var', ";
-		$query = trim($query, ', ');
-		$query .= ')';
-		return $this->query($query) ? true : false;
-	}
-	
-	/* Crea un nuovo utente. */
-	public function createInitUser($user) {
-		$user[1] = md5('njhbijk2gfcvgjiu8yt6'.$user[0]);
-		$query = "INSERT INTO {$this->prefix}utenti(nickname, password, email, grado, data, ora, codiceregistrazione, skin) VALUES(";
-		foreach($user as $var)
-			$query .= "'$var', ";
-		$query = trim($query, ', ');
-		$query .= ')';
-		return $this->query($query) ? true : false;
-	}
-	
 	/* Filtra una stringa o un array multidimensionale.
 	   ATTENZIONE: Non usare per la creazione di news e le pagine, altrimenti l'HTML non sarà parsato! */
 	public function purge($var) {

@@ -15,17 +15,8 @@ if($reg) {
 	$confPassword = ((isset($_POST['confPassword'])) && ($_POST['confPassword'] !== '')) ? $config->purge($_POST['confPassword']) : '';
 	$email = ((isset($_POST['email'])) && ($_POST['email'] !== '')) ? $config->purge($_POST['email']) : '';
 	
-	if(($password == $confPassword) && (strlen($password) > 4) && (strlen($nickname) > 4)) {
-		$codice = $config->getCode();
-		$u = $config->createInitUser(array($nickname, $password, $email, 1, date('d-m-y'), date('G:m:s'), ($config->config[0]->validazioneaccount == 1) ? $codice : '', $config->config[0]->skin));
-		if(($config->config[0]->validazioneaccount == 1) && ($u)) {
-			$config->sendMail($email, $config->config[0]->nomesito.' @ Validazione account per '.$nickname.'.', 'Ciao '.$nickname.',
-			dal momento che ti sei registrato, il sistema ha bisogno di essere sicuro che la tua email sia valida.
-			Per validarla ti basta cliccare il seguente link: '.$config->config[0]->url_index.'/registrazione.php?codice='.$codice.'
-
-			Se non sei tu '.$nickname.', ignora questa email.
-
-			Il webmaster di '.$config->config[0]->nomesito.'.');
+	if(($password == $confPassword) && (strlen($password) > 4) && (strlen($nickname) > 4))
+		if($config->createUser(array($nickname, $password, $email, 1, date('d-m-y'), date('G:m:s'), '', $config->config[0]->skin)))
 			echo '
 			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 			<html xmlns="http://www.w3.org/1999/xhtml">
@@ -34,20 +25,7 @@ if($reg) {
 			<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 			</head>
 			<body>
-			<div align="center"><h1>Registrazione completata.<br />Ora conferma l\'email ed elimina il file <b>'.$config->config[0]->root_index.'/setup.php</h1></div>
-			</body>
-			</html>';
-		}
-		elseif(($config->config[0]->validazioneaccount == 0) && ($u))
-			echo '
-			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-			<html xmlns="http://www.w3.org/1999/xhtml">
-			<head>
-			<title>Setup &raquo; Ocarina2 CMS</title>
-			<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-			</head>
-			<body>
-			<div align="center"><h1>Registrazione completata.<br />Ora elimina il file <b>'.$config->config[0]->root_index.'/setup.php</h1></div>
+			<div align="center"><h1>Registrazione completata.<br />Ora elimina il file <b>setup.php</b></div>
 			</body>
 			</html>';
 		else
@@ -62,7 +40,6 @@ if($reg) {
 			<div align="center"><h1>Registrazione fallita.</h1></div>
 			</body>
 			</html>';
-	}
 	else
 		echo '
 		<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -78,7 +55,7 @@ if($reg) {
 }
 elseif($submit) {
 	require_once('core/class.Configuration.php');
-	$config = new MySQL();
+	$config = new Configuration();
 	$nomesito = ((isset($_POST['nomesito'])) && ($_POST['nomesito'] !== '')) ? $config->purge($_POST['nomesito']) : '';
 	$email = ((isset($_POST['email'])) && ($_POST['email'] !== '')) ? $config->purge($_POST['email']) : '';
 	$registrazioni = ((isset($_POST['registrazioni'])) && (is_numeric($_POST['registrazioni'])) && ($_POST['registrazioni'] !== '')) ? $config->purge((int)$_POST['registrazioni']) : '';
@@ -106,8 +83,7 @@ elseif($submit) {
 	$root_rendering = ((isset($_POST['root_rendering'])) && ($_POST['root_rendering'] !== '')) ? $config->purge($_POST['root_rendering']) : '';
 	$root_immagini = ((isset($_POST['root_immagini'])) && ($_POST['root_immagini'] !== '')) ? $config->purge($_POST['root_immagini']) : '';
 	
-	$cb = $config->createDatabase();
-	if($cb !== true) {
+	if(!$config->createDatabase()) {
 	echo '
 	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 	<html xmlns="http://www.w3.org/1999/xhtml">
@@ -122,8 +98,8 @@ elseif($submit) {
 	unset($config);
 	die();
 	}
-	$array = array($nomesito, $email, @$bbcode, $registrazioni, $validazioneaccount, $commenti, $approvacommenti, $log, $cookie, $loginexpire, $skin, $description, $limitenews, $impaginazionenews, $limitenews, $permettivoto, $url, $url_index, $url_admin, $url_rendering, $url_immagini, $root, $root_index, $root_admin, $root_rendering, $root_immagini, $versione, '0');
-	if($config->createInitConfig($array))
+	$array = array($nomesito, $email, $registrazioni, $validazioneaccount, $commenti, $approvacommenti, $log, $plugin, $cookie, $loginexpire, $skin, $description, $limitenews, $impaginazionenews, $limitenews, $permettivoto, $url, $url_index, $url_admin, $url_rendering, $url_immagini, $root, $root_index, $root_admin, $root_rendering, $root_immagini, $versione, '0');
+	if($config->createConfig($array))
 	echo '
 	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 	<html xmlns="http://www.w3.org/1999/xhtml">
@@ -183,8 +159,8 @@ else
 	<body>
 	<div align="center"><h1>Setup &raquo; Ocarina2 CMS</h1></div>
 	Benvenuto nel setup di Ocarina2.<br />
-	Per prima cosa modifica il file <i>class.MySQL.php</i> della cartella <i>core</i>, inserendo nelle righe 10-13 i dati riguardanti il database (host, username, password e nome del database), nella 14 un prefisso per le tabelle del database, il più complesso possibile (ex.: asdfghjk12345), nella 15 abilita o meno il caching* (di default è abilitato) e nella 16 inserisci il percorso assoluto della cartella che contiene i file di cache (ex.: /var/www/htdocs/ocarina2/cache/).<br />
-	In <i>class.Plugin.php</i>, nella riga 13, inserisci il path assoluto di Ocarina (ex.: /var/www/htdocs/ocarina2).<br />
+	Per prima cosa modifica il file <i>class.MySQL.php</i> della cartella <i>core</i>, inserendo nelle righe 10-13 i dati riguardanti il database (host, username, password e nome del database), nella 14 un prefisso per le tabelle del database (ex.: ocarina_), nella 15 abilita o meno il caching* (di default è abilitato) e nella 16 inserisci il percorso assoluto della cartella che contiene i file di cache (ex.: '.$_SERVER['DOCUMENT_ROOT'].'ocarina2/cache/).<br />
+	In <i>class.Plugin.php</i>, nella riga 13, inserisci il path assoluto di Ocarina (ex.: '.$_SERVER['DOCUMENT_ROOT'].'ocarina2).<br />
 	Una volta salvato il file, compila il seguente form con ciò che è richiesto dalle righe sovrastanti, e poni attenzione nella sezione riguardante i percorsi, stando attento agli slash (<i>/</i>), come riportato negli eventuali esempi.<br />
 	In caso la directory di installazione non sia /ocarina2, modificala correttamente nelle righe 9-12, 28-31 e 34 del file <i>.htaccess</i>.<br />
 	Subito dopo l\'invio della configurazione, ti verrà presentato un form per registrarti come amministratore, dopodichè ti basterà eliminare questo file (<i>setup.php</i>).
@@ -210,7 +186,7 @@ else
 	<b>Approva commenti automaticamente (0 = Si, 1 = No)</b><br />
 	<input type="text" name="approvacommenti" maxlength="1" /><br /><br />
 
-	<b>Registra log automaticamente (0 = No, 1 = Si)</b><br />
+	<b>Registra log automaticamente (0 = No, 1 = Si) **</b><br />
 	<input type="text" name="log" maxlength="1" /><br /><br />
 	
 	<b>Attiva motore plugin (0 = No, 1 = Si)</b><br />
@@ -222,19 +198,19 @@ else
 	<b>Durata login in secondi (ex.: 3600 = 1 ora, 1296000 = 15 giorni)</b><br />
 	<input type="text" name="loginexpire" maxlength="20" /><br /><br />
 
-	<b>Skin di default</b><br />
+	<b>Skin di default (a meno che non hai modificato skin, si chiama <<default>> :)</b><br />
 	<input type="text" name="skin" maxlength="20" /><br /><br />
 
 	<b>Breve descrizione del sito</b><br />
 	<input type="text" name="description" maxlength="151" /><br /><br />
 
-	<b>Limite caratteri news</b><br />
+	<b>Limite caratteri news (0=Disattiva anteprima news dalla index)</b><br />
 	<input type="text" name="limitenews" maxlength="10" /><br /><br />
 
-	<b>News da mostrare per pagina</b><br />
+	<b>News da mostrare per pagina (nella index)</b><br />
 	<input type="text" name="impaginazionenews" maxlength="10" /><br /><br />
 
-	<b>Minuti per i quali un utente è considerato online finchè non compie un\'azione</b><br />
+	<b>Minuti per i quali un utente è considerato online finchè non compie un\'azione (per un sito senza esigenze specifiche è consigliato dai 5 ai 10)</b><br />
 	<input type="text" name="limiteonline" maxlength="10" /><br /><br />
 
 	<b>Permetti di votare news e pagine (0 = No, 1 = Si)</b><br />
@@ -255,19 +231,19 @@ else
 	<b>URL immagini (ex.: http://www.tuosito.com/ocarina2/immagini)</b><br />
 	<input type="text" name="url_immagini" maxlength="100" /><br /><br />
 
-	<b>Root (ex.: /var/www/htdocs)</b><br />
+	<b>Root (ex.: '.substr($_SERVER['DOCUMENT_ROOT'], 0, -1).')</b><br />
 	<input type="text" name="root" maxlength="100" /><br /><br />
 
-	<b>Root index (ex.: /var/www/htdocs/ocarina2)</b><br />
+	<b>Root index (ex.: '.substr($_SERVER['DOCUMENT_ROOT'], 0, -1).'ocarina2)</b><br />
 	<input type="text" name="root_index" maxlength="100" /><br /><br />
 
-	<b>Root admin (ex.: /var/www/htdocs/ocarina2/admin)</b><br />
+	<b>Root admin (ex.: '.substr($_SERVER['DOCUMENT_ROOT'], 0, -1).'ocarina2/admin)</b><br />
 	<input type="text" name="root_admin" maxlength="100" /><br /><br />
 
-	<b>Root rendering (ex.: /var/www/htdocs/ocarina2/rendering)</b><br />
+	<b>Root rendering (ex.: '.substr($_SERVER['DOCUMENT_ROOT'], 0, -1).'ocarina2/rendering)</b><br />
 	<input type="text" name="root_rendering" maxlength="100" /><br /><br />
 
-	<b>Root immagini (ex.: /var/www/htdocs/ocarina2/immagini)</b><br />
+	<b>Root immagini (ex.: '.substr($_SERVER['DOCUMENT_ROOT'], 0, -1).'ocarina2/immagini)</b><br />
 	<input type="text" name="root_immagini" maxlength="100" /><br /><br />
 
 	<input type="submit" name="submit" value="Installa" />
@@ -275,7 +251,11 @@ else
 	<br /><br />
 	
 	*Il caching consiste nel salvare sottoforma di file le richieste verso il database, in modo che finchè non vi è alcuna modifica, esso non viene più interpellato, poichè i dati saranno prelevati dai suddetti file.<br />
-	La convenienza sussiste nel fatto che le prestazioni globali aumenteranno, ma ci saranno uno o più file per ogni pagina, il che potrebbe dare problemi per lo spazio FTP concesso ad Ocarina.
+	La convenienza sussiste nel fatto che le prestazioni globali aumenteranno, ma ci saranno uno o più file per ogni pagina, il che potrebbe dare problemi per lo spazio FTP concesso ad Ocarina.<br /><br />
+	
+	**Attivando i log si aumenta il carico del database, ed è doveroso pulirli tramite l\'apposito bottone nell\'amministrazione spesso, per evitare la saturazione delle risorse destinato ad esso.<br />
+	Si consiglia quindi di attivarli solamente se sarà possibile pulirli spesso (in base al numero di visitatori).<br />
+	In ogni caso è possibile sempre attivarli o disattivarli dall\'amministrazione per ogni evenienza.
 
 	</body>
 	</html>';
