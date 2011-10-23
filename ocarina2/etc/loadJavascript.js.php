@@ -17,11 +17,11 @@ while($script = readdir($apri))
 	if((is_file($config->config[0]->root_index.'/etc/js/'.$script)) && (substr($script, -3) == '.js'))
 		$f[] = $script;
 sort($f); // Ordine alfabetico
-$text = '';
+$script = '';
 for($i=0, $count=count($f), $content=''; $i<$count; ++$i) {
 	$handler = fopen('js/'.$f[$i], 'r');
-	$text .= fread($handler, filesize('js/'.$f[$i]));
+	$script .= fread($handler, filesize('js/'.$f[$i]));
 	fclose($handler);
 }
-echo JSMin::minify($text);
+echo JSMin::minify($script);
 unset($config);
