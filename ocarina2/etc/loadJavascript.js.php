@@ -9,6 +9,7 @@
 header('Content-type: text/javascript');
 header('Last-Modified: '.gmstrftime("%a, %d %b %Y %H:%M:%S GMT", getlastmod()));
 require_once('../core/class.Configuration.php');
+require_once('jsmin.php');
 $config = new Configuration();
 $apri = opendir($config->config[0]->root_index.'/etc/js/');
 $f = array();
@@ -16,9 +17,11 @@ while($script = readdir($apri))
 	if((is_file($config->config[0]->root_index.'/etc/js/'.$script)) && (substr($script, -3) == '.js'))
 		$f[] = $script;
 sort($f); // Ordine alfabetico
-echo 'function downloadJSAtOnload(){';
-for($i=0, $count=count($f), $content=''; $i<$count; ++$i)
-	echo 'var element=document.createElement(\'script\');element.src=\''.$config->config[0]->url_index.'/etc/js/'.$f[$i].'\';document.body.appendChild(element);
-	';
-echo '}if(window.addEventListener)window.addEventListener(\'load\',downloadJSAtOnload,false);else if(window.attachEvent)window.attachEvent(\'onload\',downloadJSAtOnload);else window.onload=downloadJSAtOnload;';
+$text = '';
+for($i=0, $count=count($f), $content=''; $i<$count; ++$i) {
+	$handler = fopen('js/'.$f[$i], 'r');
+	$text .= fread($handler, filesize('js/'.$f[$i]));
+	fclose($handler);
+}
+echo JSMin::minify($text);
 unset($config);
