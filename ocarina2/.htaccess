@@ -16,7 +16,7 @@ SetOutputFilter DEFLATE
 
 <IfModule mod_expires.c>
 <IfModule mod_headers.c>
-<FilesMatch "\.(jpg|jpeg|png|bmp|gif|swf|js|css|js.php)$"> # Estensioni che verranno messe in cache per 15 giorni (1296000 secondi)
+<FilesMatch "\.(jpg|jpeg|png|bmp|gif|swf|js|css|js.php|css.php)$"> # Estensioni che verranno messe in cache per 15 giorni (1296000 secondi)
 Header set Cache-Control "max-age=1296000, public"
 </FilesMatch>
 </IfModule>

@@ -1,0 +1,7 @@
+Se usi una sola skin e più di un CSS, copia `loadStyles.css.php` nella cartella che contiene i CSS, e includi solo lui come fosse un CSS.
+In questo modo i CSS verranno inclusi automaticamente, racchiusi in un solo file per poi venire compressi.
+
+---------------------
+
+If you use only a skin and a lot of CSS, copy `loadStyles.css.php` in the folder which contains the CSS, and include only it as CSS.
+In this way the CSS will be automatically included, enclosed only in a file and then minified.
