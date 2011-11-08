@@ -28,6 +28,8 @@
 <br />News: {$countnews}, Pagine: {$countpages}, Utenti: {$countusers} (<a href="{$url_index}/profile/{$lastuser}.html">{$lastuser}</a>)</p>
 <a href="http://validator.w3.org/check?uri=referer"><img src="{$url_rendering}/templates/{$skin}/resources/images/valid-html5-blue.png" alt="Valid HTML5" height="31" width="88" /></a>
 <a href="http://feed2.w3.org/check.cgi?url={$url_index}/feed.php"><img src="{$url_rendering}/templates/{$skin}/resources/images/valid-rss-blue.png" alt="Valid RSS" height="31" width="88" /></a>
+</div>
+<div id="over">
 {$footer}
 </div>
 </body>
