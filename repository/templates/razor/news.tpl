@@ -9,8 +9,8 @@
 	{elseif is_array($news)}
 		<section>
 		<header>
-		<h2>{$news[0]->titolo}</h2>
-		<h3>Scritto da <a href="{$url_index}/profile/{$news[0]->autore}.html">{$news[0]->autore}</a> il giorno {$news[0]->data} alle ore {$news[0]->ora} nella categoria <a href="{$url_index}/category/{$news[0]->categoria}.html">{$news[0]->categoria}</a>. {if $news[0]->oraultimamodifica == $news[0]->ora}Ultima modifica {if $news[0]->dataultimamodifica == $news[0]->data}oggi{else} il giorno {$news[0]->dataultimamodifica}{/if} alle ore {$news[0]->ora} {if $news[0]->autoreultimamodifica !== $news[0]->autore}da parte di {$news[0]->autoreultimamodifica}.{/if}{/if}</h3>
+		<h3>{$news[0]->titolo}</h3>
+		<h4>Scritto da <a href="{$url_index}/profile/{$news[0]->autore}.html">{$news[0]->autore}</a> il giorno {$news[0]->data} alle ore {$news[0]->ora} nella categoria <a href="{$url_index}/category/{$news[0]->categoria}.html">{$news[0]->categoria}</a>. {if $news[0]->oraultimamodifica == $news[0]->ora}Ultima modifica {if $news[0]->dataultimamodifica == $news[0]->data}oggi{else} il giorno {$news[0]->dataultimamodifica}{/if} alle ore {$news[0]->ora} {if $news[0]->autoreultimamodifica !== $news[0]->autore}da parte di {$news[0]->autoreultimamodifica}.{/if}{/if}</h4>
 		</header>
 		<article>
 		<p>{$news[0]->contenuto}</p>
@@ -33,20 +33,30 @@
 			<br /><hr /><br />
 			<section>
 			<article>
+			<div class="span-7">
 			<p>{$commenti}</p>
+			</div>
 			</article>
 			</section>
 		{else}
 			<br /><hr /><br />
 			<section>
-			{foreach from=$commenti key=key item=item}
+			{foreach from=$commenti key=key item=item name=news}
+				<div class="span-24">
+				<header>
+				<h4><a href="{$url_index}/comment/{$commenti[$key]->id}.html">#{$item@iteration}</a> Commento inviato il giorno {$commenti[$key]->data} alle ore {$commenti[$key]->ora} da {if $commenti[$key]->autore !== ''}<a href="{$url_index}/profile/{$commenti[$key]->autore}.html">{$commenti[$key]->autore}</a>{else}Unknow{/if}. {if ((isset($grado)) && (is_numeric($grado)) && ($grado < 3))}<a href="{$url_index}/admin/cancellacommento.php?id={$commenti[$key]->id}">(X)</a>{/if} <a onclick="quota('{$item@iteration}');">Quota</a></h4>
+				</header>
 				<article>
-				<fieldset><legend><a href="{$url_index}/comment/{$commenti[$key]->id}.html">#{$item@iteration}</a> Commento inviato il giorno {$commenti[$key]->data} alle ore {$commenti[$key]->ora} da {if $commenti[$key]->autore !== ''}<a href="{$url_index}/profile/{$commenti[$key]->autore}.html">{$commenti[$key]->autore}</a>{else}Unknow{/if}. {if ((isset($grado)) && (is_numeric($grado)) && ($grado < 3))}<a href="{$url_index}/admin/cancellacommento.php?id={$commenti[$key]->id}">(X)</a>{/if} <a onclick="quota('{$item@iteration}');">Quota</a></legend><div id="{$item@iteration}">{$commenti[$key]->contenuto}</div></fieldset><br />
+				<div id="{$item@iteration}"><p>{$commenti[$key]->contenuto}</p></div>
 				</article>
+				</div>
+				{if !$smarty.foreach.news.last}
+					<hr class="space">
+				{/if}
 			{/foreach}
 			</section>
 		{/if}
-		<br />
+		<br /><br />
 		<section>
 		{if !$logged}
 			<div class="notice"><a href="{$url_index}/registrazione.php">Registrati</a> o <a href="{$url_index}/login.php">accedi</a> per commentare questa news.</div>

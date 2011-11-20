@@ -32,5 +32,6 @@
 {/if}
 {$postmenu}
 </nav>
+<br />
 <div class="span-24" id="contents">
 {$body}
