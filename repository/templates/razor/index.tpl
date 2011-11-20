@@ -3,7 +3,7 @@
 *}
 {include file="$root_rendering/templates/$skin/include/header.tpl"}
 	{if isset($lastlogout)}
-		<div class="success">Ciao {$utente}, non ti connettevi a {$nomesito} dal {$lastlogout}, siamo felici di rivederti!</div>
+		<section><div class="success">Ciao {$utente}, non ti connettevi a {$nomesito} dal {$lastlogout}, siamo felici di rivederti!</div></section>
 	{/if}
 	{if isset($error)}
 		<section><div class="notice">{$error}</div></section>

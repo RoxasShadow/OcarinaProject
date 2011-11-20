@@ -2,6 +2,7 @@
 	(C) Giovanni Capuano 2011
 *}
 </div>
+<footer>
 <div class="right" id="footer">
 <p class="small">
 {$stats}
@@ -37,6 +38,7 @@
 <!-- END -->
 
 </div>
+</footer>
 </div>
 </body>
 </html>
