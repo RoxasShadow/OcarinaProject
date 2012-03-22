@@ -1,7 +1,7 @@
 <?php
 /**
 	/modificaprofilo.php
-	(C) Giovanni Capuano 2011
+	(C) Giovanni Capuano 2012
 */
 require_once('core/class.Ocarina.php');
 
@@ -26,7 +26,7 @@ if($ocarina->isLogged())
 		$ocarina->addValue('skinattuale', $ocarina->skin);
 	}
 	else {
-		if(($ocarina->isEmail($email)) && ($email !== '') && ($bio !== '') && ($skin !== '') && ($avatar !== '') && ($password !== ''))
+		if(($ocarina->isEmail($email)) && ($email !== '') && ($skin !== '') && ($password !== ''))
 			if(($ocarina->isEmailUsed($ocarina->username[0]->nickname, $email)) || (!$ocarina->checkPassword($ocarina->username[0]->password, $password))) {
 				if($ocarina->config[0]->log == 1)
 						$ocarina->log($ocarina->username[0]->nickname, 'Profile modification failed.');
