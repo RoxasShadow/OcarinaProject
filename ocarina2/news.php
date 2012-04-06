@@ -1,13 +1,13 @@
 <?php
 /**
 	/news.php
-	(C) Giovanni Capuano 2011
+	(C) Giovanni Capuano 2012
 */
 require_once('core/class.Ocarina.php');
 
 $ocarina = new Ocarina();
 $titolo = isset($_GET['titolo']) ? $ocarina->purge($_GET['titolo']) : '';
-$comment = isset($_POST['comment']) ? $ocarina->purge($_POST['comment']) : '';
+$comment = isset($_POST['comment']) ? $ocarina->purgeSlashes($ocarina->purgeByXSS($_POST['comment'])) : '';
 
 $ocarina->skin = $ocarina->isLogged() ? $ocarina->username[0]->skin : $ocarina->config[0]->skin;
 
@@ -32,20 +32,20 @@ else {
 		if(($comment !== '') && ($ocarina->isLogged())) {
 			$array = ($ocarina->config[0]->approvacommenti == 0) ? array($ocarina->username[0]->nickname, $comment, $news[0]->minititolo, date('d-m-y'), date('G:m:s'), 1) : array($ocarina->username[0]->nickname, $comment, $news[0]->minititolo, date('d-m-y'), date('G:m:s'), 0);
 			if($ocarina->config[0]->commenti == 0)
-				$ocarina->addValue('commentSended', $ocarina->getLanguage('news', 4).header('Refresh: 2; URL='.$ocarina->config[0]->url_index.'/news/'.$titolo.'.html'));
+				$ocarina->addValue('commentsent', $ocarina->getLanguage('news', 4).header('Refresh: 2; URL='.$ocarina->config[0]->url_index.'/release/'.$titolo.'.html'));
 			elseif($ocarina->createComment($array)) {
 				if($ocarina->config[0]->log == 1)
-					$ocarina->log($ocarina->username[0]->nickname, 'Comment sended.');
-				($ocarina->config[0]->approvacommenti == 0) ? $ocarina->addValue('commentSended', $ocarina->getLanguage('news', 5).header('Refresh: 2; URL='.$ocarina->config[0]->url_index.'/news/'.$titolo.'.html')) : $ocarina->addValue('commentSended', $ocarina->getLanguage('news', 6).header('Refresh: 2; URL='.$ocarina->config[0]->url_index.'/news/'.$titolo.'.html'));
+					$ocarina->log($ocarina->username[0]->nickname, 'Comment sent.');
+				($ocarina->config[0]->approvacommenti == 0) ? $ocarina->addValue('commentsent', $ocarina->getLanguage('news', 5).header('Refresh: 2; URL='.$ocarina->config[0]->url_index.'/release/'.$titolo.'.html')) : $ocarina->addValue('commentsent', $ocarina->getLanguage('news', 6).header('Refresh: 2; URL='.$ocarina->config[0]->url_index.'/release/'.$titolo.'.html'));
 			}
 			else {
 				if($ocarina->config[0]->log == 1)
-					$ocarina->log($ocarina->username[0]->nickname, 'Comment was not sended.');
-				$ocarina->addValue('commentSended', $ocarina->getLanguage('news', 7).header('Refresh: 2; URL='.$ocarina->config[0]->url_index.'/news/'.$titolo.'.html'));
+					$ocarina->log($ocarina->username[0]->nickname, 'Comment was not sent.');
+				$ocarina->addValue('commentsent', $ocarina->getLanguage('news', 7).header('Refresh: 2; URL='.$ocarina->config[0]->url_index.'/release/'.$titolo.'.html'));
 			}
 		}
 		elseif(($comment !== '') && (!$ocarina->isLogged()))
-			$ocarina->addValue('commentSended', $ocarina->getLanguage('news', 8).header('Refresh: 2; URL='.$ocarina->config[0]->url_index.'/login.php'));
+			$ocarina->addValue('commentsent', $ocarina->getLanguage('news', 8).header('Refresh: 2; URL='.$ocarina->config[0]->url_index.'/login.php'));
 	}
 }
 $ocarina->addValue('logged', $ocarina->isLogged());

@@ -25,8 +25,7 @@ class CSRF implements FrameworkPlugin {
 		ob_start(array($this, 'ob_callback'));
 		ob_start(array($this, 'ob_callback2'));
 		$req = explode('/', $_SERVER['REQUEST_URI']);
-		$req = explode('?', $req[count($req)-1]);
-		if($req[0] == 'preview.php')
+		if($req[count($req)-1] == 'preview.php')
 			return;
 		if(session_id() == '')
 			session_start();

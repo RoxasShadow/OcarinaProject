@@ -1,7 +1,7 @@
 <?php
 /**
 	core/class.User.php
-	(C) Giovanni Capuano 2011
+	(C) Giovanni Capuano 2012
 */
 require_once('class.Configuration.php');
 
@@ -35,6 +35,11 @@ class User extends Configuration {
 				return false;
 		else
 			return ($result = parent::get('SELECT * FROM '.$this->prefix.'utenti ORDER BY nickname ASC')) ? $result : false;
+	}
+	
+	/* Ottiene l'ultimo utente registrato. */
+	public function getLastUser() {
+			return ($result = parent::get("SELECT * FROM {$this->prefix}utenti ORDER BY id DESC LIMIT 1")) ? $result : false;
 	}
 
 	/* Ottiene i visitatori. */
@@ -144,16 +149,16 @@ class User extends Configuration {
 		else
 			$nickname = '';
 		if(!$visitator = $this->getVisitator()) // Mai nessun visitatore
-			return parent::query("INSERT INTO {$this->prefix}visitatori(ip, lastaction, giorno, data, nickname) VALUES('{$_SERVER['REMOTE_ADDR']}', '$lastaction', '$giorno', '$data', '$nickname')") ? true : false;
+			return parent::query("INSERT INTO {$this->prefix}visitatori(ip, lastaction, giorno, data, nickname) VALUES('{parent::purge($_SERVER['REMOTE_ADDR'])}', '$lastaction', '$giorno', '$data', '$nickname')") ? true : false;
 		else {
 			$found = 0;
 			foreach($visitator as $v)
-				if($v->ip == $_SERVER['REMOTE_ADDR'])
+				if($v->ip == parent::purge($_SERVER['REMOTE_ADDR']))
 					++$found;
 			if($found == 0)
-				return parent::query("INSERT INTO {$this->prefix}visitatori(ip, lastaction, giorno, data, nickname) VALUES('{$_SERVER['REMOTE_ADDR']}', '$lastaction', '$giorno', '$data', '$nickname')") ? true : false;
+				return parent::query("INSERT INTO {$this->prefix}visitatori(ip, lastaction, giorno, data, nickname) VALUES('{parent::purge($_SERVER['REMOTE_ADDR'])}', '$lastaction', '$giorno', '$data', '$nickname')") ? true : false;
 			elseif((($lastaction - $v->lastaction) > 60 * $this->config[0]->limiteonline) && ($found > 0))
-				return parent::query("UPDATE {$this->prefix}visitatori SET lastaction='$lastaction', giorno='$giorno', nickname='$nickname' WHERE ip='{$_SERVER['REMOTE_ADDR']}'") ? true : false;
+				return parent::query("UPDATE {$this->prefix}visitatori SET lastaction='$lastaction', giorno='$giorno', nickname='$nickname' WHERE ip='{parent::purge($_SERVER['REMOTE_ADDR'])}'") ? true : false;
 		}
 		return false;
 	}
@@ -201,7 +206,7 @@ class User extends Configuration {
 				return false;
 			$code = $this->getCode();
 			$client = parent::getClient();
-			parent::query("UPDATE {$this->prefix}utenti SET secret='$code', ip='{$_SERVER['REMOTE_ADDR']}', browsername='{$client['browser']}', browserversion='{$client['version']}', platform='{$client['platform']}' WHERE nickname='$nickname' LIMIT 1");
+			parent::query("UPDATE {$this->prefix}utenti SET secret='$code', ip='{parent::purge($_SERVER['REMOTE_ADDR'])}', browsername='{$client['browser']}', browserversion='{$client['version']}', platform='{$client['platform']}' WHERE nickname='$nickname' LIMIT 1");
 			$this->setCookie($code);
 			return true;
 		}
@@ -230,7 +235,7 @@ class User extends Configuration {
 		$referer = trim($referer, '?');
 		$referer = trim($referer, '&');
 		$referer = parent::purge($referer);
-		return parent::query("INSERT INTO {$this->prefix}log(nickname, azione, ip, data, ora, useragent, referer) VALUES('$nickname', '$azione', '{$_SERVER['REMOTE_ADDR']}', '$data', '$ora', '{$useragent}', '$referer')") ? true : false;
+		return parent::query("INSERT INTO {$this->prefix}log(nickname, azione, ip, data, ora, useragent, referer) VALUES('$nickname', '$azione', '{parent::purge($_SERVER['REMOTE_ADDR'])}', '$data', '$ora', '{$useragent}', '$referer')") ? true : false;
 	}
 
 	/* Visualizza i log. */

@@ -6,7 +6,7 @@ La loro attivazione sarà automatica.
 --I templates, che si trovano in templates/, possono essere installati in Ocarina2 semplicemente copiandoli in /rendering/templates o tramite l'apposito pannello nell'amministrazione.
 L'utente potrà decidere quale utilizzare tramite la propria pagina di modifica del profilo.
 
---I plugin, che si trovano in plugins/, possono essere installati in Ocarina2 semplicemente caricandoli mediante l'apposita pagina Plugins dell'amministrazione.
+--I plugin, che si trovano in plugins/, possono essere installati in Ocarina2 semplicemente caricandoli come archivio zip mediante l'apposita pagina Plugins dell'amministrazione.
 Prima di installarli, potrai leggere una breve descrizione visualizzando il file plugin.cfg al loro interno.
 Successivamente, nella pagina dell'amministrazione precedentemente citata.
 

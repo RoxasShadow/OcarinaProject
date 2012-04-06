@@ -60,8 +60,8 @@ class Rendering extends Page {
 		$this->addValue('countnews', parent::countNews());
 		$this->addValue('countpages', parent::countPage());
 		$this->addValue('countusers', parent::countUser());
-		$user = parent::getUser();
-		$this->addValue('lastuser', $user[count($user)-1]->nickname);
+		$user = parent::getLastUser();
+		$this->addValue('lastuser', $user[0]->nickname);
 	}
 
 	/* Quando la classe viene distrutta, il distruttore provvede a distruggere l'oggetto Smarty liberando memoria. */
