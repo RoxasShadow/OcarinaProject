@@ -29,7 +29,7 @@ elseif($submit) {
 	elseif(($destinatario !== '') && ($oggetto !== '') && ($contenuto !== ''))
 		if(($ocarina->isUser($destinatario)) && ($ocarina->createPM(array($ocarina->username[0]->nickname, $destinatario, date('d-m-y'), date('G:m:i'), $oggetto, $contenuto, 0)))) {
 			if($ocarina->config[0]->log == 1)
-				$ocarina->log($ocarina->username[0]->nickname, 'PM sended to '.$destinatario.'.');
+				$ocarina->log($ocarina->username[0]->nickname, 'PM sent to '.$destinatario.'.');
 			$ocarina->addValue('result', $ocarina->getLanguage('sendpm', 0));
 		}
 		else {

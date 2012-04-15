@@ -16,9 +16,9 @@
 		9: Yes
 		10: Not
 		11: Comments blocked
-		12: Comment not sended
-		13: Comment sended
-		14: Comment sended and waiting for approvation
+		12: Comment not sent
+		13: Comment sent
+		14: Comment sent and waiting for approvation
 		15: The registration require the validation via email
 		16: String too long/short
 	JSON request (GET):
@@ -273,12 +273,12 @@ elseif(($action == 'createcomment') && ($titolo !== '') && ($contenuto !== '') &
 			echo '{"response":"11"}';
 		elseif($ocarina->createComment($array)) {
 			if($ocarina->config[0]->log == 1)
-				$ocarina->log($nickname, 'Comment sended.');
+				$ocarina->log($nickname, 'Comment sent.');
 			echo ($ocarina->config[0]->approvacommenti == 0) ? '{"response":"13"}' : '{"response":"14"}';
 		}
 		else {
 			if($ocarina->config[0]->log == 1)
-				$ocarina->log($nickname, 'Comment was not sended.');
+				$ocarina->log($nickname, 'Comment was not sent.');
 			echo '{"response":"12"}';
 		}
 	}

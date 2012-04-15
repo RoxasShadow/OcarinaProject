@@ -65,7 +65,7 @@ elseif(!$ocarina->isLogged())
 	Il webmaster di '.$ocarina->config[0]->nomesito.'.');
 							$ocarina->addValue('result', $ocarina->getLanguage('recoverpassword', 4));
 							if($ocarina->config[0]->log == 1)
-								$ocarina->log($nickname, 'Recover mail sended.');
+								$ocarina->log($nickname, 'Recover mail sent.');
 						}
 						else {
 							$ocarina->addValue('result', $ocarina->getLanguage('recoverpassword', 5));
@@ -81,19 +81,19 @@ elseif(!$ocarina->isLogged())
 				else {
 					$ocarina->addValue('result', $ocarina->getLanguage('recoverpassword', 6));
 					if($ocarina->config[0]->log == 1)
-						$ocarina->log('~', 'Recover mail was not sended.');
+						$ocarina->log('~', 'Recover mail was not sent.');
 				}
 			}
 			else {
 				$ocarina->addValue('result', $ocarina->getLanguage('recoverpassword', 6));
 				if($ocarina->config[0]->log == 1)
-					$ocarina->log('~', 'Recover mail was not sended.');
+					$ocarina->log('~', 'Recover mail was not sent.');
 			}
 	}
 	else {
 		$ocarina->addValue('result', $ocarina->getLanguage('recoverpassword', 7));
 		if($ocarina->config[0]->log == 1)
-			$ocarina->log('~', 'Recover mail was not sended.');
+			$ocarina->log('~', 'Recover mail was not sent.');
 	}
 $ocarina->addValue('logged', $ocarina->isLogged());
 $ocarina->addValue('submit', $submit);
